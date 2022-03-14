@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Col, Container, Pagination, Row, Table } from 'react-bootstrap'
 
 export function Community() {
@@ -35,6 +35,10 @@ export function Community() {
     { id: 12, isNotice: false, title:'12', user: '나', created_at: '2022. 03. 10 11:14', view_count: 1},
   ]
 
+  articles.sort((a, b) => {
+    return a.isNotice ? -1 : 0;
+  })
+  
   return (
     <Container style={{marginTop:'5rem'}}>
       <Row>
