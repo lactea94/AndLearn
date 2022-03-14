@@ -24,7 +24,7 @@ export default function Pagination({ total, limit, page, setPage}) {
             {i}
           </Page.Item>
         ))}
-        {(page < numPages - 2) && <Page.Ellipsis />}
+        {(page < numPages - 2) && (numPages > 5) && <Page.Ellipsis />}
       </>
     )}
 
