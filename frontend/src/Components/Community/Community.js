@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react'
 import { Col, Container, Pagination, Row, Table } from 'react-bootstrap'
 
 export function Community() {
@@ -21,24 +20,28 @@ export function Community() {
   }
 
   const articles = [
-    { id: 1, isNotice: true, title:'1', user: '나', created_at: '2022. 03. 14 11:14', view_count: 1},
+    { id: 1, isNotice: true, title:'1', user: '나', created_at: '2022. 03. 14 11:10', view_count: 1},
     { id: 2, isNotice: false, title:'2', user: '나', created_at: '2022. 03. 10 11:14', view_count: 1},
-    { id: 3, isNotice: false, title:'3', user: '나', created_at: '2022. 03. 10 11:14', view_count: 1},
-    { id: 4, isNotice: false, title:'4', user: '나', created_at: '2022. 03. 10 11:14', view_count: 1},
-    { id: 5, isNotice: false, title:'5', user: '나', created_at: '2022. 03. 10 11:14', view_count: 1},
-    { id: 6, isNotice: false, title:'6', user: '나', created_at: '2022. 03. 10 11:14', view_count: 1},
-    { id: 7, isNotice: false, title:'7', user: '나', created_at: '2022. 03. 10 11:14', view_count: 1},
-    { id: 8, isNotice: true, title:'8', user: '나', created_at: '2022. 03. 10 11:14', view_count: 1},
-    { id: 9, isNotice: false, title:'9', user: '나', created_at: '2022. 03. 10 11:14', view_count: 1},
-    { id: 10, isNotice: false, title:'10', user: '나', created_at: '2022. 03. 10 11:14', view_count: 1},
-    { id: 11, isNotice: false, title:'11', user: '나', created_at: '2022. 03. 10 11:14', view_count: 1},
-    { id: 12, isNotice: false, title:'12', user: '나', created_at: '2022. 03. 10 11:14', view_count: 1},
+    { id: 3, isNotice: false, title:'3', user: '나', created_at: '2022. 03. 11 11:14', view_count: 1},
+    { id: 4, isNotice: false, title:'4', user: '나', created_at: '2022. 03. 12 11:14', view_count: 1},
+    { id: 5, isNotice: false, title:'5', user: '나', created_at: '2022. 03. 13 11:14', view_count: 1},
+    { id: 6, isNotice: false, title:'6', user: '나', created_at: '2022. 03. 13 11:14', view_count: 1},
+    { id: 7, isNotice: false, title:'7', user: '나', created_at: '2022. 03. 14 11:14', view_count: 1},
+    { id: 8, isNotice: true, title:'8', user: '나', created_at: '2022. 03. 14 11:20', view_count: 1},
+    { id: 9, isNotice: false, title:'9', user: '나', created_at: '2022. 03. 14 11:21', view_count: 1},
+    { id: 10, isNotice: false, title:'10', user: '나', created_at: '2022. 03. 14 11:33', view_count: 1},
+    { id: 11, isNotice: false, title:'11', user: '나', created_at: '2022. 03. 14 11:35', view_count: 1},
+    { id: 12, isNotice: false, title:'12', user: '나', created_at: '2022. 03. 14 11:50', view_count: 1},
   ]
 
   articles.sort((a, b) => {
-    return a.isNotice ? -1 : 0;
+    if (b.isNotice === a.isNotice) {
+      const x = a.created_at, y = b.created_at
+      return  x < y ? 1: x > y ? -1 : 0;
+    }
+    return b.isNotice - a.isNotice;
   })
-  
+
   return (
     <Container style={{marginTop:'5rem'}}>
       <Row>
