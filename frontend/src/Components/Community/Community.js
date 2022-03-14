@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Col, Container, Row, Table } from 'react-bootstrap'
+import { Col, Container, DropdownButton, Dropdown, Row, Table, OverlayTrigger, Tooltip } from 'react-bootstrap'
 import Pagination from './Pagination/Pagination';
 
 export function Community() {
@@ -59,9 +59,14 @@ export function Community() {
       .then((data) => setArticles(data.sort((a, b) => b.id - a.id)))
   }, []);
 
+  const handleSelect = (e) => {
+    setLimit(e);
+    setPage(1);
+  }
+
   return (
     <Container style={{marginTop:'5rem'}}>
-      <Row>
+      <Row className="justify-content-center align-items-center">
         <Col>
           <Pagination 
             total={articles.length}
@@ -69,6 +74,25 @@ export function Community() {
             page={page}
             setPage={setPage}
           />
+        </Col>
+        <Col sm={2}>
+          <OverlayTrigger
+            overlay={
+              <Tooltip>
+                페이지 당 게시글 수
+              </Tooltip>
+            }
+          >
+            <DropdownButton
+              title="Page" size="sm"
+              onSelect={handleSelect}
+            >
+              <Dropdown.Item eventKey={5}>5</Dropdown.Item>
+              <Dropdown.Item eventKey={10}>10</Dropdown.Item>
+              <Dropdown.Item eventKey={15}>15</Dropdown.Item>
+              <Dropdown.Item eventKey={20}>20</Dropdown.Item>
+            </DropdownButton>
+          </OverlayTrigger>
         </Col>
       </Row>
       <Row>

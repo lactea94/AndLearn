@@ -29,7 +29,7 @@ export default function Pagination({ total, limit, page, setPage}) {
     )}
 
   return (
-    <Page className="justify-content-center">
+    <Page className="justify-content-center" style={{margin:"auto"}}>
       <Page.First onClick={() => setPage(1)} disabled={page === 1}></Page.First>
       <Page.Prev onClick={() => setPage(page - 1)} disabled={page === 1}></Page.Prev>
       <Pages/>
