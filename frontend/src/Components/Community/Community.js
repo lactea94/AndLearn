@@ -61,8 +61,8 @@ export function Community() {
 
   return (
     <Container style={{marginTop:'5rem'}}>
-      <Row className="justify-content-center">
-        <Col sm={12}>
+      <Row>
+        <Col>
           <Pagination 
             total={articles.length}
             limit={limit}
