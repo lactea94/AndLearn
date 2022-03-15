@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Col, Container, DropdownButton, Dropdown, Row, Table, OverlayTrigger, Tooltip } from 'react-bootstrap'
-import { Link, Outlet } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Pagination from './Pagination/Pagination';
 
 export function Community() {
