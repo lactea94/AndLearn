@@ -14,7 +14,7 @@ export default function Pagination({ total, limit, page, setPage}) {
     }
     return (
       <>
-        {(Page > 3) && <Page.Ellipsis />}
+        {(page > 3) && (numPages > 5) && <Page.Ellipsis />}
         {array().map(i => (
           <Page.Item
           key={i}
