@@ -3,7 +3,6 @@ import { useLocation, useParams } from "react-router-dom"
 export function Detail() {
   const { articleId } = useParams();
   const { state } = useLocation();
-  console.log(state)
   return (
     <div>
       <div>
