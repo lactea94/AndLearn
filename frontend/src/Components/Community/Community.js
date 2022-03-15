@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Col, Container, DropdownButton, Dropdown, Row, Table, OverlayTrigger, Tooltip } from 'react-bootstrap'
+import { Link, Outlet } from 'react-router-dom';
 import Pagination from './Pagination/Pagination';
 
 export function Community() {
@@ -119,7 +120,14 @@ export function Community() {
             {articles.slice(offset, offset + limit).map((article) => (
               <tr key={article.id}>
                 <td>{article.id}</td>
-                <td>{article.title}</td>
+                <td>
+                  <Link
+                    to={`${article.id}`}
+                    state={{article: article}}
+                  >
+                    {article.title}
+                  </Link>
+                </td>
                 <td>{article.userId}</td>
                 <td>임시</td>
                 <td>1</td>

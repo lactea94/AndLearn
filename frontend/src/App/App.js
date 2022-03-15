@@ -1,6 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 import { Navigation } from '../Common/Navigation/Navigation';
 import { Community } from '../Components/Community/Community';
+import { Detail } from '../Components/Community/Detail/Detail';
 import { Home } from '../Components/Home/Home';
 import { Learn } from '../Components/Learn/Learn';
 import { Profile } from '../Components/Profile/Profile';
@@ -21,6 +22,7 @@ function App() {
         </Route>
         <Route path='learn' element={<Learn/>}></Route>
         <Route path='community' element={<Community/>}></Route>
+        <Route path='community/:articleId' element={<Detail/>}></Route>
       </Routes>
     </div>
   );
