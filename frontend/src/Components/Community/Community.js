@@ -123,7 +123,11 @@ export function Community() {
                 <td>
                   <Link
                     to={`${article.id}`}
-                    state={{article: article}}
+                    state={{
+                      userId: article.userId,
+                      title: article.title,
+                      body: article.body
+                    }}
                   >
                     {article.title}
                   </Link>
