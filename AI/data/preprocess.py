@@ -20,10 +20,15 @@ def limit_train_set(PATH, annotation_file):
         image_path = PATH + "%012d.jpg" % (val["image_id"])
         image_path_to_caption[image_path].append(caption)
 
-    image_paths = list(image_path_to_caption.keys())
-    random.shuffle(image_paths)
+    # 테스트 용
+    # image_paths = list(image_path_to_caption.keys())
+    # random.shuffle(image_paths)
+    # train_image_paths = image_paths[:100] # 여기 고치면 됨
 
-    train_image_paths = image_paths[:100] # 여기 고치면 됨
+    # 실행
+    train_image_paths = list(image_path_to_caption.keys())
+
+
 
     train_captions = []
     img_name_vector = []

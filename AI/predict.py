@@ -71,12 +71,12 @@ vocab_size = params["vocab_size"]
 max_length = params["max_length"]
 attention_features_shape = params["attention_features_shape"]
 
-encoder = CNN_Encoder(embedding_dim)
-decoder = RNN_Decoder(embedding_dim, units, vocab_size)
+initial_encoder = CNN_Encoder(embedding_dim)
+initial_decoder = RNN_Decoder(embedding_dim, units, vocab_size)
 optimizer = tf.keras.optimizers.Adam()
 
-ckpt = tf.train.Checkpoint(encoder=encoder,
-                        decoder=decoder,
+ckpt = tf.train.Checkpoint(encoder=initial_encoder,
+                        decoder=initial_decoder,
                         optimizer=optimizer)
 
 checkpoint_path = "./checkpoints/train"
