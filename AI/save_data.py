@@ -11,4 +11,4 @@ if not os.path.exists(os.path.abspath(".") + image_folder):
                                       origin="http://images.cocodataset.org/zips/train2017.zip",
                                       extract=True)
   os.remove(image_zip)
-  shutil.move(".\\train2017", ".\\datasets\\images")
+  shutil.move("./train2017", "./datasets/images")
