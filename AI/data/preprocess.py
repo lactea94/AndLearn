@@ -51,7 +51,7 @@ def load_image(image_path):
 
 # InceptionV3 초기화 및 Imagenet 가중치 로드
 def initialize_and_load_weights():
-    image_model = tf.keras.applications.InceptionV3(include_top=False, weights="imagenet")
+    image_model = tf.keras.applications.InceptionResNetV2(include_top=False, weights="imagenet")
 
     new_input = image_model.input
     hidden_layer = image_model.layers[-1].output
