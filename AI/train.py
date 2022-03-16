@@ -41,7 +41,7 @@ image_features_extract_model = preprocess.initialize_and_load_weights()
 tokenizer, cap_vector, max_length = preprocess.tokenize_captions(top_k, train_captions)
 
 # 토크나이저 저장
-pickle_src = ".\\datasets\\tokenizer.pkl"
+pickle_src = "./datasets/tokenizer.pkl"
 with open(pickle_src, "wb") as f:
   pickle.dump(tokenizer, f)
 
@@ -59,7 +59,7 @@ params = {
   "max_length": max_length
 }
 
-params_src = ".\\datasets\\params.pkl"
+params_src = "./datasets/params.pkl"
 with open(params_src, "wb") as f:
   pickle.dump(params, f)
 
@@ -149,7 +149,7 @@ def loss_function(real, pred):
   return tf.reduce_mean(loss_)
 
 # 체크포인트
-checkpoint_path = ".\\checkpoints\\train"
+checkpoint_path = "./checkpoints/train"
 ckpt = tf.train.Checkpoint(encoder=encoder,
                            decoder=decoder,
                            optimizer=optimizer)
