@@ -44,14 +44,14 @@ def load_image(image_path):
     img = tf.io.read_file(image_path)
     img = tf.image.decode_jpeg(img, channels=3)
     img = tf.image.resize(img, (299, 299))
-    img = tf.keras.applications.inception_resnet_v2.preprocess_input(img)
+    img = tf.keras.applications.inception_v3.preprocess_input(img)
     
     return img, image_path
 
 
 # InceptionV3 초기화 및 Imagenet 가중치 로드
 def initialize_and_load_weights():
-    image_model = tf.keras.applications.InceptionResNetV2(include_top=False, weights="imagenet")
+    image_model = tf.keras.applications.InceptionV3(include_top=False, weights="imagenet")
 
     new_input = image_model.input
     hidden_layer = image_model.layers[-1].output
