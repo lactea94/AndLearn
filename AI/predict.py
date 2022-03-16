@@ -62,7 +62,7 @@ def plot_attention(image, result, attention_plot):
     plt.show()
 
 
-parmas_src = '.\\datasets\\params.pkl'
+parmas_src = './datasets/params.pkl'
 with open(parmas_src, "rb") as f:
     params = pickle.load(f)
 embedding_dim = params["embedding_dim"]
@@ -79,7 +79,7 @@ ckpt = tf.train.Checkpoint(encoder=encoder,
                         decoder=decoder,
                         optimizer=optimizer)
 
-checkpoint_path = ".\\checkpoints\\train"
+checkpoint_path = "./checkpoints/train"
 ckpt_manager = tf.train.CheckpointManager(ckpt, checkpoint_path, max_to_keep=5)
 
 ckpt.restore(ckpt_manager.latest_checkpoint)
@@ -87,7 +87,7 @@ encoder = ckpt.encoder
 decoder = ckpt.decoder
 
 
-pickle_src = ".\\datasets\\tokenizer.pkl"
+pickle_src = "./datasets/tokenizer.pkl"
 with open(pickle_src, "rb") as f:
     tokenizer = pickle.load(f)
 
