@@ -1,7 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 import { Navigation } from '../Common/Navigation/Navigation';
 import { Community } from '../Components/Community/Community';
-import { Detail } from '../Components/Community/Detail/Detail';
+import { Detail } from '../Components/Community/Articles/Detail/Detail';
 import { Home } from '../Components/Home/Home';
 import { Learn } from '../Components/Learn/Learn';
 import { Profile } from '../Components/Profile/Profile';
