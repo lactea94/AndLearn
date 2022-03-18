@@ -1,4 +1,11 @@
 import { Pagination as Page }  from "react-bootstrap";
+import { PageItem } from "./style";
+import { 
+  ChevronLeft,
+  ChevronRight,
+  ChevronDoubleLeft,
+  ChevronDoubleRight
+} from "react-bootstrap-icons";
 
 export default function Pagination({ total, limit, page, setPage}) {
   const numPages = Math.ceil(total / limit);
@@ -14,27 +21,35 @@ export default function Pagination({ total, limit, page, setPage}) {
     }
     return (
       <>
-        {(page > 3) && (numPages > 5) && <Page.Ellipsis />}
+        {(page > 3) && (numPages > 5) && <PageItem>...</PageItem>}
         {array().map(i => (
-          <Page.Item
-          key={i}
-          onClick={() => setPage(i)}
-          active={(page === i)}
+          <PageItem
+            key={i}
+            onClick={() => setPage(i)}
+            disabled={(page === i)}
           >
             {i}
-          </Page.Item>
+          </PageItem>
         ))}
-        {(page < numPages - 2) && (numPages > 5) && <Page.Ellipsis />}
+        {(page < numPages - 2) && (numPages > 5) && <PageItem>...</PageItem>}
       </>
     )}
 
   return (
     <Page className="justify-content-center" style={{margin:"auto"}}>
-      <Page.First onClick={() => setPage(1)} disabled={page === 1}></Page.First>
-      <Page.Prev onClick={() => setPage(page - 1)} disabled={page === 1}></Page.Prev>
+      <PageItem onClick={() => setPage(1)} disabled={page === 1}>
+        <ChevronDoubleLeft/>
+      </PageItem>
+      <PageItem onClick={() => setPage(page - 1)} disabled={page === 1}>
+        <ChevronLeft/>
+      </PageItem>
       <Pages/>
-      <Page.Next onClick={() => setPage(page + 1)} disabled={page === numPages}></Page.Next>
-      <Page.Last onClick={() => setPage(numPages)} disabled={page === numPages}></Page.Last>
+      <PageItem onClick={() => setPage(page + 1)} disabled={page === numPages}>
+        <ChevronRight/>
+      </PageItem>
+      <PageItem onClick={() => setPage(numPages)} disabled={page === numPages}>
+        <ChevronDoubleRight/>
+      </PageItem>
     </Page>
   )
 }
