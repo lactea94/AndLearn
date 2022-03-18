@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Col, Container, Row } from 'react-bootstrap'
+import { Container, Row } from 'react-bootstrap'
 import Articles from './Articles/Articles';
 import Pagination from './Pagination/Pagination';
 
@@ -8,9 +8,9 @@ export function Community() {
   const notices = [
     { id: 1, title:'1', user: '나', created_at: '2022. 03. 14 11:10', view_count: 1},
     { id: 2, title:'2', user: '나', created_at: '2022. 03. 10 11:14', view_count: 1},
-  ]
+  ];
 
-  notices.sort((a, b) => a.id - b.id)
+  notices.sort((a, b) => a.id - b.id);
 
   // const articles = [
   //   { id: 1, title:'1', user: 'aaa', created_at: '2022. 03. 14 11:10', view_count: 1},

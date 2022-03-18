@@ -17,7 +17,7 @@ function DateFormat(date) {
   return (
     date.slice(0, 12)
   )
-}
+};
 
 export default function Articles({ notices, articles, offset, limit }) {
   return (
@@ -64,4 +64,4 @@ export default function Articles({ notices, articles, offset, limit }) {
       </tbody>
     </Table>
   )
-}
+};

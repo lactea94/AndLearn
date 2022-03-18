@@ -1,4 +1,4 @@
-import { PageContainer, PageItem } from "./style";
+import { PageContainer, PageItem, PageLimit } from "./style";
 import { 
   ChevronLeft,
   ChevronRight,
@@ -6,10 +6,52 @@ import {
   ChevronDoubleRight,
   ThreeDots
 } from "react-bootstrap-icons";
-import { OverlayTrigger, Tooltip } from "react-bootstrap";
+import { 
+  Button,
+  Form,
+  OverlayTrigger,
+  Popover,
+  Tooltip
+} from "react-bootstrap";
 
 export default function Pagination({ total, limit, page, setPage, setLimit }) {
   const numPages = Math.ceil(total / limit);
+
+  const popover = (
+    <Popover>
+      <Popover.Header as="h3">페이지 이동</Popover.Header>
+      <Popover.Body>
+        <Form
+          onSubmit={function (event) {
+            event.preventDefault();
+            setPage(event.target.page.value);
+          }}
+        >
+          <Form.Group>
+            <Form.Control
+              placeholder={numPages}
+              name="page"
+              type="text"
+            />
+            <Button type="submit">이동</Button>
+          </Form.Group>
+        </Form>
+      </Popover.Body>
+    </Popover>
+  );
+
+  const PageSelect = () => {
+    return (
+      <OverlayTrigger
+        trigger="click"
+        placement="bottom"
+        overlay={popover}
+      >
+        <PageItem><ThreeDots/></PageItem>
+      </OverlayTrigger>
+    )
+  };
+
   const Pages = () => {
     const array = () => {
       if (page < 4) {
@@ -22,19 +64,19 @@ export default function Pagination({ total, limit, page, setPage, setLimit }) {
     }
     return (
       <>
-        {(page > 3) && (numPages > 5) && <PageItem><ThreeDots/></PageItem>}
+        {(page > 3) && (numPages > 5) && <PageSelect/>}
         {array().map(i => (
           <PageItem
             key={i}
             onClick={() => setPage(i)}
-            disabled={(page === i)}
+            current={page === i ? 1 : 0}
           >
             {i}
           </PageItem>
         ))}
-        {(page < numPages - 2) && (numPages > 5) && <PageItem><ThreeDots/></PageItem>}
+        {(page < numPages - 2) && (numPages > 5) && <PageSelect/>}
       </>
-    )}
+    )};
 
   return (
     <PageContainer>
@@ -52,26 +94,27 @@ export default function Pagination({ total, limit, page, setPage, setLimit }) {
         <ChevronDoubleRight/>
       </PageItem>
       <OverlayTrigger
-            overlay={
-              <Tooltip>
-                페이지 당 게시글 수
-              </Tooltip>
-            }
-          >
-            <select
-              type="number"
-              value={limit}
-              onChange={({ target: { value } }) => {
-                setLimit(Number(value))
-                setPage(1)
-              }}
-            >
-              <option value="5">5</option>
-              <option value="10">10</option>
-              <option value="15">15</option>
-              <option value="20">20</option>
-            </select>
-          </OverlayTrigger>
+        overlay={
+          <Tooltip>
+            페이지 당 게시글 수
+          </Tooltip>
+        }
+      >
+        <PageLimit
+          type="number"
+          value={limit}
+          style={{width:'5rem'}}
+          onChange={({ target: { value } }) => {
+            setLimit(Number(value))
+            setPage(1)
+          }}
+        >
+          <option value="5">5</option>
+          <option value="10">10</option>
+          <option value="15">15</option>
+          <option value="20">20</option>
+        </PageLimit>
+      </OverlayTrigger>
     </PageContainer>
   )
 }
