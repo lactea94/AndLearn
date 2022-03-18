@@ -6,8 +6,8 @@ import Pagination from './Pagination/Pagination';
 export function Community() {
 
   const notices = [
-    { id: 1, title:'1', user: '나', created_at: '2022. 03. 14 11:10', view_count: 1},
-    { id: 2, title:'2', user: '나', created_at: '2022. 03. 10 11:14', view_count: 1},
+    { id: 1231, userId: 1, title:'1', body:'123123', created_at: '2022. 03. 14 11:10', view_count: 1},
+    { id: 1232, userId: 1, title:'2', body:'123123', created_at: '2022. 03. 10 11:14', view_count: 1},
   ];
 
   notices.sort((a, b) => a.id - b.id);
