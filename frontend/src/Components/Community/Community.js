@@ -1,26 +1,9 @@
 import { useEffect, useState } from 'react';
-import { Col, Container, Row, Table, OverlayTrigger, Tooltip } from 'react-bootstrap'
-import { Link } from 'react-router-dom';
+import { Col, Container, Row } from 'react-bootstrap'
+import Articles from './Articles/Articles';
 import Pagination from './Pagination/Pagination';
 
 export function Community() {
-  
-  const now = new Date();
-  const nowYear = String(now.getFullYear());
-  const nowMonth = now.getMonth() + 1 < 10 ? '0' + String(now.getMonth() + 1) : String(now.getMonth() + 1);
-  const nowDate = now.getDate() < 10 ? '0' + String(now.getDate()) : String(now.getDate());
-  const today = nowYear + '. ' + nowMonth + '. ' + nowDate;
-
-  function DateFormat(date) {
-    if ( date.slice(0, 12) === today) {
-      return (
-        date.slice(13)
-      )
-    }
-    return (
-      date.slice(0, 12)
-    )
-  }
 
   const notices = [
     { id: 1, title:'1', user: '나', created_at: '2022. 03. 14 11:10', view_count: 1},
@@ -63,81 +46,21 @@ export function Community() {
   return (
     <Container style={{marginTop:'5rem'}}>
       <Row className="justify-content-center align-items-center">
-        <Col>
-          <Pagination 
-            total={articles.length}
-            limit={limit}
-            page={page}
-            setPage={setPage}
-          />
-        </Col>
-        <Col sm={2}>
-          <OverlayTrigger
-            overlay={
-              <Tooltip>
-                페이지 당 게시글 수
-              </Tooltip>
-            }
-          >
-            <select
-              type="number"
-              value={limit}
-              onChange={({ target: { value } }) => {
-                setLimit(Number(value))
-                setPage(1)
-              }}
-            >
-              <option value="5">5</option>
-              <option value="10">10</option>
-              <option value="15">15</option>
-              <option value="20">20</option>
-            </select>
-          </OverlayTrigger>
-        </Col>
+        <Pagination 
+          total={articles.length}
+          limit={limit}
+          page={page}
+          setPage={setPage}
+          setLimit={setLimit}
+        />
       </Row>
       <Row>
-        <Table hover>
-          <thead>
-            <tr>
-              <th>#</th>
-              <th style={{width:'60%'}}>제목</th>
-              <th>작성자</th>
-              <th>날짜</th>
-              <th>조회</th>
-            </tr>
-          </thead>
-          <tbody>
-            {notices.map((notice) => (
-              <tr key={notice.id} className="table-primary">
-                <td>공지</td>
-                <td>{notice.title}</td>
-                <td>{notice.user}</td>
-                <td>{DateFormat(notice.created_at)}</td>
-                <td>{notice.view_count}</td>
-              </tr>
-            ))}
-            {articles.slice(offset, offset + limit).map((article) => (
-              <tr key={article.id}>
-                <td>{article.id}</td>
-                <td>
-                  <Link
-                    to={`${article.id}`}
-                    state={{
-                      userId: article.userId,
-                      title: article.title,
-                      body: article.body
-                    }}
-                  >
-                    {article.title}
-                  </Link>
-                </td>
-                <td>{article.userId}</td>
-                <td>임시</td>
-                <td>1</td>
-              </tr>
-            ))}
-          </tbody>
-        </Table>
+        <Articles
+          notices={notices}
+          articles={articles}
+          offset={offset}
+          limit={limit}
+        />
       </Row>
     </Container>
   )

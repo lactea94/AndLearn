@@ -1,13 +1,14 @@
-import { Pagination as Page }  from "react-bootstrap";
-import { PageItem } from "./style";
+import { PageContainer, PageItem } from "./style";
 import { 
   ChevronLeft,
   ChevronRight,
   ChevronDoubleLeft,
-  ChevronDoubleRight
+  ChevronDoubleRight,
+  ThreeDots
 } from "react-bootstrap-icons";
+import { OverlayTrigger, Tooltip } from "react-bootstrap";
 
-export default function Pagination({ total, limit, page, setPage}) {
+export default function Pagination({ total, limit, page, setPage, setLimit }) {
   const numPages = Math.ceil(total / limit);
   const Pages = () => {
     const array = () => {
@@ -21,7 +22,7 @@ export default function Pagination({ total, limit, page, setPage}) {
     }
     return (
       <>
-        {(page > 3) && (numPages > 5) && <PageItem>...</PageItem>}
+        {(page > 3) && (numPages > 5) && <PageItem><ThreeDots/></PageItem>}
         {array().map(i => (
           <PageItem
             key={i}
@@ -31,12 +32,12 @@ export default function Pagination({ total, limit, page, setPage}) {
             {i}
           </PageItem>
         ))}
-        {(page < numPages - 2) && (numPages > 5) && <PageItem>...</PageItem>}
+        {(page < numPages - 2) && (numPages > 5) && <PageItem><ThreeDots/></PageItem>}
       </>
     )}
 
   return (
-    <Page className="justify-content-center" style={{margin:"auto"}}>
+    <PageContainer>
       <PageItem onClick={() => setPage(1)} disabled={page === 1}>
         <ChevronDoubleLeft/>
       </PageItem>
@@ -50,6 +51,27 @@ export default function Pagination({ total, limit, page, setPage}) {
       <PageItem onClick={() => setPage(numPages)} disabled={page === numPages}>
         <ChevronDoubleRight/>
       </PageItem>
-    </Page>
+      <OverlayTrigger
+            overlay={
+              <Tooltip>
+                페이지 당 게시글 수
+              </Tooltip>
+            }
+          >
+            <select
+              type="number"
+              value={limit}
+              onChange={({ target: { value } }) => {
+                setLimit(Number(value))
+                setPage(1)
+              }}
+            >
+              <option value="5">5</option>
+              <option value="10">10</option>
+              <option value="15">15</option>
+              <option value="20">20</option>
+            </select>
+          </OverlayTrigger>
+    </PageContainer>
   )
 }

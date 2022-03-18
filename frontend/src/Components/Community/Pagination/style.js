@@ -1,9 +1,10 @@
+import { Button, ButtonGroup } from "react-bootstrap";
 import styled from "styled-components";
 
-export const PageItem = styled.button`
-  width: 2rem;
-  margin: 0.2rem;
-  border: 1px solid gray;
-  background-color: skyblue;
-  border-radius: 0.2rem;
+export const PageContainer = styled(ButtonGroup)`
+
+`
+
+export const PageItem = styled(Button)`
+
 `
