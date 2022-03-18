@@ -28,17 +28,25 @@ export default function Articles({ notices, articles, offset, limit }) {
           <th style={{width:'60%'}}>제목</th>
           <th>작성자</th>
           <th>날짜</th>
-          <th>조회</th>
         </tr>
       </thead>
       <tbody>
         {notices.map((notice) => (
           <tr key={notice.id} className="table-primary">
             <td>공지</td>
-            <td>{notice.title}</td>
-            <td>{notice.user}</td>
+            <td>
+              <Link
+                to={`${notice.id}`}
+                state={{
+                  userId: notice.userId,
+                  title: notice.title,
+                  body: notice.body
+              }}>
+                {notice.title}
+              </Link>
+            </td>
+            <td>{notice.userId}</td>
             <td>{DateFormat(notice.created_at)}</td>
-            <td>{notice.view_count}</td>
           </tr>
         ))}
         {articles.slice(offset, offset + limit).map((article) => (
@@ -51,14 +59,12 @@ export default function Articles({ notices, articles, offset, limit }) {
                   userId: article.userId,
                   title: article.title,
                   body: article.body
-                }}
-              >
+              }}>
                 {article.title}
               </Link>
             </td>
             <td>{article.userId}</td>
             <td>임시</td>
-            <td>1</td>
           </tr>
         ))}
       </tbody>
