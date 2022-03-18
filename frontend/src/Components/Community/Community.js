@@ -60,11 +60,6 @@ export function Community() {
       .then((data) => setArticles(data.sort((a, b) => b.id - a.id)))
   }, []);
 
-  const handleSelect = (e) => {
-    setLimit(e);
-    setPage(1);
-  }
-
   return (
     <Container style={{marginTop:'5rem'}}>
       <Row className="justify-content-center align-items-center">
@@ -84,15 +79,19 @@ export function Community() {
               </Tooltip>
             }
           >
-            <DropdownButton
-              title="Page" size="sm"
-              onSelect={handleSelect}
+            <select
+              type="number"
+              value={limit}
+              onChange={({ target: { value } }) => {
+                setLimit(Number(value))
+                setPage(1)
+              }}
             >
-              <Dropdown.Item eventKey={5}>5</Dropdown.Item>
-              <Dropdown.Item eventKey={10}>10</Dropdown.Item>
-              <Dropdown.Item eventKey={15}>15</Dropdown.Item>
-              <Dropdown.Item eventKey={20}>20</Dropdown.Item>
-            </DropdownButton>
+              <option value="5">5</option>
+              <option value="10">10</option>
+              <option value="15">15</option>
+              <option value="20">20</option>
+            </select>
           </OverlayTrigger>
         </Col>
       </Row>
