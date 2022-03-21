@@ -1,7 +1,8 @@
-import { useLocation, useParams } from "react-router-dom"
+import { useLocation, useParams } from "react-router-dom";
 import { Comments } from "./Comments/Comments";
 import { Update } from "../Update/Update"
 import * as S from "./Style";
+import * as T from "../../Style";
 import { Col } from "react-bootstrap";
 
 export function Detail() {
@@ -16,11 +17,11 @@ export function Detail() {
       <S.SubHeader>
         <S.User>유저 아이디: {state.userId}</S.User>
         <Col xs={7}/>
-        <Col><S.Delete size="sm">삭제</S.Delete></Col>
+        <Col><T.MyButton color="red" size="sm">삭제</T.MyButton></Col>
         <Update />
       </S.SubHeader>
       <S.Body>{state.body}</S.Body>
       <Comments></Comments>
     </S.Article>
   )
-}
+};

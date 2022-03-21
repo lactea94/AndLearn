@@ -1,6 +1,5 @@
-import React from 'react'
 import { DateFormat } from '../module/module';
-import * as S from './Style'
+import * as S from './Style';
 
 const nowTime = new Date();
 

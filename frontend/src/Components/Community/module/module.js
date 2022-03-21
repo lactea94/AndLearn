@@ -1,5 +1,5 @@
 import Moment from 'react-moment';
-import 'moment/locale/ko'
+import 'moment/locale/ko';
 
 export function DateFormat(nowTime, date) {
   const createTime = new Date(date);

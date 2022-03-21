@@ -5,7 +5,7 @@ export const PageContainer = styled(ButtonGroup)`
   margin-top: 1rem;
   margin-left: 2rem;
   margin-bottom: 3rem;
-`
+`;
 
 export const PageItem = styled(Button)`
   border: solid 1px #88B04B;
@@ -33,7 +33,7 @@ export const PageItem = styled(Button)`
   &:active {
     box-shadow: none !important;
   }
-`
+`;
 
 export const PageLimit = styled(Form.Select)`
   border: solid 1px #88B04B !important;
@@ -44,7 +44,7 @@ export const PageLimit = styled(Form.Select)`
   &:active {
     box-shadow: none !important;
   }
-`
+`;
 
 export const FormControl = styled(Form.Control)`
 
@@ -52,7 +52,7 @@ export const FormControl = styled(Form.Control)`
     border: solid 1px #88B04B;
     box-shadow: none;
   }
-`
+`;
 
 export const PageButton = styled(Button)`
   background-color: #88B04B;
@@ -74,4 +74,4 @@ export const PageButton = styled(Button)`
   &:active {
     box-shadow: none !important;
   }
-`
+`;

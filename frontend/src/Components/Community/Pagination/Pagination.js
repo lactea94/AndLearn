@@ -121,4 +121,4 @@ export default function Pagination({ total, limit, page, setPage, setLimit }) {
       </S.PageContainer>
     </div>
   )
-}
+};

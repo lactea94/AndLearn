@@ -1,5 +1,6 @@
 import { Col } from "react-bootstrap";
-import * as S from "./style"
+import * as S from "./style";
+import * as T from "../../../../Style";
 
 export function Create() {
   return (
@@ -8,8 +9,8 @@ export function Create() {
         <S.Control type="text" placeholder="댓글"></S.Control>
       </Col>
       <Col>
-        <S.Create size="sm">작성</S.Create>
+        <T.MyButton size="sm">작성</T.MyButton>
       </Col>
     </S.CreateForm>
   )
-}
+};
