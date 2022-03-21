@@ -1,4 +1,4 @@
-import { PageContainer, PageItem, PageLimit } from "./style";
+import * as S from "./style";
 import { 
   ChevronLeft,
   ChevronRight,
@@ -47,7 +47,7 @@ export default function Pagination({ total, limit, page, setPage, setLimit }) {
         placement="bottom"
         overlay={popover}
       >
-        <PageItem><ThreeDots/></PageItem>
+        <S.PageItem><ThreeDots/></S.PageItem>
       </OverlayTrigger>
     )
   };
@@ -66,33 +66,33 @@ export default function Pagination({ total, limit, page, setPage, setLimit }) {
       <>
         {(page > 3) && (numPages > 5) && <PageSelect/>}
         {array().map(i => (
-          <PageItem
+          <S.PageItem
             key={i}
             onClick={() => setPage(i)}
             current={page === i ? 1 : 0}
           >
             {i}
-          </PageItem>
+          </S.PageItem>
         ))}
         {(page < numPages - 2) && (numPages > 5) && <PageSelect/>}
       </>
     )};
 
   return (
-    <PageContainer>
-      <PageItem onClick={() => setPage(1)} disabled={page === 1}>
+    <S.PageContainer>
+      <S.PageItem onClick={() => setPage(1)} disabled={page === 1}>
         <ChevronDoubleLeft/>
-      </PageItem>
-      <PageItem onClick={() => setPage(page - 1)} disabled={page === 1}>
+      </S.PageItem>
+      <S.PageItem onClick={() => setPage(page - 1)} disabled={page === 1}>
         <ChevronLeft/>
-      </PageItem>
+      </S.PageItem>
       <Pages/>
-      <PageItem onClick={() => setPage(page + 1)} disabled={page === numPages}>
+      <S.PageItem onClick={() => setPage(page + 1)} disabled={page === numPages}>
         <ChevronRight/>
-      </PageItem>
-      <PageItem onClick={() => setPage(numPages)} disabled={page === numPages}>
+      </S.PageItem>
+      <S.PageItem onClick={() => setPage(numPages)} disabled={page === numPages}>
         <ChevronDoubleRight/>
-      </PageItem>
+      </S.PageItem>
       <OverlayTrigger
         overlay={
           <Tooltip>
@@ -100,7 +100,7 @@ export default function Pagination({ total, limit, page, setPage, setLimit }) {
           </Tooltip>
         }
       >
-        <PageLimit
+        <S.PageLimit
           type="number"
           value={limit}
           style={{width:'5rem'}}
@@ -113,8 +113,8 @@ export default function Pagination({ total, limit, page, setPage, setLimit }) {
           <option value="10">10</option>
           <option value="15">15</option>
           <option value="20">20</option>
-        </PageLimit>
+        </S.PageLimit>
       </OverlayTrigger>
-    </PageContainer>
+    </S.PageContainer>
   )
 }

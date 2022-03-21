@@ -7,8 +7,9 @@ import Pagination from './Pagination/Pagination';
 export function Community() {
 
   const notices = [
-    { id: 1231, userId: 1, title:'1', body:'123123', created_at: '2022. 03. 14 11:10', view_count: 1},
-    { id: 1232, userId: 1, title:'2', body:'123123', created_at: '2022. 03. 10 11:14', view_count: 1},
+    { id: 1230, userId: 1, title:'2', body:'123123', created_at: '2022. 03. 10 11:14'},
+    { id: 1231, userId: 1, title:'1', body:'123123', created_at: '2022. 03. 14 13:10'},
+    { id: 1233, userId: 1, title:'3', body:'123123', created_at: '2022. 03. 21 11:14'},
   ];
 
   notices.sort((a, b) => a.id - b.id);
@@ -49,6 +50,14 @@ export function Community() {
       <Row>
         <Outlet/>
       </Row>
+      <Row>
+        <Articles
+          notices={notices}
+          articles={articles}
+          offset={offset}
+          limit={limit}
+        />
+      </Row>
       <Row className="justify-content-center align-items-center">
         <Pagination 
           total={articles.length}
@@ -56,14 +65,6 @@ export function Community() {
           page={page}
           setPage={setPage}
           setLimit={setLimit}
-        />
-      </Row>
-      <Row>
-        <Articles
-          notices={notices}
-          articles={articles}
-          offset={offset}
-          limit={limit}
         />
       </Row>
     </Container>
