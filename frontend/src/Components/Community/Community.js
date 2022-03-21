@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Container, Row } from 'react-bootstrap'
+import { Outlet } from 'react-router-dom';
 import Articles from './Articles/Articles';
 import Pagination from './Pagination/Pagination';
 
@@ -45,6 +46,9 @@ export function Community() {
 
   return (
     <Container style={{marginTop:'5rem'}}>
+      <Row>
+        <Outlet/>
+      </Row>
       <Row className="justify-content-center align-items-center">
         <Pagination 
           total={articles.length}
