@@ -4,6 +4,7 @@ import { Outlet } from 'react-router-dom';
 import Articles from './Articles/Articles';
 import Create from './Articles/Create/Create';
 import Pagination from './Pagination/Pagination';
+import { Search } from './Search/Search';
 
 export function Community() {
 
@@ -37,6 +38,8 @@ export function Community() {
 
   const [articles, setArticles] = useState([]);
   const [limit, setLimit] = useState(10);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredArticles, setFilterdArticle] = useState([]);
   const [page, setPage] = useState(1);
   const offset = (page - 1) * limit;
 
@@ -46,6 +49,14 @@ export function Community() {
       .then((data) => setArticles(data.sort((a, b) => b.id - a.id)))
   }, []);
 
+  useEffect(() => {
+    setFilterdArticle(() => 
+      articles.filter((article) => 
+        article.title.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    )
+  }, [searchTerm, articles]);
+
   return (
     <Container style={{marginTop:'5rem'}}>
       <Row>
@@ -54,12 +65,13 @@ export function Community() {
       <Row>
         <Articles
           notices={notices}
-          articles={articles}
+          articles={filteredArticles}
           offset={offset}
           limit={limit}
         />
       </Row>
       <Row>
+        <Search setSearchTerm={setSearchTerm} />
         <Create />        
       </Row>
       <Row className="justify-content-center align-items-center">
