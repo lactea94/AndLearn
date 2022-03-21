@@ -1,4 +1,4 @@
-import { Col, Container, Row } from "react-bootstrap";
+import { Button, Col, Container, Row } from "react-bootstrap";
 import styled from "styled-components";
 
 export const Article = styled(Container)`
@@ -33,6 +33,27 @@ export const SubHeader = styled(Row)`
 export const User = styled(Col)`
   text-align: start;
   font-size: 0.8rem;
+`
+
+export const Delete = styled(Button)`
+border: solid 1px red;
+background-color: red;
+border: solid 1px red;
+
+&:focus {
+  background-color: red;
+  border: solid 1px red;
+  box-shadow: none;
+}
+
+&:hover {
+  background-color: red;
+  border: solid 1px red;
+}
+
+&:active {
+  box-shadow: none !important;
+}
 `
 
 export const Body = styled(Row)`
