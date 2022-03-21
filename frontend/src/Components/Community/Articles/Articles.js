@@ -1,27 +1,27 @@
 import React from 'react'
-import { Table } from 'react-bootstrap'
 import { Link } from 'react-router-dom';
 import { DateFormat } from '../module/module';
+import * as S from './Style'
 
 const nowTime = new Date();
 
 export default function Articles({ notices, articles, offset, limit }) {
 
   return (
-    <Table hover>
-      <thead>
-        <tr>
-          <th>#</th>
-          <th style={{width:'60%'}}>제목</th>
-          <th>작성자</th>
-          <th>날짜</th>
-        </tr>
-      </thead>
-      <tbody>
+    <S.Table>
+      <S.THead>
+        <S.TR>
+          <S.TH>#</S.TH>
+          <S.TH style={{width:'60%'}}>제목</S.TH>
+          <S.TH>작성자</S.TH>
+          <S.TH>날짜</S.TH>
+        </S.TR>
+      </S.THead>
+      <S.TBody>
         {notices.map((notice) => (
-          <tr key={notice.id} style={{backgroundColor:"#88B04B"}}>
-            <td>공지</td>
-            <td>
+          <S.TR key={notice.id} style={{backgroundColor:"#ACC981"}}>
+            <S.TD>공지</S.TD>
+            <S.TD>
               <Link
                 to={`${notice.id}`}
                 state={{
@@ -31,18 +31,18 @@ export default function Articles({ notices, articles, offset, limit }) {
               }}>
                 {notice.title}
               </Link>
-            </td>
-            <td>{notice.userId}</td>
-            <td>
+            </S.TD>
+            <S.TD>{notice.userId}</S.TD>
+            <S.TD>
               {DateFormat(nowTime, notice.created_at)}
-            </td>
-          </tr>
+            </S.TD>
+          </S.TR>
         ))}
         {articles.slice(offset, offset + limit).map((article) => (
-          <tr key={article.id}>
-            <td>{article.id}</td>
-            <td>
-              <Link
+          <S.TR key={article.id}>
+            <S.TD>{article.id}</S.TD>
+            <S.TD>
+              <S.DetailLink
                 to={`${article.id}`}
                 state={{
                   userId: article.userId,
@@ -50,13 +50,13 @@ export default function Articles({ notices, articles, offset, limit }) {
                   body: article.body
               }}>
                 {article.title}
-              </Link>
-            </td>
-            <td>{article.userId}</td>
-            <td>임시</td>
-          </tr>
+              </S.DetailLink>
+            </S.TD>
+            <S.TD>{article.userId}</S.TD>
+            <S.TD>임시</S.TD>
+          </S.TR>
         ))}
-      </tbody>
-    </Table>
+      </S.TBody>
+    </S.Table>
   )
 };
