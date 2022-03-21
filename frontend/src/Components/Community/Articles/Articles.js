@@ -19,7 +19,7 @@ export default function Articles({ notices, articles, offset, limit }) {
         <S.TableNoticeRow key={notice.id}>
           <S.Column xs={1}>공지</S.Column>
           <S.Column xs={7}>
-            <Link
+            <S.DetailLink
               to={`${notice.id}`}
               state={{
                 userId: notice.userId,
@@ -27,7 +27,7 @@ export default function Articles({ notices, articles, offset, limit }) {
                 body: notice.body
             }}>
               {notice.title}
-            </Link>
+            </S.DetailLink>
           </S.Column>
           <S.Column xs={2}>{notice.userId}</S.Column>
           <S.Column xs={2}>

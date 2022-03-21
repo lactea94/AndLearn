@@ -3,7 +3,7 @@ import { Link } from "react-router-dom"
 import styled from "styled-components"
 
 export const Table = styled(Container)`
-
+  margin-bottom: 1rem;
 `
 
 export const TableHead = styled(Row)`
