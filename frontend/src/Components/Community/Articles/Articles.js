@@ -32,7 +32,7 @@ export default function Articles({ notices, articles, offset, limit }) {
       </thead>
       <tbody>
         {notices.map((notice) => (
-          <tr key={notice.id} className="table-primary">
+          <tr key={notice.id} style={{backgroundColor:"#88B04B"}}>
             <td>공지</td>
             <td>
               <Link

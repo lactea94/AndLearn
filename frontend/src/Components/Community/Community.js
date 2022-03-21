@@ -49,6 +49,14 @@ export function Community() {
       <Row>
         <Outlet/>
       </Row>
+      <Row>
+        <Articles
+          notices={notices}
+          articles={articles}
+          offset={offset}
+          limit={limit}
+        />
+      </Row>
       <Row className="justify-content-center align-items-center">
         <Pagination 
           total={articles.length}
@@ -56,14 +64,6 @@ export function Community() {
           page={page}
           setPage={setPage}
           setLimit={setLimit}
-        />
-      </Row>
-      <Row>
-        <Articles
-          notices={notices}
-          articles={articles}
-          offset={offset}
-          limit={limit}
         />
       </Row>
     </Container>
