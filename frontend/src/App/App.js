@@ -5,8 +5,6 @@ import { Detail } from '../Components/Community/Articles/Detail/Detail';
 import { Home } from '../Components/Home/Home';
 import { Learn } from '../Components/Learn/Learn';
 import { Profile } from '../Components/Profile/Profile';
-import { ProfileContentDetail } from '../Components/Profile/ProfileContentDetail';
-import { ProfileStats } from '../Components/Profile/ProfileStats';
 import './App.css';
 
 function App() {
@@ -15,11 +13,7 @@ function App() {
       <Navigation/>
       <Routes>
         <Route path='/' element={<Home/>}></Route>
-        <Route path='profile/:userId'>
-          <Route path='content' element={<Profile/>}/>
-          <Route path='content/:contentId' element={<ProfileContentDetail/>}/>
-          <Route path='stats' element={<ProfileStats/>}/>
-        </Route>
+        <Route path='profile/:userId/*' element={<Profile />} />
         <Route path='learn' element={<Learn/>}></Route>
         <Route path='community' element={<Community/>}>
           <Route path=':articleId' element={<Detail/>}></Route>
