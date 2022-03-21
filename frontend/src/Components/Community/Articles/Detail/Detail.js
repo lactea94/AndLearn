@@ -13,7 +13,6 @@ export function Detail() {
       </S.Header>
       <S.SubHeader>
         <S.User>유저 아이디: {state.userId}</S.User>
-        <S.CommentCount>댓글 수</S.CommentCount>
       </S.SubHeader>
       <S.Body>{state.body}</S.Body>
       <Comments></Comments>

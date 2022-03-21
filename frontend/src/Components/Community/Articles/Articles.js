@@ -1,12 +1,12 @@
 import React from 'react'
 import { Table } from 'react-bootstrap'
 import { Link } from 'react-router-dom';
-import Moment from 'react-moment';
-import 'moment/locale/ko'
+import { DateFormat } from '../module/module';
 
-const now = new Date();
+const nowTime = new Date();
 
 export default function Articles({ notices, articles, offset, limit }) {
+
   return (
     <Table hover>
       <thead>
@@ -34,9 +34,7 @@ export default function Articles({ notices, articles, offset, limit }) {
             </td>
             <td>{notice.userId}</td>
             <td>
-              { (parseInt(now - Date(notice.created_at)) < 86400000) ?
-                <Moment fromNow>{notice.created_at}</Moment> :
-                <Moment format="YY.MM.DD HH:mm">{notice.created_at}</Moment>}
+              {DateFormat(nowTime, notice.created_at)}
             </td>
           </tr>
         ))}
