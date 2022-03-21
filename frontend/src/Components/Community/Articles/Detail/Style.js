@@ -2,7 +2,6 @@ import { Col, Container, Row } from "react-bootstrap";
 import styled from "styled-components";
 
 export const Article = styled(Container)`
-  width: 80%;
   margin-bottom: 5rem;
 `
 
