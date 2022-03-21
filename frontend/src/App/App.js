@@ -21,8 +21,9 @@ function App() {
           <Route path='stats' element={<ProfileStats/>}/>
         </Route>
         <Route path='learn' element={<Learn/>}></Route>
-        <Route path='community' element={<Community/>}></Route>
-        <Route path='community/:articleId' element={<Detail/>}></Route>
+        <Route path='community' element={<Community/>}>
+          <Route path=':articleId' element={<Detail/>}></Route>
+        </Route>
       </Routes>
     </div>
   );
