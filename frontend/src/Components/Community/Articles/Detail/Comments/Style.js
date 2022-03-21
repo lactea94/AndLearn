@@ -1,4 +1,4 @@
-import { Col, Container, Row } from "react-bootstrap";
+import { Button, Col, Container, Row } from "react-bootstrap";
 import styled from "styled-components"
 
 export const Comments = styled(Container)`
@@ -25,6 +25,27 @@ export const User = styled(Col)`
 
 export const Body = styled(Col)`
   font-size: 0.9rem;
+`
+
+export const Delete = styled(Button)`
+border: solid 1px red;
+background-color: red;
+border: solid 1px red;
+
+&:focus {
+  background-color: red;
+  border: solid 1px red;
+  box-shadow: none;
+}
+
+&:hover {
+  background-color: red;
+  border: solid 1px red;
+}
+
+&:active {
+  box-shadow: none !important;
+}
 `
 
 export const Created = styled(Col)`
