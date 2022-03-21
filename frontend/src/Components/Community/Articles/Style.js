@@ -1,31 +1,44 @@
+import { Col, Container, Row } from "react-bootstrap"
 import { Link } from "react-router-dom"
 import styled from "styled-components"
 
-export const Table = styled.table`
+export const Table = styled(Container)`
 
 `
 
-export const THead = styled.thead`
+export const TableHead = styled(Row)`
+  padding: 1rem 0;
 `
 
-export const TR = styled.tr`
-border-bottom: solid 1px lightgray;
-height: 2rem;
+export const ColumnName = styled(Col)`
 
-&:hover {
-  background-color: lightgray;
-}
 `
 
-export const TH = styled.th`
+export const TableRow = styled(Row)`
+  font-size: 0.8rem;
+  padding: 0.5rem 0;
+  align-items: center;
+  border-bottom: solid 1px lightgray;
+
+  &:hover {
+    background-color: lightgray;
+  }
 `
 
-export const TD = styled.td`
+export const TableNoticeRow = styled(TableRow)`
+  background-color: #88B04B;
+
+  &:hover {
+    background-color: #ACC981;
+  }
 `
 
-export const TBody = styled.tbody`
+export const Column = styled(Col)`
+
 `
 
 export const DetailLink = styled(Link)`
   text-decoration: none;
+  font-weight: bold;
+  font-size: 1rem;
 `
