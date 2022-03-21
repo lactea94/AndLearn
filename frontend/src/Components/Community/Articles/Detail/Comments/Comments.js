@@ -1,5 +1,7 @@
+import { Create } from "./Create/Create";
+import { Col } from "react-bootstrap";
 import { DateFormat } from "../../../module/module";
-import * as S from "./Style"
+import * as S from "./Style";
 
 const nowTime = new Date();
 
@@ -17,10 +19,14 @@ export function Comments() {
       {comments.map((comment) => (
         <S.Comment key={comment.id} >
           <S.User xs={2}>{comment.userId}</S.User>
-          <S.Body>{comment.body}</S.Body>
+          <S.Body xs={7}>{comment.body}</S.Body>
+          <Col xs={1}>
+            <S.Delete size="sm" variant="danger">삭제</S.Delete>
+          </Col>
           <S.Created xs={2}>{DateFormat(nowTime, comment.created_at)}</S.Created>
         </S.Comment>
       ))}
+      <Create />
     </S.Comments>
   )
 }

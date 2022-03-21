@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Container, Row } from 'react-bootstrap'
 import { Outlet } from 'react-router-dom';
 import Articles from './Articles/Articles';
+import Create from './Articles/Create/Create';
 import Pagination from './Pagination/Pagination';
 
 export function Community() {
@@ -48,7 +49,7 @@ export function Community() {
   return (
     <Container style={{marginTop:'5rem'}}>
       <Row>
-        <Outlet/>
+        <Outlet />
       </Row>
       <Row>
         <Articles
@@ -57,6 +58,9 @@ export function Community() {
           offset={offset}
           limit={limit}
         />
+      </Row>
+      <Row>
+        <Create />        
       </Row>
       <Row className="justify-content-center align-items-center">
         <Pagination 

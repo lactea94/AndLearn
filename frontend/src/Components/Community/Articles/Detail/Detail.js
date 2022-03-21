@@ -1,6 +1,8 @@
 import { useLocation, useParams } from "react-router-dom"
 import { Comments } from "./Comments/Comments";
+import { Update } from "../Update/Update"
 import * as S from "./Style";
+import { Col } from "react-bootstrap";
 
 export function Detail() {
   const { articleId } = useParams();
@@ -13,6 +15,9 @@ export function Detail() {
       </S.Header>
       <S.SubHeader>
         <S.User>유저 아이디: {state.userId}</S.User>
+        <Col xs={7}/>
+        <Col><S.Delete size="sm">삭제</S.Delete></Col>
+        <Update />
       </S.SubHeader>
       <S.Body>{state.body}</S.Body>
       <Comments></Comments>
