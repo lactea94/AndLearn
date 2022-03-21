@@ -1,23 +1,10 @@
 import React from 'react'
 import { Table } from 'react-bootstrap'
 import { Link } from 'react-router-dom';
+import Moment from 'react-moment';
+import 'moment/locale/ko'
 
 const now = new Date();
-const nowYear = String(now.getFullYear());
-const nowMonth = now.getMonth() + 1 < 10 ? '0' + String(now.getMonth() + 1) : String(now.getMonth() + 1);
-const nowDate = now.getDate() < 10 ? '0' + String(now.getDate()) : String(now.getDate());
-const today = nowYear + '. ' + nowMonth + '. ' + nowDate;
-
-function DateFormat(date) {
-  if ( date.slice(0, 12) === today) {
-    return (
-      date.slice(13)
-    )
-  }
-  return (
-    date.slice(0, 12)
-  )
-};
 
 export default function Articles({ notices, articles, offset, limit }) {
   return (
@@ -46,7 +33,11 @@ export default function Articles({ notices, articles, offset, limit }) {
               </Link>
             </td>
             <td>{notice.userId}</td>
-            <td>{DateFormat(notice.created_at)}</td>
+            <td>
+              { (parseInt(now - Date(notice.created_at)) < 86400000) ?
+                <Moment fromNow>{notice.created_at}</Moment> :
+                <Moment format="YY.MM.DD HH:mm">{notice.created_at}</Moment>}
+            </td>
           </tr>
         ))}
         {articles.slice(offset, offset + limit).map((article) => (
