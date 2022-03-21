@@ -7,7 +7,6 @@ import {
   ThreeDots
 } from "react-bootstrap-icons";
 import { 
-  Button,
   Form,
   OverlayTrigger,
   Popover,
@@ -27,14 +26,15 @@ export default function Pagination({ total, limit, page, setPage, setLimit }) {
             setPage(event.target.page.value);
           }}
         >
-          <Form.Group>
-            <Form.Control
+          <Form.Group className="mb-3">
+            <S.FormControl
               placeholder={numPages}
+              size="sm"
               name="page"
               type="text"
             />
-            <Button type="submit">이동</Button>
           </Form.Group>
+          <S.PageButton size="sm" type="submit">이동</S.PageButton>
         </Form>
       </Popover.Body>
     </Popover>
@@ -44,7 +44,7 @@ export default function Pagination({ total, limit, page, setPage, setLimit }) {
     return (
       <OverlayTrigger
         trigger="click"
-        placement="bottom"
+        placement="top"
         overlay={popover}
       >
         <S.PageItem><ThreeDots/></S.PageItem>
@@ -79,42 +79,46 @@ export default function Pagination({ total, limit, page, setPage, setLimit }) {
     )};
 
   return (
-    <S.PageContainer>
-      <S.PageItem onClick={() => setPage(1)} disabled={page === 1}>
-        <ChevronDoubleLeft/>
-      </S.PageItem>
-      <S.PageItem onClick={() => setPage(page - 1)} disabled={page === 1}>
-        <ChevronLeft/>
-      </S.PageItem>
-      <Pages/>
-      <S.PageItem onClick={() => setPage(page + 1)} disabled={page === numPages}>
-        <ChevronRight/>
-      </S.PageItem>
-      <S.PageItem onClick={() => setPage(numPages)} disabled={page === numPages}>
-        <ChevronDoubleRight/>
-      </S.PageItem>
-      <OverlayTrigger
-        overlay={
-          <Tooltip>
-            페이지 당 게시글 수
-          </Tooltip>
-        }
-      >
-        <S.PageLimit
-          type="number"
-          value={limit}
-          style={{width:'5rem'}}
-          onChange={({ target: { value } }) => {
-            setLimit(Number(value))
-            setPage(1)
-          }}
+    <div>
+      <S.PageContainer>
+        <S.PageItem onClick={() => setPage(1)} disabled={page === 1}>
+          <ChevronDoubleLeft/>
+        </S.PageItem>
+        <S.PageItem onClick={() => setPage(page - 1)} disabled={page === 1}>
+          <ChevronLeft/>
+        </S.PageItem>
+        <Pages/>
+        <S.PageItem onClick={() => setPage(page + 1)} disabled={page === numPages}>
+          <ChevronRight/>
+        </S.PageItem>
+        <S.PageItem onClick={() => setPage(numPages)} disabled={page === numPages}>
+          <ChevronDoubleRight/>
+        </S.PageItem>
+      </S.PageContainer>
+      <S.PageContainer>
+        <OverlayTrigger
+          overlay={
+            <Tooltip>
+              페이지 당 게시글 수
+            </Tooltip>
+          }
         >
-          <option value="5">5</option>
-          <option value="10">10</option>
-          <option value="15">15</option>
-          <option value="20">20</option>
-        </S.PageLimit>
-      </OverlayTrigger>
-    </S.PageContainer>
+          <S.PageLimit
+            type="number"
+            value={limit}
+            style={{width:'5rem'}}
+            onChange={({ target: { value } }) => {
+              setLimit(Number(value))
+              setPage(1)
+            }}
+          >
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="15">15</option>
+            <option value="20">20</option>
+          </S.PageLimit>
+        </OverlayTrigger>
+      </S.PageContainer>
+    </div>
   )
 }
