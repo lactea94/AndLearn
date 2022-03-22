@@ -1,6 +1,6 @@
 import { Col } from "react-bootstrap";
 import * as S from "./style";
-import * as T from "../../../../Style";
+import * as T from "../../../Style";
 
 export function Create() {
   return (

@@ -1,5 +1,5 @@
 import { useLocation, useParams } from "react-router-dom";
-import { Comments } from "./Comments/Comments";
+import { Comments } from "../Comments/Comments";
 import { Update } from "../Update/Update"
 import * as S from "./Style";
 import * as T from "../../Style";

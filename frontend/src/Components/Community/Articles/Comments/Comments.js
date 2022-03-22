@@ -1,8 +1,8 @@
 import { Create } from "./Create/Create";
 import { Col } from "react-bootstrap";
-import { DateFormat } from "../../../module/module";
+import { DateFormat } from "../../module/module";
 import * as S from "./Style";
-import * as T from "../../../Style";
+import * as T from "../../Style";
 
 const nowTime = new Date();
 
