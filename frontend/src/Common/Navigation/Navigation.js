@@ -1,25 +1,43 @@
-import React from 'react'
-import { Navbar, Container, Nav } from 'react-bootstrap'
-import { NavLink } from 'react-router-dom'
+import { useState } from "react"
+import { Navbar, Container, Nav, Offcanvas } from "react-bootstrap"
+import { NavLink } from "react-router-dom"
+import * as S from "./Style"
 
 export function Navigation() {
   // 임시로 사용하는 프로필 접근 닉네임? 아이디?
   const userId = 'kimcookie'
+  const [isAuthenticated, setIsAuthenticated] = useState(true)
 
   return (
-    <Navbar bg="light" expand="lg">
-      <Container>
-        <Navbar.Brand as={NavLink} to="/">React-Bootstrap</Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto">
-            <Nav.Link as={NavLink} to="/">Home</Nav.Link>
-            <Nav.Link as={NavLink} to={`profile/${userId}/content`}>Profile</Nav.Link>
-            <Nav.Link as={NavLink} to="learn">Learn</Nav.Link>
-            <Nav.Link as={NavLink} to="community">Community</Nav.Link>
+    <S.MyNavbar expand={false}>
+    <Container fluid>
+      <Navbar.Toggle aria-controls="offcanvasNavbar" />
+      <S.Offcanvas
+        placement="start"
+      >
+        <Offcanvas.Header closeButton>
+          <Offcanvas.Title><S.NavItem as={NavLink} to="/">Home</S.NavItem></Offcanvas.Title>
+        </Offcanvas.Header>
+        <Offcanvas.Body>
+          <Nav className="justify-content-end flex-grow-1 pe-3">
+            { isAuthenticated ? 
+              <>
+                <S.NavItem as={NavLink} to="/">Home</S.NavItem>
+                <S.NavItem as={NavLink} to={`profile/${userId}/content`}>Profile</S.NavItem>
+                <S.NavItem as={NavLink} to="learn">Learn</S.NavItem>
+                <S.NavItem as={NavLink} to="community">Community</S.NavItem>
+              </>
+            :
+              <>
+                <S.NavItem as={NavLink} to="/">Home</S.NavItem>
+                <S.NavItem as={NavLink} to="login">LogIn</S.NavItem>
+                <S.NavItem as={NavLink} to="signup">SignUp</S.NavItem>
+              </>
+            }
           </Nav>
-        </Navbar.Collapse>
-      </Container>
-    </Navbar>
+        </Offcanvas.Body>
+      </S.Offcanvas>
+    </Container>
+  </S.MyNavbar>
   )
 };
