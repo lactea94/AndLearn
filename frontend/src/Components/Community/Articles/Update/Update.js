@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Col, Form, Modal } from "react-bootstrap";
 import * as S from './Style';
-import * as T from '../../Style';
+import { MyButton } from "styles/Button";
 
 export function Update() {
   const [show, setShow] = useState(false);
@@ -11,9 +11,9 @@ export function Update() {
 
   return (
     <Col>
-      <T.MyButton size="sm" onClick={handleShow}>
+      <MyButton size="sm" onClick={handleShow}>
         수정
-      </T.MyButton>
+      </MyButton>
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header>
@@ -32,12 +32,12 @@ export function Update() {
         </Form>
         </Modal.Body>
         <Modal.Footer>
-          <T.MyButton color="gray" onClick={handleClose}>
+          <MyButton color="gray" onClick={handleClose}>
             취소
-          </T.MyButton>
-          <T.MyButton onClick={handleClose}>
+          </MyButton>
+          <MyButton onClick={handleClose}>
             완료
-          </T.MyButton>
+          </MyButton>
         </Modal.Footer>
       </Modal>
     </Col>

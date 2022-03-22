@@ -2,7 +2,7 @@ import { Create } from "./Create/Create";
 import { Col } from "react-bootstrap";
 import { DateFormat } from "../../module/module";
 import * as S from "./Style";
-import * as T from "../../Style";
+import { MyButton } from "styles/Button";
 
 const nowTime = new Date();
 
@@ -22,7 +22,7 @@ export function Comments() {
           <S.User xs={2}>{comment.userId}</S.User>
           <S.Body xs={7}>{comment.body}</S.Body>
           <Col xs={1}>
-            <T.MyButton color="red" size="sm">삭제</T.MyButton>
+            <MyButton color="red" size="sm">삭제</MyButton>
           </Col>
           <S.Created xs={2}>{DateFormat(nowTime, comment.created_at)}</S.Created>
         </S.Comment>
