@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
+import Dropzone from 'react-dropzone'
 
-export function ImageUpload() {
+export function ImageUpload(fileImage) {
   const [image, setImage] = useState('')
 
   function onLoad(e) {
@@ -26,9 +27,35 @@ export function ImageUpload() {
 
   return (
     <div>
-      ImageUpload
-      {/* <img width={180} height={160} src={image} /> */}
-      <button>사진 업로드</button>
+      <img width={180} height={160} src={image} alt="" />
+      <div>
+        {/* <Dropzone onDrop={onLoad}>
+          {({ getRootProps, getInputProps }) => (
+            <section>
+              <div {...getRootProps()}>
+                <input {...getInputProps()} />
+                <p>Drag 'n' drop some files here, or click to select files</p>
+              </div>
+            </section>
+          )}
+        </Dropzone> */}
+        <input
+          id="imgInput"
+          className="image"
+          type="file"
+          accept="image/*"
+          style={{ display: 'none' }}
+          onChange={onLoad}
+        ></input>
+
+        <label
+          className="btn btn-outline-primary"
+          name="ImgBtn"
+          htmlFor="imgInput"
+        >
+          프로필 사진 등록
+        </label>
+      </div>
       <button>랜덤사진</button>
       <button>시작!</button>
     </div>

@@ -79,19 +79,19 @@ export function Signup() {
 
   return (
     <div>
-      <Container className='panel'>
+      <Container className="panel">
         <Form>
-          <Form.Group as={Row} className='mb-3'>
+          <Form.Group as={Row} className="mb-3">
             <Col sm>
               <Form.Control
                 maxLength={50}
-                type='input'
-                placeholder='Email Address'
+                type="input"
+                placeholder="Email Address"
                 value={email}
                 onChange={onChangeEmail}
               />
               {emailError && (
-                <div class='invalid-input'>
+                <div className="invalid-input">
                   유효한 이메일 주소를 입력해주세요
                 </div>
               )}
@@ -109,60 +109,58 @@ export function Signup() {
                 <div class='invalid-input'>
                   User ID must be at least 5 letter and contain letters or
                                   numbers.
-                                  유저 아이디는 
+                                  유저 아이디는
                 </div>
               )}
             </Col>
           </Form.Group> */}
-          <Form.Group as={Row} className='mb-3'>
+          <Form.Group as={Row} className="mb-3">
             <Col sm>
               <Form.Control
                 maxLength={20}
-                type='password'
-                placeholder='Password'
+                type="password"
+                placeholder="Password"
                 value={password}
                 onChange={onChangePassword}
               />
               {passwordError && (
-                <div class='invalid-input'>
-                  최소 8자리, 영문과 숫자 모두 포함해주세요.{" "}
+                <div class="invalid-input">
+                  최소 8자리, 영문과 숫자 모두 포함해주세요.{' '}
                 </div>
               )}
             </Col>
           </Form.Group>
-          <Form.Group as={Row} className='mb-3'>
+          <Form.Group as={Row} className="mb-3">
             <Col sm>
               <Form.Control
                 maxLength={20}
-                type='password'
-                placeholder='Confirm Password'
+                type="password"
+                placeholder="Confirm Password"
                 value={confirmPassword}
                 onChange={onChangeConfirmPassword}
               />
               {confirmPasswordError && (
-                <div class='invalid-input'>비밀번호가 일치하지 않습니다.</div>
+                <div class="invalid-input">비밀번호가 일치하지 않습니다.</div>
               )}
             </Col>
           </Form.Group>
-          <Form.Group as={Row} className='mb-3'>
+          <Form.Group as={Row} className="mb-3">
             <Col sm>
               <Form.Control
                 maxLength={20}
-                placeholder='Username'
+                placeholder="Username"
                 value={userName}
                 onChange={onChangeUserName}
               />
               {userNameError && (
-                <div class='invalid-input'>이름을 입력해주세요.</div>
+                <div class="invalid-input">이름을 입력해주세요.</div>
               )}
             </Col>
           </Form.Group>
 
           <br />
-          <div className='d-grid gap-1'>
-            <MyButton onClick={onSubmit}>
-              회원 가입
-            </MyButton>
+          <div className="d-grid gap-1">
+            <MyButton onClick={onSubmit}>회원 가입</MyButton>
           </div>
         </Form>
         <br />
@@ -174,5 +172,5 @@ export function Signup() {
         </span> */}
       </Container>
     </div>
-  );
+  )
 }
