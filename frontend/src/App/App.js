@@ -5,6 +5,7 @@ import { Detail } from "../Components/Community/Articles/Detail/Detail";
 import { Home } from "../Components/Home/Home";
 import { Learn } from "../Components/Learn/Learn";
 import { Profile } from "../Components/Profile/Profile";
+import { NotFound } from "../Common/NotFound/NotFound";
 import { Login } from "../Common/Login/Login";
 import { Signup } from "../Common/Signup/Signup";
 import "./App.css";
@@ -19,11 +20,14 @@ function App() {
 
         <Route path='login' element={<Login />}></Route>
         <Route path='signup' element={<Signup />}></Route>
+        
         <Route path='learn' element={<Learn />}></Route>
 
         <Route path='community' element={<Community />}>
           <Route path=':articleId' element={<Detail />}></Route>
         </Route>
+        
+        <Route path='*' element={<NotFound />}></Route>
       </Routes>
     </div>
   );
