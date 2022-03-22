@@ -9,6 +9,7 @@ export const NavItem = styled(Nav.Link)`
   text-decoration: none;
   color: black;
   font-size: 1.5rem;
+  font-family: Maru Buri;
   padding: 1rem;
 `
 
