@@ -83,7 +83,7 @@ def expect(img_url):
     skip = [
         'a', 'an', 'of', 'on', 'the',
         'is', 'in', 'this', 'are',
-        '<end>', '<unk>',
+        '<end>', '<unk>', 'and', 'that',
     ]
     word_dic = dict()
     for _ in range(50):
