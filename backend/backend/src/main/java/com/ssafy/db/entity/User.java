@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -32,18 +33,19 @@ public class User extends BaseEntity{
     @Column(nullable = false)
     private LocalDateTime createdDate;
 
+//    @Column(nullable = false)
+    private String image_url;
+
     @JsonIgnore
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Column(nullable = false)
     private String password;
 
-    private String image_url;
-
     @Column(nullable = false)
     private Boolean admin;
 
-    @Column(nullable = false)
-    private Boolean is_deleted;
+//    @Column(nullable = false)
+//    private Boolean is_deleted;
 
     @JsonIgnore
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
@@ -52,8 +54,5 @@ public class User extends BaseEntity{
     @JsonIgnore
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Comment> comments = new ArrayList<>();
-
-
-
 
 }
