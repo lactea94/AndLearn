@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Container, Form, Button, Row, Col } from "react-bootstrap";
+import { Container, Form, Row, Col } from "react-bootstrap";
+import { MyButton } from "styles/Button";
 // import { Link } from "react-router-dom";
 import axios from "axios";
 
@@ -159,9 +160,9 @@ export function Signup() {
 
           <br />
           <div className='d-grid gap-1'>
-            <Button variant='secondary' onClick={onSubmit}>
+            <MyButton onClick={onSubmit}>
               회원 가입
-            </Button>
+            </MyButton>
           </div>
         </Form>
         <br />

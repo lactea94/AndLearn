@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Container, Button, Form, Col, Row } from "react-bootstrap";
+import { Container, Form, Col, Row } from "react-bootstrap";
+import { MyButton } from 'styles/Button'
 
 export function Login() {
   const [email, setEmail] = useState("");
@@ -45,14 +46,14 @@ export function Login() {
           </Col>
         </Form.Group>
         <div className='d-grid gap-1'>
-          <Button
+          <MyButton
             variant='secondary'
             type='submit'
             onSubmit={onSubmit}
             class='login__button'
           >
             로그인
-          </Button>
+          </MyButton>
         </div>
       </Form>
     </Container>
