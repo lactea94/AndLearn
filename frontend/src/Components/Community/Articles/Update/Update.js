@@ -11,9 +11,9 @@ export function Update() {
 
   return (
     <Col>
-      <S.ModalButton size="sm" onClick={handleShow}>
+      <T.MyButton size="sm" onClick={handleShow}>
         수정
-      </S.ModalButton>
+      </T.MyButton>
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header>
