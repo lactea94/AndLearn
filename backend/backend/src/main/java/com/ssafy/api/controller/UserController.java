@@ -108,4 +108,24 @@ public class UserController {
 		}
 	}
 
+	@ApiOperation(value = "닉네임 중복 체크", notes = "중복되는 닉네임이 있는 지 체크한다")
+	@ApiResponses({
+			@ApiResponse(code = 200, message = "성공"),
+			@ApiResponse(code=409, message = "중복되는 닉네임 존재"),
+			@ApiResponse(code = 500, message = "서버 오류")
+	})
+	@PostMapping("/duplicate-check-nickname")
+	public ResponseEntity duplicateCheckNickname(@RequestBody @ApiParam(value="체크할 닉네임", required = true) Map<String,Object> body) {
+
+		String nickname  = body.get("nickname").toString();
+		Optional<User> user = userRepository.findByNickname(nickname);
+
+
+		if (user.isPresent()) {
+			return new ResponseEntity(HttpStatus.CONFLICT);
+		}
+		else {
+			return new ResponseEntity(HttpStatus.OK);
+		}
+	}
 }
