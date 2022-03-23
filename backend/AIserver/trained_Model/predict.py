@@ -54,7 +54,7 @@ def expect(img_url):
     skip = [
         'a', 'an', 'of', 'on', 'the',
         'is', 'in', 'this', 'are',
-        '<end>', '<unk>', 'and', 'that',
+        '<end>', '<unk>', 'and', 'that', 'to', 'these', 'those',
     ]
     word_dic = dict()
     for _ in range(50):
@@ -72,9 +72,7 @@ def expect(img_url):
         result = []
 
         for i in range(max_length):
-            predictions, hidden, attention_weights = decoder(dec_input,
-                                                            features,
-                                                            hidden)
+            predictions, hidden = decoder(dec_input, features, hidden)
 
             predicted_id = tf.random.categorical(predictions, 1)[0][0].numpy()
             result.append(tokenizer.index_word[predicted_id])
