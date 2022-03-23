@@ -4,7 +4,7 @@ import { Container, Row, Col, Image } from 'react-bootstrap';
 import { useParams } from 'react-router-dom'
 import { ProfileContents } from './ProfileContents';
 import { ProfileContentDetail } from './ProfileContentDetail';
-import { ProfileStats } from './ProfileStats';
+import { ProfileStats } from './ProfileStats/ProfileStats';
 import { ProfileArticles } from './ProfileArticles';
 
 export function Profile() {
