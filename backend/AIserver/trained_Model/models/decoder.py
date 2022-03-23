@@ -1,5 +1,5 @@
 import tensorflow as tf
-from models.model import BahdanauAttention
+from trained_Model.models.model import BahdanauAttention
 
 
 class RNN_Decoder(tf.keras.Model):
