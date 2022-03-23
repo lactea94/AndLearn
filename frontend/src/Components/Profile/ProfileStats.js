@@ -9,6 +9,9 @@ const CalendarBox = styled.div`
   border-right: 1px solid gray;
   border-top-left-radius: 6px;
   border-top-right-radius: 6px;
+  @media screen and (min-width: 900px) {
+    width: 850px;
+  }
   width: 90%;
 `
 
