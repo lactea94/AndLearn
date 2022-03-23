@@ -24,8 +24,8 @@ public class User extends BaseEntity{
     @Column(nullable = false, unique = true)
     private String userId;
 
-    @Column(nullable = false)
-    private String name;
+//    @Column(nullable = false)
+//    private String name;
 
     @Column(nullable = false, unique = true)
     private String nickname;
