@@ -17,8 +17,8 @@ public class UserRegisterPostReq {
 	@ApiModelProperty(name="유저 ID", example="ssafy_web")
 	String id;
 
-	@ApiModelProperty(name="유저 name", example="your_name")
-	String name;
+//	@ApiModelProperty(name="유저 name", example="your_name")
+//	String name;
 
 	@ApiModelProperty(name="유저 nickname", example="your_nickname")
 	String nickname;
