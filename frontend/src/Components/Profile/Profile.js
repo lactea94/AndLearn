@@ -25,9 +25,6 @@ export function Profile() {
                 <h1 className='m-0'>{userId}</h1>
               </div>
               <div>
-                <h4>이름 : </h4>
-              </div>
-              <div>
                 <h4>이메일 : </h4>
               </div>           
             </div>

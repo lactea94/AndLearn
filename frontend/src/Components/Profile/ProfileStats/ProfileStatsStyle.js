@@ -36,3 +36,18 @@ export const StatsRow = styled(Row)`
   }
   width: 90%;
 `
+
+export const StatsText = styled.div`
+  font-size: 15px;
+  color: gray;
+  margin-top: 15px;
+  margin-bottom: 15px;
+`
+
+export const StatsNum = styled.div`
+  font-size: 25px;
+  color: black;
+  margin-top: 1px;
+  margint-bottom: 1px;
+  font-weight: 600;
+`
