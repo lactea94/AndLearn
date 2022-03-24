@@ -1,14 +1,19 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Link, Route, Routes } from 'react-router-dom';
 import { Container, Row, Col, Image } from 'react-bootstrap';
 import { useParams } from 'react-router-dom'
-import { ProfileContents } from './ProfileContents';
-import { ProfileContentDetail } from './ProfileContentDetail';
-import { ProfileStats } from './ProfileStats';
+import { ProfileContents } from './ProfileContents/ProfileContents';
+import { ProfileContentDetail } from './ProfileContents/ProfileContentDetail';
+import { ProfileStats } from './ProfileStats/ProfileStats';
 import { ProfileArticles } from './ProfileArticles';
+import axios from 'axios';
 
 export function Profile() {
   const { userId } = useParams();
+  
+  useEffect(() => {
+    axios.defaults.headers.common['Authorization'] = 'JWT'
+  }, [])
 
   return (
     <div>
@@ -23,9 +28,6 @@ export function Profile() {
             <div className='d-flex flex-column align-items-start ps-5'>
               <div className='mt-1 mb-3'>
                 <h1 className='m-0'>{userId}</h1>
-              </div>
-              <div>
-                <h4>이름 : </h4>
               </div>
               <div>
                 <h4>이메일 : </h4>

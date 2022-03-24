@@ -7,6 +7,10 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ScrollToTop from './Util/ScrollToTop';
+import axios from 'axios'
+
+// axios.defaults.baseURL = 'https://www.abc.com'
+// axios.defaults.withCredentials = true
 
 ReactDOM.render(
   <React.StrictMode>

@@ -1,22 +1,35 @@
-import React, { useState } from "react";
-import { Container, Form, Col, Row } from "react-bootstrap";
+import React, { useState } from 'react'
+import { Container, Form, Col, Row } from 'react-bootstrap'
 import { MyButton } from 'styles/Button'
-
+import { Link, useNavigate } from 'react-router-dom'
+import axios from 'axios'
 export function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const nav = useNavigate()
 
   const onEmailHandler = (event) => {
-    setEmail(event.currentTarget.value);
-  };
+    setEmail(event.currentTarget.value)
+  }
 
   const onPasswordHandler = (event) => {
-    setPassword(event.currentTarget.value);
-  };
+    setPassword(event.currentTarget.value)
+  }
 
   const onSubmit = (event) => {
-    event.preventDefault();
-  };
+    event.preventDefault()
+    axios
+      .post('/api/api/v1/auth/login', { email, password })
+      .then((response) => response.json())
+
+      .then((response) => {
+        if (response.ACCESS_TOKEN) {
+          localStorage.setItem('login-token', response.ACCESS_TOKEN)
+        }
+        nav('/')
+
+      })
+  }
 
   return (
     <Container className="login">
