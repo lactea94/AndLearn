@@ -3,5 +3,5 @@ from . import views
 
 app_name = 'predictions'
 urlpatterns = [
-    path('', views.predict, name='predict'),
+    path('image', views.FileToURL.as_view(), name='image')
 ]
