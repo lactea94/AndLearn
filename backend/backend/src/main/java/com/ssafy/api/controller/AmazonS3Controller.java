@@ -23,7 +23,7 @@ import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/s3")
+@RequestMapping("/v1/s3")
 public class AmazonS3Controller {
 
     private final AwsS3Service awsS3Service;
