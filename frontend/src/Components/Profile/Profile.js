@@ -4,7 +4,7 @@ import { Container, Row, Col, Image } from 'react-bootstrap';
 import { useParams } from 'react-router-dom'
 import { ProfileContents } from './ProfileContents';
 import { ProfileContentDetail } from './ProfileContentDetail';
-import { ProfileStats } from './ProfileStats';
+import { ProfileStats } from './ProfileStats/ProfileStats';
 import { ProfileArticles } from './ProfileArticles';
 
 export function Profile() {
@@ -23,9 +23,6 @@ export function Profile() {
             <div className='d-flex flex-column align-items-start ps-5'>
               <div className='mt-1 mb-3'>
                 <h1 className='m-0'>{userId}</h1>
-              </div>
-              <div>
-                <h4>이름 : </h4>
               </div>
               <div>
                 <h4>이메일 : </h4>
