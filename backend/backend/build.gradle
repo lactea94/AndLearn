@@ -48,55 +48,17 @@ repositories {
 
 group 'com.ssafy'
 version '1.0-SNAPSHOT'
-sourceCompatibility = '1.8'
+sourceCompatibility = "11"
 
-node {
-    download = true
-    version = '14.17.0'
-    // Set the work directory where node_modules should be located
-    nodeModulesDir = file("${project.projectDir}/../frontend")
-}
 
 configurations {
     providedRuntime
 }
 
-/*task npmInstall(type: NpmTask, overwrite: true) {
-    args = ['install']
-}*/
 
-task webpack(type: NpmTask, dependsOn: 'npmInstall') {
-    args = ['run','build']
-}
 
 // processResources is a Java task. Run the webpack bundling before this task using the 'build' task in the package.json
-processResources.dependsOn 'webpack'
 
-//set build time and inject value to application.properties
-def buildTime() {
-    def date = new Date()
-    def formattedDate = date.format('yyyyMMdd_HHmm')
-    return formattedDate
-}
-
-project.ext.set("build.date", buildTime())
-
-processResources {
-    with copySpec {
-        from "src/main/resources"
-        include "**/application*.yml"
-        include "**/application*.yaml"
-        include "**/application*.properties"
-        project.properties.findAll().each {
-            prop ->
-                if (prop.value != null) {
-                    filter(ReplaceTokens, tokens: [ (prop.key): String.valueOf(prop.value)])
-                    filter(ReplaceTokens, tokens: [ ('project.' + prop.key): String.valueOf(prop.value)])
-                    filter(ReplaceTokens, tokens: [ ('project.ext.' + prop.key): String.valueOf(prop.value)])
-                }
-        }
-    }
-}
 
 //이클립스인 경우를 위한 QueryDSL 설정. IntelliJ는 불필요. [시작]
 //def querydslDir = 'src/main/generated'
@@ -142,6 +104,8 @@ dependencies {
 
     implementation("com.querydsl:querydsl-jpa:${querydslVer}")
     implementation("com.querydsl:querydsl-apt:${querydslVer}")
+
+    implementation 'io.awspring.cloud:spring-cloud-starter-aws:2.3.1'
 
     //STOMP 웹소캣 서버 사이드 테스트를 위한 의존성 추가
 //    implementation("org.springframework.boot:spring-boot-starter-mustache")
@@ -189,3 +153,4 @@ dependencies {
 test {
     useJUnitPlatform()
 }
+targetCompatibility = JavaVersion.VERSION_11
