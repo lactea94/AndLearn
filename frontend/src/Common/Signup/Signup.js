@@ -62,7 +62,7 @@ export function Signup() {
     }
     try {
       axios
-        .post('http://localhost:8080/api/v1/users/duplicate-check-id', data)
+        .post('http://j6c201.p.ssafy.io/api/v1/users/duplicate-check-id', data)
         .then((res) => {
           setCheckEmail(true)
           setDEmail('확인 완료')
@@ -73,7 +73,7 @@ export function Signup() {
 
   function onSubmit(e) {
     if (!validation()) return
-    const url = 'http://localhost:8080/api/v1/users'
+    const url = 'http://j6c201.p.ssafy.io/api/v1/users'
     axios
       .post(url, { id: email, nickname: userName, password: password })
       .then((res) => {
