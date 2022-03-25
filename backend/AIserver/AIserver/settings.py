@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-pin#@$m#=rkolj)d(_^+@@p4rw%22h(rrg)u0*i4v-7!+9l-e0
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['j6c101.p.ssafy.io']
 
 
 # Application definition
