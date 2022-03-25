@@ -1,7 +1,7 @@
 import boto3
 from rest_framework.views import APIView
 from django.http import JsonResponse
-
+from AIserver.settings import AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY
 from predictions.models import Learn
 import uuid
 
@@ -10,8 +10,8 @@ from trained_Model.predict import expect
 class FileToURL(APIView):
     s3_client = boto3.client(
             's3',
-            aws_access_key_id='AKIAVKWXUQLU7OTAGQHZ',
-            aws_secret_access_key='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'
+            aws_access_key_id=AWS_ACCESS_KEY_ID,
+            aws_secret_access_key=AWS_SECRET_ACCESS_KEY
         )
 
     def post(self, request):
