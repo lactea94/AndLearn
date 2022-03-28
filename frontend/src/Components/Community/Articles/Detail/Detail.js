@@ -16,12 +16,16 @@ export function Detail() {
       </S.Header>
       <S.SubHeader>
         <S.User>유저 아이디: {state.userId}</S.User>
-        <Col xs={7}/>
-        <Col><MyButton color="red" size="sm">삭제</MyButton></Col>
-        <Update />
+        { state.currentUser === state.userId &&
+        <>
+          <Col xs={7}/>
+          <Col><MyButton color="red" size="sm">삭제</MyButton></Col>
+          <Update />
+        </>
+        }
       </S.SubHeader>
       <S.Body>{state.body}</S.Body>
-      <Comments></Comments>
+      <Comments currentUser={state.currentUser}></Comments>
     </S.Article>
   )
 };

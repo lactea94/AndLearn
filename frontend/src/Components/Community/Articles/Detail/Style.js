@@ -12,8 +12,8 @@ export const Header = styled(Row)`
   display: inlnie;
   align-items: center;
   border-bottom: 0.1rem solid gray;
-  // border-top-left-radius: 1rem;
-  // border-top-right-radius: 1rem;
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
   padding: 0.5rem 0.2rem;
 `;
 

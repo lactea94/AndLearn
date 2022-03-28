@@ -9,8 +9,8 @@ export const PageContainer = styled(ButtonGroup)`
 
 export const PageItem = styled(Button)`
   border: solid 1px #88B04B;
-  background-color: ${props => props.current === true ? "#88B04B" : "white"};
-  color:  ${props => props.current === true ? "white" : "#88B04B"};
+  background-color: ${props => props.current === 1 ? "#88B04B" : "white"};
+  color:  ${props => props.current === 1 ? "white" : "#88B04B"};
   active: true;
 
   &:focus {

@@ -15,27 +15,7 @@ export function Community() {
   ];
 
   notices.sort((a, b) => a.id - b.id);
-
-  // const articles = [
-  //   { id: 1, title:'1', user: 'aaa', created_at: '2022. 03. 14 11:10', view_count: 1},
-  //   { id: 2, title:'2', user: 'bbb', created_at: '2022. 03. 10 11:14', view_count: 1},
-  //   { id: 3, title:'3', user: 'ccc', created_at: '2022. 03. 11 11:14', view_count: 1},
-  //   { id: 4, title:'4', user: 'ddd', created_at: '2022. 03. 12 11:14', view_count: 1},
-  //   { id: 5, title:'5', user: 'eee', created_at: '2022. 03. 13 11:14', view_count: 1},
-  //   { id: 6, title:'6', user: 'aaa', created_at: '2022. 03. 13 11:14', view_count: 1},
-  //   { id: 7, title:'7', user: 'bbb', created_at: '2022. 03. 14 11:14', view_count: 1},
-  //   { id: 8, title:'8', user: 'ccc', created_at: '2022. 03. 14 11:20', view_count: 1},
-  //   { id: 9, title:'9', user: 'ddd', created_at: '2022. 03. 14 11:21', view_count: 1},
-  //   { id: 10, title:'10', user: 'eee', created_at: '2022. 03. 14 11:33', view_count: 1},
-  //   { id: 11, title:'11', user: 'fff', created_at: '2022. 03. 14 11:35', view_count: 1},
-  //   { id: 12, title:'12', user: 'bbb', created_at: '2022. 03. 14 11:50', view_count: 1},
-  // ]
-
-  // articles.sort((a, b) => {
-  //   const x = a.created_at, y = b.created_at
-  //   return  x < y ? 1: x > y ? -1 : 0;
-  // })
-
+  const currentUser = 2
   const [articles, setArticles] = useState([]);
   const [limit, setLimit] = useState(10);
   const [searchTerm, setSearchTerm] = useState("");
@@ -45,8 +25,8 @@ export function Community() {
 
   useEffect(() => {
     fetch("https://jsonplaceholder.typicode.com/posts")
-      .then((res) => res.json())
-      .then((data) => setArticles(data.sort((a, b) => b.id - a.id)))
+    .then((res) => res.json())
+    .then((data) => setArticles(data.sort((a, b) => b.id - a.id)))
   }, []);
 
   useEffect(() => {
@@ -68,6 +48,7 @@ export function Community() {
           articles={filteredArticles}
           offset={offset}
           limit={limit}
+          currentUser={currentUser}
         />
       </Row>
       <Row>
