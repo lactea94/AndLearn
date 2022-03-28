@@ -15,7 +15,7 @@ public class Record extends BaseEntity{
     private String recordUrl;
 
     @Column
-    private int recordTime;
+    private Integer recordTime;
 
     @ManyToOne
     @JoinColumn(name="learn_id", nullable = false)

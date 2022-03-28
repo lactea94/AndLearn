@@ -11,4 +11,5 @@ public class LearnPostReq {
 
     float score;
     List<String> words;
+    List<Integer> times;
 }
