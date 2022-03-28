@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { ImageUpload } from './ImageUpload.js'
 import { AudioRecord } from './AudioRecord'
+import { Dictaphone } from './Dictaphone'
 
 export function Learn() {
   const [fileImage, setFileImage] = useState('')
@@ -13,6 +14,7 @@ export function Learn() {
       Learn
       <ImageUpload fileImage={fileImage} />
       <AudioRecord />
+      <Dictaphone/>
     </div>
   )
 }
