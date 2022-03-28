@@ -1,5 +1,5 @@
 import tensorflow as tf
-from models.model import BahdanauAttention
+from trained_Model.models.model import BahdanauAttention
 
 
 class RNN_Decoder(tf.keras.Model):
@@ -39,7 +39,8 @@ class RNN_Decoder(tf.keras.Model):
     # output shape == (batch_size * max_length, vocab)
     x = self.fc2(x)
 
-    return x, state, attention_weights
+    # return x, state, attention_weights
+    return x, state
 
   def reset_state(self, batch_size):
     return tf.zeros((batch_size, self.units))

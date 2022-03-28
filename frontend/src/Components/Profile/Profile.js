@@ -1,14 +1,19 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Link, Route, Routes } from 'react-router-dom';
 import { Container, Row, Col, Image } from 'react-bootstrap';
 import { useParams } from 'react-router-dom'
-import { ProfileContents } from './ProfileContents';
-import { ProfileContentDetail } from './ProfileContentDetail';
+import { ProfileContents } from './ProfileContents/ProfileContents';
+import { ProfileContentDetail } from './ProfileContents/ProfileContentDetail';
 import { ProfileStats } from './ProfileStats/ProfileStats';
 import { ProfileArticles } from './ProfileArticles';
+import axios from 'axios';
 
 export function Profile() {
   const { userId } = useParams();
+  
+  useEffect(() => {
+    axios.defaults.headers.common['Authorization'] = 'JWT'
+  }, [])
 
   return (
     <div>

@@ -1,6 +1,8 @@
 package com.ssafy.api.controller;
 
+import com.ssafy.db.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -28,16 +30,25 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import springfox.documentation.annotations.ApiIgnore;
 
+import java.util.Map;
+import java.util.Optional;
+
 /**
  * 유저 관련 API 요청 처리를 위한 컨트롤러 정의.
  */
 @Api(value = "유저 API", tags = {"User"})
 @RestController
-@RequestMapping("/api/v1/users")
+@RequestMapping("/v1/users")
 public class UserController {
 	
 	@Autowired
 	UserService userService;
+
+	@Autowired
+	UserRepository userRepository;
+
+	@Autowired
+	UserRepositorySupport userRepositorySupport;
 	
 	@PostMapping()
 	@ApiOperation(value = "회원 가입", notes = "<strong>아이디와 패스워드</strong>를 통해 회원가입 한다.") 
@@ -74,5 +85,47 @@ public class UserController {
 		User user = userService.getUserByUserId(userId);
 		
 		return ResponseEntity.status(200).body(UserRes.of(user));
+	}
+
+
+	@ApiOperation(value = "아이디 중복체크", notes = "중복된 아이디 체크한다.")
+	@ApiResponses({
+			@ApiResponse(code = 200, message = "성공"),
+			@ApiResponse(code=409, message = "중복되는 아이디 존재"),
+			@ApiResponse(code = 500, message = "서버 오류")
+	})
+	@PostMapping("/duplicate-check-id")
+	public ResponseEntity duplicateCheckId(@RequestBody @ApiParam(value="체크할 아이디", required = true) Map<String,Object> body) {
+
+		String userId  = body.get("id").toString();
+		Optional<User> user = userRepositorySupport.findUserByUserId(userId);
+
+		if (user.isPresent()) {
+			return new ResponseEntity(HttpStatus.CONFLICT);
+		}
+		else {
+			return new ResponseEntity(HttpStatus.OK);
+		}
+	}
+
+	@ApiOperation(value = "닉네임 중복 체크", notes = "중복되는 닉네임이 있는 지 체크한다")
+	@ApiResponses({
+			@ApiResponse(code = 200, message = "성공"),
+			@ApiResponse(code=409, message = "중복되는 닉네임 존재"),
+			@ApiResponse(code = 500, message = "서버 오류")
+	})
+	@PostMapping("/duplicate-check-nickname")
+	public ResponseEntity duplicateCheckNickname(@RequestBody @ApiParam(value="체크할 닉네임", required = true) Map<String,Object> body) {
+
+		String nickname  = body.get("nickname").toString();
+		Optional<User> user = userRepository.findByNickname(nickname);
+
+
+		if (user.isPresent()) {
+			return new ResponseEntity(HttpStatus.CONFLICT);
+		}
+		else {
+			return new ResponseEntity(HttpStatus.OK);
+		}
 	}
 }
