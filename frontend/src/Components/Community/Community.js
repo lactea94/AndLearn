@@ -39,6 +39,7 @@ export function Community() {
 
   return (
     <Container style={{marginTop:'5rem', minHeight:'100vh'}}>
+      <h1>Community</h1>
       <Row>
         <Outlet />
       </Row>
