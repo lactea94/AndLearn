@@ -3,6 +3,9 @@ import { useParams } from 'react-router-dom';
 import { ProfileContent } from './ProfileContent';
 import styled from "styled-components";
 import { useState, useEffect } from "react"
+import ReactDatePicker from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css";
+import { Button } from 'react-bootstrap';
 
 const Remote = styled.div`
   display: block; 
@@ -19,10 +22,44 @@ const Remote = styled.div`
   font-size: 15px;
 `
 
+const MyDatePicker = styled(ReactDatePicker)`
+  width: 90%;
+  border: 1px solid;
+  border-radius: 3px;
+`
+
 export function ProfileContents() {
   const { userId } = useParams();
   const [contents, setContents] = useState([]);
   const [selectedContents, setSelectedContents] = useState([]);
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
+
+  function range(start, end) {
+    var arr = [];
+    var length = end - start; 
+    for (var i = 0; i <= length; i++) { 
+ 
+        arr[i] = start;
+        start++;
+    }
+    return arr;
+  }
+  const years = range(1990, new Date().getFullYear());
+  const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
 
   // 전체 Contents 목록 불러오기 (현재 임시 값)
   useEffect(() => {
@@ -80,10 +117,23 @@ export function ProfileContents() {
     ]);
   }, [])
 
-  // 
+  // 처음 contents 목록 받아올 때, 모든 contents 값을 default로 설정
   useEffect(() => {
     setSelectedContents(contents);
   }, [contents])
+
+  // 버튼 클릭시 기간설정을 바탕으로 selectedContents 업데이트
+  const clickSearchButton = () => {
+    const startMSec = startDate.getTime();
+    const endMSec = endDate.getTime();
+
+    const result = contents.filter(content => 
+      startMSec <= new Date(content.created_at).getTime() && new Date(content.created_at).getTime() <= endMSec
+    )
+
+    console.log(result);
+    setSelectedContents(result);
+  }
 
   let posX = 0;
   let posY = 0;  
@@ -120,7 +170,117 @@ export function ProfileContents() {
         onDrag={dragHandler} 
         onDragEnd={dragEndHandler}
       >
-        filter remote
+        <div className='m-2'>기간 검색</div>
+        <MyDatePicker
+          closeOnScroll={true}
+          renderCustomHeader={({
+            date,
+            changeYear,
+            changeMonth,
+            decreaseMonth,
+            increaseMonth,
+            prevMonthButtonDisabled,
+            nextMonthButtonDisabled,
+          }) => (
+            <div
+              style={{
+                margin: 10,
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
+              <button onClick={decreaseMonth} disabled={prevMonthButtonDisabled}>
+                {"<"}
+              </button>
+              <select
+                value={date.getFullYear()}
+                onChange={({ target: { value } }) => changeYear(value)}
+              >
+                {years.map((option) => (
+                  <option key={option} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </select>
+
+              <select
+                value={months[date.getMonth()]}
+                onChange={({ target: { value } }) =>
+                  changeMonth(months.indexOf(value))
+                }
+              >
+                {months.map((option) => (
+                  <option key={option} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </select>
+              <button onClick={increaseMonth} disabled={nextMonthButtonDisabled}>
+                {">"}
+              </button>
+            </div>
+          )}
+          selected={startDate} 
+          onChange={(date) => setStartDate(date)}
+          dateFormat="yyyy-MM-dd"
+        />
+        <div className='m-2'>~</div>
+        <MyDatePicker
+          closeOnScroll={true}
+          renderCustomHeader={({
+            date,
+            changeYear,
+            changeMonth,
+            decreaseMonth,
+            increaseMonth,
+            prevMonthButtonDisabled,
+            nextMonthButtonDisabled,
+          }) => (
+            <div
+              style={{
+                margin: 10,
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
+              <button onClick={decreaseMonth} disabled={prevMonthButtonDisabled}>
+                {"<"}
+              </button>
+              <select
+                value={date.getFullYear()}
+                onChange={({ target: { value } }) => changeYear(value)}
+              >
+                {years.map((option) => (
+                  <option key={option} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </select>
+
+              <select
+                value={months[date.getMonth()]}
+                onChange={({ target: { value } }) =>
+                  changeMonth(months.indexOf(value))
+                }
+              >
+                {months.map((option) => (
+                  <option key={option} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </select>
+              <button onClick={increaseMonth} disabled={nextMonthButtonDisabled}>
+                {">"}
+              </button>
+            </div>
+          )}
+          selected={endDate} 
+          onChange={(date) => setEndDate(date)}
+          dateFormat="yyyy-MM-d"
+        />
+        <Button className='m-2 py-0' onClick={() => {clickSearchButton()}}>
+          검색
+        </Button>
       </Remote>
     </div>
   )
