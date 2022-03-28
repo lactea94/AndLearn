@@ -62,6 +62,7 @@ export default function Pagination({ total, limit, page, setPage, setLimit }) {
         return [page - 2, page - 1, page , page + 1]
       }
     }
+    console.log(page)
     return (
       <>
         {(page > 3) && (numPages > 5) && <PageSelect/>}
@@ -69,7 +70,7 @@ export default function Pagination({ total, limit, page, setPage, setLimit }) {
           <S.PageItem
             key={i}
             onClick={() => setPage(i)}
-            current={page === i ? 1 : 0}
+            current={page === i}
           >
             {i}
           </S.PageItem>
