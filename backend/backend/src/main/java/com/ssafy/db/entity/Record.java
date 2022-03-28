@@ -17,6 +17,9 @@ public class Record extends BaseEntity{
     @Column
     private Integer recordTime;
 
+    @Column
+    private String sentence;
+
     @ManyToOne
     @JoinColumn(name="learn_id", nullable = false)
     private Learn learn;

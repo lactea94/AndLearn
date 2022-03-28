@@ -2,6 +2,7 @@ package com.ssafy.api.controller;
 
 import com.ssafy.api.request.LearnPostReq;
 import com.ssafy.api.response.PicturesRes;
+import com.ssafy.api.response.StatisticsRes;
 import com.ssafy.api.response.UserRes;
 import com.ssafy.api.service.AwsS3Service;
 import com.ssafy.api.service.UserService;
@@ -82,6 +83,8 @@ public class AmazonS3Controller {
             record.setLearn(learn);
             Integer time = learnPostReq.getTimes().get(i);
             record.setRecordTime(time);
+            String sentence = learnPostReq.getSentences().get(i);
+            record.setSentence(sentence);
             recordRepository.save(record);
 
         }
@@ -131,6 +134,44 @@ public class AmazonS3Controller {
             return ResponseEntity.status(HttpStatus.OK).body(pictureList);
         }
     }
+
+    @GetMapping("/statistics")
+    public ResponseEntity<List<StatisticsRes>> getStatistics(Authentication authentication) {
+        SsafyUserDetails userDetails = (SsafyUserDetails)authentication.getDetails();
+        String userId = userDetails.getUsername();
+        User user = userService.getUserByUserId(userId);
+        List<Learn> learnList = learnRepository.findAllByUser(user);
+        if (learnList == null || learnList.size() == 0) {
+            return ResponseEntity.status(HttpStatus.OK).body(null);
+        }
+        else {
+            List<StatisticsRes> pictureList = new ArrayList<>();
+            for (Learn entity : learnList) {
+                pictureList.add(new StatisticsRes(entity));
+            }
+            return ResponseEntity.status(HttpStatus.OK).body(pictureList);
+        }
+    }
+
+    @GetMapping("/picture/{key}")
+    public ResponseEntity<List> getLearnDetail(@PathVariable Long key) {
+        Optional<Learn> learnTmp = learnRepository.findById(key);
+        if (learnTmp.isEmpty()) {
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+        Learn learn = learnTmp.get();
+        List<Record> record = recordRepository.findAllByLearn(learn);
+        List<Word> word = wordRepository.findAllByLearn(learn);
+        List learnDetail = new ArrayList();
+        learnDetail.add(learn);
+        learnDetail.add(record);
+        learnDetail.add(word);
+        return ResponseEntity.status(HttpStatus.OK).body(learnDetail);
+
+
+    }
+
+
 
 
 
