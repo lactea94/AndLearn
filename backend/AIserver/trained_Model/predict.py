@@ -52,12 +52,13 @@ def expect(img_url):
     image_path = tf.keras.utils.get_file(image_name + image_extension, origin=image_url)
 
     skip = [
-        'a', 'an', 'of', 'on', 'the',
-        'is', 'in', 'this', 'are',
-        '<end>', '<unk>', 'and', 'that', 'to', 'these', 'those',
+        'a', 'an', 'of', 'on', 'the', 'at', 'by', 'for',
+        'is', 'in', 'this', 'are', 'with', 'over',
+        'and', 'that', 'to', 'these', 'those',
+        '<end>', '<unk>'
     ]
     word_dic = dict()
-    for _ in range(50):
+    for _ in range(100):
        
         hidden = decoder.reset_state(batch_size=1)
 
@@ -88,6 +89,6 @@ def expect(img_url):
                 word_dic[word] = 1
             else:
                 word_dic[word] += 1
-    word_list = [k for k, v in word_dic.items() if v > 15]
+    word_list = [k for k, v in word_dic.items() if v > 25]
     print("time :", time.time() - start)
     return word_list
