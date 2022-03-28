@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 export const CreateForm = styled(Row)`
   margin-top: 1rem;
-  align-items: c;enter;
+  align-items: center;
 `;
 
 export const Control = styled(Form.Control)`

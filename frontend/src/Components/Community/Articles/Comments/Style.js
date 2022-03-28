@@ -30,3 +30,17 @@ export const Body = styled(Col)`
 export const Created = styled(Col)`
   font-size: 0.8rem;
 `;
+
+export const Button = styled.div`
+  margin: 0;
+  padding: 0;
+  font-size: 0.7rem;
+  text-align: center;
+  text-decoration: underline;
+  color: red;
+
+  &:hover {
+    font-weight: bold;
+    cursor: pointer;
+  }
+`

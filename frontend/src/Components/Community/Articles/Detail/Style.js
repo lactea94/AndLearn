@@ -3,14 +3,17 @@ import styled from "styled-components";
 
 export const Article = styled(Container)`
   margin-bottom: 2rem;
+  border-radius: 1rem;
+  border: solid;
 `;
 
 export const Header = styled(Row)`
   background-color: #88B04B;
+  display: inlnie;
   align-items: center;
   border-bottom: 0.1rem solid gray;
-  border-top-left-radius: 1rem;
-  border-top-right-radius: 1rem;
+  // border-top-left-radius: 1rem;
+  // border-top-right-radius: 1rem;
   padding: 0.5rem 0.2rem;
 `;
 
