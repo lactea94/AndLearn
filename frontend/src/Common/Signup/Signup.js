@@ -5,28 +5,19 @@ import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
 export function Signup() {
-  const [userId, setUserId] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [userName, setUserName] = useState('')
   const [email, setEmail] = useState('')
 
-  //   const [userIdError, setUserIdError] = useState(false);
   const [passwordError, setPasswordError] = useState(false)
   const [confirmPasswordError, setConfirmPasswordError] = useState(false)
   const [userNameError, setUserNameError] = useState(false)
   const [emailError, setEmailError] = useState(false)
-  const [dEmail, setDEmail] = useState(false)
+  const [dEmail, setDEmail] = useState('')
   const [checkEmail, setCheckEmail] = useState(false)
 
   const navigate = useNavigate()
-  //   const onChangeUserId = (e) => {
-  //     const userIdRegex = /^[A-Za-z0-9+]{5,}$/;
-  //     if (!e.target.value || userIdRegex.test(e.target.value))
-  //       setUserIdError(false);
-  //     else setUserIdError(true);
-  //     setUserId(e.target.value);
-  //   };
   function onChangePassword(e) {
     const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,}$/
     if (!e.target.value || passwordRegex.test(e.target.value))
@@ -56,12 +47,11 @@ export function Signup() {
   }
 
   function validation() {
-    // if (!userId) setUserIdError(true);
     if (!password) setPasswordError(true)
     if (!confirmPassword) setConfirmPasswordError(true)
     if (!userName) setUserNameError(true)
     if (!email) setEmailError(true)
-    if (!checkEmail) setDEmail(true)
+    if (!checkEmail) setDEmail('중복검사를 눌러주세요.')
     if (password && confirmPassword && userName && email && checkEmail)
       return true
     else return false
@@ -70,18 +60,20 @@ export function Signup() {
     const data = {
       id: email,
     }
-    axios
-      .post('http://localhost:8080/api/v1/users/duplicate-check-id', data)
-      .then((res) => {
-        setCheckEmail(true)
-        console.log(res.status)
-      })
-      .catch((error) => console.log(error))
+    try {
+      axios
+        .post('http://j6c201.p.ssafy.io/api/v1/users/duplicate-check-id', data)
+        .then((res) => {
+          setCheckEmail(true)
+          setDEmail('확인 완료')
+        })
+        .catch((error) => setDEmail('이미 존재하는 아이디입니다.'))
+    } catch {}
   }
 
   function onSubmit(e) {
     if (!validation()) return
-    const url = 'http://localhost:8080/api/v1/users'
+    const url = 'http://j6c201.p.ssafy.io/api/v1/users'
     axios
       .post(url, { id: email, nickname: userName, password: password })
       .then((res) => {
@@ -112,9 +104,7 @@ export function Signup() {
                   중복확인
                 </MyButton>
               </div>
-              {dEmail && (
-                <div className="duplicate-input">중복검사를 눌러주세요.</div>
-              )}
+              <p>{dEmail}</p>
               {emailError && (
                 <div className="invalid-input">
                   유효한 이메일 주소를 입력해주세요
@@ -135,23 +125,6 @@ export function Signup() {
               )}
             </Col>
           </Form.Group>
-          {/* <Form.Group as={Row} className='mb-3'>
-            <Col sm>
-              <Form.Control
-                maxLength={20}
-                placeholder='UserID'
-                value={userId}
-                onChange={onChangeUserId}
-              />
-              {userIdError && (
-                <div class='invalid-input'>
-                  User ID must be at least 5 letter and contain letters or
-                                  numbers.
-                                  유저 아이디는
-                </div>
-              )}
-            </Col>
-          </Form.Group> */}
           <Form.Group as={Row} className="mb-3">
             <Col sm>
               <Form.Control
@@ -163,7 +136,7 @@ export function Signup() {
               />
               {passwordError && (
                 <div className="invalid-input">
-                  최소 8자리, 영문과 숫자 모두 포함해주세요.{' '}
+                  최소 8자리, 영문, 숫자, 특수문자 모두 포함해주세요.
                 </div>
               )}
             </Col>

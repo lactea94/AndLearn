@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import Dropzone from 'react-dropzone'
+//import Dropzone from 'react-dropzone'
 
 export function ImageUpload(fileImage) {
   const [image, setImage] = useState('')
