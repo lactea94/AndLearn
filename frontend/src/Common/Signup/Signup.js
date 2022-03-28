@@ -5,6 +5,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
 export function Signup() {
+  const baseURL = 'https://j6c201.p.ssafy.io'
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [userName, setUserName] = useState('')
@@ -15,7 +16,9 @@ export function Signup() {
   const [userNameError, setUserNameError] = useState(false)
   const [emailError, setEmailError] = useState(false)
   const [dEmail, setDEmail] = useState('')
+  const [dName, setDName] = useState('')
   const [checkEmail, setCheckEmail] = useState(false)
+  const [checkName, setCheckName] = useState(false)
 
   const navigate = useNavigate()
   function onChangePassword(e) {
@@ -52,7 +55,16 @@ export function Signup() {
     if (!userName) setUserNameError(true)
     if (!email) setEmailError(true)
     if (!checkEmail) setDEmail('중복검사를 눌러주세요.')
-    if (password && confirmPassword && userName && email && checkEmail)
+    if (!checkName) setDName('중복검사를 눌러주세요.')
+    if (
+      password &&
+      confirmPassword &&
+      userName &&
+      email &&
+      checkEmail &&
+      checkName &&
+      password === confirmPassword
+    )
       return true
     else return false
   }
@@ -62,7 +74,7 @@ export function Signup() {
     }
     try {
       axios
-        .post('http://j6c201.p.ssafy.io/api/v1/users/duplicate-check-id', data)
+        .post(baseURL + '/api/v1/users/duplicate-check-id', data)
         .then((res) => {
           setCheckEmail(true)
           setDEmail('확인 완료')
@@ -70,10 +82,24 @@ export function Signup() {
         .catch((error) => setDEmail('이미 존재하는 아이디입니다.'))
     } catch {}
   }
+  function onCheckName() {
+    const data = {
+      nickname: userName,
+    }
+    try {
+      axios
+        .post(baseURL + '/api/v1/users/duplicate-check-nickname', data)
+        .then((res) => {
+          setCheckName(true)
+          setDName('확인 완료')
+        })
+        .catch((error) => setDName('이미 존재하는 이름입니다.'))
+    } catch {}
+  }
 
   function onSubmit(e) {
     if (!validation()) return
-    const url = 'http://j6c201.p.ssafy.io/api/v1/users'
+    const url = baseURL + '/api/v1/users'
     axios
       .post(url, { id: email, nickname: userName, password: password })
       .then((res) => {
@@ -114,12 +140,18 @@ export function Signup() {
           </Form.Group>
           <Form.Group as={Row} className="mb-3">
             <Col sm>
-              <Form.Control
-                maxLength={20}
-                placeholder="Nickname"
-                value={userName}
-                onChange={onChangeUserName}
-              />
+              <div className="d-flex">
+                <Form.Control
+                  maxLength={20}
+                  placeholder="Nickname"
+                  value={userName}
+                  onChange={onChangeUserName}
+                />
+                <MyButton className="flex-shrink-1" onClick={onCheckName}>
+                  중복확인
+                </MyButton>
+              </div>
+              <p>{dName}</p>
               {userNameError && (
                 <div className="invalid-input">닉네임을 입력해주세요.</div>
               )}
