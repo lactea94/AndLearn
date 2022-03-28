@@ -38,7 +38,7 @@ export function Community() {
   }, [searchTerm, articles]);
 
   return (
-    <Container style={{marginTop:'5rem'}}>
+    <Container style={{marginTop:'5rem', minHeight:'100vh'}}>
       <Row>
         <Outlet />
       </Row>
