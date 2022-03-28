@@ -1,81 +1,89 @@
-import React, { useState } from "react";
-import { Container, Form, Row, Col } from "react-bootstrap";
-import { MyButton } from "styles/Button";
-// import { Link } from "react-router-dom";
-import axios from "axios";
+import React, { useEffect, useState } from 'react'
+import { Container, Form, Row, Col } from 'react-bootstrap'
+import { MyButton } from 'styles/Button'
+import { Link, useNavigate } from 'react-router-dom'
+import axios from 'axios'
 
 export function Signup() {
-  const [userId, setUserId] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [userName, setUserName] = useState("");
-  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
+  const [userName, setUserName] = useState('')
+  const [email, setEmail] = useState('')
 
-  //   const [userIdError, setUserIdError] = useState(false);
-  const [passwordError, setPasswordError] = useState(false);
-  const [confirmPasswordError, setConfirmPasswordError] = useState(false);
-  const [userNameError, setUserNameError] = useState(false);
-  const [emailError, setEmailError] = useState(false);
+  const [passwordError, setPasswordError] = useState(false)
+  const [confirmPasswordError, setConfirmPasswordError] = useState(false)
+  const [userNameError, setUserNameError] = useState(false)
+  const [emailError, setEmailError] = useState(false)
+  const [dEmail, setDEmail] = useState('')
+  const [checkEmail, setCheckEmail] = useState(false)
 
-  //   const onChangeUserId = (e) => {
-  //     const userIdRegex = /^[A-Za-z0-9+]{5,}$/;
-  //     if (!e.target.value || userIdRegex.test(e.target.value))
-  //       setUserIdError(false);
-  //     else setUserIdError(true);
-  //     setUserId(e.target.value);
-  //   };
-  const onChangePassword = (e) => {
-    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+  const navigate = useNavigate()
+  function onChangePassword(e) {
+    const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,}$/
     if (!e.target.value || passwordRegex.test(e.target.value))
-      setPasswordError(false);
-    else setPasswordError(true);
+      setPasswordError(false)
+    else setPasswordError(true)
 
     if (!confirmPassword || e.target.value === confirmPassword)
-      setConfirmPasswordError(false);
-    else setConfirmPasswordError(true);
-    setPassword(e.target.value);
-  };
-  const onChangeConfirmPassword = (e) => {
-    if (password === e.target.value) setConfirmPasswordError(false);
-    else setConfirmPasswordError(true);
-    setConfirmPassword(e.target.value);
-  };
-  const onChangeUserName = (e) => {
-    setUserNameError(false);
-    setUserName(e.target.value);
-  };
-  const onChangeEmail = (e) => {
+      setConfirmPasswordError(false)
+    else setConfirmPasswordError(true)
+    setPassword(e.target.value)
+  }
+  function onChangeConfirmPassword(e) {
+    if (password === e.target.value) setConfirmPasswordError(false)
+    else setConfirmPasswordError(true)
+    setConfirmPassword(e.target.value)
+  }
+  function onChangeUserName(e) {
+    setUserNameError(false)
+    setUserName(e.target.value)
+  }
+  function onChangeEmail(e) {
     const emailRegex =
-      /^(([^<>()\[\].,;:\s@"]+(\.[^<>()\[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
-    if (!e.target.value || emailRegex.test(e.target.value))
-      setEmailError(false);
-    else setEmailError(true);
-    setEmail(e.target.value);
-  };
+      /^(([^<>()\[\].,;:\s@"]+(\.[^<>()\[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i
+    if (!e.target.value || emailRegex.test(e.target.value)) setEmailError(false)
+    else setEmailError(true)
+    setEmail(e.target.value)
+  }
 
-  const validation = () => {
-    // if (!userId) setUserIdError(true);
-    if (!password) setPasswordError(true);
-    if (!confirmPassword) setConfirmPasswordError(true);
-    if (!userName) setUserNameError(true);
-    if (!email) setEmailError(true);
+  function validation() {
+    if (!password) setPasswordError(true)
+    if (!confirmPassword) setConfirmPasswordError(true)
+    if (!userName) setUserNameError(true)
+    if (!email) setEmailError(true)
+    if (!checkEmail) setDEmail('중복검사를 눌러주세요.')
+    if (password && confirmPassword && userName && email && checkEmail)
+      return true
+    else return false
+  }
+  function onCheckEmail() {
+    const data = {
+      id: email,
+    }
+    try {
+      axios
+        .post('http://j6c201.p.ssafy.io/api/v1/users/duplicate-check-id', data)
+        .then((res) => {
+          setCheckEmail(true)
+          setDEmail('확인 완료')
+        })
+        .catch((error) => setDEmail('이미 존재하는 아이디입니다.'))
+    } catch {}
+  }
 
-    if (userId && password && confirmPassword && userName && email) return true;
-    else return false;
-  };
-
-  const onSubmit = (e) => {
-    if (validation()) return;
-    const url = "";
+  function onSubmit(e) {
+    if (!validation()) return
+    const url = 'http://j6c201.p.ssafy.io/api/v1/users'
     axios
-      .post(url, {})
+      .post(url, { id: email, nickname: userName, password: password })
       .then((res) => {
-        console.log(res.data);
+        console.log(res.data)
+        navigate(`/login`)
       })
       .catch((error) => {
-        console.log(error);
-      });
-  };
+        console.log(error)
+      })
+  }
 
   return (
     <div>
@@ -83,13 +91,20 @@ export function Signup() {
         <Form>
           <Form.Group as={Row} className="mb-3">
             <Col sm>
-              <Form.Control
-                maxLength={50}
-                type="input"
-                placeholder="Email Address"
-                value={email}
-                onChange={onChangeEmail}
-              />
+              <div className="d-flex">
+                <Form.Control
+                  maxLength={50}
+                  type="input"
+                  placeholder="Email Address"
+                  value={email}
+                  onChange={onChangeEmail}
+                  className="flex-grow-1"
+                />
+                <MyButton className="flex-shrink-1" onClick={onCheckEmail}>
+                  중복확인
+                </MyButton>
+              </div>
+              <p>{dEmail}</p>
               {emailError && (
                 <div className="invalid-input">
                   유효한 이메일 주소를 입력해주세요
@@ -97,23 +112,19 @@ export function Signup() {
               )}
             </Col>
           </Form.Group>
-          {/* <Form.Group as={Row} className='mb-3'>
+          <Form.Group as={Row} className="mb-3">
             <Col sm>
               <Form.Control
                 maxLength={20}
-                placeholder='UserID'
-                value={userId}
-                onChange={onChangeUserId}
+                placeholder="Nickname"
+                value={userName}
+                onChange={onChangeUserName}
               />
-              {userIdError && (
-                <div class='invalid-input'>
-                  User ID must be at least 5 letter and contain letters or
-                                  numbers.
-                                  유저 아이디는
-                </div>
+              {userNameError && (
+                <div className="invalid-input">닉네임을 입력해주세요.</div>
               )}
             </Col>
-          </Form.Group> */}
+          </Form.Group>
           <Form.Group as={Row} className="mb-3">
             <Col sm>
               <Form.Control
@@ -124,8 +135,8 @@ export function Signup() {
                 onChange={onChangePassword}
               />
               {passwordError && (
-                <div class="invalid-input">
-                  최소 8자리, 영문과 숫자 모두 포함해주세요.{' '}
+                <div className="invalid-input">
+                  최소 8자리, 영문, 숫자, 특수문자 모두 포함해주세요.
                 </div>
               )}
             </Col>
@@ -140,20 +151,9 @@ export function Signup() {
                 onChange={onChangeConfirmPassword}
               />
               {confirmPasswordError && (
-                <div class="invalid-input">비밀번호가 일치하지 않습니다.</div>
-              )}
-            </Col>
-          </Form.Group>
-          <Form.Group as={Row} className="mb-3">
-            <Col sm>
-              <Form.Control
-                maxLength={20}
-                placeholder="Username"
-                value={userName}
-                onChange={onChangeUserName}
-              />
-              {userNameError && (
-                <div class="invalid-input">이름을 입력해주세요.</div>
+                <div className="invalid-input">
+                  비밀번호가 일치하지 않습니다.
+                </div>
               )}
             </Col>
           </Form.Group>
@@ -164,12 +164,13 @@ export function Signup() {
           </div>
         </Form>
         <br />
-        {/* <span className='text'>
-          Have an account?{" "}
-          <Link to='/login' className='link'>
-            Sign In
+        <span className="text">
+          이미 계정이 있습니까?
+          <br />
+          <Link to="/login" className="link">
+            로그인
           </Link>
-        </span> */}
+        </span>
       </Container>
     </div>
   )
