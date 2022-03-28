@@ -3,6 +3,9 @@ import { Container, Form, Row, Col } from 'react-bootstrap'
 import { MyButton } from 'styles/Button'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import { onCheckingEmail, onCheckingName } from '../../api/index'
+import { apiInstance } from '../../api/index'
+import { API_BASE_URL } from 'constants'
 
 export function Signup() {
   const baseURL = 'https://j6c201.p.ssafy.io'
@@ -10,6 +13,7 @@ export function Signup() {
   const [confirmPassword, setConfirmPassword] = useState('')
   const [userName, setUserName] = useState('')
   const [email, setEmail] = useState('')
+  const api = apiInstance()
 
   const [passwordError, setPasswordError] = useState(false)
   const [confirmPasswordError, setConfirmPasswordError] = useState(false)
@@ -69,38 +73,31 @@ export function Signup() {
     else return false
   }
   function onCheckEmail() {
-    const data = {
-      id: email,
-    }
-    try {
-      axios
-        .post(baseURL + '/api/v1/users/duplicate-check-id', data)
-        .then((res) => {
-          setCheckEmail(true)
-          setDEmail('확인 완료')
-        })
-        .catch((error) => setDEmail('이미 존재하는 아이디입니다.'))
-    } catch {}
+    api
+      .post(API_BASE_URL + '/api/v1/users/duplicate-check-id', { id: email })
+      .then((res) => {
+        setCheckEmail(true)
+        setDEmail('확인 완료')
+      })
+      .catch((error) => setDEmail('이미 존재하는 아이디입니다.'))
   }
+
   function onCheckName() {
-    const data = {
-      nickname: userName,
-    }
-    try {
-      axios
-        .post(baseURL + '/api/v1/users/duplicate-check-nickname', data)
-        .then((res) => {
-          setCheckName(true)
-          setDName('확인 완료')
-        })
-        .catch((error) => setDName('이미 존재하는 이름입니다.'))
-    } catch {}
+    api
+      .post(API_BASE_URL + '/api/v1/users/duplicate-check-nickname', {
+        nickname: userName,
+      })
+      .then((res) => {
+        setCheckName(true)
+        setDName('확인 완료')
+      })
+      .catch((error) => setDName('이미 존재하는 이름입니다.'))
   }
 
   function onSubmit(e) {
     if (!validation()) return
-    const url = baseURL + '/api/v1/users'
-    axios
+    const url = API_BASE_URL + '/api/v1/users'
+    api
       .post(url, { id: email, nickname: userName, password: password })
       .then((res) => {
         console.log(res.data)

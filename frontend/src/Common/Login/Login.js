@@ -2,11 +2,13 @@ import React, { useState } from 'react'
 import { Container, Form, Col, Row } from 'react-bootstrap'
 import { MyButton } from 'styles/Button'
 import { useNavigate } from 'react-router-dom'
+import { API_BASE_URL } from '../../constants/index'
+import { apiInstance } from '../../api/index'
 import axios from 'axios'
 export function Login() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const baseURL = 'https://j6c201.p.ssafy.io'
+  const api = apiInstance()
   const nav = useNavigate()
 
   const onEmailHandler = (event) => {
@@ -23,12 +25,9 @@ export function Login() {
       id: email,
       password: password,
     }
-    console.log('onsubmit')
-
-    axios
-      .post(baseURL + '/api/v1/auth/login', data)
+    api
+      .post(API_BASE_URL + '/api/v1/auth/login', data)
       .then((response) => {
-        console.log(response)
         if (response.data.accessToken) {
           localStorage.setItem('login-token', response.data.accessToken)
         }

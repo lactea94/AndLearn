@@ -5,3 +5,4 @@
 export const API_BASE_URL = 'https://j6c201.p.ssafy.io';
 
 export const ACCESS_TOKEN = 'accessToken';
+
