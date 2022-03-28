@@ -5,11 +5,10 @@ import { MyButton } from "styles/Button";
 export function Create() {
   return (
     <S.CreateForm>
-      <Col>유저이름</Col>
-      <Col xs={9}>
+      <Col xs={10}>
         <S.Textarea rows="3" placeholder="댓글"></S.Textarea>
       </Col>
-      <Col xs={1}>
+      <Col>
         <MyButton size="sm">작성</MyButton>
       </Col>
     </S.CreateForm>
