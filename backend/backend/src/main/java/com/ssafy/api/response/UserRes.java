@@ -18,10 +18,14 @@ import java.util.Optional;
 public class UserRes{
 	@ApiModelProperty(name="User ID")
 	String userId;
+	String nickname;
+	String image_url;
 	
 	public static UserRes of(User user) {
 		UserRes res = new UserRes();
 		res.setUserId(user.getUserId());
+		res.setNickname(user.getNickname());
+		res.setImage_url(user.getImage_url());
 		return res;
 	}
 }
