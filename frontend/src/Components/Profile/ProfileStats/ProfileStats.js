@@ -73,7 +73,6 @@ export function ProfileStats() {
           )
         } else if (i % 7 === 0) {
           const checkMonthDate = new Date(newDate.getFullYear() - 1, newDate.getMonth(), newDate.getDate() - 1 + i)
-          const checkNextMonthDate = new Date(newDate.getFullYear() - 1, newDate.getMonth(), newDate.getDate() - 1 + i + 7)
           // 이전 세로줄에서 달이 바뀌었다면 위에 표시
           if (checkMonth !== checkMonthDate.getMonth()) {
             checkMonth = (checkMonth + 1) % 12

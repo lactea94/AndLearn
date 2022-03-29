@@ -15,8 +15,8 @@ export function ProfileContentDetail() {
     answer_time: '45',
     // answer_time_2 답변 2 시간 추가
     score: '3.7',
-    record_1: 'https://d3qljd3xvkb8gz.cloudfront.net/03a2e6d0-2d5d-4cdd-9718-529f5214260d.m4a',
-    record_2: 'https://d3qljd3xvkb8gz.cloudfront.net/72a334d9-437e-4749-85ef-00a69f2a83f3.m4a',
+    record_1: 'dcc27319-54d7-4e94-910e-7778d110473f.m4a',
+    record_2: '72a334d9-437e-4749-85ef-00a69f2a83f3.m4a',
     AI_answers: ['apple', 'banana', 'cake'],
     my_answer: 'Help me...'
     // my_answer_2 답변 2 추가
@@ -40,7 +40,7 @@ export function ProfileContentDetail() {
           <div className="row mb-2">
             <S.Text className="mb-0 align-self-center">1차 녹음본</S.Text>
             <audio controls>
-              <source src={`${learningInfo.record_1}`} />
+              <source src={`https://d3qljd3xvkb8gz.cloudfront.net/${learningInfo.record_1}`} />
             </audio>
           </div>
 
