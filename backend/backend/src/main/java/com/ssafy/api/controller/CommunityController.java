@@ -140,4 +140,16 @@ public class CommunityController {
         communityRepository.save(community);
         return new ResponseEntity(HttpStatus.OK);
     }
+
+    // ----------------공지사항---------------------
+//    @ApiOperation(value = "공지사항 리스트 조회", notes = "공지사항 리스트를 조회한다")
+//    @ApiResponses({
+//            @ApiResponse(code = 200, message = "성공"),
+//            @ApiResponse(code = 500, message = "서버 오류")
+//    })
+//    @GetMapping
+//    public ResponseEntity noticelist() {
+//        List<Community> list = communityRepository.
+//    }
+
 }
