@@ -1,6 +1,7 @@
 package com.ssafy.api.controller;
 
 import com.ssafy.api.request.LearnPostReq;
+import com.ssafy.api.response.LearnDetailRes;
 import com.ssafy.api.response.PicturesRes;
 import com.ssafy.api.response.StatisticsRes;
 import com.ssafy.api.response.UserRes;
@@ -154,19 +155,13 @@ public class AmazonS3Controller {
     }
 
     @GetMapping("/picture/{key}")
-    public ResponseEntity<List> getLearnDetail(@PathVariable Long key) {
+    public ResponseEntity<LearnDetailRes> getLearnDetail(@PathVariable Long key) {
         Optional<Learn> learnTmp = learnRepository.findById(key);
         if (learnTmp.isEmpty()) {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
         Learn learn = learnTmp.get();
-        List<Record> record = recordRepository.findAllByLearn(learn);
-        List<Word> word = wordRepository.findAllByLearn(learn);
-        List learnDetail = new ArrayList();
-        learnDetail.add(learn);
-        learnDetail.add(record);
-        learnDetail.add(word);
-        return ResponseEntity.status(HttpStatus.OK).body(learnDetail);
+        return ResponseEntity.status(HttpStatus.OK).body(new LearnDetailRes(learn));
 
 
     }

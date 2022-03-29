@@ -123,9 +123,11 @@ public class CommunityController {
     @ApiImplicitParam(name="communityId", value = "게시글 seq", required = true)
     @PutMapping("/{communityId}")
     public ResponseEntity update(@ApiIgnore Authentication authentication, @PathVariable Long communityId, @RequestBody @ApiParam(value = "게시글 수정 정보", required = true) CommunityPostReq communityPostReq) {
+
         SsafyUserDetails userDetails = (SsafyUserDetails)authentication.getDetails();
         String userId = userDetails.getUsername();
         User user = userService.getUserByUserId(userId);
+
         Optional<Community> option = communityRepository.findById(communityId);
         if (!option.isPresent()) {
             return null;

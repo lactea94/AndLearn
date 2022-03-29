@@ -14,4 +14,6 @@ public class StatisticsRes {
         this.createdDate = entity.getCreatedDate();
 
     }
+
+
 }
