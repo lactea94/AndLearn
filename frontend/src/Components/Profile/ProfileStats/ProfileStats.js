@@ -26,6 +26,8 @@ export function ProfileStats() {
       { id: 6, created_at: '2012-03-24 11:14:00'},
       { id: 7, created_at: '2022-03-20 11:14:00'},
       { id: 8, created_at: '2022-03-28 11:14:00'},
+      { id: 9, created_at: '2022-03-29 11:14:00'},
+      { id: 10, created_at: '2022-03-29 11:14:00'},
     ]);
   }, [])
 
@@ -45,12 +47,27 @@ export function ProfileStats() {
     }
   }, [myLearns])
 
+  const bgColor = (learnings) => {
+    const backgroundColors = ['gray', 'crimson', 'orange', 'green']
+
+    if (learnings === 0) {
+      return backgroundColors[0]
+    }
+
+    if (learnings <= 1) {
+      return backgroundColors[1]
+    }
+
+    if (learnings <= 2) {
+      return backgroundColors[3]
+    }
+  }
+
   // 1년 동안 공부한 내용을 바탕으로 잔디 색칠
   useEffect(() => {
     const myStats = () => {
       const week = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
       const month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-      const backgroundColors = ['gray', 'crimson']
       // 색깔 범위? 0개 gray, 1~3개 옅게
       
       const newDate = new Date();
@@ -67,29 +84,28 @@ export function ProfileStats() {
           const weekDate = new Date(newDate.getFullYear() - 1, newDate.getMonth(), newDate.getDate() - 1 + i)
           const weekNum = weekDate.getDay()
           result.push(
-            <S.DailyBox key={i} style={{ position: 'relative', backgroundColor: `${backgroundColors[myLearnCounts[i]]}` }}>
+            <S.DailyBox key={i} style={{ position: 'relative', backgroundColor: `${bgColor(myLearnCounts[i])}` }}>
               <S.WeekText>{week[weekNum]}</S.WeekText>
             </S.DailyBox>
           )
         } else if (i % 7 === 0) {
           const checkMonthDate = new Date(newDate.getFullYear() - 1, newDate.getMonth(), newDate.getDate() - 1 + i)
-          const checkNextMonthDate = new Date(newDate.getFullYear() - 1, newDate.getMonth(), newDate.getDate() - 1 + i + 7)
           // 이전 세로줄에서 달이 바뀌었다면 위에 표시
           if (checkMonth !== checkMonthDate.getMonth()) {
             checkMonth = (checkMonth + 1) % 12
             result.push(
-              <S.DailyBox key={i} style={{ position: 'relative', backgroundColor: `${backgroundColors[myLearnCounts[i]]}` }}>
+              <S.DailyBox key={i} style={{ position: 'relative', backgroundColor: `${bgColor(myLearnCounts[i])}` }}>
                 <S.MonthText>{month[checkMonth]}</S.MonthText>
               </S.DailyBox>
             )
           } else {
             result.push(
-              <S.DailyBox key={i} style={{ backgroundColor: `${backgroundColors[myLearnCounts[i]]}` }}></S.DailyBox>
+              <S.DailyBox key={i} style={{ backgroundColor: `${bgColor(myLearnCounts[i])}` }}></S.DailyBox>
             );
           }
         } else {
           result.push(
-            <S.DailyBox key={i} style={{ backgroundColor: `${backgroundColors[myLearnCounts[i]]}` }}></S.DailyBox>
+            <S.DailyBox key={i} style={{ backgroundColor: `${bgColor(myLearnCounts[i])}` }}></S.DailyBox>
           );
         }
       }

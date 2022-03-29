@@ -47,16 +47,24 @@ export function Profile() {
         <hr/>
         <Row>
           <Col>
-            <Link to={`content`}>공부내용</Link>
+            <Link to={`content`}>
+              <Button>공부내용</Button>
+            </Link>
           </Col>
           <Col>
-            <Link to={`stats`}>개인통계</Link>
+            <Link to={`stats`}>
+              <Button>개인통계</Button>
+            </Link>
           </Col>
           <Col>
-            <Link to={`articles`}>게시글</Link>
+            <Link to={`articles`}>
+              <Button>
+                게시글
+              </Button>
+            </Link>
           </Col>
         </Row>
-        <div className="mt-5">
+        <div className="mt-3">
           <Routes>
             <Route path='/content' element={<ProfileContents/>} />
             <Route path='/content/:contentId' element={<ProfileContentDetail/>} />
