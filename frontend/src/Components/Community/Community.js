@@ -1,3 +1,4 @@
+import Loading from 'Common/Loading/Loading';
 import { useEffect, useState } from 'react';
 import { Container, Row } from 'react-bootstrap'
 import { Outlet } from 'react-router-dom';
@@ -13,7 +14,7 @@ export function Community() {
     { id: 1231, userId: 1, title:'1', body:'123123', created_at: '2022. 03. 14 13:10'},
     { id: 1233, userId: 1, title:'3', body:'123123', created_at: '2022. 03. 21 11:14'},
   ];
-
+  const [loading, setLoading] = useState(true);
   notices.sort((a, b) => a.id - b.id);
   const currentUser = 2
   const [articles, setArticles] = useState([]);
@@ -44,44 +45,55 @@ export function Community() {
         )
       )
     }
+    
   }, [searchText, articles, searchCategory]);
 
+  useEffect(() => {
+    setLoading(false)
+  }, [filteredArticles])
+
   return (
-    <Container style={{marginTop:'5rem'}}>
-      <h1>Community</h1>
-      <Row>
-        <Outlet />
-      </Row>
-      <Row>
-        <Articles
-          notices={notices}
-          articles={filteredArticles}
-          offset={offset}
-          limit={limit}
-          currentUser={currentUser}
-        />
-      </Row>
-      <Row>
-        <Container style={{width: '90%'}}>
-          <Row className="justify-content-between align-items-center">
-            <Search
-              setSearchText={setSearchText}
-              setSearchCategory={setSearchCategory}
-              setPage={setPage}
+    <>
+      { loading ? (
+        <Loading/>
+      ) : (
+        <Container style={{marginTop:'5rem'}}>
+          <h1>Community</h1>
+          <Row>
+            <Outlet />
+          </Row>
+          <Row>
+            <Articles
+              notices={notices}
+              articles={filteredArticles}
+              offset={offset}
+              limit={limit}
+              currentUser={currentUser}
             />
-            <Create />
+          </Row>
+          <Row>
+            <Container style={{width: '90%'}}>
+              <Row className="justify-content-between align-items-center">
+                <Search
+                  setSearchText={setSearchText}
+                  setSearchCategory={setSearchCategory}
+                  setPage={setPage}
+                />
+                <Create />
+              </Row>
+            </Container>
+          </Row>
+          <Row className="justify-content-center align-items-center">
+            <Pagination 
+              total={filteredArticles.length}
+              limit={limit}
+              page={page}
+              setPage={setPage}
+              setLimit={setLimit}
+            />
           </Row>
         </Container>
-      </Row>
-      <Row className="justify-content-center align-items-center">
-        <Pagination 
-          total={filteredArticles.length}
-          limit={limit}
-          page={page}
-          setPage={setPage}
-          setLimit={setLimit}
-        />
-      </Row>
-    </Container>
+      )}
+    </>
   )
 };
