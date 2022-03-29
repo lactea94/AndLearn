@@ -4,7 +4,7 @@ import styled from "styled-components";
 export const Control = styled(Form.Control)`
   &:focus {
     box-shadow: none;
-    border: solid 1px #58C063
+    border: solid 1px #88B04B
   }
 `;
 
@@ -16,6 +16,6 @@ export const TextArea = styled.textarea`
 
   &:focus {
     outline: none;
-    border: solid 1px #58C063;
+    border: solid 1px #88B04B;
   }
 `;

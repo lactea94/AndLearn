@@ -11,12 +11,11 @@ export const Textarea = styled.textarea`
   resize: none;
   font-size: 0.8rem;
   padding: 0.5rem;
-  background-color: lightgray;
   border: none;
   border-radius: 1rem;
 
   &:focus {
     outline: none;
-    background-color: #58C063;
+    background-color: #FFDD74;
   }
 `;

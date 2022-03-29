@@ -10,7 +10,7 @@ export default function Create() {
   const handleShow = () => setShow(true);
 
   return (
-    <Col>
+    <Col xs={2}>
       <MyButton onClick={handleShow}>
         새 글
       </MyButton>

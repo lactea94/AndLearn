@@ -53,8 +53,12 @@ export function Community() {
         />
       </Row>
       <Row>
-        <Search setSearchTerm={setSearchTerm} />
-        <Create />        
+        <Container style={{width: '90%'}}>
+          <Row className="justify-content-between align-items-center">
+            <Search setSearchTerm={setSearchTerm} />
+            <Create />
+          </Row>
+        </Container>
       </Row>
       <Row className="justify-content-center align-items-center">
         <Pagination 
