@@ -1,20 +1,18 @@
 import React, { useState } from 'react'
 import { ImageUpload } from './ImageUpload.js'
 import { AudioRecord } from './AudioRecord'
-import { Dictaphone } from './Dictaphone'
-
+import { GrammarlyEditor } from './GrammarlyEditor'
 export function Learn() {
   const [fileImage, setFileImage] = useState('')
-  function onLoad(e) {
-    setFileImage(URL.createObjectURL(e.target.files[0]))
-  }
+
+  const [script, setScript] = useState('')
 
   return (
     <div>
       Learn
       <ImageUpload fileImage={fileImage} />
-      <AudioRecord />
-      <Dictaphone/>
+      <AudioRecord setScript={setScript} />
+      <GrammarlyEditor script={script} />
     </div>
   )
 }
