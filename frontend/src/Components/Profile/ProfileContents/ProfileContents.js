@@ -131,7 +131,6 @@ export function ProfileContents() {
       startMSec <= new Date(content.created_at).getTime() && new Date(content.created_at).getTime() <= endMSec
     )
 
-    console.log(result);
     setSelectedContents(result);
   }
 
@@ -154,7 +153,6 @@ export function ProfileContents() {
 
   return (
     <div>
-      {userId} Profile contents
       <Row>
         {selectedContents.map((content) => {
           return (
