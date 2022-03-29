@@ -1,6 +1,7 @@
 package com.ssafy.db.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -33,4 +34,16 @@ public class Community extends BaseEntity {
     @JsonIgnore
     @OneToMany(mappedBy = "community", fetch = FetchType.LAZY)
     private List<Comment> comments = new ArrayList<>();
+
+    // 0328 김병완 save용 builder 추가
+    @Builder
+    public Community(Long id, String title, String content, LocalDateTime createdDate, LocalDateTime updatedDate, User user) {
+        this.id = id;
+        this.title = title;
+        this.content = content;
+        this.createdDate = createdDate;
+        this.updatedDate = updatedDate;
+        // 이게 맞아?
+        //this.user = user;
+    }
 }
