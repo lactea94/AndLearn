@@ -3,12 +3,13 @@ import styled from "styled-components";
 
 export const Article = styled(Container)`
   margin-bottom: 2rem;
+  border-radius: 1rem;
+  background-color: white;
 `;
 
 export const Header = styled(Row)`
-  background-color: #88B04B;
+  display: inlnie;
   align-items: center;
-  border-bottom: 0.1rem solid gray;
   border-top-left-radius: 1rem;
   border-top-right-radius: 1rem;
   padding: 0.5rem 0.2rem;
@@ -26,7 +27,7 @@ export const Created = styled(Col)`
 
 export const SubHeader = styled(Row)`
   align-items: center;
-  border-bottom: 0.1rem solid lightgray;
+  background-color: #88B04B;
   padding: 0.4rem 0;
 `;
 
@@ -38,5 +39,4 @@ export const User = styled(Col)`
 export const Body = styled(Row)`
   padding: 2rem 0.5rem;
   text-align: start;
-  border-bottom: 0.1rem solid lightgray;
 `;

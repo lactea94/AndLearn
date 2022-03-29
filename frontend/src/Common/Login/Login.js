@@ -1,11 +1,14 @@
 import React, { useState } from 'react'
 import { Container, Form, Col, Row } from 'react-bootstrap'
 import { MyButton } from 'styles/Button'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+import { API_BASE_URL } from '../../constants/index'
+import { apiInstance } from '../../api/index'
 import axios from 'axios'
 export function Login() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const api = apiInstance()
   const nav = useNavigate()
 
   const onEmailHandler = (event) => {
@@ -18,17 +21,19 @@ export function Login() {
 
   const onSubmit = (event) => {
     event.preventDefault()
-    axios
-      .post('/api/api/v1/auth/login', { email, password })
-      .then((response) => response.json())
-
+    const data = {
+      id: email,
+      password: password,
+    }
+    api
+      .post(API_BASE_URL + '/api/v1/auth/login', data)
       .then((response) => {
-        if (response.ACCESS_TOKEN) {
-          localStorage.setItem('login-token', response.ACCESS_TOKEN)
+        if (response.data.accessToken) {
+          localStorage.setItem('login-token', response.data.accessToken)
         }
         nav('/')
-
       })
+      .catch((err) => console.log(err))
   }
 
   return (
@@ -62,7 +67,7 @@ export function Login() {
           <MyButton
             variant="secondary"
             type="submit"
-            onSubmit={onSubmit}
+            onClick={onSubmit}
             className="login__button"
           >
             로그인

@@ -88,9 +88,14 @@ export function AudioRecord() {
 
   return (
     <>
-      <button onClick={onRec ? onRecAudio : offRecAudio}>녹음</button>
+      {onRec ? (
+        <button onClick={onRecAudio}>녹음</button>
+      ) : (
+        <button onClick={offRecAudio}>정지</button>
+      )}
+
       <button onClick={onSubmitAudioFile}>결과 확인</button>
-      <audio controls src={audio1}></audio>
+      <audio controls src={audio1} controlsList="nodownload"></audio>
     </>
   )
 }

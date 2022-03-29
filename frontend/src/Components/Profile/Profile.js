@@ -1,12 +1,14 @@
 import React, { useEffect } from 'react'
 import { Link, Route, Routes } from 'react-router-dom';
-import { Container, Row, Col, Image } from 'react-bootstrap';
+import { Container, Row, Col, Image, Button } from 'react-bootstrap';
 import { useParams } from 'react-router-dom'
 import { ProfileContents } from './ProfileContents/ProfileContents';
 import { ProfileContentDetail } from './ProfileContents/ProfileContentDetail';
 import { ProfileStats } from './ProfileStats/ProfileStats';
 import { ProfileArticles } from './ProfileArticles';
 import axios from 'axios';
+import { UserInfoEdit } from './ProfileEdit/UserInfoEdit';
+import { PasswordEdit } from './ProfileEdit/PasswordEdit';
 
 export function Profile() {
   const { userId } = useParams();
@@ -34,7 +36,12 @@ export function Profile() {
               </div>           
             </div>
           </Col>
-          <Col xs={2}>
+          <Col xs={2} className="row align-items-end">
+            <Link to={`edit`}>
+              <Button>
+                Update
+              </Button>
+            </Link>
           </Col>
         </Row>
         <hr/>
@@ -55,6 +62,8 @@ export function Profile() {
             <Route path='/content/:contentId' element={<ProfileContentDetail/>} />
             <Route path='/stats' element={<ProfileStats/>} />
             <Route path='/articles' element={<ProfileArticles />} />
+            <Route path='/edit' element={<UserInfoEdit />} />
+            <Route path='/edit/password' element={<PasswordEdit />} />
           </Routes>
         </div>
       </Container>
