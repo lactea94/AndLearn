@@ -27,6 +27,9 @@ public class Community extends BaseEntity {
 
     private LocalDateTime updatedDate;
 
+    @Column(nullable = false)
+    private Boolean isNotice;
+
     @ManyToOne
     @JoinColumn(name="user_id", nullable = false)
     private User user;
@@ -37,13 +40,14 @@ public class Community extends BaseEntity {
 
     // 0328 김병완 save용 builder 추가
     @Builder
-    public Community(Long id, String title, String content, LocalDateTime createdDate, LocalDateTime updatedDate, User user) {
+    public Community(Long id, String title, String content, LocalDateTime createdDate, LocalDateTime updatedDate, Boolean isNotice) {
         this.id = id;
         this.title = title;
         this.content = content;
         this.createdDate = createdDate;
         this.updatedDate = updatedDate;
+        this.isNotice = isNotice;
         // 이게 맞아?
-        //this.user = user;
+//        this.user = user;
     }
 }
