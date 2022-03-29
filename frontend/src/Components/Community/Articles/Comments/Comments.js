@@ -19,8 +19,7 @@ export function Comments({ currentUser }) {
         if (currentUser === comment.id) {
           return (
             <S.MyComment key={comment.id} >
-              <S.User>{comment.userId}</S.User>
-              <S.MyCommentContent xs={6}>
+              <S.MyCommentContent>
                 <S.Body>{comment.body}</S.Body>
                 <S.Created>{DateFormat(nowTime, comment.created_at)}</S.Created>
                 <S.Button>삭제</S.Button>
@@ -30,8 +29,11 @@ export function Comments({ currentUser }) {
         } else {
           return (
             <S.Comment key={comment.id} >
-              <S.User>{comment.userId}</S.User>
-              <S.CommentContent xs={6}>
+              <S.ImgBox>
+                <S.UserImg alt={comment.userId} src="/images/default_user.jpg" />
+              </S.ImgBox>
+              <S.CommentContent>
+                <S.User>{comment.userId}</S.User>
                 <S.Body>{comment.body}</S.Body>
                 <S.Created>{DateFormat(nowTime, comment.created_at)}</S.Created>
               </S.CommentContent>
