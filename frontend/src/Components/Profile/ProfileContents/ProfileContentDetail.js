@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import { Row, Col, Image } from "react-bootstrap";
 import { useState } from "react";
 import * as S from './ProfileContentDetailStyle';
@@ -6,6 +6,7 @@ import * as S from './ProfileContentDetailStyle';
 export function ProfileContentDetail() {
   const { userId, contentId } = useParams();
   const [isCheckAnswer, setIsCheckAnswer] = useState(false);
+  const { state } = useLocation();
 
   // 임시 학습 디테일 정보
   const learningInfo = {
@@ -33,6 +34,7 @@ export function ProfileContentDetail() {
           <Image src={`${learningInfo.img_url}`} alt="profile_image" rounded fluid></Image>
         </Col>
         <Col xs={7} className="d-flex flex-column align-items-start row text-start">
+          <S.Text>받아온 주소 : {state.imgUrl}</S.Text>
           <S.Text>날짜 : {learningInfo.created_at}</S.Text>
           <S.Text>1번째 경과시간 : {learningInfo.answer_time_1}</S.Text>
           <S.Text>2번째 경과시간 : {learningInfo.answer_time_2}</S.Text>

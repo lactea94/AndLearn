@@ -19,15 +19,17 @@ export function ProfileStats() {
     setMyLearns([
       { id: 0, created_at: '2021-03-23 11:14:00'},
       { id: 1, created_at: '2021-09-23 11:14:00'},
-      { id: 2, created_at: '2022-03-21 11:14:00'},
-      { id: 3, created_at: '2022-03-22 11:14:00'},
-      { id: 4, created_at: '2022-03-23 11:14:00'},
-      { id: 5, created_at: '2022-03-24 11:14:00'},
-      { id: 6, created_at: '2012-03-24 11:14:00'},
-      { id: 7, created_at: '2022-03-20 11:14:00'},
+      { id: 2, created_at: '2022-03-25 11:14:00'},
+      { id: 3, created_at: '2022-03-26 11:14:00'},
+      { id: 4, created_at: '2022-03-27 11:14:00'},
+      { id: 5, created_at: '2022-03-27 11:14:00'},
+      { id: 6, created_at: '2022-03-28 11:14:00'},
+      { id: 7, created_at: '2022-03-28 11:14:00'},
       { id: 8, created_at: '2022-03-28 11:14:00'},
       { id: 9, created_at: '2022-03-29 11:14:00'},
       { id: 10, created_at: '2022-03-29 11:14:00'},
+      { id: 11, created_at: '2022-03-29 11:14:00'},
+      { id: 12, created_at: '2022-03-29 11:14:00'},
     ]);
   }, [])
 
@@ -48,18 +50,28 @@ export function ProfileStats() {
   }, [myLearns])
 
   const bgColor = (learnings) => {
-    const backgroundColors = ['gray', 'crimson', 'orange', 'green']
+    const backgroundColors = [
+      'rgba(235, 237, 240)', 
+      'rgba(155, 233, 168)', 
+      'rgba(64, 196, 99)', 
+      'rgba(48, 161, 78)',
+      'rgba(33, 110, 57)'
+    ]
 
     if (learnings === 0) {
       return backgroundColors[0]
     }
-
     if (learnings <= 1) {
       return backgroundColors[1]
     }
-
     if (learnings <= 2) {
+      return backgroundColors[2]
+    }
+    if (learnings <= 3) {
       return backgroundColors[3]
+    }
+    if (learnings <= 4) {
+      return backgroundColors[4]
     }
   }
 

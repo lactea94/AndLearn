@@ -1,5 +1,5 @@
 // 로컬
-// export const API_BASE_URL = 'https://localhost:8082/api';
+// export const API_BASE_URL = 'https://localhost:8082';
 
 // 배포
 export const API_BASE_URL = 'https://j6c201.p.ssafy.io';

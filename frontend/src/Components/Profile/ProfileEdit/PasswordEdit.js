@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { Form } from "react-bootstrap"
-import { MyButton } from "styles/Button"
+import * as C from "../CommonStyle";
+import { MyButton } from "styles/Button";
 
 export function PasswordEdit() {
   const [password, setPassword] = useState('')
@@ -27,7 +28,6 @@ export function PasswordEdit() {
   }
 
   function onSubmit(e) {
-    // if (!validation()) return
     // const url = 'http://j6c201.p.ssafy.io/api/v1/users'
     // axios
     //   .post(url, { password: password })
@@ -37,7 +37,7 @@ export function PasswordEdit() {
     //   .catch((error) => {
     //     console.log(error)
     //   })
-    console.log(password)
+    // console.log(password)
   }
 
   return (

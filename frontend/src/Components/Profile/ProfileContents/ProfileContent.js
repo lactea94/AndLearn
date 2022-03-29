@@ -6,7 +6,12 @@ export function ProfileContent({imgUrl, contentId}) {
 
   return (
     <div className="mb-4">
-      <NavLink to={`/profile/${userId}/content/${contentId}`}>
+      <NavLink 
+        to={`/profile/${userId}/content/${contentId}`}
+        state={{
+          imgUrl: imgUrl,
+        }}
+      >
         <Image src={`${imgUrl}`} alt="content_image" fluid></Image>
       </NavLink>
     </div>
