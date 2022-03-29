@@ -22,10 +22,10 @@ export const TableRow = styled(Row)`
   font-size: 0.8rem;
   padding: 0.5rem 0;
   align-items: center;
-  border-top: solid 1px lightgray;
+  border-top: solid 1px #DFDFDF;
 
   &:hover {
-    background-color: lightgray;
+    background-color: #DFDFDF;
   }
 `;
 
