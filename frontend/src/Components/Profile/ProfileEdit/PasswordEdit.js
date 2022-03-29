@@ -1,6 +1,5 @@
 import { useState } from "react"
 import { Form } from "react-bootstrap"
-import * as C from "../CommonStyle";
 import { MyButton } from "styles/Button";
 
 export function PasswordEdit() {
@@ -72,7 +71,7 @@ export function PasswordEdit() {
           )}
         </Form.Group>
         <div className="d-grid gap-1">
-          <MyButton onClick={onSubmit}>비밀번호 수정</MyButton>
+          <MyButton color="#58C063" onClick={onSubmit}>비밀번호 수정</MyButton>
         </div>
       </Form>
     </div>

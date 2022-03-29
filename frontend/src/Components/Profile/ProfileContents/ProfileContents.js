@@ -6,7 +6,6 @@ import { useState, useEffect } from "react"
 import ReactDatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import { MyButton } from 'styles/Button';
-import * as C from '../CommonStyle';
 
 const Remote = styled.div`
   display: block; 
@@ -287,7 +286,7 @@ export function ProfileContents() {
           onChange={(date) => setEndDate(date)}
           dateFormat="yyyy-MM-d"
         />
-        <MyButton className='m-2 py-0' onClick={() => {clickSearchButton()}}>
+        <MyButton color="#58C063" className='m-2 py-0' onClick={() => {clickSearchButton()}}>
           검색
         </MyButton>
       </Remote>

@@ -1,13 +1,14 @@
 import { Form } from "react-bootstrap"
 import { useState } from "react"
 import { Link } from "react-router-dom"
-import * as C from "../CommonStyle"
 import { MyButton } from "styles/Button"
 import axios from "axios"
 
 export function UserInfoEdit() {
   const [userName, setUserName] = useState('')
   const [userNameError, setUserNameError] = useState(false)
+  const [dName, setDName] = useState('')
+  const [checkName, setCheckName] = useState(false)
   const [imgBase64, setImgBase64] = useState([]); // 파일 base64
   const [imgFile, setImgFile] = useState(null);	//파일	
 
@@ -37,28 +38,44 @@ export function UserInfoEdit() {
     }
   }
 
+  function onCheckName() {
+    axios
+      .post('https://j6c201.p.ssafy.io/api/v1/users/duplicate-check-nickname', {
+        nickname: userName,
+      })
+      .then((res) => {
+        setDName('');
+        setCheckName(true);
+      })
+      .catch((error) => {
+        setDName('이미 존재하는 이름입니다.');
+        setCheckName(false);
+      })
+  }
+
   function onSubmit(e) {
     console.log(imgFile)
     console.log(userName)
+    if (checkName) {
+      const fd = new FormData();
+      fd.append("file", imgFile);
+      fd.append("userName", userName);
 
-    const fd = new FormData();
-    fd.append("file", imgFile);
-    fd.append("userName", userName);
-
-    axios
-      .post(
-        "https://j6c201.p.ssafy.io/api/v1/users/...",
-        fd,
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data',
+      axios
+        .post(
+          "https://j6c201.p.ssafy.io/api/v1/users/...",
+          fd,
+          {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            }
           }
-        }
-      )
-      .then(res => {
-        console.log(res)
-      })
-      .catch()
+        )
+        .then(res => {
+          console.log(res)
+        })
+        .catch()
+    }
   }
 
   return (
@@ -71,10 +88,11 @@ export function UserInfoEdit() {
             value={userName}
             onChange={onChangeUserName}
           />
-          {userNameError && (
-            <div className="invalid-input">닉네임을 입력해주세요.</div>
-          )}
         </Form.Group>
+        <p>{dName}</p>
+        {userNameError && (
+          <div className="invalid-input">닉네임을 입력해주세요.</div>
+        )}
         <div className="mb-3">
           {imgBase64.map((item, index) => {
             return(
@@ -92,16 +110,16 @@ export function UserInfoEdit() {
           <Form.Control 
             type="file" 
             id="file"
-            onChange={handleChangeFile} 
+            onChange={handleChangeFile}
             placeholder="프로필 사진"
           />
         </Form.Group>
         <div className="d-grid gap-1 mb-3">
-          <MyButton onClick={onSubmit}>회원 정보 수정</MyButton>
+          <MyButton color="#58C063" onClick={() => {onSubmit(); onCheckName();}}>회원 정보 수정</MyButton>
         </div>
         <div>
           <Link to={`password`}>
-            <MyButton>비밀번호 수정</MyButton>
+            <MyButton color="#58C063">비밀번호 수정</MyButton>
           </Link>
         </div>
       </Form>

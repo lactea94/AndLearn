@@ -9,7 +9,6 @@ import { ProfileArticles } from './ProfileArticles/ProfileArticles';
 import axios from 'axios';
 import { UserInfoEdit } from './ProfileEdit/UserInfoEdit';
 import { PasswordEdit } from './ProfileEdit/PasswordEdit';
-import * as C from './CommonStyle';
 import { Detail } from './ProfileArticles/Articles/Detail/Detail';
 import { MyButton } from 'styles/Button';
 
@@ -49,7 +48,7 @@ export function Profile() {
           </Col>
           <Col xs={2} className="row align-items-end">
             <Link to={`edit`}>
-              <MyButton>
+              <MyButton color="#58C063">
                 Update
               </MyButton>
             </Link>
@@ -59,17 +58,17 @@ export function Profile() {
         <Row>
           <Col>
             <Link to={`content`}>
-              <MyButton>공부내용</MyButton>
+              <MyButton color="#58C063">공부내용</MyButton>
             </Link>
           </Col>
           <Col>
             <Link to={`stats`}>
-              <MyButton>개인통계</MyButton>
+              <MyButton color="#58C063">개인통계</MyButton>
             </Link>
           </Col>
           <Col>
             <Link to={`articles`}>
-              <MyButton>
+              <MyButton color="#58C063">
                 게시글
               </MyButton>
             </Link>
