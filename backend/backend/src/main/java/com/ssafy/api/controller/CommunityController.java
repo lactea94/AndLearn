@@ -130,9 +130,9 @@ public class CommunityController {
     })
     @PostMapping
     public ResponseEntity post(@ApiIgnore Authentication authentication, @RequestBody @ApiParam(value="게시글 정보", required = true) CommunityPostReq communityPostReq) {
-//        SsafyUserDetails userDetails = (SsafyUserDetails)authentication.getDetails();
-//        String userId = userDetails.getUsername();
-//        User user = userService.getUserByUserId(userId);
+        SsafyUserDetails userDetails = (SsafyUserDetails)authentication.getDetails();
+        String userId = userDetails.getUsername();
+        User user = userService.getUserByUserId(userId);
 
         communityRepository.save(Community.builder()
                 .title(communityPostReq.getTitle())
