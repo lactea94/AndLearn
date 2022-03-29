@@ -20,7 +20,13 @@ export function Search({ setSearchText, setSearchCategory, setPage }) {
   }
 
   return (
-    <Col xs={6}>
+    <Col xs={6}
+      style={{
+        display: "flex",
+        justifyContent: "start",
+        alignItems: "center"
+      }}
+    >
       <Select
         onChange={e => {
           setCategory(e.target.value);
@@ -38,7 +44,10 @@ export function Search({ setSearchText, setSearchCategory, setPage }) {
         onKeyPress={handleKeyPress}
       />
       <MyButton
-        size="sm"
+        style={{
+          marginTop: 'auto',
+          marginBottom: 'auto'
+        }}
         onClick={handleClick}
       >
         검색

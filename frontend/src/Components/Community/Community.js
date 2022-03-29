@@ -73,7 +73,10 @@ export function Community() {
           </Row>
           <Row>
             <Container style={{width: '90%'}}>
-              <Row className="justify-content-between align-items-center">
+              <Row
+                className="justify-content-between align-items-center"
+                style={{marginTop: "1rem"}}
+              >
                 <Search
                   setSearchText={setSearchText}
                   setSearchCategory={setSearchCategory}

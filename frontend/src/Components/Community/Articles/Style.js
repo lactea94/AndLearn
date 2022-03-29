@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export const Table = styled(Container)`
-  margin-top: 5rem;
+  margin-top: 3rem;
   margin-bottom: 1rem;
   background-color: white;
   border-radius: 1rem;

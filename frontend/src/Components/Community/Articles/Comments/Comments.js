@@ -1,5 +1,4 @@
 import { Create } from "./Create/Create";
-import { Col } from "react-bootstrap";
 import { DateFormat } from "../../module/module";
 import * as S from "./Style";
 
