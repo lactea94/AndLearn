@@ -51,3 +51,17 @@ export const StatsNum = styled.div`
   margint-bottom: 1px;
   font-weight: 600;
 `
+
+export const MonthText = styled.p`
+  position: absolute;
+  left: 0px;
+  top: -15px;
+  fontSize: 9px;
+`
+
+export const WeekText = styled.p`
+  position: absolute;
+  left: -23px;
+  top: -2px;
+  fontSize: 9px;
+`

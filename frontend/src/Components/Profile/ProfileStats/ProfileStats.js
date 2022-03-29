@@ -25,6 +25,7 @@ export function ProfileStats() {
       { id: 5, created_at: '2022-03-24 11:14:00'},
       { id: 6, created_at: '2012-03-24 11:14:00'},
       { id: 7, created_at: '2022-03-20 11:14:00'},
+      { id: 8, created_at: '2022-03-28 11:14:00'},
     ]);
   }, [])
 
@@ -49,7 +50,8 @@ export function ProfileStats() {
     const myStats = () => {
       const week = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
       const month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-      const backgroundColors = ['gray', 'green']
+      const backgroundColors = ['gray', 'crimson']
+      // 색깔 범위? 0개 gray, 1~3개 옅게
       
       const newDate = new Date();
       const nowDate = new Date(newDate.getFullYear(), newDate.getMonth(), newDate.getDate())
@@ -66,17 +68,18 @@ export function ProfileStats() {
           const weekNum = weekDate.getDay()
           result.push(
             <S.DailyBox key={i} style={{ position: 'relative', backgroundColor: `${backgroundColors[myLearnCounts[i]]}` }}>
-              <p style={{position: 'absolute', left: '-23px', top: '-2px', fontSize: '9px'}}>{week[weekNum]}</p>
+              <S.WeekText>{week[weekNum]}</S.WeekText>
             </S.DailyBox>
           )
         } else if (i % 7 === 0) {
           const checkMonthDate = new Date(newDate.getFullYear() - 1, newDate.getMonth(), newDate.getDate() - 1 + i)
+          const checkNextMonthDate = new Date(newDate.getFullYear() - 1, newDate.getMonth(), newDate.getDate() - 1 + i + 7)
           // 이전 세로줄에서 달이 바뀌었다면 위에 표시
           if (checkMonth !== checkMonthDate.getMonth()) {
             checkMonth = (checkMonth + 1) % 12
             result.push(
               <S.DailyBox key={i} style={{ position: 'relative', backgroundColor: `${backgroundColors[myLearnCounts[i]]}` }}>
-                <p style={{position: 'absolute', left: '0px', top: '-15px', fontSize: '9px'}}>{month[checkMonth]}</p>
+                <S.MonthText>{month[checkMonth]}</S.MonthText>
               </S.DailyBox>
             )
           } else {
