@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export const Table = styled(Container)`
+  margin-top: 5rem;
   margin-bottom: 1rem;
   background-color: white;
   border-radius: 1rem;
@@ -22,10 +23,10 @@ export const TableRow = styled(Row)`
   font-size: 0.8rem;
   padding: 0.5rem 0;
   align-items: center;
-  border-top: solid 1px lightgray;
+  border-top: solid 1px #DFDFDF;
 
   &:hover {
-    background-color: lightgray;
+    background-color: #DFDFDF;
   }
 `;
 

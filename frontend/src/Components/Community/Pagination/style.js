@@ -35,17 +35,6 @@ export const PageItem = styled(Button)`
   }
 `;
 
-export const PageLimit = styled(Form.Select)`
-  border: solid 1px #58C063 !important;
-  &:focus {
-    box-shadow: none;
-  }
-
-  &:active {
-    box-shadow: none !important;
-  }
-`;
-
 export const FormControl = styled(Form.Control)`
 
   &:focus {

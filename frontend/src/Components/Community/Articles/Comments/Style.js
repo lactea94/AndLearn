@@ -14,31 +14,52 @@ export const Header = styled(Row)`
 `;
 
 export const Comment = styled(Row)`
-  border-bottom: solid 1px lightgray;
   text-align: start; 
   align-items: center;
   padding: 0.5rem;
 `;
 
-export const User = styled(Col)`
+export const MyComment = styled(Row)`
+  justify-content: end;
+  text-align: start;
+  align-items: center;
+  padding: 0.5rem;
+`;
+
+export const CommentContent = styled.div`
+  width: auto;
+  min-width: 20rem;
+  background-color: white;
+  padding: 1rem;
+  border-radius: 0.3rem;
+`
+
+export const MyCommentContent = styled.div`
+  width: auto;
+  min-width: 20rem;
+  background-color: #FFDD74;
+  padding: 1rem;
+  border-radius: 0.3rem;
+`
+
+export const User = styled.div`
   font-size: 0.8rem;
 `;
 
-export const Body = styled(Col)`
+export const Body = styled.div`
   font-size: 0.9rem;
 `;
 
-export const Created = styled(Col)`
+export const Created = styled.div`
   font-size: 0.8rem;
 `;
 
-export const Button = styled.div`
-  margin: 0;
-  padding: 0;
+export const Button = styled.button`
   font-size: 0.7rem;
-  text-align: center;
   text-decoration: underline;
   color: red;
+  background-color: none;
+  border: none;
 
   &:hover {
     font-weight: bold;

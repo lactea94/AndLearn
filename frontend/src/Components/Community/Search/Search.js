@@ -1,15 +1,48 @@
+import { useState } from "react";
 import { Col } from "react-bootstrap";
-import * as S from "./Style"
+import { MyButton } from "styles/Button";
+import { Input } from "styles/Input";
+import { Select } from "styles/Select";
 
-export function Search({ setSearchTerm }) {
+export function Search({ setSearchText, setSearchCategory, setPage }) {
+  const [text, setText] = useState("");
+  const [category, setCategory] = useState("title");
+  const handleClick = () => {
+    setSearchText(text);
+    setSearchCategory(category);
+    setText("");
+    setPage(1);
+  }
+  const handleKeyPress = e => {
+    if(e.key === 'Enter') {
+      handleClick();
+    }
+  }
+
   return (
-    <Col xs={10}>
-      <S.Control
-        placeholder="제목을 검색하세요"
-        onChange={(e) => {
-          setSearchTerm(e.target.value)
+    <Col xs={6}>
+      <Select
+        onChange={e => {
+          setCategory(e.target.value);
         }}
-        />
+      >
+        <option value="title">제목</option>
+        <option value="body">내용</option>
+      </Select>
+      <Input
+        type="text"
+        value={text}
+        onChange={(e) => {
+          setText(e.target.value);
+        }}
+        onKeyPress={handleKeyPress}
+      />
+      <MyButton
+        size="sm"
+        onClick={handleClick}
+      >
+        검색
+      </MyButton>
     </Col>
   )
 }

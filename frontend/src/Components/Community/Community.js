@@ -18,7 +18,8 @@ export function Community() {
   const currentUser = 2
   const [articles, setArticles] = useState([]);
   const [limit, setLimit] = useState(10);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchCategory, setSearchCategory] = useState("title");
+  const [searchText, setSearchText] = useState("");
   const [filteredArticles, setFilterdArticle] = useState([]);
   const [page, setPage] = useState(1);
   const offset = (page - 1) * limit;
@@ -30,15 +31,23 @@ export function Community() {
   }, []);
 
   useEffect(() => {
-    setFilterdArticle(() => 
-      articles.filter((article) => 
-        article.title.toLowerCase().includes(searchTerm.toLowerCase())
+    if (searchCategory === 'title') {
+      setFilterdArticle(() => 
+        articles.filter((article) => 
+          article.title.toLowerCase().includes(searchText.toLowerCase())
+        )
       )
-    )
-  }, [searchTerm, articles]);
+    } else if (searchCategory === 'body') {
+      setFilterdArticle(() => 
+        articles.filter((article) => 
+          article.body.toLowerCase().includes(searchText.toLowerCase())
+        )
+      )
+    }
+  }, [searchText, articles, searchCategory]);
 
   return (
-    <Container style={{marginTop:'5rem', minHeight:'100vh'}}>
+    <Container style={{marginTop:'5rem'}}>
       <h1>Community</h1>
       <Row>
         <Outlet />
@@ -53,12 +62,20 @@ export function Community() {
         />
       </Row>
       <Row>
-        <Search setSearchTerm={setSearchTerm} />
-        <Create />        
+        <Container style={{width: '90%'}}>
+          <Row className="justify-content-between align-items-center">
+            <Search
+              setSearchText={setSearchText}
+              setSearchCategory={setSearchCategory}
+              setPage={setPage}
+            />
+            <Create />
+          </Row>
+        </Container>
       </Row>
       <Row className="justify-content-center align-items-center">
         <Pagination 
-          total={articles.length}
+          total={filteredArticles.length}
           limit={limit}
           page={page}
           setPage={setPage}

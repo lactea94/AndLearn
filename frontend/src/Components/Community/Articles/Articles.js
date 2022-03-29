@@ -4,6 +4,15 @@ import * as S from './Style';
 const nowTime = new Date();
 
 export default function Articles({ notices, articles, offset, limit, currentUser }) {
+  const NoSearchItems = () => {
+    return (
+      <div style={{margin: "5rem"}}>
+        <h3>
+          검색결과가 없습니다.
+        </h3>
+      </div>
+    )
+  }
   return (
     <S.Table>
       <S.TableHead>
@@ -52,6 +61,7 @@ export default function Articles({ notices, articles, offset, limit, currentUser
           <S.Column xs={2}>임시</S.Column>
         </S.TableRow>
       ))}
+      {(articles.length === 0) && (<NoSearchItems />)}
     </S.Table>
   )
 };

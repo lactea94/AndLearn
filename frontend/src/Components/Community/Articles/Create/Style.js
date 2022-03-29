@@ -9,13 +9,16 @@ export const Control = styled(Form.Control)`
 `;
 
 export const TextArea = styled.textarea`
-  display: block;
   width: 100%;
-  border: solid 1px lightgray;
-  border-radius: 5px;
+  resize: none;
+  font-size: 0.8rem;
+  padding: 0.5rem;
+
+  border: solid 1px #58C063;
+  border-radius: 0.3rem;
 
   &:focus {
-    outline: none;
     border: solid 1px #58C063;
+    outline: solid 1px #58C063;
   }
 `;
