@@ -36,16 +36,11 @@ export function Community() {
       setFilterdArticle(() => 
         articles.filter((article) => 
           article.title.toLowerCase().includes(searchText.toLowerCase())
-        )
-      )
-    } else if (searchCategory === 'body') {
+    ))} else if (searchCategory === 'body') {
       setFilterdArticle(() => 
         articles.filter((article) => 
           article.body.toLowerCase().includes(searchText.toLowerCase())
-        )
-      )
-    }
-    
+    ))}
   }, [searchText, articles, searchCategory]);
 
   useEffect(() => {
