@@ -7,6 +7,17 @@ import { Select } from "styles/Select";
 export function Search({ setSearchText, setSearchCategory, setPage }) {
   const [text, setText] = useState("");
   const [category, setCategory] = useState("title");
+  const handleClick = () => {
+    setSearchText(text);
+    setSearchCategory(category);
+    setText("");
+    setPage(1);
+  }
+  const handleKeyPress = e => {
+    if(e.key === 'Enter') {
+      handleClick();
+    }
+  }
 
   return (
     <Col xs={6}>
@@ -26,14 +37,11 @@ export function Search({ setSearchText, setSearchCategory, setPage }) {
           e.preventDefault();
           setText(e.target.value);
         }}
+        onKeyPress={handleKeyPress}
       />
       <MyButton
-        onClick={() => {
-          setSearchText(text);
-          setSearchCategory(category);
-          setText("");
-          setPage(1);
-        }}
+        size="sm"
+        onClick={handleClick}
       >
         검색
       </MyButton>
