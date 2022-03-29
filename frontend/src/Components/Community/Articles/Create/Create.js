@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Col, Form, Modal } from "react-bootstrap";
 import * as S from './Style';
 import { MyButton } from "styles/Button";
+import { Input } from "styles/Input";
 
 export default function Create() {
   const [show, setShow] = useState(false);
@@ -23,11 +24,11 @@ export default function Create() {
         <Form>
           <Form.Group className="mb-3">
             <Form.Label>제목</Form.Label>
-            <S.Control type="text" />
+            <Input type="text" style={{width: "70%"}}/>
           </Form.Group>
           <Form.Group className="mb-3">
             <Form.Label>내용</Form.Label>
-            <S.TextArea rows={10} />
+            <S.TextArea type="textarea" rows={10} />
           </Form.Group>
         </Form>
         </Modal.Body>

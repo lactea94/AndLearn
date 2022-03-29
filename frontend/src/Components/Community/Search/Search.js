@@ -23,7 +23,6 @@ export function Search({ setSearchText, setSearchCategory, setPage }) {
     <Col xs={6}>
       <Select
         onChange={e => {
-          e.preventDefault();
           setCategory(e.target.value);
         }}
       >
@@ -34,7 +33,6 @@ export function Search({ setSearchText, setSearchCategory, setPage }) {
         type="text"
         value={text}
         onChange={(e) => {
-          e.preventDefault();
           setText(e.target.value);
         }}
         onKeyPress={handleKeyPress}
