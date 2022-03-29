@@ -1,4 +1,5 @@
 import { useState } from "react"
+import './Loading.css'
 
 export default function Loading()  {
   const [image, setImage] = useState(true);
@@ -30,19 +31,19 @@ export default function Loading()  {
   const Load = () => {
     if (load === 0) {
       return (
-        <h1>Loading</h1>
+        <h1 style={{fontFamily: 'Maru Buri'}}>Loading</h1>
       )
     } else if (load === 1) {
       return (
-        <h1>Loading .</h1>
+        <h1 style={{fontFamily: 'Maru Buri'}}>Loading .</h1>
       )
     } else if (load === 2) {
       return (
-        <h1>Loading ..</h1>
+        <h1 style={{fontFamily: 'Maru Buri'}}>Loading ..</h1>
       )
     } else {
       return (
-        <h1>Loading ...</h1>
+        <h1 style={{fontFamily: 'Maru Buri'}}>Loading ...</h1>
       )
     }
   }
