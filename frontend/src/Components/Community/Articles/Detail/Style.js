@@ -2,9 +2,11 @@ import { Col, Container, Row } from "react-bootstrap";
 import styled from "styled-components";
 
 export const Article = styled(Container)`
+  width: 75%;
   margin-bottom: 2rem;
   border-radius: 1rem;
-  background-color: white;
+  background-color: #F8F8F8;
+  padding: 2rem;
 `;
 
 export const Header = styled(Row)`
@@ -27,8 +29,9 @@ export const Created = styled(Col)`
 
 export const SubHeader = styled(Row)`
   align-items: center;
-  background-color: #88B04B;
+  background-color: #58C063;
   padding: 0.4rem 0;
+  border-radius: 0.3rem;
 `;
 
 export const User = styled(Col)`

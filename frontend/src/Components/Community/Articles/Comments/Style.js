@@ -9,7 +9,8 @@ export const Header = styled(Row)`
   font-size: 0.8rem;
   padding: 0.4rem;
   margin-bottom: 0.5rem;
-  background-color: #88B04B;
+  background-color: #58C063;
+  border-radius: 0.3rem;
 `;
 
 export const Comment = styled(Row)`

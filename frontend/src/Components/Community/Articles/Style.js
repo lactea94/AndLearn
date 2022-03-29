@@ -6,6 +6,8 @@ export const Table = styled(Container)`
   margin-bottom: 1rem;
   background-color: white;
   border-radius: 1rem;
+  width: 90%;
+  background-color: #F8F8F8
 `;
 
 export const TableHead = styled(Row)`
@@ -28,10 +30,10 @@ export const TableRow = styled(Row)`
 `;
 
 export const TableNoticeRow = styled(TableRow)`
-  background-color: #88B04B;
+  background-color: #58C063;
 
   &:hover {
-    background-color: #ACC981;
+    background-color: #90D597;
   }
 `;
 
