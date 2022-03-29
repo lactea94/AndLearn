@@ -78,9 +78,9 @@ public class AmazonS3Controller {
         List<String> fileNameList = awsS3Service.uploadFiles(multipartFile);
         for (int i=0; i< fileNameList.size(); i++) {
             String fileName = fileNameList.get(i);
-            String url = awsS3Service.getThumbnailPath(fileName);
+//            String url = awsS3Service.getThumbnailPath(fileName);
             Record record = new Record();
-            record.setRecordUrl(url);
+            record.setRecordUrl(fileName);
             record.setLearn(learn);
             Integer time = learnPostReq.getTimes().get(i);
             record.setRecordTime(time);
@@ -89,14 +89,6 @@ public class AmazonS3Controller {
             recordRepository.save(record);
 
         }
-//        fileNameList.forEach(fileName -> {
-//            String url = awsS3Service.getThumbnailPath(fileName);
-//            Record record = new Record();
-//            record.setRecordUrl(url);
-//            record.setLearn(learn);
-//            recordRepository.save(record);
-//        });
-
         return new ResponseEntity(HttpStatus.OK);
 
     }
