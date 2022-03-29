@@ -10,6 +10,6 @@ import java.util.Optional;
 public interface CommunityRepository extends JpaRepository<Community, Long> {
     Optional<Community> findById(Long id);
 
-    @Query(value = "select id, title, content, createdData, updateDate from Community")
+    @Query(value = "select * from Community", nativeQuery = true)
     List<Object[]> findCommunityList();
 }

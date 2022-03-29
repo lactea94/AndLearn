@@ -26,7 +26,7 @@ import java.util.Optional;
 @RestController
 @AllArgsConstructor
 @CrossOrigin("*")
-@RequestMapping("/api/v1/notice")
+@RequestMapping("/v1/community")
 @Api(value = "Community API", tags = {"Community"})
 public class CommunityController {
 
@@ -55,6 +55,31 @@ public class CommunityController {
         return new ResponseEntity<>(communityList, HttpStatus.OK);
     }
 
+    @ApiOperation(value = "게시판 특정 리스트 조회", notes = "게시글 중 본인이 작성한 게시판 리스트를 조회한다")
+    @ApiResponses({
+            @ApiResponse(code = 200, message="조회 성공"),
+            @ApiResponse(code = 500, message="서버 오류")
+    })
+    @ApiImplicitParam(name = "userId", value = "사용자 작성 게시글 리스트 조회", required = true, dataType = "Long")
+    @GetMapping("/{userId}")
+    public ResponseEntity communityListByUser(@PathVariable Long userId) {
+        List<Community> list = communityRepository.findAll();
+        List<CommunityListRes> communityList = new ArrayList<>();
+        User user = userService.getUserByUserId(userId.toString());
+
+        Collections.reverse(list);
+
+        for (Community entity : list) {
+            if (entity.getUser().equals(user)) {
+                communityList.add(new CommunityListRes(entity));
+            }
+        }
+
+        return new ResponseEntity<>(communityList, HttpStatus.OK);
+    }
+
+
+
     @ApiOperation(value = "특정 게시글 조회", notes = "특정 게시글을 조회한다")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
@@ -64,7 +89,7 @@ public class CommunityController {
     @GetMapping("/{communityId}")
     public ResponseEntity community(@PathVariable Long communityId) {
         Optional<Community> option = communityRepository.findById(communityId);
-        if (!option.isPresent()) {
+        if (option.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         Community community = option.get();
@@ -83,9 +108,13 @@ public class CommunityController {
     public ResponseEntity delete(@ApiIgnore Authentication authentication, @PathVariable Long communityId) {
         SsafyUserDetails userDetails = (SsafyUserDetails)authentication.getDetails();
         String userId = userDetails.getUsername();
+        User user = userService.getUserByUserId(userId);
         Optional<Community> option = communityRepository.findById(communityId);
+        if (option.isEmpty()) {
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+        }
         Community community = option.get();
-        if (!community.getUser().equals(userId)) {
+        if (!community.getUser().equals(user)) {
             return new ResponseEntity(HttpStatus.UNAUTHORIZED);
         }
         communityRepository.deleteById(communityId);
@@ -103,12 +132,14 @@ public class CommunityController {
     public ResponseEntity post(@ApiIgnore Authentication authentication, @RequestBody @ApiParam(value="게시글 정보", required = true) CommunityPostReq communityPostReq) {
         SsafyUserDetails userDetails = (SsafyUserDetails)authentication.getDetails();
         String userId = userDetails.getUsername();
+        User user = userService.getUserByUserId(userId);
 
         communityRepository.save(Community.builder()
                 .title(communityPostReq.getTitle())
                 .content(communityPostReq.getContent())
                 .createdDate(LocalDateTime.now())
                 .updatedDate(LocalDateTime.now())
+                .isNotice(communityPostReq.getIsNotice())
                 .build());
         // 유저 아이디 어따써먹음?
         return new ResponseEntity(HttpStatus.OK);
@@ -123,15 +154,17 @@ public class CommunityController {
     @ApiImplicitParam(name="communityId", value = "게시글 seq", required = true)
     @PutMapping("/{communityId}")
     public ResponseEntity update(@ApiIgnore Authentication authentication, @PathVariable Long communityId, @RequestBody @ApiParam(value = "게시글 수정 정보", required = true) CommunityPostReq communityPostReq) {
+
         SsafyUserDetails userDetails = (SsafyUserDetails)authentication.getDetails();
         String userId = userDetails.getUsername();
         User user = userService.getUserByUserId(userId);
+
         Optional<Community> option = communityRepository.findById(communityId);
-        if (!option.isPresent()) {
+        if (option.isEmpty()) {
             return null;
         }
         Community community = option.get();
-        if (community.getUser().equals(userId)) {
+        if (community.getUser().equals(user)) {
             return new ResponseEntity(HttpStatus.UNAUTHORIZED);
         }
         community.setTitle(communityPostReq.getTitle());
@@ -141,15 +174,26 @@ public class CommunityController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    // ----------------공지사항---------------------
-//    @ApiOperation(value = "공지사항 리스트 조회", notes = "공지사항 리스트를 조회한다")
-//    @ApiResponses({
-//            @ApiResponse(code = 200, message = "성공"),
-//            @ApiResponse(code = 500, message = "서버 오류")
-//    })
-//    @GetMapping
-//    public ResponseEntity noticelist() {
-//        List<Community> list = communityRepository.
-//    }
+    //------------------공지사항---------------------
+    @ApiOperation(value = "공지사항 리스트 조회", notes = "공지사항 리스트를 조회한다")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    @GetMapping("/notice")
+    public ResponseEntity noticelist() {
+        List<Community> list = communityRepository.findAll();
+        List<CommunityListRes> communityList = new ArrayList<>();
+
+        Collections.reverse(list);
+
+        for (Community entity : list) {
+            if (entity.getIsNotice()) {
+                communityList.add(new CommunityListRes(entity));
+            }
+        }
+
+        return new ResponseEntity<>(communityList, HttpStatus.OK);
+    }
 
 }
