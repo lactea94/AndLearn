@@ -1,4 +1,4 @@
-import { Nav, Navbar } from "react-bootstrap"
+import { Navbar } from "react-bootstrap"
 import { NavLink } from "react-router-dom"
 import styled from "styled-components"
 
@@ -14,11 +14,11 @@ export const NavItem = styled(NavLink)`
   padding: 1rem;
 
   &:hover {
-    color: #9C4CB0;
+    color: #FEFF74;
   }
 
   &:focus {
-    color: #9C4CB0;
+    color: #FEFF74;
   }
 `
 

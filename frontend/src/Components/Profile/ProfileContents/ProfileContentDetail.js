@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { Row, Col, Image, Button } from "react-bootstrap";
+import { Row, Col, Image } from "react-bootstrap";
 import { useState } from "react";
 import * as S from './ProfileContentDetailStyle';
 
@@ -9,14 +9,17 @@ export function ProfileContentDetail() {
 
   // 임시 학습 디테일 정보
   const learningInfo = {
+    // id ?
     img_url: 'http://placeimg.com/400/400/animals',
     created_at: '2021-03-23 11:14:00',
     answer_time: '45',
+    // answer_time_2 답변 2 시간 추가
     score: '3.7',
     record_1: 'https://d3qljd3xvkb8gz.cloudfront.net/03a2e6d0-2d5d-4cdd-9718-529f5214260d.m4a',
     record_2: 'https://d3qljd3xvkb8gz.cloudfront.net/72a334d9-437e-4749-85ef-00a69f2a83f3.m4a',
     AI_answers: ['apple', 'banana', 'cake'],
     my_answer: 'Help me...'
+    // my_answer_2 답변 2 추가
   }
 
   const onToggleOpen = () => {

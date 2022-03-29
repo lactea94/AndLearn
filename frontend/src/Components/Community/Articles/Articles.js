@@ -3,8 +3,7 @@ import * as S from './Style';
 
 const nowTime = new Date();
 
-export default function Articles({ notices, articles, offset, limit }) {
-
+export default function Articles({ notices, articles, offset, limit, currentUser }) {
   return (
     <S.Table>
       <S.TableHead>
@@ -22,7 +21,8 @@ export default function Articles({ notices, articles, offset, limit }) {
               state={{
                 userId: notice.userId,
                 title: notice.title,
-                body: notice.body
+                body: notice.body,
+                currentUser: currentUser,
             }}>
               {notice.title}
             </S.DetailLink>
@@ -42,7 +42,8 @@ export default function Articles({ notices, articles, offset, limit }) {
               state={{
                 userId: article.userId,
                 title: article.title,
-                body: article.body
+                body: article.body,
+                currentUser: currentUser
             }}>
               {article.title}
             </S.DetailLink>

@@ -1,4 +1,4 @@
-import { Form, Row } from "react-bootstrap";
+import { Row } from "react-bootstrap";
 import styled from "styled-components";
 
 export const CreateForm = styled(Row)`
@@ -6,9 +6,17 @@ export const CreateForm = styled(Row)`
   align-items: center;
 `;
 
-export const Control = styled(Form.Control)`
+export const Textarea = styled.textarea`
+  width: 100%;
+  resize: none;
+  font-size: 0.8rem;
+  padding: 0.5rem;
+  background-color: lightgray;
+  border: none;
+  border-radius: 1rem;
+
   &:focus {
-    box-shadow: none;
-    border: solid 1px #88B04B
+    outline: none;
+    background-color: #88B04B;
   }
 `;
