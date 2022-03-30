@@ -8,21 +8,10 @@ function apiInstance() {
     headers: {
       'Content-type': 'application/json',
       'Access-Control-Allow-Origin': '*',
-      accessToken: ACCESS_TOKEN,
+      Authorization: localStorage.getItem(ACCESS_TOKEN),
     },
   })
   return instance
 }
-const api = apiInstance()
 
-function onCheckingEmail(param, success, fail) {
-  api
-    .post(API_BASE_URL + '/api/v1/users/duplicate-check-id', param)
-    .then(success)
-    .catch(fail)
-}
-function onCheckingName(param, success, fail) {
-  
-}
-
-export { apiInstance, onCheckingEmail, onCheckingName }
+export { apiInstance }
