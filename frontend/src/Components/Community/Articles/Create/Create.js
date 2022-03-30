@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Col, Form, Modal } from "react-bootstrap";
+import { Alert, Col, Form, Modal } from "react-bootstrap";
 import * as S from './Style';
 import { MyButton } from "styles/Button";
 import { Input } from "styles/Input";
@@ -13,17 +13,23 @@ export default function Create() {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const validation = () => {
+    if (title && content) return true
+    else return false
+  }
   const handleSubmit = () => {
-    apiInstance()
-    .post(API_BASE_URL + '/community',
-      {
-        title: title,
-        content: content,
-        isNotice: false,
-    })
-      .then(setShow(false))
-      .then(window.location.reload())
-    };
+    if (validation()) {
+      apiInstance()
+      .post(API_BASE_URL + '/community',
+        {
+          title: title,
+          content: content,
+          isNotice: false,
+      })
+        .then(setShow(false))
+        .then(window.location.reload())    
+    }
+  } 
 
   return (
     <Col xs={2}
@@ -52,6 +58,7 @@ export default function Create() {
                 setTitle(e.target.value)
               }}
             />
+            { !title && <Alert variant="warning">제목을 입력하세요</Alert>}
           </Form.Group>
           <Form.Group className="mb-3">
             <Form.Label>내용</Form.Label>
@@ -62,6 +69,7 @@ export default function Create() {
                 setContent(e.target.value)
               }}
             />
+            { !content && <Alert variant="warning">내용을 입력하세요</Alert>}
           </Form.Group>
         </Form>
         </Modal.Body>
