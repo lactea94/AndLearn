@@ -3,7 +3,8 @@ import styled from "styled-components";
 
 export const Article = styled(Container)`
   width: 75%;
-  margin-bottom: 2rem;
+  margin-top: 3rem;
+  margin-bottom: 1rem;
   border-radius: 1rem;
   background-color: #F8F8F8;
   padding: 2rem;
