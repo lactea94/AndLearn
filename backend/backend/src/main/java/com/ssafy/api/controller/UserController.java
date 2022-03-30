@@ -1,16 +1,14 @@
 package com.ssafy.api.controller;
 
+import com.ssafy.api.request.UserEditInfoReq;
+import com.ssafy.api.request.UserEditPwReq;
 import com.ssafy.db.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.ssafy.api.request.UserLoginPostReq;
 import com.ssafy.api.request.UserRegisterPostReq;
@@ -49,7 +47,10 @@ public class UserController {
 
 	@Autowired
 	UserRepositorySupport userRepositorySupport;
-	
+
+	@Autowired
+	PasswordEncoder passwordEncoder;
+
 	@PostMapping()
 	@ApiOperation(value = "회원 가입", notes = "<strong>아이디와 패스워드</strong>를 통해 회원가입 한다.") 
     @ApiResponses({
@@ -87,6 +88,40 @@ public class UserController {
 		return ResponseEntity.status(200).body(UserRes.of(user));
 	}
 
+	@ApiOperation(value = "회원 본인 정보 수정", notes = "로그인한 회원 본인의 정보 중 닉네임과 이메일을 수정한다.")
+	@ApiResponses({
+			@ApiResponse(code = 200, message = "성공"),
+			@ApiResponse(code = 401, message = "엑세스 토큰 값이 틀림"),
+			@ApiResponse(code = 403, message = "엑세스 토큰이 없이 요청"),
+			@ApiResponse(code = 500, message = "서버 오류")
+	})
+	@PutMapping("/edit")
+	public ResponseEntity editUserInfo(@ApiIgnore Authentication authentication, @ApiParam(value="회원정보 수정 데이터", required = true) @RequestBody UserEditInfoReq userEditPutReq) {
+		SsafyUserDetails userDetails = (SsafyUserDetails)authentication.getDetails();
+		String userId = userDetails.getUsername();
+		User user = userService.getUserByUserId(userId);
+		user.setNickname(userEditPutReq.getNickname());
+		userRepository.save(user);
+		return new ResponseEntity(HttpStatus.OK);
+
+	}
+
+	@ApiOperation(value = "비밀번호 수정", notes = "로그인한 회원 본인의 정보 중 비밀번호를 수정한다.")
+	@ApiResponses({
+			@ApiResponse(code = 200, message = "성공"),
+			@ApiResponse(code = 401, message = "엑세스 토큰 값이 틀림"),
+			@ApiResponse(code = 403, message = "엑세스 토큰이 없이 요청"),
+			@ApiResponse(code = 500, message = "서버 오류")
+	})
+	@PutMapping("/edit-password")
+	public ResponseEntity editPassword(@ApiIgnore Authentication authentication, @RequestBody @ApiParam(value="새로운 비밀번호", required = true) UserEditPwReq userEditPasswordReq) {
+		SsafyUserDetails userDetails = (SsafyUserDetails)authentication.getDetails();
+		String userId = userDetails.getUsername();
+		User user = userService.getUserByUserId(userId);
+		user.setPassword(passwordEncoder.encode(userEditPasswordReq.getPassword()));
+		userRepository.save(user);
+		return new ResponseEntity(HttpStatus.OK);
+	}
 
 	@ApiOperation(value = "아이디 중복체크", notes = "중복된 아이디 체크한다.")
 	@ApiResponses({
