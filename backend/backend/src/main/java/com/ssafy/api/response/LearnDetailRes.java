@@ -20,6 +20,8 @@ public class LearnDetailRes {
     private List<RecordRes> records;
     private List<WordRes> words;
 
+    private String userId;
+
     public LearnDetailRes(Learn entity) {
 
         this.pictureUrl = entity.getPictureUrl();

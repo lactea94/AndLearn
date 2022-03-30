@@ -1,19 +1,19 @@
 package com.ssafy.db.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+
 @Entity
 @Getter
 @Setter
 @Table(name = "community")
+@NoArgsConstructor
 public class Community extends BaseEntity {
 
     @Column(nullable = false)
@@ -40,14 +40,12 @@ public class Community extends BaseEntity {
 
     // 0328 김병완 save용 builder 추가
     @Builder
-    public Community(Long id, String title, String content, LocalDateTime createdDate, LocalDateTime updatedDate, Boolean isNotice) {
-        this.id = id;
+    public Community(String title, String content, LocalDateTime createdDate, LocalDateTime updatedDate, Boolean isNotice, User user) {
         this.title = title;
         this.content = content;
         this.createdDate = createdDate;
         this.updatedDate = updatedDate;
         this.isNotice = isNotice;
-        // 이게 맞아?
-//        this.user = user;
+        this.user = user;
     }
 }
