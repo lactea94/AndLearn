@@ -20,12 +20,15 @@ public class UserRes{
 	String userId;
 	String nickname;
 	String image_url;
+	Boolean admin;
+
 	
 	public static UserRes of(User user) {
 		UserRes res = new UserRes();
 		res.setUserId(user.getUserId());
 		res.setNickname(user.getNickname());
 		res.setImage_url(user.getImage_url());
+		res.setAdmin(user.getAdmin());
 		return res;
 	}
 }
