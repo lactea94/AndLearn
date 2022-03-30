@@ -3,7 +3,7 @@ import { Comments } from "../Comments/Comments";
 import { Update } from "../Update/Update"
 import * as S from "./Style";
 import { MyButton } from "styles/Button";
-import { Col, Row } from "react-bootstrap";
+import { Col } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import { apiInstance } from "api";
 import { API_BASE_URL } from "constants";
