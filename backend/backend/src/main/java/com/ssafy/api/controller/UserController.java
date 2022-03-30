@@ -2,6 +2,7 @@ package com.ssafy.api.controller;
 
 import com.ssafy.api.request.UserEditInfoReq;
 import com.ssafy.api.request.UserEditPwReq;
+import com.ssafy.api.service.AwsS3Service;
 import com.ssafy.db.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,14 +11,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import com.ssafy.api.request.UserLoginPostReq;
 import com.ssafy.api.request.UserRegisterPostReq;
-import com.ssafy.api.response.UserLoginPostRes;
 import com.ssafy.api.response.UserRes;
 import com.ssafy.api.service.UserService;
 import com.ssafy.common.auth.SsafyUserDetails;
 import com.ssafy.common.model.response.BaseResponseBody;
-import com.ssafy.common.util.JwtTokenUtil;
 import com.ssafy.db.entity.User;
 import com.ssafy.db.repository.UserRepositorySupport;
 
@@ -26,6 +24,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import org.springframework.web.multipart.MultipartFile;
 import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.Map;
@@ -38,7 +37,8 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/v1/users")
 public class UserController {
-	
+
+	private final AwsS3Service awsS3Service;// 이거 왜이러는거
 	@Autowired
 	UserService userService;
 
@@ -50,6 +50,11 @@ public class UserController {
 
 	@Autowired
 	PasswordEncoder passwordEncoder;
+
+	public UserController(AwsS3Service awsS3Service) {// 이거 붙이니깐 됨..ㄷㄷ 이게 뭐냐고 그래서
+		this.awsS3Service = awsS3Service;
+	}
+
 
 	@PostMapping()
 	@ApiOperation(value = "회원 가입", notes = "<strong>아이디와 패스워드</strong>를 통해 회원가입 한다.") 
@@ -106,6 +111,22 @@ public class UserController {
 
 	}
 
+	// 주윤 유저 이미지를 위해 추가 03.31.3
+	@ApiOperation(value = "Amazon S3에 파일 업로드", notes = "Amazon S3에 파일 업로드 ")
+	@ApiResponses({
+			@ApiResponse(code = 200, message = "성공"),
+			@ApiResponse(code = 401, message = "엑세스 토큰 값이 틀림"),
+			@ApiResponse(code = 403, message = "엑세스 토큰이 없이 요청"),
+			@ApiResponse(code = 500, message = "서버 오류")
+	})
+	@PostMapping("/image")
+	public ResponseEntity<String> uploadFile(@ApiIgnore Authentication authentication, @ApiParam(value="이미지파일 1개만", required = true) @RequestPart MultipartFile multipartFile) {
+		SsafyUserDetails userDetails = (SsafyUserDetails)authentication.getDetails();
+		String userId = userDetails.getUsername();
+		User user = userService.getUserByUserId(userId);
+//		user.setImage_url();
+		return ResponseEntity.status(200).body(awsS3Service.uploadFile(multipartFile));
+	}
 	@ApiOperation(value = "비밀번호 수정", notes = "로그인한 회원 본인의 정보 중 비밀번호를 수정한다.")
 	@ApiResponses({
 			@ApiResponse(code = 200, message = "성공"),
