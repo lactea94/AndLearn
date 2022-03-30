@@ -1,28 +1,26 @@
 import axios from 'axios'
 
-import { API_BASE_URL, ACCESS_TOKEN } from '../constants/index'
+import { API_BASE_URL, ACCESS_TOKEN } from 'constants'
 
-function apiInstance() {
+export function userInstance() {
   const instance = axios.create({
     baseURL: API_BASE_URL,
     headers: {
       'Content-type': 'application/json',
       'Access-Control-Allow-Origin': '*',
-      accessToken: ACCESS_TOKEN,
     },
   })
   return instance
 }
-const api = apiInstance()
 
-function onCheckingEmail(param, success, fail) {
-  api
-    .post(API_BASE_URL + '/api/v1/users/duplicate-check-id', param)
-    .then(success)
-    .catch(fail)
+export function apiInstance() {
+  const instance = axios.create({
+    baseURL: API_BASE_URL,
+    headers: {
+      'Content-type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
+      'Authorization': `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
+    },
+  })
+  return instance
 }
-function onCheckingName(param, success, fail) {
-  
-}
-
-export { apiInstance, onCheckingEmail, onCheckingName }

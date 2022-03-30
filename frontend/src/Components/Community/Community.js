@@ -6,15 +6,12 @@ import Articles from './Articles/Articles';
 import Create from './Articles/Create/Create';
 import Pagination from './Pagination/Pagination';
 import { Search } from './Search/Search';
+import { apiInstance } from 'api';
 import * as S from './Style';
+import { API_BASE_URL } from 'constants';
 
 export function Community() {
-
-  const notices = [
-    { id: 1230, userId: 1, title:'2', body:'123123', created_at: '2022. 03. 10 11:14'},
-    { id: 1231, userId: 1, title:'1', body:'123123', created_at: '2022. 03. 14 13:10'},
-    { id: 1233, userId: 1, title:'3', body:'123123', created_at: '2022. 03. 21 11:14'},
-  ];
+  const [notices, setNotices] = useState([]);
   const [loading, setLoading] = useState(true);
   notices.sort((a, b) => a.id - b.id);
   const currentUser = 2
@@ -27,9 +24,18 @@ export function Community() {
   const offset = (page - 1) * limit;
 
   useEffect(() => {
-    fetch("https://jsonplaceholder.typicode.com/posts")
-    .then((res) => res.json())
-    .then((data) => setArticles(data.sort((a, b) => b.id - a.id)))
+    apiInstance().get(API_BASE_URL + '/api/v1/users/me')
+    .then((response) => console.log(response))
+  }, [])
+
+  useEffect(() => {
+    apiInstance().get(API_BASE_URL + '/api/v1/community')
+    .then((response) => setArticles(response.data))
+  }, []);
+
+  useEffect(() => {
+    apiInstance().get(API_BASE_URL + '/api/v1/community/notice')
+    .then((response) => setNotices(response.data))
   }, []);
 
   useEffect(() => {
@@ -37,7 +43,7 @@ export function Community() {
       setFilterdArticle(() => 
         articles.filter((article) => 
           article.title.toLowerCase().includes(searchText.toLowerCase())
-    ))} else if (searchCategory === 'body') {
+    ))} else if (searchCategory === 'content') {
       setFilterdArticle(() => 
         articles.filter((article) => 
           article.body.toLowerCase().includes(searchText.toLowerCase())
