@@ -34,9 +34,9 @@ export function Detail() {
   return (
     <S.Article>
       <S.Header>
-        <S.Title xs={10}>{article.title}</S.Title>
+        <S.Title xs={9}>{article.title}</S.Title>
         <S.Created>{DateFormat(article.createdAt)}</S.Created>
-        <S.Created>{DateFormat(article.updatedAt)}</S.Created>
+        <S.Updated>{DateFormat(article.updatedAt)}</S.Updated>
       </S.Header>
       <S.SubHeader>
         <S.User>{article.nickname}</S.User>
@@ -57,7 +57,7 @@ export function Detail() {
         }
       </S.SubHeader>
       <S.Body>{article.content}</S.Body>
-      <Comments></Comments>
+      <Comments />
     </S.Article>
   )
 };

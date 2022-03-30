@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { Col, Form, Modal } from "react-bootstrap";
+import { Alert, Col, Form, Modal } from "react-bootstrap";
 import * as S from './Style';
 import { MyButton } from "styles/Button";
 import { apiInstance } from "api";
@@ -9,22 +9,28 @@ import { API_BASE_URL } from "constants";
 export function Update(props) {
   const { articleId } = useParams();
   const navigate = useNavigate();
-  const [show, setShow] = useState(false);
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const [show, setShow] = useState(false);
   const [title, setTitle] = useState(props.title);
   const [content, setContent] = useState(props.content);
 
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+  const validation = () => {
+    if (title && content) return true
+    else return false
+  }
   const handleClick = () => {
-    apiInstance()
-    .put(API_BASE_URL + `/community/${articleId}`,
-      {
-        title: title,
-        content: content,
-    })
-      .then(setShow(false))
-      .then(navigate(0))
+    if (validation()) {
+      apiInstance()
+      .put(API_BASE_URL + `/community/${articleId}`,
+        {
+          title: title,
+          content: content,
+      })
+        .then(setShow(false))
+        .then(navigate(0))
+    }
   }
 
   return (
@@ -48,6 +54,7 @@ export function Update(props) {
                 setTitle(e.target.value)
               }}
             />
+            { !title && <Alert variant="warning">제목을 입력하세요</Alert>}
           </Form.Group>
           <Form.Group className="mb-3">
             <Form.Label>내용</Form.Label>
@@ -58,6 +65,7 @@ export function Update(props) {
                 setContent(e.target.value)
               }}
             />
+            { !content && <Alert variant="warning">내용을 입력하세요</Alert>}
           </Form.Group>
         </Form>
         </Modal.Body>
