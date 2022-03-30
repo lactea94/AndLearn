@@ -28,6 +28,7 @@ import java.util.Optional;
 @AllArgsConstructor
 @CrossOrigin("*")
 @RequestMapping("/v1/community/{communityId}/comment")
+@Api(value = "Comment API", tags = {"Comment"})
 public class CommentController {
 
     @Autowired
@@ -46,7 +47,7 @@ public class CommentController {
     })
     @GetMapping
     public ResponseEntity comments(@PathVariable Long communityId) {
-        List<Comment> list = commentRepository.findByCommunityId(communityId);
+        List<Comment> list = commentRepository.findAllByCommunityId(communityId);
         List<CommentListRes> commentList = new ArrayList<>();
 
         Collections.reverse(list);

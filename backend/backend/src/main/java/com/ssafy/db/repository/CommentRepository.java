@@ -10,7 +10,7 @@ import java.util.Optional;
 public interface CommentRepository extends JpaRepository<Comment, Long> {
     Optional<Comment> findById(Long id);
 
-    List<Comment> findByCommunityId(Long communityId);
+    List<Comment> findAllByCommunityId(Long communityId);
 
     @Query(value = "select * from comment", nativeQuery = true)
     List<Object[]> findCommentList();

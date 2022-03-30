@@ -43,15 +43,13 @@ public class CommunityController {
     })
     @GetMapping
     public ResponseEntity list() {
-        List<Community> list = communityRepository.findAll();
+        List<Community> list = communityRepository.findByIsNoticeFalse();
         List<CommunityListRes> communityList = new ArrayList<>();
 
         Collections.reverse(list);
 
         for (Community entity : list) {
-            if (entity.getIsNotice().equals(Boolean.FALSE)) {
-                communityList.add(new CommunityListRes(entity));
-            }
+            communityList.add(new CommunityListRes(entity));
         }
 
         return new ResponseEntity<>(communityList, HttpStatus.OK);
@@ -70,7 +68,7 @@ public class CommunityController {
 
         User user = userService.getUserByUserId(userId);
 
-        List<Community> list = communityRepository.findByUserId(user.getId());
+        List<Community> list = communityRepository.findAllByUserId(user.getId());
 
         Collections.reverse(list);
 
@@ -188,15 +186,13 @@ public class CommunityController {
     })
     @GetMapping("/notice")
     public ResponseEntity noticeList() {
-        List<Community> list = communityRepository.findAll();
+        List<Community> list = communityRepository.findByIsNoticeTrue();
         List<CommunityListRes> communityList = new ArrayList<>();
 
         Collections.reverse(list);
 
         for (Community entity : list) {
-            if (entity.getIsNotice().equals(Boolean.TRUE)) {
-                communityList.add(new CommunityListRes(entity));
-            }
+            communityList.add(new CommunityListRes(entity));
         }
         return new ResponseEntity<>(communityList, HttpStatus.OK);
     }
