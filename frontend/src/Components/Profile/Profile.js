@@ -31,14 +31,14 @@ export function Profile() {
     <div>
       <Container className='mt-3'>
         <Row>
-          <Col xs={2}>
+          <Col lg={2}>
           </Col>
-          <Col xs={2}>
+          <Col lg={2}>
             <Image src={`${profileImgUrl ? profileImgUrl : randomProfileImgUrl}`} alt="profile_image" roundedCircle fluid></Image>
           </Col>
-          <Col xs={6}>
+          <Col lg={6}>
             <div className='d-flex flex-column align-items-start ps-5'>
-              <div className='mt-1 mb-3'>
+              <div className='mt-2 mb-3'>
                 <h1 className='m-0'>{userId}</h1>
               </div>
               <div>
@@ -46,7 +46,7 @@ export function Profile() {
               </div>           
             </div>
           </Col>
-          <Col xs={2} className="row align-items-end">
+          <Col lg={2} className="row align-items-end">
             <Link to={`edit`}>
               <MyButton color="#58C063">
                 Update
