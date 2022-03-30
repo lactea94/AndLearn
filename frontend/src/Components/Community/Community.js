@@ -13,8 +13,6 @@ import { API_BASE_URL } from 'constants';
 export function Community() {
   const [notices, setNotices] = useState([]);
   const [loading, setLoading] = useState(true);
-  notices.sort((a, b) => a.id - b.id);
-  const currentUser = 2
   const [articles, setArticles] = useState([]);
   const [limit, setLimit] = useState(10);
   const [searchCategory, setSearchCategory] = useState("title");
@@ -24,17 +22,12 @@ export function Community() {
   const offset = (page - 1) * limit;
 
   useEffect(() => {
-    apiInstance().get(API_BASE_URL + '/api/v1/users/me')
-    .then((response) => console.log(response))
-  }, [])
-
-  useEffect(() => {
-    apiInstance().get(API_BASE_URL + '/api/v1/community')
+    apiInstance().get(API_BASE_URL + '/community')
     .then((response) => setArticles(response.data))
   }, []);
 
   useEffect(() => {
-    apiInstance().get(API_BASE_URL + '/api/v1/community/notice')
+    apiInstance().get(API_BASE_URL + '/community/notice')
     .then((response) => setNotices(response.data))
   }, []);
 
@@ -70,7 +63,6 @@ export function Community() {
               articles={filteredArticles}
               offset={offset}
               limit={limit}
-              currentUser={currentUser}
             />
           </Row>
           <Row>

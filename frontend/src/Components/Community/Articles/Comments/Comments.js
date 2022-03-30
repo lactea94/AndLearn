@@ -1,8 +1,7 @@
 import { Create } from "./Create/Create";
-import { DateFormat } from "../../module/module";
+import { DateFormat } from "Util/DateFormat";
 import * as S from "./Style";
 
-const nowTime = new Date();
 const comments = [
   {id: 1, userId: 1, body: "안녕하세요", created_at: "2022. 03. 14 11:10"},
   {id: 2, userId: 2, body: "반갑습니다", created_at: "2022. 03. 15 11:10"},
@@ -20,7 +19,7 @@ export function Comments({ currentUser }) {
             <S.MyComment key={comment.id} >
               <S.MyCommentContent>
                 <S.Body>{comment.body}</S.Body>
-                <S.Created>{DateFormat(nowTime, comment.created_at)}</S.Created>
+                <S.Created>{DateFormat(comment.created_at)}</S.Created>
                 <S.Button>삭제</S.Button>
               </S.MyCommentContent>
             </S.MyComment>
@@ -34,7 +33,7 @@ export function Comments({ currentUser }) {
               <S.CommentContent>
                 <S.User>{comment.userId}</S.User>
                 <S.Body>{comment.body}</S.Body>
-                <S.Created>{DateFormat(nowTime, comment.created_at)}</S.Created>
+                <S.Created>{DateFormat(comment.created_at)}</S.Created>
               </S.CommentContent>
             </S.Comment>
           )

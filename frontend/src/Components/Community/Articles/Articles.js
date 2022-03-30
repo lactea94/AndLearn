@@ -1,7 +1,5 @@
-import { DateFormat } from '../module/module';
+import { DateFormat } from 'Util/DateFormat';
 import * as S from './Style';
-
-const nowTime = new Date();
 
 export default function Articles({ notices, articles, offset, limit, currentUser }) {
   const NoSearchItems = () => {
@@ -33,7 +31,7 @@ export default function Articles({ notices, articles, offset, limit, currentUser
           </S.Column>
           <S.Column xs={2}>{notice.userId}</S.Column>
           <S.Column xs={2}>
-            {DateFormat(nowTime, notice.createdAt)}
+            {DateFormat(notice.createdAt)}
           </S.Column>
         </S.TableNoticeRow>
       ))}
@@ -48,7 +46,7 @@ export default function Articles({ notices, articles, offset, limit, currentUser
             </S.DetailLink>
           </S.Column>
           <S.Column xs={2}>{article.userId}</S.Column>
-          <S.Column xs={2}>{DateFormat(nowTime, article.createdAt)}</S.Column>
+          <S.Column xs={2}>{DateFormat(article.createdAt)}</S.Column>
         </S.TableRow>
       ))}
       {(articles.length === 0) && (<NoSearchItems />)}
