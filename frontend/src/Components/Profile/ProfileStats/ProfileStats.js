@@ -189,7 +189,7 @@ export function ProfileStats() {
   }, [myLearns])
 
   return(
-    <div>
+    <div style={{ minHeight:'100vh'}}>
       <S.CalendarBox className="d-flex flex-column justify-content-end align-items-end overflow-hidden mx-auto pt-2">
         <S.Calendar className="d-flex flex-column flex-wrap overflow-hidden ps-4 pt-3">
           {dailyBoxs}

@@ -3,6 +3,18 @@ import { useState } from "react"
 import { Link } from "react-router-dom"
 import { MyButton } from "styles/Button"
 import axios from "axios"
+import styled from "styled-components"
+import { apiInstance } from "api"
+import { API_BASE_URL, ACCESS_TOKEN } from "constants"
+
+const myToken = localStorage.getItem('accesstoken')
+
+const MyForm = styled(Form)`
+  @media screen and (min-width: 576px) {
+    width: 50%;
+  }
+  width: 90%;
+`
 
 export function UserInfoEdit() {
   const [userName, setUserName] = useState('')
@@ -10,7 +22,9 @@ export function UserInfoEdit() {
   const [dName, setDName] = useState('')
   const [checkName, setCheckName] = useState(false)
   const [imgBase64, setImgBase64] = useState([]); // 파일 base64
-  const [imgFile, setImgFile] = useState(null);	//파일	
+  const [imgFile, setImgFile] = useState(null);	//파일
+
+  const api = apiInstance();
 
   function onChangeUserName(e) {
     setUserNameError(false)
@@ -39,8 +53,8 @@ export function UserInfoEdit() {
   }
 
   function onCheckName() {
-    axios
-      .post('https://j6c201.p.ssafy.io/api/v1/users/duplicate-check-nickname', {
+    api
+      .post('/api/v1/users/duplicate-check-nickname', {
         nickname: userName,
       })
       .then((res) => {
@@ -53,34 +67,41 @@ export function UserInfoEdit() {
       })
   }
 
-  function onSubmit(e) {
-    console.log(imgFile)
+  function onSubmit() {
+    // console.log(imgFile)
     console.log(userName)
-    if (checkName) {
-      const fd = new FormData();
-      fd.append("file", imgFile);
-      fd.append("userName", userName);
+    console.log(myToken)
 
-      axios
-        .post(
-          "https://j6c201.p.ssafy.io/api/v1/users/...",
-          fd,
-          {
-            headers: {
-              'Content-Type': 'multipart/form-data',
-            }
-          }
-        )
-        .then(res => {
-          console.log(res)
-        })
-        .catch()
+    const data = {
+      nickname: userName
     }
+
+    // const fd = new FormData();
+    // fd.append("file", imgFile);
+    // fd.append("nickname", userName);
+
+    axios
+      .put(
+          "https://j6c201.p.ssafy.io/api/v1/users/edit", data,
+        {
+          headers: {
+            'Content-type': 'application/json',
+            'Access-Control-Allow-Origin': '*',
+            'Authorization': `Bearer ${myToken}`,
+          },
+        }
+      )
+      .then(res => {
+        console.log(res)
+      })
+      .catch(e => {
+        console.log(e)
+      })
   }
 
   return (
     <div className="row justify-content-center">
-      <Form style={{ width: '50%' }}>
+      <MyForm>
         <Form.Group className="mb-3">
           <Form.Control
             maxLength={20}
@@ -122,7 +143,7 @@ export function UserInfoEdit() {
             <MyButton color="#58C063">비밀번호 수정</MyButton>
           </Link>
         </div>
-      </Form>
+      </MyForm>
     </div>
   )
 }
