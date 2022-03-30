@@ -10,7 +10,6 @@ import com.ssafy.db.entity.User;
 import com.ssafy.db.repository.CommunityRepository;
 import io.swagger.annotations.*;
 import lombok.AllArgsConstructor;
-import org.checkerframework.checker.guieffect.qual.PolyUIType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -50,7 +49,9 @@ public class CommunityController {
         Collections.reverse(list);
 
         for (Community entity : list) {
-            communityList.add(new CommunityListRes(entity));
+            if (entity.getIsNotice().equals(Boolean.FALSE)) {
+                communityList.add(new CommunityListRes(entity));
+            }
         }
 
         return new ResponseEntity<>(communityList, HttpStatus.OK);
@@ -63,19 +64,18 @@ public class CommunityController {
     })
     @GetMapping("/me")
     public ResponseEntity communityListByUser(@ApiIgnore Authentication authentication) {
-        List<Community> list = communityRepository.findAll();
         List<CommunityListRes> communityList = new ArrayList<>();
         SsafyUserDetails userDetails = (SsafyUserDetails)authentication.getDetails();
         String userId = userDetails.getUsername();
 
         User user = userService.getUserByUserId(userId);
 
+        List<Community> list = communityRepository.findByUserId(user.getId());
+
         Collections.reverse(list);
 
         for (Community entity : list) {
-            if (entity.getUser().equals(user)) {
-                communityList.add(new CommunityListRes(entity));
-            }
+            communityList.add(new CommunityListRes(entity));
         }
 
         return new ResponseEntity<>(communityList, HttpStatus.OK);
@@ -129,7 +129,7 @@ public class CommunityController {
 
     @ApiOperation(value = "게시글 작성", notes = "user가 게시글을 작성한다")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "삭제 성공"),
+            @ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 401, message = "인증 실패"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
@@ -194,7 +194,7 @@ public class CommunityController {
         Collections.reverse(list);
 
         for (Community entity : list) {
-            if (entity.getIsNotice()) {
+            if (entity.getIsNotice().equals(Boolean.TRUE)) {
                 communityList.add(new CommunityListRes(entity));
             }
         }
