@@ -38,7 +38,7 @@ export function Search({ setSearchText, setSearchCategory, setPage }) {
       <Input
         type="text"
         value={text}
-        onChange={(e) => {
+        onChange={e => {
           setText(e.target.value);
         }}
         onKeyPress={handleKeyPress}

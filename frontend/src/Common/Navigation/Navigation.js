@@ -2,22 +2,31 @@ import { useState, useEffect } from 'react'
 import { Navbar, Container, Nav, Offcanvas } from 'react-bootstrap'
 import * as S from './Style'
 import { ACCESS_TOKEN } from 'constants/index'
+import { apiInstance } from 'api'
+
 export function Navigation() {
-  // 임시로 사용하는 프로필 접근 닉네임? 아이디?
-  const userId = 'kimcookie'
   const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [myInfo, setMyInfo] = useState({});
   const token = localStorage.getItem(ACCESS_TOKEN)
+  const api = apiInstance();
+
   useEffect(() => {
     if (token) {
       setIsAuthenticated(true)
+      api.get('users/me')
+        .then(res => {
+          setMyInfo(res.data)
+        })
     } else {
       setIsAuthenticated(false)
     }
   }, [])
+
   function logout() {
     localStorage.removeItem(ACCESS_TOKEN)
     window.location.replace(`/`)
   }
+
   return (
     <S.MyNavbar expand={false}>
       <Container fluid>
@@ -33,7 +42,7 @@ export function Navigation() {
               <S.NavItem to="/">Home</S.NavItem>
               {isAuthenticated ? (
                 <>
-                  <S.NavItem to={`profile/${userId}/content`}>
+                  <S.NavItem to={`profile/${myInfo.nickname}/content`}>
                     Profile
                   </S.NavItem>
                   <S.NavItem to="learn">Learn</S.NavItem>

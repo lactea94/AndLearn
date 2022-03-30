@@ -1,31 +1,48 @@
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useParams, useNavigate } from "react-router-dom";
 import { Comments } from "../Comments/Comments";
 import { Update } from "../Update/Update"
 import * as S from "./Style";
 import { MyButton } from "styles/Button";
 import { Col } from "react-bootstrap";
+import { useEffect, useState } from "react";
+import { apiInstance } from "api";
 
 export function Detail() {
-  const { articleId } = useParams();
-  const { state } = useLocation();
+  const { articleId, userId } = useParams();
+  const [article, setArticle] = useState({});
+  const api = apiInstance();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    api.get(`/community/${articleId}`)
+    .then(resposne => setArticle(resposne.data))
+  }, [articleId])
+
+  const deleteArticle = () => {
+    api.delete(`/community/${articleId}`)
+    .then(response => {
+      navigate(`/profile/${userId}/articles`)
+    })
+  }
+
   return (
     <S.Article>
       <S.Header>
-        <S.Title xs={10}>{articleId} : {state.title}</S.Title>
-        <S.Created>작성 시간</S.Created>
+        <S.Title xs={10}>{article.title}</S.Title>
+        <S.Created>{article.createdAt}</S.Created>
       </S.Header>
       <S.SubHeader>
-        <S.User>유저 아이디: {state.userId}</S.User>
-        { state.currentUser === state.userId &&
+        <S.User>{article.nickname}</S.User>
         <>
           <Col xs={7}/>
-          <Col><MyButton color="red" size="sm">삭제</MyButton></Col>
+          <Col>
+            <MyButton onClick={() => {deleteArticle()}} color="red" size="sm">삭제</MyButton>
+          </Col>
           <Update />
         </>
-        }
       </S.SubHeader>
-      <S.Body>{state.body}</S.Body>
-      <Comments currentUser={state.currentUser}></Comments>
+      <S.Body>{article.content}</S.Body>
+      <Comments></Comments>
     </S.Article>
   )
 };
