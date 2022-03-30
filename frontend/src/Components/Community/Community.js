@@ -13,8 +13,6 @@ import { API_BASE_URL } from 'constants';
 export function Community() {
   const [notices, setNotices] = useState([]);
   const [loading, setLoading] = useState(true);
-  notices.sort((a, b) => a.id - b.id);
-  const currentUser = 2
   const [articles, setArticles] = useState([]);
   const [limit, setLimit] = useState(10);
   const [searchCategory, setSearchCategory] = useState("title");
@@ -70,7 +68,6 @@ export function Community() {
               articles={filteredArticles}
               offset={offset}
               limit={limit}
-              currentUser={currentUser}
             />
           </Row>
           <Row>

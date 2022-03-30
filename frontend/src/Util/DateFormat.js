@@ -1,7 +1,8 @@
 import Moment from 'react-moment';
 import 'moment/locale/ko';
 
-export function DateFormat(nowTime, date) {
+export function DateFormat(date) {
+  const nowTime = new Date();
   const createTime = new Date(date);
   if (nowTime - createTime < 86400000) {
     return (
