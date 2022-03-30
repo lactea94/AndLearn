@@ -27,8 +27,8 @@ class FileToURL(APIView):
         )
             
         file_urls = f"https://s3.ap-northeast-2.amazonaws.com/ssafy-s3-bucket/{file.name}" 
-        learn = Learn(picture_url=file_urls)
+        learn = Learn(picture_url=file.name)
         learn.save()
         words = expect(file_urls)
 
-        return JsonResponse({'words': words}, status=200)
+        return JsonResponse({'words': words, 'id':learn.pk}, status=200)
