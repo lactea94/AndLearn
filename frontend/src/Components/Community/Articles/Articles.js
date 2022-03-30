@@ -2,7 +2,6 @@ import { DateFormat } from 'Util/DateFormat';
 import * as S from './Style';
 
 export default function Articles({ notices, articles, offset, limit, me }) {
-
   const NoSearchItems = () => {
     return (
       <div style={{margin: "5rem"}}>
@@ -12,22 +11,24 @@ export default function Articles({ notices, articles, offset, limit, me }) {
       </div>
     )
   }
-  console.log(articles)
+
   function ArticleComponent(article, notice) {
     return (
       <S.TableRow notice={notice} key={article.id}>
-        <S.Column xs={1}>공지</S.Column>
+        <S.Column xs={1}>
+          {notice ? '공지' : `${article.id}`}
+        </S.Column>
         <S.Column xs={7}>
           <S.DetailLink
             to={`${article.id}`}
             state={{
-              user: me
+              user: me,
             }}
           >
             {article.title}
           </S.DetailLink>
         </S.Column>
-        <S.Column xs={2}>{article.userId}</S.Column>
+        <S.Column xs={2}>{article.nickname}</S.Column>
         <S.Column xs={2}>
           {DateFormat(article.createdDate)}
         </S.Column>

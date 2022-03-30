@@ -3,7 +3,7 @@ import { Comments } from "../Comments/Comments";
 import { Update } from "../Update/Update"
 import * as S from "./Style";
 import { MyButton } from "styles/Button";
-import { Col } from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import { apiInstance } from "api";
 import { API_BASE_URL } from "constants";
@@ -12,8 +12,8 @@ import { DateFormat } from 'Util/DateFormat';
 export function Detail() {
   const { articleId } = useParams();
   const { state } = useLocation();
-  const [article, setArticle] = useState({});
   const navigate = useNavigate();
+  const [article, setArticle] = useState({});
   
   useEffect(() => {
     apiInstance().get(API_BASE_URL + `/community/${articleId}`)
@@ -34,24 +34,29 @@ export function Detail() {
         <S.Updated>{DateFormat(article.updatedAt)}</S.Updated>
       </S.Header>
       <S.SubHeader>
-        <S.User>{article.nickname}</S.User>
+        <S.User xs={2}>{article.nickname}</S.User>
+        <Col xs={2} sm={5} md={6}/>
+        {(article.nickname === state.user.nickname || state.user.admin) && 
+          <Col>
+            <MyButton
+              color="red"
+              size="sm"
+              onClick={handleClick}
+            >
+              삭제
+            </MyButton>
+          </Col>}
         {article.nickname === state.user.nickname && 
-          <>
-            <Col xs={7}/>
-            <Col>
-              <MyButton
-                color="red"
-                size="sm"
-                onClick={handleClick}
-              >
-                삭제
-              </MyButton>
-            </Col>
-            <Update title={article.title} content={article.content}/>
-          </>
-        }
+          <Update
+            title={article.title}
+            content={article.content}
+        />}
       </S.SubHeader>
-      <S.Body>{article.content}</S.Body>
+      <S.Body style={{
+        whiteSpace: "pre-wrap"
+      }}>
+        {article.content}
+      </S.Body>
       <Comments />
     </S.Article>
   )

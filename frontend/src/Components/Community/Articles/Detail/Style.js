@@ -33,6 +33,7 @@ export const Updated = styled(Col)`
 
 export const SubHeader = styled(Row)`
   align-items: center;
+  // justify-content: between;
   background-color: #58C063;
   padding: 0.4rem 0;
   border-radius: 0.3rem;

@@ -83,7 +83,7 @@ export function Community() {
                   setSearchCategory={setSearchCategory}
                   setPage={setPage}
                 />
-                <Create />
+                <Create me={me}/>
               </Row>
             </Container>
           </Row>
