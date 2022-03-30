@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { Comments } from "../Comments/Comments";
 import { Update } from "../Update/Update"
 import * as S from "./Style";
@@ -13,30 +13,46 @@ export function Detail() {
   const { articleId } = useParams();
   const [article, setArticle] = useState({});
   const [me, setMe] = useState({});
+  const navigate = useNavigate();
   
   useEffect(() => {
     apiInstance().get(API_BASE_URL + '/users/me')
-    .then((response) => setMe(response.data.nickname))
+      .then((response) => setMe(response.data.nickname))
   }, [me])
 
   useEffect(() => {
     apiInstance().get(API_BASE_URL + `/community/${articleId}`)
-    .then(resposne => setArticle(resposne.data))
+      .then(resposne => setArticle(resposne.data))
   }, [articleId])
+
+  const handleClick = () => {
+    apiInstance().delete(API_BASE_URL + `/community/${articleId}`)
+      .then(navigate('/community'))
+      .then(navigate(0))
+  }
 
   return (
     <S.Article>
       <S.Header>
         <S.Title xs={10}>{article.title}</S.Title>
         <S.Created>{DateFormat(article.createdAt)}</S.Created>
+        <S.Created>{DateFormat(article.updatedAt)}</S.Created>
       </S.Header>
       <S.SubHeader>
         <S.User>{article.nickname}</S.User>
         {article.nickname === me && 
           <>
             <Col xs={7}/>
-            <Col><MyButton color="red" size="sm">삭제</MyButton></Col>
-            <Update />
+            <Col>
+              <MyButton
+                color="red"
+                size="sm"
+                onClick={handleClick}
+              >
+                삭제
+              </MyButton>
+            </Col>
+            <Update title={article.title} content={article.content}/>
           </>
         }
       </S.SubHeader>
