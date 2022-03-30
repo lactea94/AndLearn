@@ -36,7 +36,7 @@ export default function Articles({ notices, articles, offset, limit, currentUser
             <S.DetailLink
               to={`${notice.id}`}
               state={{
-                username: me.nickname
+                user: me
               }}
             >
               {notice.title}
@@ -55,7 +55,7 @@ export default function Articles({ notices, articles, offset, limit, currentUser
             <S.DetailLink
               to={`${article.id}`}
               state={{
-                username: me.nickname
+                user: me
               }}
             >
               {article.title}

@@ -11,10 +11,10 @@ import { DateFormat } from 'Util/DateFormat';
 
 export function Detail() {
   const { articleId } = useParams();
-  const navigate = useNavigate();
   const { state } = useLocation();
   const [article, setArticle] = useState({});
-
+  const navigate = useNavigate();
+  
   useEffect(() => {
     apiInstance().get(API_BASE_URL + `/community/${articleId}`)
     .then(resposne => setArticle(resposne.data))
@@ -35,7 +35,7 @@ export function Detail() {
       </S.Header>
       <S.SubHeader>
         <S.User>{article.nickname}</S.User>
-        {article.nickname === state.username && 
+        {article.nickname === state.user.nickname && 
           <>
             <Col xs={7}/>
             <Col>
