@@ -29,11 +29,15 @@ export function Login() {
       .post(API_BASE_URL + '/api/v1/auth/login', data)
       .then((response) => {
         if (response.data.accessToken) {
-          localStorage.setItem('login-token', response.data.accessToken)
+          localStorage.setItem('accesstoken', response.data.accessToken)
         }
         nav('/')
       })
-      .catch((err) => console.log(err))
+      .catch((error) => {
+        if (error.response.status === 401) {
+          alert('비밀번호를 다시 입력해주세요.')
+        }
+      })
   }
 
   return (

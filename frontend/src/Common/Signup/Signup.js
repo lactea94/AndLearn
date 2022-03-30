@@ -25,8 +25,9 @@ export function Signup() {
   const [checkName, setCheckName] = useState(false)
 
   const navigate = useNavigate()
+
   function onChangePassword(e) {
-    const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,}$/
+    const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,}$/
     if (!e.target.value || passwordRegex.test(e.target.value))
       setPasswordError(false)
     else setPasswordError(true)
@@ -53,7 +54,7 @@ export function Signup() {
     setEmail(e.target.value)
   }
 
-  function validation() {
+  function validation(e) {
     if (!password) setPasswordError(true)
     if (!confirmPassword) setConfirmPasswordError(true)
     if (!userName) setUserNameError(true)
@@ -67,7 +68,9 @@ export function Signup() {
       email &&
       checkEmail &&
       checkName &&
-      password === confirmPassword
+      password === confirmPassword &&
+      !passwordError &&
+      !emailError
     )
       return true
     else return false
@@ -95,7 +98,7 @@ export function Signup() {
   }
 
   function onSubmit(e) {
-    if (!validation()) return
+    if (!validation(e)) return
     const url = API_BASE_URL + '/api/v1/users'
     api
       .post(url, { id: email, nickname: userName, password: password })
@@ -165,7 +168,7 @@ export function Signup() {
               />
               {passwordError && (
                 <div className="invalid-input">
-                  최소 8자리, 영문, 숫자, 특수문자 모두 포함해주세요.
+                  최소 8자리, 영문, 숫자를 포함해주세요.
                 </div>
               )}
             </Col>
