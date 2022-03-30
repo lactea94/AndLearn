@@ -6,6 +6,7 @@ import Articles from './Articles/Articles';
 import Create from './Articles/Create/Create';
 import Pagination from './Pagination/Pagination';
 import { Search } from './Search/Search';
+import * as S from './Style';
 
 export function Community() {
 
@@ -53,7 +54,7 @@ export function Community() {
         <Loading/>
       ) : (
         <Container style={{marginTop:'5rem'}}>
-          <h1>Community</h1>
+          <S.Header>Community</S.Header>
           <Row>
             <Outlet />
           </Row>

@@ -5,7 +5,7 @@ import * as S from "./Style"
 export function Navigation() {
   // 임시로 사용하는 프로필 접근 닉네임? 아이디?
   const userId = 'kimcookie'
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [isAuthenticated, setIsAuthenticated] = useState(true)
   
 
   return (
