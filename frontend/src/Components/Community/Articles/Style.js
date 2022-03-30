@@ -25,18 +25,11 @@ export const TableRow = styled(Row)`
   padding: 0.5rem 0;
   align-items: center;
   border-top: solid 1px #DFDFDF;
+  background-color: ${props => props.notice ? "#58C063" : "inherit"};
   
 
   &:hover {
-    background-color: #DFDFDF;
-  }
-`;
-
-export const TableNoticeRow = styled(TableRow)`
-  background-color: #58C063;
-
-  &:hover {
-    background-color: #90D597;
+    background-color: ${props => props.notice ? "#58C063" : "#DFDFDF"};
   }
 `;
 

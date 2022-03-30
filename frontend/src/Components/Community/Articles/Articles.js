@@ -1,16 +1,7 @@
-import { apiInstance } from 'api';
-import { API_BASE_URL } from 'constants';
-import { useEffect, useState } from 'react';
 import { DateFormat } from 'Util/DateFormat';
 import * as S from './Style';
 
-export default function Articles({ notices, articles, offset, limit, currentUser }) {
-  const [me, setMe] = useState({});
-
-  useEffect(() => {
-    apiInstance().get(API_BASE_URL + '/users/me')
-      .then((response) => setMe(response.data))
-  }, [me])
+export default function Articles({ notices, articles, offset, limit, me }) {
 
   const NoSearchItems = () => {
     return (
@@ -21,6 +12,29 @@ export default function Articles({ notices, articles, offset, limit, currentUser
       </div>
     )
   }
+  console.log(articles)
+  function ArticleComponent(article, notice) {
+    return (
+      <S.TableRow notice={notice} key={article.id}>
+        <S.Column xs={1}>공지</S.Column>
+        <S.Column xs={7}>
+          <S.DetailLink
+            to={`${article.id}`}
+            state={{
+              user: me
+            }}
+          >
+            {article.title}
+          </S.DetailLink>
+        </S.Column>
+        <S.Column xs={2}>{article.userId}</S.Column>
+        <S.Column xs={2}>
+          {DateFormat(article.createdDate)}
+        </S.Column>
+      </S.TableRow>
+    )
+  }
+
   return (
     <S.Table>
       <S.TableHead>
@@ -30,40 +44,10 @@ export default function Articles({ notices, articles, offset, limit, currentUser
         <S.ColumnName xs={2}>날짜</S.ColumnName>
       </S.TableHead>
       {notices.map((notice) => (
-        <S.TableNoticeRow key={notice.id}>
-          <S.Column xs={1}>공지</S.Column>
-          <S.Column xs={7}>
-            <S.DetailLink
-              to={`${notice.id}`}
-              state={{
-                user: me
-              }}
-            >
-              {notice.title}
-            </S.DetailLink>
-          </S.Column>
-          <S.Column xs={2}>{notice.userId}</S.Column>
-          <S.Column xs={2}>
-            {DateFormat(notice.createdDate)}
-          </S.Column>
-        </S.TableNoticeRow>
+        ArticleComponent(notice, 1)
       ))}
       {articles.slice(offset, offset + limit).map((article) => (
-        <S.TableRow key={article.id}>
-          <S.Column xs={1}>{article.id}</S.Column>
-          <S.Column xs={7}>
-            <S.DetailLink
-              to={`${article.id}`}
-              state={{
-                user: me
-              }}
-            >
-              {article.title}
-            </S.DetailLink>
-          </S.Column>
-          <S.Column xs={2}>{article.userId}</S.Column>
-          <S.Column xs={2}>{DateFormat(article.createdDate)}</S.Column>
-        </S.TableRow>
+        ArticleComponent(article, 0)
       ))}
       {(articles.length === 0) && (<NoSearchItems />)}
     </S.Table>
