@@ -29,7 +29,6 @@ const MyDatePicker = styled(ReactDatePicker)`
 `
 
 export function ProfileContents() {
-  const { userId } = useParams();
   const [contents, setContents] = useState([]);
   const [selectedContents, setSelectedContents] = useState([]);
   const [startDate, setStartDate] = useState(new Date());

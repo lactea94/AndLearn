@@ -2,8 +2,7 @@ import React from 'react'
 import { GrammarlyEditorPlugin, Grammarly } from '@grammarly/editor-sdk-react'
 
 
-export function GrammarlyEditor(script) {
-
+export function GrammarlyEditor({ script, next }) {
   return (
     <Grammarly
       clientId="leesk3732"
@@ -12,7 +11,7 @@ export function GrammarlyEditor(script) {
       }}
     >
       <GrammarlyEditorPlugin>
-        <textarea defaultValue={script.script} rows={10}></textarea>
+        <textarea defaultValue={script} rows={10}></textarea>
         <grammarly-button></grammarly-button>
       </GrammarlyEditorPlugin>
     </Grammarly>

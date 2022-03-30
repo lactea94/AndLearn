@@ -1,7 +1,5 @@
-import { DateFormat } from '../module/module';
+import { DateFormat } from 'Util/DateFormat';
 import * as S from './Style';
-
-const nowTime = new Date();
 
 export default function Articles({ notices, articles, offset, limit, currentUser }) {
   const NoSearchItems = () => {
@@ -27,18 +25,13 @@ export default function Articles({ notices, articles, offset, limit, currentUser
           <S.Column xs={7}>
             <S.DetailLink
               to={`${notice.id}`}
-              state={{
-                userId: notice.userId,
-                title: notice.title,
-                body: notice.body,
-                currentUser: currentUser,
-            }}>
+            >
               {notice.title}
             </S.DetailLink>
           </S.Column>
           <S.Column xs={2}>{notice.userId}</S.Column>
           <S.Column xs={2}>
-            {DateFormat(nowTime, notice.created_at)}
+            {DateFormat(notice.createdAt)}
           </S.Column>
         </S.TableNoticeRow>
       ))}
@@ -48,17 +41,12 @@ export default function Articles({ notices, articles, offset, limit, currentUser
           <S.Column xs={7}>
             <S.DetailLink
               to={`${article.id}`}
-              state={{
-                userId: article.userId,
-                title: article.title,
-                body: article.body,
-                currentUser: currentUser
-            }}>
+            >
               {article.title}
             </S.DetailLink>
           </S.Column>
           <S.Column xs={2}>{article.userId}</S.Column>
-          <S.Column xs={2}>임시</S.Column>
+          <S.Column xs={2}>{DateFormat(article.createdAt)}</S.Column>
         </S.TableRow>
       ))}
       {(articles.length === 0) && (<NoSearchItems />)}

@@ -3,7 +3,7 @@ import SpeechRecognition, {
   useSpeechRecognition,
 } from 'react-speech-recognition'
 
-export function AudioRecord({setScript}) {
+export function AudioRecord({ setScript, next, setRecord }) {
   const [stream, setStream] = useState()
   const [media, setMedia] = useState()
   const [onRec, setOnRec] = useState(true)
@@ -11,7 +11,7 @@ export function AudioRecord({setScript}) {
   const [analyser, setAnalyser] = useState()
   const [audioUrl, setAudioUrl] = useState()
   const [audio1, setAudio1] = useState()
-  const { transcript, listening, resetTranscript, finalTranscript } =
+  const { transcript, resetTranscript, finalTranscript } =
     useSpeechRecognition()
 
   const onRecAudio = () => {
@@ -71,6 +71,7 @@ export function AudioRecord({setScript}) {
     media.ondataavailable = function (e) {
       setAudioUrl(e.data)
       setOnRec(true)
+      setRecord(e.data)
     }
 
     // 모든 트랙에서 stop()을 호출해 오디오 스트림을 정지
@@ -87,6 +88,7 @@ export function AudioRecord({setScript}) {
   }
 
   const onSubmitAudioFile = useCallback(() => {
+    next()
     if (audioUrl) {
       console.log(URL.createObjectURL(audioUrl)) // 출력된 링크에서 녹음된아이포트폴리오
       setAudio1(URL.createObjectURL(audioUrl))

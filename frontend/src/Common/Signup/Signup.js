@@ -1,19 +1,16 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Container, Form, Row, Col } from 'react-bootstrap'
 import { MyButton } from 'styles/Button'
 import { Link, useNavigate } from 'react-router-dom'
-import axios from 'axios'
-import { onCheckingEmail, onCheckingName } from '../../api/index'
-import { apiInstance } from '../../api/index'
+import { userInstance } from '../../api/index'
 import { API_BASE_URL } from 'constants'
 
 export function Signup() {
-  const baseURL = 'https://j6c201.p.ssafy.io'
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [userName, setUserName] = useState('')
   const [email, setEmail] = useState('')
-  const api = apiInstance()
+  const api = userInstance()
 
   const [passwordError, setPasswordError] = useState(false)
   const [confirmPasswordError, setConfirmPasswordError] = useState(false)
@@ -82,7 +79,11 @@ export function Signup() {
         setCheckEmail(true)
         setDEmail('확인 완료')
       })
-      .catch((error) => setDEmail('이미 존재하는 아이디입니다.'))
+      .catch((error) => {
+        if (error.response.status === 409) {
+          setDEmail('이미 존재하는 아이디입니다.')
+        }
+      })
   }
 
   function onCheckName() {
@@ -94,7 +95,11 @@ export function Signup() {
         setCheckName(true)
         setDName('확인 완료')
       })
-      .catch((error) => setDName('이미 존재하는 이름입니다.'))
+      .catch((error) => {
+        if (error.response.status === 409) {
+          setDName('이미 존재하는 이름입니다.')
+        }
+      })
   }
 
   function onSubmit(e) {
@@ -124,10 +129,11 @@ export function Signup() {
                   placeholder="Email Address"
                   value={email}
                   onChange={onChangeEmail}
-                  className="flex-grow-1"
+                  className="w-90 flex-grow-1 "
+
                 />
-                <MyButton className="flex-shrink-1" onClick={onCheckEmail}>
-                  중복확인
+                <MyButton className="flex-shrink-1 " onClick={onCheckEmail}>
+                  확인
                 </MyButton>
               </div>
               <p>{dEmail}</p>
@@ -147,8 +153,8 @@ export function Signup() {
                   value={userName}
                   onChange={onChangeUserName}
                 />
-                <MyButton className="flex-shrink-1" onClick={onCheckName}>
-                  중복확인
+                <MyButton className="flex-shrink-1 mx-1" onClick={onCheckName}>
+                  확인
                 </MyButton>
               </div>
               <p>{dName}</p>
