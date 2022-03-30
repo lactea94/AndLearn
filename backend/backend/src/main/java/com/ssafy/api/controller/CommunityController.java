@@ -10,6 +10,7 @@ import com.ssafy.db.entity.User;
 import com.ssafy.db.repository.CommunityRepository;
 import io.swagger.annotations.*;
 import lombok.AllArgsConstructor;
+import org.checkerframework.checker.guieffect.qual.PolyUIType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -60,12 +61,14 @@ public class CommunityController {
             @ApiResponse(code = 200, message="조회 성공"),
             @ApiResponse(code = 500, message="서버 오류")
     })
-    @ApiImplicitParam(name = "userId", value = "사용자 작성 게시글 리스트 조회", required = true, dataType = "Long")
-    @GetMapping("/{userId}")
-    public ResponseEntity communityListByUser(@PathVariable Long userId) {
+    @GetMapping("/me")
+    public ResponseEntity communityListByUser(@ApiIgnore Authentication authentication) {
         List<Community> list = communityRepository.findAll();
         List<CommunityListRes> communityList = new ArrayList<>();
-        User user = userService.getUserByUserId(userId.toString());
+        SsafyUserDetails userDetails = (SsafyUserDetails)authentication.getDetails();
+        String userId = userDetails.getUsername();
+
+        User user = userService.getUserByUserId(userId);
 
         Collections.reverse(list);
 
@@ -96,6 +99,8 @@ public class CommunityController {
         CommunityRes communityRes = new CommunityRes(community);
         return new ResponseEntity<>(communityRes, HttpStatus.OK);
     }
+
+
 
     @ApiOperation(value = "특정 게시글 삭제", notes = "user 중 자신의 게시글을 삭제한다")
     @ApiResponses({
@@ -140,8 +145,8 @@ public class CommunityController {
                 .createdDate(LocalDateTime.now())
                 .updatedDate(LocalDateTime.now())
                 .isNotice(communityPostReq.getIsNotice())
+                .user(user)
                 .build());
-        // 유저 아이디 어따써먹음?
         return new ResponseEntity(HttpStatus.OK);
     }
 
@@ -164,12 +169,13 @@ public class CommunityController {
             return null;
         }
         Community community = option.get();
-        if (community.getUser().equals(user)) {
+        if (!community.getUser().equals(user)) {
             return new ResponseEntity(HttpStatus.UNAUTHORIZED);
         }
         community.setTitle(communityPostReq.getTitle());
         community.setContent(communityPostReq.getContent());
         community.setUpdatedDate(LocalDateTime.now());
+
         communityRepository.save(community);
         return new ResponseEntity(HttpStatus.OK);
     }
@@ -192,8 +198,98 @@ public class CommunityController {
                 communityList.add(new CommunityListRes(entity));
             }
         }
-
         return new ResponseEntity<>(communityList, HttpStatus.OK);
     }
+
+    @ApiOperation(value = "특정 공지사항 조회", notes = "특정 공지사항을 조회한다")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    @ApiImplicitParam(name = "communityId", value = "공지사항 seq", required = true)
+    @GetMapping("/notice/{communityId}")
+    public ResponseEntity notice(@ApiIgnore Authentication authentication, @PathVariable Long communityId) {
+        Optional<Community> option = communityRepository.findById(communityId);
+        if (option.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+
+        Community community = option.get();
+        CommunityRes communityRes = new CommunityRes(community);
+        return new ResponseEntity<>(communityRes, HttpStatus.OK);
+    }
+
+    @ApiOperation(value = "공지사항 작성", notes = "user 중 admin 권한을 가진 사람이 공지사항을 작성한다")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 401, message = "인증 실패"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    @PostMapping("/notice")
+    public ResponseEntity noticePost(@ApiIgnore Authentication authentication, @RequestBody @ApiParam(value = "공지사항 정보", required = true) CommunityPostReq communityPostReq) {
+        SsafyUserDetails userDetails = (SsafyUserDetails)authentication.getDetails();
+        String userId = userDetails.getUsername();
+        User user = userService.getUserByUserId(userId);
+        if (user.getAdmin().equals(Boolean.FALSE)) {
+            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+        }
+        communityRepository.save(Community.builder()
+                .title(communityPostReq.getTitle())
+                .content(communityPostReq.getContent())
+                .createdDate(LocalDateTime.now())
+                .updatedDate(LocalDateTime.now())
+                .isNotice(Boolean.TRUE)
+                .build());
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @ApiOperation(value = "공지사항 수정", notes = "user 중 admin 권한을 가진 사람이 공지사항을 수정한다")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 401, message = "인증 실패"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    @ApiImplicitParam(name = "communityId", value = "공지사항 seq", required = true)
+    @PutMapping("/notice/{communityId}")
+    public ResponseEntity noticeUpdate(@ApiIgnore Authentication authentication, @PathVariable Long communityId, @RequestBody @ApiParam(value = "공지사항 수정 정보", required = true) CommunityPostReq communityPostReq) {
+        SsafyUserDetails userDetails = (SsafyUserDetails)authentication.getDetails();
+        String userId = userDetails.getUsername();
+        User user = userService.getUserByUserId(userId);
+        if (user.getAdmin().equals(Boolean.FALSE)) {
+            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+        }
+        Optional<Community> option = communityRepository.findById(communityId);
+        if (option.isEmpty()) {
+            return null;
+        }
+        Community community = option.get();
+        community.setTitle(communityPostReq.getTitle());
+        community.setContent(communityPostReq.getContent());
+        community.setUpdatedDate(LocalDateTime.now());
+        community.setIsNotice(communityPostReq.getIsNotice());
+        communityRepository.save(community);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @ApiOperation(value = "공지사항 삭제", notes = "user 중 admin 권한을 가지 사람이 공지사항을 삭제한다")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 401, message = "인증 실패"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    @ApiImplicitParam(name = "communityId", value = "공지사항 seq", required = true)
+    @DeleteMapping("/notice/{communityId}")
+    public ResponseEntity noticeDelete(@ApiIgnore Authentication authentication, @PathVariable Long communityId) {
+        SsafyUserDetails userDetails = (SsafyUserDetails)authentication.getDetails();
+        String userId = userDetails.getUsername();
+        User user = userService.getUserByUserId(userId);
+
+        if (user.getAdmin().equals(Boolean.FALSE)) {
+            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+        }
+        communityRepository.deleteById(communityId);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
 
 }
