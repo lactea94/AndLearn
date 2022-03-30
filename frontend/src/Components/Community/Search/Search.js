@@ -43,15 +43,7 @@ export function Search({ setSearchText, setSearchCategory, setPage }) {
         }}
         onKeyPress={handleKeyPress}
       />
-      <MyButton
-        style={{
-          marginTop: 'auto',
-          marginBottom: 'auto'
-        }}
-        onClick={handleClick}
-      >
-        검색
-      </MyButton>
+      <MyButton onClick={handleClick}>검색</MyButton>
     </Col>
   )
 }
