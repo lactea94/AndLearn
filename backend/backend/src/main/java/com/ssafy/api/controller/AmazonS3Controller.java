@@ -108,12 +108,12 @@ public class AmazonS3Controller {
         awsS3Service.deleteFile(fileName);
         return new ResponseEntity(HttpStatus.OK);
     }
-    // 주윤 유저 이미지를 위해 추가 03.31.3
-    @ApiOperation(value = "Amazon S3에 파일 업로드", notes = "Amazon S3에 파일 업로드 ")
-    @PostMapping("/image")
-    public ResponseEntity<String> uploadFile(@ApiParam(value="이미지파일 1개만", required = true) @RequestPart MultipartFile multipartFile) {
-        return ResponseEntity.status(200).body(awsS3Service.uploadFile(multipartFile));
-    }
+//    // 주윤 유저 이미지를 위해 추가 03.31.3
+//    @ApiOperation(value = "Amazon S3에 파일 업로드", notes = "Amazon S3에 파일 업로드 ")
+//    @PostMapping("/image")
+//    public ResponseEntity<String> uploadFile(@ApiParam(value="이미지파일 1개만", required = true) @RequestPart MultipartFile multipartFile) {
+//        return ResponseEntity.status(200).body(awsS3Service.uploadFile(multipartFile));
+//    }
     @GetMapping("/pictures")
     public ResponseEntity<List<PicturesRes>> getLearnByUser(Authentication authentication) {
         SsafyUserDetails userDetails = (SsafyUserDetails)authentication.getDetails();

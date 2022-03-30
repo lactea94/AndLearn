@@ -11,4 +11,6 @@ import lombok.Setter;
 public class UserEditInfoReq {
     @ApiModelProperty(name="유저 Nickname", example="your_nickname")
     String nickname;
+    @ApiModelProperty(name = "유저 imagename", example = "asdfasdf.png")
+    String image_name;
 }

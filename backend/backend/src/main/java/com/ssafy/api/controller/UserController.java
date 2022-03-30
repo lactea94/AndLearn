@@ -112,7 +112,7 @@ public class UserController {
 	}
 
 	// 주윤 유저 이미지를 위해 추가 03.31.3
-	@ApiOperation(value = "Amazon S3에 파일 업로드", notes = "Amazon S3에 파일 업로드 ")
+	@ApiOperation(value = "Amazon S3에 유저 이미지 업로드", notes = "Amazon S3에 유저 이미지 업로드 ")
 	@ApiResponses({
 			@ApiResponse(code = 200, message = "성공"),
 			@ApiResponse(code = 401, message = "엑세스 토큰 값이 틀림"),
@@ -124,7 +124,7 @@ public class UserController {
 		SsafyUserDetails userDetails = (SsafyUserDetails)authentication.getDetails();
 		String userId = userDetails.getUsername();
 		User user = userService.getUserByUserId(userId);
-//		user.setImage_url();
+		user.setImage_url(awsS3Service.uploadFile(multipartFile));
 		return ResponseEntity.status(200).body(awsS3Service.uploadFile(multipartFile));
 	}
 	@ApiOperation(value = "비밀번호 수정", notes = "로그인한 회원 본인의 정보 중 비밀번호를 수정한다.")
