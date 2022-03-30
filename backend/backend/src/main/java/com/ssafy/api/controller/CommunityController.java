@@ -187,7 +187,7 @@ public class CommunityController {
             @ApiResponse(code = 500, message = "서버 오류")
     })
     @GetMapping("/notice")
-    public ResponseEntity noticelist() {
+    public ResponseEntity noticeList() {
         List<Community> list = communityRepository.findAll();
         List<CommunityListRes> communityList = new ArrayList<>();
 

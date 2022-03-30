@@ -8,7 +8,8 @@ export const Table = styled(Container)`
   background-color: white;
   border-radius: 1rem;
   width: 90%;
-  background-color: #F8F8F8
+  background-color: #F8F8F8;
+  overflow: hidden;
 `;
 
 export const TableHead = styled(Row)`
@@ -16,7 +17,7 @@ export const TableHead = styled(Row)`
 `;
 
 export const ColumnName = styled(Col)`
-
+  font-weight: bold;
 `;
 
 export const TableRow = styled(Row)`
@@ -24,6 +25,7 @@ export const TableRow = styled(Row)`
   padding: 0.5rem 0;
   align-items: center;
   border-top: solid 1px #DFDFDF;
+  
 
   &:hover {
     background-color: #DFDFDF;

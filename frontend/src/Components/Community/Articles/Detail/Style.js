@@ -13,8 +13,6 @@ export const Article = styled(Container)`
 export const Header = styled(Row)`
   display: inlnie;
   align-items: center;
-  border-top-left-radius: 1rem;
-  border-top-right-radius: 1rem;
   padding: 0.5rem 0.2rem;
 `;
 

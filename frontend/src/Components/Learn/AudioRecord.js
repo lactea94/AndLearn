@@ -11,7 +11,7 @@ export function AudioRecord({setScript}) {
   const [analyser, setAnalyser] = useState()
   const [audioUrl, setAudioUrl] = useState()
   const [audio1, setAudio1] = useState()
-  const { transcript, listening, resetTranscript, finalTranscript } =
+  const { transcript, resetTranscript, finalTranscript } =
     useSpeechRecognition()
 
   const onRecAudio = () => {
