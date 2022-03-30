@@ -11,7 +11,13 @@ export default function Create() {
   const handleShow = () => setShow(true);
 
   return (
-    <Col xs={2}>
+    <Col xs={2}
+      style={{
+        display: "flex",
+        justifyContent: "end",
+        alignItems: "center",
+      }}
+    >
       <MyButton onClick={handleShow}>
         새 글
       </MyButton>

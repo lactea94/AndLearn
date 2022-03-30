@@ -33,7 +33,7 @@ export function Search({ setSearchText, setSearchCategory, setPage }) {
         }}
       >
         <option value="title">제목</option>
-        <option value="body">내용</option>
+        <option value="content">내용</option>
       </Select>
       <Input
         type="text"
@@ -43,15 +43,7 @@ export function Search({ setSearchText, setSearchCategory, setPage }) {
         }}
         onKeyPress={handleKeyPress}
       />
-      <MyButton
-        style={{
-          marginTop: 'auto',
-          marginBottom: 'auto'
-        }}
-        onClick={handleClick}
-      >
-        검색
-      </MyButton>
+      <MyButton onClick={handleClick}>검색</MyButton>
     </Col>
   )
 }
