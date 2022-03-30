@@ -1,4 +1,4 @@
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { Comments } from "../Comments/Comments";
 import { Update } from "../Update/Update"
 import * as S from "./Style";
@@ -11,14 +11,9 @@ import { DateFormat } from 'Util/DateFormat';
 
 export function Detail() {
   const { articleId } = useParams();
-  const [article, setArticle] = useState({});
-  const [me, setMe] = useState({});
   const navigate = useNavigate();
-  
-  useEffect(() => {
-    apiInstance().get(API_BASE_URL + '/users/me')
-      .then((response) => setMe(response.data.nickname))
-  }, [me])
+  const { state } = useLocation();
+  const [article, setArticle] = useState({});
 
   useEffect(() => {
     apiInstance().get(API_BASE_URL + `/community/${articleId}`)
@@ -40,7 +35,7 @@ export function Detail() {
       </S.Header>
       <S.SubHeader>
         <S.User>{article.nickname}</S.User>
-        {article.nickname === me && 
+        {article.nickname === state.username && 
           <>
             <Col xs={7}/>
             <Col>
