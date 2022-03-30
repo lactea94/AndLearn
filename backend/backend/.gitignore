@@ -6,7 +6,7 @@ build/
 !**/src/test/**/build/
 
 ssafy-web.log
-
+*.pid
 ### STS ###
 .apt_generated
 .classpath
