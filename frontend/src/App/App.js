@@ -31,7 +31,9 @@ function App() {
         <Route path="login" element={<Login />}></Route>
         <Route path="signup" element={<Signup />}></Route>
 
-        <Route path="learn" element={<Learn />}></Route>
+        <Route path="learn" element={<Learn />}>
+          <Route path="image" element={<Learn />}></Route>
+        </Route>
 
         <Route path="community" element={<Community />}>
           <Route path=":articleId" element={<Detail />}></Route>

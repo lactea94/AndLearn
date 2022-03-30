@@ -1,28 +1,36 @@
 import React, { useState } from 'react'
+import { apiInstance } from 'api/index'
+import { API_BASE_URL } from 'constants/index'
+import { useNavigate } from 'react-router-dom'
 //import Dropzone from 'react-dropzone'
 
-export function ImageUpload(fileImage) {
+export function ImageUpload({ setFileImage, setImageId, next }) {
   const [image, setImage] = useState('')
+  const api = apiInstance()
 
   function onLoad(e) {
     setImage(URL.createObjectURL(e.target.files[0]))
+    setFileImage(URL.createObjectURL(e.target.files[0]))
   }
 
   function onImageUpload(e) {
+    next()
     // const formData = new FormData()
-    // formData.append('file', files[0])
-    // authAxios
-    //   .post(`/profile/update/image/${id}`, formData, {
+    // formData.append('file', image[0])
+    // api
+    //   .post('https://j6c201.p.ssafy.io/aiserver/image', formData, {
     //     headers: {
     //       'Content-Type': 'multipart/form-data',
     //     },
     //   })
     //   .then((res) => {
     //     setImage(res.data)
-    //     setFiles('')
-    //     window.location.replace(`/auth/profile/${id}`)
+    //     setImageId(res.data.id)
+    //     setStage(1)
     //   })
-    //   .catch((error) => console.log(error))
+    //   .catch((error) => {
+    //     console.log(error)
+    //   })
   }
 
   return (
@@ -57,7 +65,7 @@ export function ImageUpload(fileImage) {
         </label>
       </div>
       <button>랜덤사진</button>
-      <button>시작!</button>
+      <button onClick={onImageUpload}>시작!</button>
     </div>
   )
 }

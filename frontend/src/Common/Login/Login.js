@@ -29,7 +29,7 @@ export function Login() {
       .post(API_BASE_URL + '/api/v1/auth/login', data)
       .then((response) => {
         if (response.data.accessToken) {
-          localStorage.setItem('accessToken', response.data.accessToken)
+          localStorage.setItem('accesstoken', response.data.accessToken)
         }
         window.location.replace(`/`)
       })
