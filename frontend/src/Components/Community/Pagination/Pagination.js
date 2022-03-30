@@ -12,6 +12,7 @@ import {
   Popover,
   Tooltip
 } from "react-bootstrap";
+import { Select } from "styles/Select";
 
 export default function Pagination({ total, limit, page, setPage, setLimit }) {
   const numPages = Math.ceil(total / limit);
@@ -54,7 +55,13 @@ export default function Pagination({ total, limit, page, setPage, setLimit }) {
 
   const Pages = () => {
     const array = () => {
-      if (page < 4) {
+      if (numPages < 5) {
+        let tmp = []
+        for (let p = 1; p < numPages + 1; p ++) {
+          tmp.push(p);
+        }
+        return tmp
+      } else if (page < 4) {
         return [1, 2, 3, 4, 5]
       } else if (page > numPages - 3) {
         return [numPages - 4, numPages - 3, numPages - 2, numPages - 1, numPages]
@@ -103,7 +110,7 @@ export default function Pagination({ total, limit, page, setPage, setLimit }) {
             </Tooltip>
           }
         >
-          <S.PageLimit
+          <Select
             type="number"
             value={limit}
             style={{width:'5rem'}}
@@ -116,7 +123,7 @@ export default function Pagination({ total, limit, page, setPage, setLimit }) {
             <option value="10">10</option>
             <option value="15">15</option>
             <option value="20">20</option>
-          </S.PageLimit>
+          </Select>
         </OverlayTrigger>
       </S.PageContainer>
     </div>

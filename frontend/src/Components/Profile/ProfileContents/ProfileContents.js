@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { useState, useEffect } from "react"
 import ReactDatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
-import { Button } from 'react-bootstrap';
+import { MyButton } from 'styles/Button';
 
 const Remote = styled.div`
   display: block; 
@@ -34,6 +34,7 @@ export function ProfileContents() {
   const [selectedContents, setSelectedContents] = useState([]);
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
+  const [isRemoteOn, setIsRemoteOn] = useState(true);
 
   function range(start, end) {
     var arr = [];
@@ -134,6 +135,7 @@ export function ProfileContents() {
     setSelectedContents(result);
   }
 
+  // Remote 관련 함수
   let posX = 0;
   let posY = 0;  
   const dragStartHandler = e => {
@@ -150,6 +152,9 @@ export function ProfileContents() {
     e.target.style.left = `${e.target.offsetLeft + e.clientX - posX}px`;
     e.target.style.top = `${e.target.offsetTop + e.clientY - posY}px`;
   }
+  const handleRemote = () => {
+    setIsRemoteOn(!isRemoteOn)
+  }
 
   return (
     <div>
@@ -158,6 +163,7 @@ export function ProfileContents() {
           return (
             <Col xs={4} key={content.id}>
               <ProfileContent imgUrl={content.imgUrl} contentId={content.id}/>
+              {/* <ProfileContent content={content} /> */}
             </Col>
           )
         })}
@@ -167,8 +173,12 @@ export function ProfileContents() {
         onDragStart={dragStartHandler} 
         onDrag={dragHandler} 
         onDragEnd={dragEndHandler}
+        style={{ display: `${ isRemoteOn ? '' : 'none' }` }}
       >
-        <div className='m-2'>기간 검색</div>
+        <div className='m-2'>
+          기간 검색
+        </div>
+        <button className="btn-close" onClick={() => {handleRemote()}} style={{ position: 'absolute', left: '134px', top: '2px' }} />
         <MyDatePicker
           closeOnScroll={true}
           renderCustomHeader={({
@@ -276,9 +286,9 @@ export function ProfileContents() {
           onChange={(date) => setEndDate(date)}
           dateFormat="yyyy-MM-d"
         />
-        <Button className='m-2 py-0' onClick={() => {clickSearchButton()}}>
+        <MyButton color="#58C063" className='m-2 py-0' onClick={() => {clickSearchButton()}}>
           검색
-        </Button>
+        </MyButton>
       </Remote>
     </div>
   )

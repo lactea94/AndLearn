@@ -12,7 +12,7 @@ export const AnswerBox = styled.div`
   width: 100%;
   padding: 5px;
   margin-left: 12px;
-  margin-right: 12px;
+  margin-right: 24px;
   border-radius: 6px;
 `
 
@@ -21,4 +21,20 @@ export const AnswerButton = styled(Button)`
   font-size: 17px;
   margin-left: 12px;
   margin-bottom: 5px;
+
+  background-color: #58C063;
+  border: solid 1px #58C063;
+
+  &:hover {
+    background-color: white;
+    color: #58C063;
+    border: solid 1px #58C063;
+  }
+
+  &:focus {
+    background-color: #58C063;
+    border: solid 1px #58C063;
+    color: white;
+    box-shadow: none;
+  }
 `

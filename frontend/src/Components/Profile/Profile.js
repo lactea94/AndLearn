@@ -1,20 +1,30 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, Route, Routes } from 'react-router-dom';
-import { Container, Row, Col, Image, Button } from 'react-bootstrap';
+import { Container, Row, Col, Image } from 'react-bootstrap';
 import { useParams } from 'react-router-dom'
 import { ProfileContents } from './ProfileContents/ProfileContents';
 import { ProfileContentDetail } from './ProfileContents/ProfileContentDetail';
 import { ProfileStats } from './ProfileStats/ProfileStats';
-import { ProfileArticles } from './ProfileArticles';
+import { ProfileArticles } from './ProfileArticles/ProfileArticles';
 import axios from 'axios';
 import { UserInfoEdit } from './ProfileEdit/UserInfoEdit';
 import { PasswordEdit } from './ProfileEdit/PasswordEdit';
+import { Detail } from './ProfileArticles/Articles/Detail/Detail';
+import { MyButton } from 'styles/Button';
 
 export function Profile() {
   const { userId } = useParams();
+  const [profileImgUrl, setProfileImgUrl] = useState();
+
+  const randomProfileImgUrl = "http://placeimg.com/240/240/animals";
   
   useEffect(() => {
     axios.defaults.headers.common['Authorization'] = 'JWT'
+  }, [])
+
+  useEffect(() => {
+    const myProfileImgUrl = "http://placeimg.com/240/240/people"
+    setProfileImgUrl(myProfileImgUrl);
   }, [])
 
   return (
@@ -24,7 +34,7 @@ export function Profile() {
           <Col xs={2}>
           </Col>
           <Col xs={2}>
-            <Image src="http://placeimg.com/240/240/animals" alt="profile_image" roundedCircle fluid></Image>
+            <Image src={`${profileImgUrl ? profileImgUrl : randomProfileImgUrl}`} alt="profile_image" roundedCircle fluid></Image>
           </Col>
           <Col xs={6}>
             <div className='d-flex flex-column align-items-start ps-5'>
@@ -38,30 +48,39 @@ export function Profile() {
           </Col>
           <Col xs={2} className="row align-items-end">
             <Link to={`edit`}>
-              <Button>
+              <MyButton color="#58C063">
                 Update
-              </Button>
+              </MyButton>
             </Link>
           </Col>
         </Row>
         <hr/>
         <Row>
           <Col>
-            <Link to={`content`}>공부내용</Link>
+            <Link to={`content`}>
+              <MyButton color="#58C063">공부내용</MyButton>
+            </Link>
           </Col>
           <Col>
-            <Link to={`stats`}>개인통계</Link>
+            <Link to={`stats`}>
+              <MyButton color="#58C063">개인통계</MyButton>
+            </Link>
           </Col>
           <Col>
-            <Link to={`articles`}>게시글</Link>
+            <Link to={`articles`}>
+              <MyButton color="#58C063">
+                게시글
+              </MyButton>
+            </Link>
           </Col>
         </Row>
-        <div className="mt-5">
+        <div className="mt-3">
           <Routes>
             <Route path='/content' element={<ProfileContents/>} />
             <Route path='/content/:contentId' element={<ProfileContentDetail/>} />
             <Route path='/stats' element={<ProfileStats/>} />
             <Route path='/articles' element={<ProfileArticles />} />
+            <Route path='/articles/:articleId' element={<Detail />} />
             <Route path='/edit' element={<UserInfoEdit />} />
             <Route path='/edit/password' element={<PasswordEdit />} />
           </Routes>

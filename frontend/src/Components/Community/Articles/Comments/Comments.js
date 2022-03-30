@@ -1,5 +1,4 @@
 import { Create } from "./Create/Create";
-import { Col } from "react-bootstrap";
 import { DateFormat } from "../../module/module";
 import * as S from "./Style";
 
@@ -15,16 +14,32 @@ export function Comments({ currentUser }) {
   return (
     <S.Comments>
       <S.Header>댓글 {comments.length}개</S.Header>
-      {comments.map((comment) => (
-        <S.Comment key={comment.id} >
-          <S.User xs={2}>{comment.userId}</S.User>
-          <S.Body xs={7}>{comment.body}</S.Body>
-          <Col xs={1}>
-            {(currentUser === comment.userId) && <S.Button>삭제</S.Button>}
-          </Col>
-          <S.Created xs={2}>{DateFormat(nowTime, comment.created_at)}</S.Created>
-        </S.Comment>
-      ))}
+      {comments.map((comment) => {
+        if (currentUser === comment.id) {
+          return (
+            <S.MyComment key={comment.id} >
+              <S.MyCommentContent>
+                <S.Body>{comment.body}</S.Body>
+                <S.Created>{DateFormat(nowTime, comment.created_at)}</S.Created>
+                <S.Button>삭제</S.Button>
+              </S.MyCommentContent>
+            </S.MyComment>
+          )
+        } else {
+          return (
+            <S.Comment key={comment.id} >
+              <S.ImgBox>
+                <S.UserImg alt={comment.userId} src="/images/default_user.jpg" />
+              </S.ImgBox>
+              <S.CommentContent>
+                <S.User>{comment.userId}</S.User>
+                <S.Body>{comment.body}</S.Body>
+                <S.Created>{DateFormat(nowTime, comment.created_at)}</S.Created>
+              </S.CommentContent>
+            </S.Comment>
+          )
+        }
+      })}
       <Create />
     </S.Comments>
   )

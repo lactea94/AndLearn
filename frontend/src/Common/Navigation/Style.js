@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom"
 import styled from "styled-components"
 
 export const MyNavbar = styled(Navbar)`
-  background-color: #88B04B;
+  background-color: #58C063;
 `
 
 export const NavItem = styled(NavLink)`
@@ -23,6 +23,6 @@ export const NavItem = styled(NavLink)`
 `
 
 export const Offcanvas = styled(Navbar.Offcanvas)`
-  background-color: #88B04B;
+  background-color: #58C063;
   border: none;
 `

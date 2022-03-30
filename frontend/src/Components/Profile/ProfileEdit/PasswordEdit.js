@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { Form } from "react-bootstrap"
-import { MyButton } from "styles/Button"
+import { MyButton } from "styles/Button";
 
 export function PasswordEdit() {
   const [password, setPassword] = useState('')
@@ -27,7 +27,6 @@ export function PasswordEdit() {
   }
 
   function onSubmit(e) {
-    // if (!validation()) return
     // const url = 'http://j6c201.p.ssafy.io/api/v1/users'
     // axios
     //   .post(url, { password: password })
@@ -37,7 +36,7 @@ export function PasswordEdit() {
     //   .catch((error) => {
     //     console.log(error)
     //   })
-    console.log(password)
+    // console.log(password)
   }
 
   return (
@@ -72,7 +71,7 @@ export function PasswordEdit() {
           )}
         </Form.Group>
         <div className="d-grid gap-1">
-          <MyButton onClick={onSubmit}>비밀번호 수정</MyButton>
+          <MyButton color="#58C063" onClick={onSubmit}>비밀번호 수정</MyButton>
         </div>
       </Form>
     </div>

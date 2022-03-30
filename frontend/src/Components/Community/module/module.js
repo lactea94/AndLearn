@@ -9,7 +9,7 @@ export function DateFormat(nowTime, date) {
     )
   } else {
     return (
-      <Moment format="YY.MM.DD HH:mm">{date}</Moment>
+      <Moment format="YY.MM.DD">{date}</Moment>
     )
   };
 };

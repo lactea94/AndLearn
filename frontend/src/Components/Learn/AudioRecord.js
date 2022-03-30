@@ -1,6 +1,9 @@
 import React, { useState, useCallback } from 'react'
+import SpeechRecognition, {
+  useSpeechRecognition,
+} from 'react-speech-recognition'
 
-export function AudioRecord() {
+export function AudioRecord({setScript}) {
   const [stream, setStream] = useState()
   const [media, setMedia] = useState()
   const [onRec, setOnRec] = useState(true)
@@ -8,6 +11,8 @@ export function AudioRecord() {
   const [analyser, setAnalyser] = useState()
   const [audioUrl, setAudioUrl] = useState()
   const [audio1, setAudio1] = useState()
+  const { transcript, listening, resetTranscript, finalTranscript } =
+    useSpeechRecognition()
 
   const onRecAudio = () => {
     // 음원정보를 담은 노드를 생성하거나 음원을 실행또는 디코딩 시키는 일을 한다
@@ -15,7 +20,6 @@ export function AudioRecord() {
     // 자바스크립트를 통해 음원의 진행상태에 직접접근에 사용된다.
     const analyser = audioCtx.createScriptProcessor(0, 1, 1)
     setAnalyser(analyser)
-
     function makeSound(stream) {
       // 내 컴퓨터의 마이크나 다른 소스를 통해 발생한 오디오 스트림의 정보를 보여준다.
       const source = audioCtx.createMediaStreamSource(stream)
@@ -30,14 +34,19 @@ export function AudioRecord() {
       setStream(stream)
       setMedia(mediaRecorder)
       makeSound(stream)
-
+      if (finalTranscript !== '') {
+        resetTranscript()
+      }
+      SpeechRecognition.startListening({ continuous: true, language: 'en-US' })
       analyser.onaudioprocess = function (e) {
-        // 3분(180초) 지나면 자동으로 음성 저장 및 녹음 중지
-        if (e.playbackTime > 180) {
+        // 1분(60초) 지나면 자동으로 음성 저장 및 녹음 중지
+        if (e.playbackTime > 60) {
           stream.getAudioTracks().forEach(function (track) {
             track.stop()
+            setScript(finalTranscript)
           })
           mediaRecorder.stop()
+
           // 메서드가 호출 된 노드 연결 해제
           analyser.disconnect()
           audioCtx.createMediaStreamSource(stream).disconnect()
@@ -46,6 +55,7 @@ export function AudioRecord() {
             setAudioUrl(e.data)
             setOnRec(true)
           }
+          SpeechRecognition.stopListening()
         } else {
           setOnRec(false)
         }
@@ -56,6 +66,8 @@ export function AudioRecord() {
   // 사용자가 음성 녹음을 중지했을 때
   const offRecAudio = () => {
     // dataavailable 이벤트로 Blob 데이터에 대한 응답을 받을 수 있음
+    SpeechRecognition.stopListening()
+
     media.ondataavailable = function (e) {
       setAudioUrl(e.data)
       setOnRec(true)
@@ -71,11 +83,12 @@ export function AudioRecord() {
     // 메서드가 호출 된 노드 연결 해제
     analyser.disconnect()
     source.disconnect()
+    setScript(finalTranscript)
   }
 
   const onSubmitAudioFile = useCallback(() => {
     if (audioUrl) {
-      console.log(URL.createObjectURL(audioUrl)) // 출력된 링크에서 녹음된
+      console.log(URL.createObjectURL(audioUrl)) // 출력된 링크에서 녹음된아이포트폴리오
       setAudio1(URL.createObjectURL(audioUrl))
     }
     // File 생성자를 사용해 파일로 변환
@@ -93,9 +106,14 @@ export function AudioRecord() {
       ) : (
         <button onClick={offRecAudio}>정지</button>
       )}
-
       <button onClick={onSubmitAudioFile}>결과 확인</button>
-      <audio controls src={audio1} controlsList="nodownload"></audio>
+      <p>
+        <audio controls src={audio1} controlsList="nodownload"></audio>
+      </p>
+      {/* 실시간 스크립트 */}
+      <p>{transcript}</p>
+      {/* 최종 스크립트 */}
+      <p>{finalTranscript}</p>
     </>
   )
 }

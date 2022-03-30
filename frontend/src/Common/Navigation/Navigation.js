@@ -5,7 +5,8 @@ import * as S from "./Style"
 export function Navigation() {
   // 임시로 사용하는 프로필 접근 닉네임? 아이디?
   const userId = 'kimcookie'
-  const [isAuthenticated, setIsAuthenticated] = useState(true)
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  
 
   return (
     <S.MyNavbar expand={false}>
@@ -21,7 +22,7 @@ export function Navigation() {
         </Offcanvas.Header>
         <Offcanvas.Body>
           <Nav className="justify-content-end flex-grow-1 pe-3">
-            { isAuthenticated ? 
+            { isAuthenticated ?
               <>
                 <S.NavItem to="/">Home</S.NavItem>
                 <S.NavItem to={`profile/${userId}/content`}>Profile</S.NavItem>
