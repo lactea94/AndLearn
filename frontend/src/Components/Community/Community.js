@@ -24,17 +24,17 @@ export function Community() {
   const offset = (page - 1) * limit;
 
   useEffect(() => {
-    apiInstance().get(API_BASE_URL + '/api/v1/users/me')
+    apiInstance().get(API_BASE_URL + '/users/me')
     .then((response) => console.log(response))
   }, [])
 
   useEffect(() => {
-    apiInstance().get(API_BASE_URL + '/api/v1/community')
+    apiInstance().get(API_BASE_URL + '/community')
     .then((response) => setArticles(response.data))
   }, []);
 
   useEffect(() => {
-    apiInstance().get(API_BASE_URL + '/api/v1/community/notice')
+    apiInstance().get(API_BASE_URL + '/community/notice')
     .then((response) => setNotices(response.data))
   }, []);
 

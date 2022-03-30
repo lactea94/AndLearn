@@ -13,7 +13,7 @@ export function Detail() {
   const [article, setArticle] = useState({});
 
   useEffect(() => {
-    apiInstance().get(API_BASE_URL + `/api/v1/community/${articleId}`)
+    apiInstance().get(API_BASE_URL + `/community/${articleId}`)
     .then(resposne => setArticle(resposne.data))
     // .then(console.log(article))/
   }, [articleId])

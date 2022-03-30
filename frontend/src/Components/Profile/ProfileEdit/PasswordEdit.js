@@ -40,7 +40,7 @@ export function PasswordEdit() {
   }
 
   return (
-    <div className="row justify-content-center">
+    <div className="row justify-content-center"  style={{ minHeight:'100vh'}}>
       <Form style={{ width: '50%' }}>
         <Form.Group className="mb-3">
           <Form.Control

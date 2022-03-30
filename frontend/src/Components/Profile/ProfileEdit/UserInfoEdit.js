@@ -5,7 +5,7 @@ import { MyButton } from "styles/Button"
 import axios from "axios"
 import styled from "styled-components"
 import { apiInstance } from "api"
-import { API_BASE_URL, ACCESS_TOKEN } from "constants"
+import { API_BASE_URL, ACCESS_TOKEN } from "constants";
 
 const myToken = localStorage.getItem('accesstoken')
 
@@ -44,7 +44,6 @@ export function UserInfoEdit() {
       const base64 = reader.result;
       console.log(base64)
       if (base64) {
-      //  images.push(base64.toString())
       var base64Sub = base64.toString()
         
       setImgBase64(imgBase64 => [...imgBase64, base64Sub]);
@@ -54,7 +53,7 @@ export function UserInfoEdit() {
 
   function onCheckName() {
     api
-      .post('/api/v1/users/duplicate-check-nickname', {
+      .post('/users/duplicate-check-nickname', {
         nickname: userName,
       })
       .then((res) => {
@@ -68,29 +67,21 @@ export function UserInfoEdit() {
   }
 
   function onSubmit() {
-    // console.log(imgFile)
     console.log(userName)
-    console.log(myToken)
 
-    const data = {
-      nickname: userName
-    }
+    const fd = new FormData();
+    fd.append("image_url", imgFile);
+    fd.append(
+      "nickname", 
+      new Blob([JSON.stringify(userName)], { type: "application/json" })
+    );
 
-    // const fd = new FormData();
-    // fd.append("file", imgFile);
-    // fd.append("nickname", userName);
-
-    axios
-      .put(
-          "https://j6c201.p.ssafy.io/api/v1/users/edit", data,
-        {
-          headers: {
-            'Content-type': 'application/json',
-            'Access-Control-Allow-Origin': '*',
-            'Authorization': `Bearer ${myToken}`,
-          },
+    api
+      .put("/users/edit", fd, {
+        headers: {
+          "Content-Type": "multipart/form-data",
         }
-      )
+      })
       .then(res => {
         console.log(res)
       })
@@ -100,7 +91,7 @@ export function UserInfoEdit() {
   }
 
   return (
-    <div className="row justify-content-center">
+    <div className="row justify-content-center"  style={{ minHeight:'100vh'}}>
       <MyForm>
         <Form.Group className="mb-3">
           <Form.Control
