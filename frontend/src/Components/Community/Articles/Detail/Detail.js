@@ -23,7 +23,6 @@ export function Detail() {
   useEffect(() => {
     apiInstance().get(API_BASE_URL + `/community/${articleId}`)
     .then(resposne => setArticle(resposne.data))
-    // .then(console.log(article))/
   }, [articleId])
 
   const handleClick = () => {

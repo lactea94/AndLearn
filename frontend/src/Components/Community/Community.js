@@ -22,11 +22,6 @@ export function Community() {
   const offset = (page - 1) * limit;
 
   useEffect(() => {
-    apiInstance().get(API_BASE_URL + '/users/me')
-    .then((response) => console.log(response))
-  }, [])
-
-  useEffect(() => {
     apiInstance().get(API_BASE_URL + '/community')
     .then((response) => setArticles(response.data))
   }, []);
