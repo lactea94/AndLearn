@@ -3,7 +3,7 @@ import SpeechRecognition, {
   useSpeechRecognition,
 } from 'react-speech-recognition'
 
-export function AudioRecord({ setScript, next, setRecord }) {
+export function AudioRecord({ setScript, next, setAudioUrl1, setAud1 }) {
   const [stream, setStream] = useState()
   const [media, setMedia] = useState()
   const [onRec, setOnRec] = useState(true)
@@ -11,6 +11,8 @@ export function AudioRecord({ setScript, next, setRecord }) {
   const [analyser, setAnalyser] = useState()
   const [audioUrl, setAudioUrl] = useState()
   const [audio1, setAudio1] = useState()
+  const [hidden, setHidden] = useState(false)
+
   const { transcript, resetTranscript, finalTranscript } =
     useSpeechRecognition()
 
@@ -53,6 +55,7 @@ export function AudioRecord({ setScript, next, setRecord }) {
 
           mediaRecorder.ondataavailable = function (e) {
             setAudioUrl(e.data)
+            setAudioUrl1(e.data)
             setOnRec(true)
           }
           SpeechRecognition.stopListening()
@@ -70,8 +73,8 @@ export function AudioRecord({ setScript, next, setRecord }) {
 
     media.ondataavailable = function (e) {
       setAudioUrl(e.data)
+      setAudioUrl1(e.data)
       setOnRec(true)
-      setRecord(e.data)
     }
 
     // 모든 트랙에서 stop()을 호출해 오디오 스트림을 정지
@@ -88,10 +91,12 @@ export function AudioRecord({ setScript, next, setRecord }) {
   }
 
   const onSubmitAudioFile = useCallback(() => {
+    setHidden(true)
     next()
     if (audioUrl) {
       console.log(URL.createObjectURL(audioUrl)) // 출력된 링크에서 녹음된아이포트폴리오
       setAudio1(URL.createObjectURL(audioUrl))
+      setAud1(URL.createObjectURL(audioUrl))
     }
     // File 생성자를 사용해 파일로 변환
     const sound = new File([audioUrl], 'soundBlob', {
@@ -103,15 +108,20 @@ export function AudioRecord({ setScript, next, setRecord }) {
 
   return (
     <>
-      {onRec ? (
-        <button onClick={onRecAudio}>녹음</button>
-      ) : (
-        <button onClick={offRecAudio}>정지</button>
+      {!hidden && (
+        <>
+          {onRec ? (
+            <button onClick={onRecAudio}>녹음</button>
+          ) : (
+            <button onClick={offRecAudio}>정지</button>
+          )}
+          <button onClick={onSubmitAudioFile}>결과 확인</button>
+        </>
       )}
-      <button onClick={onSubmitAudioFile}>결과 확인</button>
-      <p>
+
+      {/* <p>
         <audio controls src={audio1} controlsList="nodownload"></audio>
-      </p>
+      </p> */}
       {/* 실시간 스크립트 */}
       <p>{transcript}</p>
       {/* 최종 스크립트 */}

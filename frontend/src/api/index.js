@@ -19,7 +19,19 @@ export function apiInstance() {
     headers: {
       'Content-type': 'application/json',
       'Access-Control-Allow-Origin': '*',
-      'Authorization': `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
+      Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
+    },
+  })
+  return instance
+}
+
+export function djangoInstance() {
+  const instance = axios.create({
+    baseURL: API_BASE_URL,
+    headers: {
+      'Content-type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
+      Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
     },
   })
   return instance
