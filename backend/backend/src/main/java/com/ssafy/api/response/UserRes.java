@@ -19,7 +19,7 @@ public class UserRes{
 	@ApiModelProperty(name="User ID")
 	String userId;
 	String nickname;
-	String image_url;
+	String imageUrl;
 	Boolean admin;
 
 	
@@ -27,7 +27,7 @@ public class UserRes{
 		UserRes res = new UserRes();
 		res.setUserId(user.getUserId());
 		res.setNickname(user.getNickname());
-		res.setImage_url(user.getImage_url());
+		res.setImageUrl(user.getImageUrl());
 		res.setAdmin(user.getAdmin());
 		return res;
 	}
