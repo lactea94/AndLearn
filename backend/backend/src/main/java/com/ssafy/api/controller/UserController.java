@@ -33,12 +33,17 @@ import java.util.Optional;
 /**
  * 유저 관련 API 요청 처리를 위한 컨트롤러 정의.
  */
+//@CrossOrigin("j6c201.p.ssafy.io:3000")
+//@CrossOrigin("*")
 @Api(value = "유저 API", tags = {"User"})
 @RestController
 @RequestMapping("/v1/users")
 public class UserController {
 
-	private final AwsS3Service awsS3Service;// 이거 왜이러는거
+//	private final AwsS3Service awsS3Service;
+	@Autowired
+	AwsS3Service awsS3Service;
+
 	@Autowired
 	UserService userService;
 
@@ -51,9 +56,9 @@ public class UserController {
 	@Autowired
 	PasswordEncoder passwordEncoder;
 
-	public UserController(AwsS3Service awsS3Service) {// 이거 붙이니깐 됨..ㄷㄷ 이게 뭐냐고 그래서
-		this.awsS3Service = awsS3Service;
-	}
+//	public UserController(AwsS3Service awsS3Service) {
+//		this.awsS3Service = awsS3Service;
+//	}
 
 
 	@PostMapping()
@@ -119,13 +124,16 @@ public class UserController {
 			@ApiResponse(code = 403, message = "엑세스 토큰이 없이 요청"),
 			@ApiResponse(code = 500, message = "서버 오류")
 	})
-	@PostMapping("/image")
+	@PutMapping("/image")
 	public ResponseEntity<String> uploadFile(@ApiIgnore Authentication authentication, @ApiParam(value="이미지파일 1개만", required = true) @RequestPart MultipartFile multipartFile) {
+		String imageName = awsS3Service.uploadFile(multipartFile);
 		SsafyUserDetails userDetails = (SsafyUserDetails)authentication.getDetails();
 		String userId = userDetails.getUsername();
 		User user = userService.getUserByUserId(userId);
-		user.setImage_url(awsS3Service.uploadFile(multipartFile));
-		return ResponseEntity.status(200).body(awsS3Service.uploadFile(multipartFile));
+		user.setImageUrl("https://d3qljd3xvkb8gz.cloudfront.net/"+imageName);
+		System.out.println(imageName);
+		userRepository.save(user);
+		return ResponseEntity.status(200).body(imageName);
 	}
 	@ApiOperation(value = "비밀번호 수정", notes = "로그인한 회원 본인의 정보 중 비밀번호를 수정한다.")
 	@ApiResponses({
