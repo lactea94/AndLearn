@@ -1,12 +1,14 @@
 import { useState } from "react"
 import { Form } from "react-bootstrap"
 import { MyButton } from "styles/Button";
+import { apiInstance } from "api";
 
 export function PasswordEdit() {
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [passwordError, setPasswordError] = useState(false)
   const [confirmPasswordError, setConfirmPasswordError] = useState(false)
+  const api = apiInstance();
 
   function onChangePassword(e) {
     const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,}$/
@@ -26,17 +28,16 @@ export function PasswordEdit() {
     setConfirmPassword(e.target.value)
   }
 
-  function onSubmit(e) {
-    // const url = 'http://j6c201.p.ssafy.io/api/v1/users'
-    // axios
-    //   .post(url, { password: password })
-    //   .then((res) => {
-    //     console.log(res.data)
-    //   })
-    //   .catch((error) => {
-    //     console.log(error)
-    //   })
-    // console.log(password)
+  function onSubmit() {
+    api
+      .post('/users/edit/password', { password: password })
+      .then((res) => {
+        console.log(res.data)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+    console.log(password)
   }
 
   return (
