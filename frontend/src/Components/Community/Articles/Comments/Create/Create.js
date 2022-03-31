@@ -15,14 +15,11 @@ export function Create() {
   }
   const handleSubmit = () => {
     if (validation()) {
-      return (
         apiInstance()
         .post(`/community/${articleId}/comment`,
           {
             content: content,
-        })
-          .then(navigate(0))
-      )
+        }).then(navigate(0))
     }
   }
 
