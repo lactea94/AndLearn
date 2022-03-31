@@ -36,6 +36,6 @@ public class CommunityListRes {
         User user = entity.getUser();
         this.nickname = user.getNickname();
         this.userId = user.getId();
-        this.imgUrl = user.getImage_url();
+        this.imgUrl = user.getImageUrl();
     }
 }

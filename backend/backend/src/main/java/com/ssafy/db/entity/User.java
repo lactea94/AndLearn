@@ -34,7 +34,7 @@ public class User extends BaseEntity{
     private LocalDateTime createdDate;
 
 //    @Column(nullable = false)
-    private String image_url;
+    private String imageUrl;
 
     @JsonIgnore
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
