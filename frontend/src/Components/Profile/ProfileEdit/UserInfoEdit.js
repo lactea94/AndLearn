@@ -81,7 +81,7 @@ export function UserInfoEdit() {
 
     // 프로필 사진 수정 api
     api
-    .put("/users/edit", fd, {
+    .put("/users/image", fd, {
       headers: {
         "Content-Type": "multipart/form-data",
       }
