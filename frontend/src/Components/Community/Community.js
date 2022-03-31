@@ -20,10 +20,11 @@ export function Community() {
   const [filteredArticles, setFilterdArticle] = useState([]);
   const [page, setPage] = useState(1);
   const offset = (page - 1) * limit;
+  const [me, setMe] = useState({});
 
   useEffect(() => {
     apiInstance().get(API_BASE_URL + '/users/me')
-    .then((response) => console.log(response))
+      .then((response) => setMe(response.data))
   }, [])
 
   useEffect(() => {
@@ -68,6 +69,7 @@ export function Community() {
               articles={filteredArticles}
               offset={offset}
               limit={limit}
+              me={me}
             />
           </Row>
           <Row>
@@ -81,7 +83,7 @@ export function Community() {
                   setSearchCategory={setSearchCategory}
                   setPage={setPage}
                 />
-                <Create />
+                <Create me={me}/>
               </Row>
             </Container>
           </Row>

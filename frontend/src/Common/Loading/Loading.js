@@ -26,11 +26,11 @@ export default function Loading()  {
   const Image = () => {
     if (image) {
       return (
-        <img src="/images/allu-4.png" alt="allu-4.png" style={{marginTop: '10rem'}}/>
+        <img src="/images/allu-1.png" alt="allu-1.png" style={{marginTop: '10rem'}}/>
       )
     } else {
       return (
-        <img src="/images/allu-5.png" alt="allu-5.png" style={{marginTop: '10rem'}}/>
+        <img src="/images/allu-2.png" alt="allu-2.png" style={{marginTop: '10rem'}}/>
       )
     }}
   

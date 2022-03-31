@@ -1,7 +1,7 @@
 import { DateFormat } from 'Util/DateFormat';
 import * as S from './Style';
 
-export default function Articles({ notices, articles, offset, limit, currentUser }) {
+export default function Articles({ notices, articles, offset, limit, me }) {
   const NoSearchItems = () => {
     return (
       <div style={{margin: "5rem"}}>
@@ -11,6 +11,31 @@ export default function Articles({ notices, articles, offset, limit, currentUser
       </div>
     )
   }
+
+  function ArticleComponent(article, notice) {
+    return (
+      <S.TableRow notice={notice} key={article.id}>
+        <S.Column xs={1}>
+          {notice ? '공지' : `${article.id}`}
+        </S.Column>
+        <S.Column xs={7}>
+          <S.DetailLink
+            to={`${article.id}`}
+            state={{
+              user: me,
+            }}
+          >
+            {article.title}
+          </S.DetailLink>
+        </S.Column>
+        <S.Column xs={2}>{article.nickname}</S.Column>
+        <S.Column xs={2}>
+          {DateFormat(article.createdDate)}
+        </S.Column>
+      </S.TableRow>
+    )
+  }
+
   return (
     <S.Table>
       <S.TableHead>
@@ -20,34 +45,10 @@ export default function Articles({ notices, articles, offset, limit, currentUser
         <S.ColumnName xs={2}>날짜</S.ColumnName>
       </S.TableHead>
       {notices.map((notice) => (
-        <S.TableNoticeRow key={notice.id}>
-          <S.Column xs={1}>공지</S.Column>
-          <S.Column xs={7}>
-            <S.DetailLink
-              to={`${notice.id}`}
-            >
-              {notice.title}
-            </S.DetailLink>
-          </S.Column>
-          <S.Column xs={2}>{notice.userId}</S.Column>
-          <S.Column xs={2}>
-            {DateFormat(notice.createdAt)}
-          </S.Column>
-        </S.TableNoticeRow>
+        ArticleComponent(notice, 1)
       ))}
       {articles.slice(offset, offset + limit).map((article) => (
-        <S.TableRow key={article.id}>
-          <S.Column xs={1}>{article.id}</S.Column>
-          <S.Column xs={7}>
-            <S.DetailLink
-              to={`${article.id}`}
-            >
-              {article.title}
-            </S.DetailLink>
-          </S.Column>
-          <S.Column xs={2}>{article.userId}</S.Column>
-          <S.Column xs={2}>{DateFormat(article.createdAt)}</S.Column>
-        </S.TableRow>
+        ArticleComponent(article, 0)
       ))}
       {(articles.length === 0) && (<NoSearchItems />)}
     </S.Table>

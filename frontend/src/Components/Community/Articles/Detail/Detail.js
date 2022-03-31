@@ -1,4 +1,4 @@
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { Comments } from "../Comments/Comments";
 import { Update } from "../Update/Update"
 import * as S from "./Style";
@@ -11,19 +11,13 @@ import { DateFormat } from 'Util/DateFormat';
 
 export function Detail() {
   const { articleId } = useParams();
-  const [article, setArticle] = useState({});
-  const [me, setMe] = useState({});
+  const { state } = useLocation();
   const navigate = useNavigate();
+  const [article, setArticle] = useState({});
   
-  useEffect(() => {
-    apiInstance().get(API_BASE_URL + '/users/me')
-      .then((response) => setMe(response.data.nickname))
-  }, [me])
-
   useEffect(() => {
     apiInstance().get(API_BASE_URL + `/community/${articleId}`)
     .then(resposne => setArticle(resposne.data))
-    // .then(console.log(article))/
   }, [articleId])
 
   const handleClick = () => {
@@ -35,30 +29,35 @@ export function Detail() {
   return (
     <S.Article>
       <S.Header>
-        <S.Title xs={10}>{article.title}</S.Title>
+        <S.Title xs={9}>{article.title}</S.Title>
         <S.Created>{DateFormat(article.createdAt)}</S.Created>
-        <S.Created>{DateFormat(article.updatedAt)}</S.Created>
+        <S.Updated>{DateFormat(article.updatedAt)}</S.Updated>
       </S.Header>
       <S.SubHeader>
-        <S.User>{article.nickname}</S.User>
-        {article.nickname === me && 
-          <>
-            <Col xs={7}/>
-            <Col>
-              <MyButton
-                color="red"
-                size="sm"
-                onClick={handleClick}
-              >
-                삭제
-              </MyButton>
-            </Col>
-            <Update title={article.title} content={article.content}/>
-          </>
-        }
+        <S.User xs={2}>{article.nickname}</S.User>
+        <Col xs={2} sm={5} md={6}/>
+        {(article.nickname === state.user.nickname || state.user.admin) && 
+          <Col>
+            <MyButton
+              color="red"
+              size="sm"
+              onClick={handleClick}
+            >
+              삭제
+            </MyButton>
+          </Col>}
+        {article.nickname === state.user.nickname && 
+          <Update
+            title={article.title}
+            content={article.content}
+        />}
       </S.SubHeader>
-      <S.Body>{article.content}</S.Body>
-      <Comments></Comments>
+      <S.Body style={{
+        whiteSpace: "pre-wrap"
+      }}>
+        {article.content}
+      </S.Body>
+      <Comments />
     </S.Article>
   )
 };
