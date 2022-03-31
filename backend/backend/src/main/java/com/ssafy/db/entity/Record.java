@@ -14,8 +14,8 @@ public class Record extends BaseEntity{
     @Column(nullable = false)
     private String recordUrl;
 
-    @Column
-    private Integer recordTime;
+//    @Column
+//    private Integer recordTime;
 
     @Column
     private String sentence;
