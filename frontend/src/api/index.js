@@ -27,7 +27,7 @@ export function apiInstance() {
 
 export function djangoInstance() {
   const instance = axios.create({
-    baseURL: API_BASE_URL,
+    baseURL: 'https://j6c201.p.ssafy.io/aiserver/',
     headers: {
       'Content-type': 'application/json',
       'Access-Control-Allow-Origin': '*',

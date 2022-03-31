@@ -38,7 +38,9 @@ export function Learn() {
             setAudioUrl1={setAudioUrl1}
             setAud1={setAud1}
           />
-          <audio controls src={aud1} controlsList="nodownload"></audio>
+          {aud1 && (
+            <audio controls src={aud1} controlsList="nodownload"></audio>
+          )}
         </>
       )}
 
@@ -54,7 +56,9 @@ export function Learn() {
             setAudioUrl1={setAudioUrl2}
             setAud1={setAud2}
           />
-          <audio controls src={aud2} controlsList="nodownload"></audio>
+          {aud2 && (
+            <audio controls src={aud2} controlsList="nodownload"></audio>
+          )}
         </>
       )}
       {stage >= 4 && (
