@@ -30,7 +30,7 @@ export function PasswordEdit() {
 
   function onSubmit() {
     api
-      .post('/users/edit/password', { password: password })
+      .put('/users/edit-password', { password: password })
       .then((res) => {
         console.log(res.data)
       })

@@ -14,19 +14,22 @@ import { apiInstance } from 'api';
 
 export function Profile() {
   const [profileImgUrl, setProfileImgUrl] = useState();
-  const [myInfo, setMyInfo] = useState();
+  const [userId, setUserId] = useState();
+  const [userNickname, setUserNickname] = useState();
+  const [userImgUrl, setUserImgUrl] = useState();
+  const token = localStorage.getItem(ACCESS_TOKEN);
   const api = apiInstance();
 
   const randomProfileImgUrl = "http://placeimg.com/240/240/animals";
   
   useEffect(() => {
-    const token = localStorage.getItem(ACCESS_TOKEN);
-
     if (token) {
       api.get('users/me')
         .then(res => {
-          setMyInfo(res.data)
-          console.log(myInfo)
+          console.log(res.data)
+          setUserId(res.data.userId);
+          setUserNickname(res.data.nickname);
+          setUserImgUrl(res.data.imageUrl);
         })
     } else {
       window.location.replace(`/`)
@@ -34,9 +37,13 @@ export function Profile() {
   }, [])
 
   useEffect(() => {
-    const myProfileImgUrl = "http://placeimg.com/240/240/people"
-    setProfileImgUrl(myProfileImgUrl);
-  }, [])
+    
+  }, [userId, userNickname, userImgUrl])
+
+  useEffect(() => {
+    console.log(userImgUrl)
+    setProfileImgUrl(userImgUrl);
+  }, [userImgUrl])
 
   return (
     <div>
@@ -50,10 +57,10 @@ export function Profile() {
           <Col lg={6}>
             <div className='d-flex flex-column align-items-start ps-5'>
               <div className='mt-2 mb-3'>
-                <h1 className='m-0'>닉네임 : </h1>
+                <h1 className='m-0'>닉네임 : {userNickname}</h1>
               </div>
               <div>
-                <h4>이메일 : </h4>
+                <h4>이메일 : {userId}</h4>
               </div>           
             </div>
           </Col>
@@ -87,7 +94,7 @@ export function Profile() {
         </Row>
         <div className="mt-3">
           <Routes>
-            <Route path='/content' element={<ProfileContents/>} setMyInfo={setMyInfo}/>
+            <Route path='/content' element={<ProfileContents/>}/>
             <Route path='/content/:contentId' element={<ProfileContentDetail/>} />
             <Route path='/stats' element={<ProfileStats/>} />
             <Route path='/articles' element={<ProfileArticles />} />
