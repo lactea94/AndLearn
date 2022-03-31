@@ -6,6 +6,7 @@ import { useState, useEffect } from "react"
 import ReactDatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import { MyButton } from 'styles/Button';
+import { apiInstance } from 'api';
 
 const Remote = styled.div`
   display: block; 
@@ -34,6 +35,7 @@ export function ProfileContents() {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [isRemoteOn, setIsRemoteOn] = useState(true);
+  const api = apiInstance();
 
   function range(start, end) {
     var arr = [];
