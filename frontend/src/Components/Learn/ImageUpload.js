@@ -1,12 +1,11 @@
 import React, { useState } from 'react'
-import { apiInstance } from 'api/index'
-import { API_BASE_URL } from 'constants/index'
-import { useNavigate } from 'react-router-dom'
+import { djangoInstance } from 'api/index'
+
 //import Dropzone from 'react-dropzone'
 
 export function ImageUpload({ setFileImage, setImageId, next }) {
   const [image, setImage] = useState('')
-  const api = apiInstance()
+  const api = djangoInstance()
 
   function onLoad(e) {
     setImage(URL.createObjectURL(e.target.files[0]))
@@ -18,7 +17,7 @@ export function ImageUpload({ setFileImage, setImageId, next }) {
     const formData = new FormData()
     formData.append('file', image[0])
     api
-      .post('https://j6c201.p.ssafy.io/aiserver/image', formData, {
+      .post('image', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -35,7 +34,6 @@ export function ImageUpload({ setFileImage, setImageId, next }) {
 
   return (
     <div>
-      <img width={180} height={160} src={image} alt="" />
       <div>
         {/* <Dropzone onDrop={onLoad}>
           {({ getRootProps, getInputProps }) => (
