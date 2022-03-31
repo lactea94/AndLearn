@@ -5,6 +5,7 @@
 ### Java ###
 # Compiled class file
 *.class
+*.pid
 
 # Log file
 *.log
