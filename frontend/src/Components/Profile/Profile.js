@@ -50,10 +50,10 @@ export function Profile() {
           <Col lg={6}>
             <div className='d-flex flex-column align-items-start ps-5'>
               <div className='mt-2 mb-3'>
-                <h1 className='m-0'>{myInfo.nickname}</h1>
+                <h1 className='m-0'>닉네임 : </h1>
               </div>
               <div>
-                <h4>이메일 : {myInfo.userId}</h4>
+                <h4>이메일 : </h4>
               </div>           
             </div>
           </Col>

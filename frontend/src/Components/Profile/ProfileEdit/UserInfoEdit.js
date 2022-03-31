@@ -2,12 +2,9 @@ import { Form } from "react-bootstrap"
 import { useState } from "react"
 import { Link } from "react-router-dom"
 import { MyButton } from "styles/Button"
-import axios from "axios"
 import styled from "styled-components"
 import { apiInstance } from "api"
-import { API_BASE_URL, ACCESS_TOKEN } from "constants";
-
-const myToken = localStorage.getItem('accesstoken')
+import { ACCESS_TOKEN } from "constants";
 
 const MyForm = styled(Form)`
   @media screen and (min-width: 576px) {
@@ -32,8 +29,8 @@ export function UserInfoEdit() {
   }
 
   const handleChangeFile = (event) => {
-    console.log(event.target.files)
-    setImgFile(event.target.files);
+    setImgFile(event.target.files[0]);
+    console.log(imgFile)
     setImgBase64([]);
     
     let reader = new FileReader();
@@ -67,20 +64,10 @@ export function UserInfoEdit() {
   }
 
   function onSubmit() {
-    console.log(userName)
-
-    const fd = new FormData();
-    fd.append("image_url", imgFile);
-    fd.append(
-      "nickname", 
-      new Blob([JSON.stringify(userName)], { type: "application/json" })
-    );
-
+    // 닉네임 수정 api
     api
-      .put("/users/edit", fd, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        }
+      .put("/users/edit", {
+        nickname: userName,
       })
       .then(res => {
         console.log(res)
@@ -88,6 +75,23 @@ export function UserInfoEdit() {
       .catch(e => {
         console.log(e)
       })
+
+    const fd = new FormData();
+    fd.append("multipartFile", imgFile);
+
+    // 프로필 사진 수정 api
+    api
+    .put("/users/edit", fd, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      }
+    })
+    .then(res => {
+      console.log(res)
+    })
+    .catch(e => {
+      console.log(e)
+    })
   }
 
   return (
