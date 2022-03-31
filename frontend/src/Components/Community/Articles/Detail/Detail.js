@@ -14,7 +14,7 @@ export function Detail() {
   const { state } = useLocation();
   const navigate = useNavigate();
   const [article, setArticle] = useState({});
-  
+
   useEffect(() => {
     apiInstance().get(API_BASE_URL + `/community/${articleId}`)
     .then(resposne => setArticle(resposne.data))
@@ -57,7 +57,7 @@ export function Detail() {
       }}>
         {article.content}
       </S.Body>
-      <Comments />
+      <Comments articleI={articleId} usernickname={state.user.nickname}/>
     </S.Article>
   )
 };

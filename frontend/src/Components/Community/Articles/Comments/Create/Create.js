@@ -1,15 +1,45 @@
 import { Col } from "react-bootstrap";
 import * as S from "./style";
 import { MyButton } from "styles/Button";
+import { useState } from "react";
+import { apiInstance } from "api";
+import { API_BASE_URL } from "constants";
+import { useNavigate, useParams } from "react-router-dom";
 
 export function Create() {
+  const { articleId } = useParams();
+  const [content, setContent] = useState('');
+  const navigate = useNavigate();
+  const validation = () => {
+    if (content) return true
+    else return false
+  }
+  const handleSubmit = () => {
+    if (validation()) {
+      return (
+        apiInstance()
+        .post(API_BASE_URL + `/community/${articleId}/comment`,
+          {
+            content: content,
+        })
+          .then(navigate(0))
+      )
+    }
+  }
+
   return (
     <S.CreateForm>
       <Col xs={10}>
-        <S.TextArea rows="3" placeholder="댓글"></S.TextArea>
+        <S.TextArea
+          rows="3"
+          placeholder="댓글"
+          onChange={e => {
+              setContent(e.target.value)
+            }}
+        />
       </Col>
       <Col>
-        <MyButton size="sm">작성</MyButton>
+        <MyButton size="sm" onClick={handleSubmit}>작성</MyButton>
       </Col>
     </S.CreateForm>
   )
