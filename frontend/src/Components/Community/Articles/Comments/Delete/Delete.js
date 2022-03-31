@@ -1,6 +1,4 @@
 import { apiInstance } from "api"
-import { API_BASE_URL } from "constants"
-import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import * as S from "./Style";
 
@@ -9,7 +7,8 @@ export function Delete({ commentId }) {
     const navigate = useNavigate();
 
     const handleClick = () => {
-        apiInstance().delete(API_BASE_URL + `/community/${articleId}/comment/${commentId}`)
+        apiInstance().delete(`/community/${articleId}/comment/${commentId}`)
+        .then(navigate(0))
     }
 
     return (

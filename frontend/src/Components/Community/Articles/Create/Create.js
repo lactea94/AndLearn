@@ -4,7 +4,6 @@ import * as S from './Style';
 import { MyButton } from "styles/Button";
 import { Input } from "styles/Input";
 import { apiInstance } from 'api';
-import { API_BASE_URL } from 'constants';
 import { Switch } from "styles/Switch";
 
 export default function Create({ me }) {
@@ -24,7 +23,7 @@ export default function Create({ me }) {
     if (validation()) {
       return (
         apiInstance()
-        .post(API_BASE_URL + '/community',
+        .post('/community',
           {
             title: title,
             content: content,

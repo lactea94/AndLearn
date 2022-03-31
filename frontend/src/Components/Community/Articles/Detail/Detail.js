@@ -6,7 +6,6 @@ import { MyButton } from "styles/Button";
 import { Col } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import { apiInstance } from "api";
-import { API_BASE_URL } from "constants";
 import { DateFormat } from 'Util/DateFormat';
 
 export function Detail() {
@@ -16,12 +15,12 @@ export function Detail() {
   const [article, setArticle] = useState({});
 
   useEffect(() => {
-    apiInstance().get(API_BASE_URL + `/community/${articleId}`)
+    apiInstance().get(`/community/${articleId}`)
     .then(resposne => setArticle(resposne.data))
   }, [articleId])
 
   const handleClick = () => {
-    apiInstance().delete(API_BASE_URL + `/community/${articleId}`)
+    apiInstance().delete(`/community/${articleId}`)
       .then(navigate('/community'))
       .then(navigate(0))
   }

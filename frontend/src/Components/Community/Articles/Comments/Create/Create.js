@@ -3,7 +3,6 @@ import * as S from "./style";
 import { MyButton } from "styles/Button";
 import { useState } from "react";
 import { apiInstance } from "api";
-import { API_BASE_URL } from "constants";
 import { useNavigate, useParams } from "react-router-dom";
 
 export function Create() {
@@ -18,7 +17,7 @@ export function Create() {
     if (validation()) {
       return (
         apiInstance()
-        .post(API_BASE_URL + `/community/${articleId}/comment`,
+        .post(`/community/${articleId}/comment`,
           {
             content: content,
         })
