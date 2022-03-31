@@ -81,18 +81,22 @@ export function AudioRecord({ setScript, next, setAudioUrl1, setAud1 }) {
     stream.getAudioTracks().forEach(function (track) {
       track.stop()
     })
-
+    //스크립트 저장
+    setScript(finalTranscript)
     // 미디어 캡처 중지
     media.stop()
     // 메서드가 호출 된 노드 연결 해제
     analyser.disconnect()
     source.disconnect()
-    setScript(finalTranscript)
   }
 
   const onSubmitAudioFile = useCallback(() => {
-    setHidden(true)
-    next()
+    if (finalTranscript) {
+      setHidden(true)
+      next()
+    } else {
+      alert('녹음을 완료해주세요!.')
+    }
     if (audioUrl) {
       console.log(URL.createObjectURL(audioUrl)) // 출력된 링크에서 녹음된아이포트폴리오
       setAudio1(URL.createObjectURL(audioUrl))

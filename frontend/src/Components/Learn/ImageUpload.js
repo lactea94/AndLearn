@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { djangoInstance } from 'api/index'
-import { API_BASE_URL } from 'constants/index'
-import { useNavigate } from 'react-router-dom'
+
 //import Dropzone from 'react-dropzone'
 
 export function ImageUpload({ setFileImage, setImageId, next }) {
@@ -35,7 +34,6 @@ export function ImageUpload({ setFileImage, setImageId, next }) {
 
   return (
     <div>
-      <img width={180} height={160} src={image} alt="" />
       <div>
         {/* <Dropzone onDrop={onLoad}>
           {({ getRootProps, getInputProps }) => (
