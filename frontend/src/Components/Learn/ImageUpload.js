@@ -23,6 +23,7 @@ export function ImageUpload({ setFileImage, setImageId, next }) {
         },
       })
       .then((res) => {
+        console.log(res)
         setImage(res.data)
         setImageId(res.data.id)
         next()
