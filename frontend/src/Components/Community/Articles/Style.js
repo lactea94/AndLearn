@@ -16,7 +16,7 @@ export const TableHead = styled(Row)`
   padding: 1rem 0;
   font-size: 0.3rem;
 
-  @media ( min-width: 820px ) {
+  @media ( min-width: 768px ) {
     font-size: 1rem;
   }
 `;
@@ -37,7 +37,7 @@ export const TableRow = styled(Row)`
     background-color: ${props => props.notice ? "#58C063" : "#DFDFDF"};
   }
 
-  @media ( min-width: 820px ) {
+  @media ( min-width: 768px ) {
     font-size: 0.8rem;
   }
 `;

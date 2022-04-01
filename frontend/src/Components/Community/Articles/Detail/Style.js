@@ -18,17 +18,35 @@ export const Header = styled(Row)`
 
 export const Title = styled(Col)`
   text-align: start;
-  font-size: 1.3rem;
+  font-size: 1rem;
+
+  @media ( min-width: 768px ) {
+    font-size: 1.3rem;
+  }
 `;
 
 export const Created = styled(Col)`
-  text-align: end;
-  font-size: 0.8rem;
+  text-align: center;
+  font-size: 0.5rem;
+  padding: 0.5rem;
+
+  @media ( min-width: 768px ) {
+    font-size: 0.8rem;
+    text-align: end;
+    padding: 0;
+  }
 `;
 
 export const Updated = styled(Col)`
-  text-align: end;
-  font-size: 0.8rem;
+  text-align: center;
+  font-size: 0.5rem;
+  padding: 0.5rem;
+
+  @media ( min-width: 768px ) {
+    font-size: 0.8rem;
+    text-align: end;
+    padding: 0;
+  }
 `;
 
 export const SubHeader = styled(Row)`

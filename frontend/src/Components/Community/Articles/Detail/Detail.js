@@ -34,12 +34,12 @@ export function Detail() {
   return (
     <S.Article>
       <S.Header>
-        <S.Title xs={9}>{article.title}</S.Title>
+        <S.Title xs={12} md={8}>{article.title}</S.Title>
         <S.Created>{DateFormat(article.createdAt)}</S.Created>
         <S.Updated>{DateFormat(article.updatedAt)}</S.Updated>
       </S.Header>
       <S.SubHeader>
-        <S.User xs={2}>{article.nickname}</S.User>
+        <S.User xs={5} md={8}>{article.nickname}</S.User>
         {(article.nickname === state.user.nickname) && 
           <>
             <Col>
