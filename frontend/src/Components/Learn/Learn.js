@@ -69,9 +69,7 @@ export function Learn() {
         )}
       </div>
       <div>
-        {stage >= 4 && (
-          <GrammarlyEditor script={script2} stage={stage} next={next} />
-        )}
+        {script2}
       </div>
     </div>
   )

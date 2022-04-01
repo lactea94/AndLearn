@@ -23,6 +23,7 @@ export default function Articles({ notices, articles, offset, limit, me }) {
             to={`${article.id}`}
             state={{
               user: me,
+              isNotice: notice,
             }}
           >
             {article.title}

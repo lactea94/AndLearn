@@ -26,7 +26,7 @@ export function Login() {
       password: password,
     }
     api
-      .post(API_BASE_URL + '/auth/login', data)
+      .post('/auth/login', data)
       .then((response) => {
         if (response.data.accessToken) {
           localStorage.setItem('accesstoken', response.data.accessToken)

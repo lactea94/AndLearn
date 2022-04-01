@@ -20,6 +20,7 @@ export function ImageUpload({ setFileImage, setImageId, next }) {
       .post('image', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
+          'Access-Control-Allow-Credentials': true,
         },
       })
       .then((res) => {

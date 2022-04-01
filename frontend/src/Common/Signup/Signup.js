@@ -74,7 +74,7 @@ export function Signup() {
   }
   function onCheckEmail() {
     api
-      .post(API_BASE_URL + '/users/duplicate-check-id', { id: email })
+      .post('/users/duplicate-check-id', { id: email })
       .then((res) => {
         setCheckEmail(true)
         setDEmail('확인 완료')
@@ -88,7 +88,7 @@ export function Signup() {
 
   function onCheckName() {
     api
-      .post(API_BASE_URL + '/users/duplicate-check-nickname', {
+      .post('/users/duplicate-check-nickname', {
         nickname: userName,
       })
       .then((res) => {
@@ -104,9 +104,9 @@ export function Signup() {
 
   function onSubmit(e) {
     if (!validation(e)) return
-    const url = API_BASE_URL + '/users'
+
     api
-      .post(url, { id: email, nickname: userName, password: password })
+      .post('/users', { id: email, nickname: userName, password: password })
       .then((res) => {
         console.log(res.data)
         navigate(`/login`)
@@ -130,7 +130,6 @@ export function Signup() {
                   value={email}
                   onChange={onChangeEmail}
                   className="w-90 flex-grow-1 "
-
                 />
                 <MyButton className="flex-shrink-1 " onClick={onCheckEmail}>
                   확인
