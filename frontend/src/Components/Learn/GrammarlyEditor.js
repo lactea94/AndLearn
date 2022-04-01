@@ -1,10 +1,11 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import { GrammarlyEditorPlugin, Grammarly } from '@grammarly/editor-sdk-react'
+import { MyButton } from 'styles/Button'
 
 export function GrammarlyEditor({ script, next }) {
   const onNext = useCallback(() => {
     next()
-  },[script])
+  },[])
   return (
     <Grammarly
       clientId="leesk3732"
@@ -13,8 +14,8 @@ export function GrammarlyEditor({ script, next }) {
       }}
     >
       <GrammarlyEditorPlugin>
-        <textarea defaultValue={script} rows={3} cols={50}></textarea>
-        <button onClick={onNext}>다음</button>
+        <textarea value={script} rows={3} cols={50}></textarea>
+        <MyButton onClick={onNext}>다음</MyButton>
         <grammarly-button></grammarly-button>
       </GrammarlyEditorPlugin>
     </Grammarly>
