@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom'
+import { Route, Routes, useLocation } from 'react-router-dom'
 import { Navigation } from '../Common/Navigation/Navigation'
 import { Community } from '../Components/Community/Community'
 import { Detail } from '../Components/Community/Articles/Detail/Detail'
@@ -13,9 +13,11 @@ import { useEffect } from 'react'
 import { ACCESS_TOKEN } from 'constants/index'
 import { useNavigate } from 'react-router-dom'
 import { apiInstance } from 'api'
+import { Footer } from 'Common/Footer/Footer'
 
 function App() {
   const token = localStorage.getItem(ACCESS_TOKEN)
+  const location = useLocation();
   const nav = useNavigate()
   const api = apiInstance();
   useEffect(() => {
@@ -48,6 +50,7 @@ function App() {
 
         <Route path="*" element={<NotFound />}></Route>
       </Routes>
+      {location.pathname !== '/learn' && <Footer />}
     </div>
   )
 }
