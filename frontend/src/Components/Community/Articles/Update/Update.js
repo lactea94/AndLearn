@@ -1,13 +1,37 @@
 import { useState } from "react";
-import { Col, Form, Modal } from "react-bootstrap";
+import { useParams, useNavigate } from "react-router-dom";
+import { Alert, Col, Form, Modal } from "react-bootstrap";
 import * as S from './Style';
 import { MyButton } from "styles/Button";
+import { apiInstance } from "api";
+import { API_BASE_URL } from "constants";
 
-export function Update() {
+export function Update(props) {
+  const { articleId } = useParams();
+  const navigate = useNavigate();
+
   const [show, setShow] = useState(false);
+  const [title, setTitle] = useState(props.title);
+  const [content, setContent] = useState(props.content);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const validation = () => {
+    if (title && content) return true
+    else return false
+  }
+  const handleClick = () => {
+    if (validation()) {
+      apiInstance()
+      .put(API_BASE_URL + `/community/${articleId}`,
+        {
+          title: title,
+          content: content,
+      })
+        .then(setShow(false))
+        .then(navigate(0))
+    }
+  }
 
   return (
     <Col>
@@ -23,11 +47,25 @@ export function Update() {
         <Form>
           <Form.Group className="mb-3">
             <Form.Label>제목</Form.Label>
-            <S.Control type="text" />
+            <S.Control
+              type="text"
+              defaultValue={title}
+              onChange={e => {
+                setTitle(e.target.value)
+              }}
+            />
+            { !title && <Alert variant="warning">제목을 입력하세요</Alert>}
           </Form.Group>
           <Form.Group className="mb-3">
             <Form.Label>내용</Form.Label>
-            <S.TextArea rows={10} />
+            <S.TextArea
+              defaultValue={content}
+              rows={10}
+              onChange={e => {
+                setContent(e.target.value)
+              }}
+            />
+            { !content && <Alert variant="warning">내용을 입력하세요</Alert>}
           </Form.Group>
         </Form>
         </Modal.Body>
@@ -35,7 +73,7 @@ export function Update() {
           <MyButton color="gray" onClick={handleClose}>
             취소
           </MyButton>
-          <MyButton onClick={handleClose}>
+          <MyButton onClick={handleClick}>
             완료
           </MyButton>
         </Modal.Footer>

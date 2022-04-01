@@ -1,9 +1,9 @@
-import { Nav, Navbar } from "react-bootstrap"
+import { Navbar } from "react-bootstrap"
 import { NavLink } from "react-router-dom"
 import styled from "styled-components"
 
 export const MyNavbar = styled(Navbar)`
-  background-color: #88B04B;
+  background-color: #58C063;
 `
 
 export const NavItem = styled(NavLink)`
@@ -14,15 +14,15 @@ export const NavItem = styled(NavLink)`
   padding: 1rem;
 
   &:hover {
-    color: #9C4CB0;
+    color: #FEFF74;
   }
 
   &:focus {
-    color: #9C4CB0;
+    color: #FEFF74;
   }
 `
 
 export const Offcanvas = styled(Navbar.Offcanvas)`
-  background-color: #88B04B;
+  background-color: #58C063;
   border: none;
 `

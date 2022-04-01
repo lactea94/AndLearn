@@ -1,33 +1,40 @@
 import React, { useState } from 'react'
+import { djangoInstance } from 'api/index'
+
 //import Dropzone from 'react-dropzone'
 
-export function ImageUpload(fileImage) {
+export function ImageUpload({ setFileImage, setImageId, next }) {
   const [image, setImage] = useState('')
+  const api = djangoInstance()
 
   function onLoad(e) {
     setImage(URL.createObjectURL(e.target.files[0]))
+    setFileImage(URL.createObjectURL(e.target.files[0]))
   }
 
   function onImageUpload(e) {
-    // const formData = new FormData()
-    // formData.append('file', files[0])
-    // authAxios
-    //   .post(`/profile/update/image/${id}`, formData, {
-    //     headers: {
-    //       'Content-Type': 'multipart/form-data',
-    //     },
-    //   })
-    //   .then((res) => {
-    //     setImage(res.data)
-    //     setFiles('')
-    //     window.location.replace(`/auth/profile/${id}`)
-    //   })
-    //   .catch((error) => console.log(error))
+    next()
+    const formData = new FormData()
+    formData.append('file', image[0])
+    api
+      .post('image', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          'Access-Control-Allow-Credentials': true,
+        },
+      })
+      .then((res) => {
+        setImage(res.data)
+        setImageId(res.data.id)
+        next()
+      })
+      .catch((error) => {
+        console.log(error)
+      })
   }
 
   return (
     <div>
-      <img width={180} height={160} src={image} alt="" />
       <div>
         {/* <Dropzone onDrop={onLoad}>
           {({ getRootProps, getInputProps }) => (
@@ -57,7 +64,7 @@ export function ImageUpload(fileImage) {
         </label>
       </div>
       <button>랜덤사진</button>
-      <button>시작!</button>
+      <button onClick={onImageUpload}>시작!</button>
     </div>
   )
 }

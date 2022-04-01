@@ -1,32 +1,51 @@
 import { Create } from "./Create/Create";
-import { Col } from "react-bootstrap";
-import { DateFormat } from "../../module/module";
+import { DateFormat } from "Util/DateFormat";
 import * as S from "./Style";
-import { MyButton } from "styles/Button";
+import { useEffect, useState } from "react";
+import { apiInstance } from "api";
+import { API_BASE_URL } from "constants";
+import { useParams } from "react-router-dom";
+import { Delete } from "./Delete/Delete";
 
-const nowTime = new Date();
 
-const comments = [
-  {id: 1, userId: "김철수", body: "안녕하세요", created_at: "2022. 03. 14 11:10"},
-  {id: 2, userId: "박싸피", body: "반갑습니다", created_at: "2022. 03. 15 11:10"},
-  {id: 3, userId: "김영희", body: "안녕히 계세요", created_at: "2022. 03. 16 11:10"},
-  {id: 4, userId: "이싸피", body: "수고하세요", created_at: "2022. 03. 21 11:10"},
-];
+export function Comments({ usernickname }) {
+  const { articleId } = useParams();
+  const [comments, setcCmments] = useState([]);
 
-export function Comments() {
+  useEffect(() => {
+    apiInstance().get(API_BASE_URL + `/community/${articleId}/comment`)
+    .then((response) => setcCmments(response.data))
+  }, [articleId]);
+
   return (
     <S.Comments>
       <S.Header>댓글 {comments.length}개</S.Header>
-      {comments.map((comment) => (
-        <S.Comment key={comment.id} >
-          <S.User xs={2}>{comment.userId}</S.User>
-          <S.Body xs={7}>{comment.body}</S.Body>
-          <Col xs={1}>
-            <MyButton color="red" size="sm">삭제</MyButton>
-          </Col>
-          <S.Created xs={2}>{DateFormat(nowTime, comment.created_at)}</S.Created>
-        </S.Comment>
-      ))}
+      {comments.map((comment) => {
+        if (usernickname === comment.nickname) {
+          return (
+            <S.MyComment key={comment.id} >
+              <S.MyCommentContent>
+                <S.Body>{comment.content}</S.Body>
+                <S.Created>{DateFormat(comment.createdDate)}</S.Created>
+                <Delete commentId={comment.id}/>
+              </S.MyCommentContent>
+            </S.MyComment>
+          )
+        } else {
+          return (
+            <S.Comment key={comment.id} >
+              <S.ImgBox>
+                <S.UserImg alt={comment.userId} src="/images/default_user.jpg" />
+              </S.ImgBox>
+              <S.CommentContent>
+                <S.User>{comment.nickname}</S.User>
+                <S.Body>{comment.content}</S.Body>
+                <S.Created>{DateFormat(comment.createdDate)}</S.Created>
+              </S.CommentContent>
+            </S.Comment>
+          )
+        }
+      })}
       <Create />
     </S.Comments>
   )

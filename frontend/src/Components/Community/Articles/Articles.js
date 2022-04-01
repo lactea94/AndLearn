@@ -1,9 +1,41 @@
-import { DateFormat } from '../module/module';
+import { DateFormat } from 'Util/DateFormat';
 import * as S from './Style';
 
-const nowTime = new Date();
+export default function Articles({ notices, articles, offset, limit, me }) {
+  const NoSearchItems = () => {
+    return (
+      <div style={{margin: "5rem"}}>
+        <h3>
+          검색결과가 없습니다.
+        </h3>
+      </div>
+    )
+  }
 
-export default function Articles({ notices, articles, offset, limit }) {
+  function ArticleComponent(article, notice) {
+    return (
+      <S.TableRow notice={notice} key={article.id}>
+        <S.Column xs={1}>
+          {notice ? '공지' : `${article.id}`}
+        </S.Column>
+        <S.Column xs={7}>
+          <S.DetailLink
+            to={`${article.id}`}
+            state={{
+              user: me,
+              isNotice: notice,
+            }}
+          >
+            {article.title}
+          </S.DetailLink>
+        </S.Column>
+        <S.Column xs={2}>{article.nickname}</S.Column>
+        <S.Column xs={2}>
+          {DateFormat(article.createdDate)}
+        </S.Column>
+      </S.TableRow>
+    )
+  }
 
   return (
     <S.Table>
@@ -14,43 +46,12 @@ export default function Articles({ notices, articles, offset, limit }) {
         <S.ColumnName xs={2}>날짜</S.ColumnName>
       </S.TableHead>
       {notices.map((notice) => (
-        <S.TableNoticeRow key={notice.id}>
-          <S.Column xs={1}>공지</S.Column>
-          <S.Column xs={7}>
-            <S.DetailLink
-              to={`${notice.id}`}
-              state={{
-                userId: notice.userId,
-                title: notice.title,
-                body: notice.body
-            }}>
-              {notice.title}
-            </S.DetailLink>
-          </S.Column>
-          <S.Column xs={2}>{notice.userId}</S.Column>
-          <S.Column xs={2}>
-            {DateFormat(nowTime, notice.created_at)}
-          </S.Column>
-        </S.TableNoticeRow>
+        ArticleComponent(notice, 1)
       ))}
       {articles.slice(offset, offset + limit).map((article) => (
-        <S.TableRow key={article.id}>
-          <S.Column xs={1}>{article.id}</S.Column>
-          <S.Column xs={7}>
-            <S.DetailLink
-              to={`${article.id}`}
-              state={{
-                userId: article.userId,
-                title: article.title,
-                body: article.body
-            }}>
-              {article.title}
-            </S.DetailLink>
-          </S.Column>
-          <S.Column xs={2}>{article.userId}</S.Column>
-          <S.Column xs={2}>임시</S.Column>
-        </S.TableRow>
+        ArticleComponent(article, 0)
       ))}
+      {(articles.length === 0) && (<NoSearchItems />)}
     </S.Table>
   )
 };

@@ -1,53 +1,70 @@
-import { useParams } from "react-router-dom"
-import { Row, Col, Image, Button } from "react-bootstrap";
-import styled from "styled-components";
-import { useState } from "react";
-
-const Text = styled.div`
-  font-size: 17px;
-  margin-bottom: 5px;
-`
+import { useParams } from "react-router-dom";
+import { Row, Col, Image } from "react-bootstrap";
+import { useEffect, useState } from "react";
+import * as S from './ProfileContentDetailStyle';
+import { apiInstance } from "api";
 
 export function ProfileContentDetail() {
-  const { userId, contentId } = useParams();
+  const { contentId } = useParams();
   const [isCheckAnswer, setIsCheckAnswer] = useState(false);
+  const [learningInfo, setLearningInfo] = useState();
+  const api = apiInstance();
 
-  // 임시 학습 디테일 정보
-  const learningInfo = {
-    img_url: 'http://placeimg.com/400/400/animals',
-    created_at: '2021-03-23 11:14:00',
-    answer_time: '45',
-    score: '3.7',
-    record_1: 'record_1_url',
-    record_2: 'record_2_url',
-    AI_answers: ['apple', 'banana', 'cake'],
-    my_answer: 'Help me...'
-  }
+  useEffect(() => {
+    api.get(`/learn/picture/${contentId}`)
+      .then(res => {
+        setLearningInfo(res.data)
+      })
+  }, [])
 
   const onToggleOpen = () => {
     setIsCheckAnswer(!isCheckAnswer)
   }
 
   return (
-    <div>
-      <Row>
-        <Col xs={5}>
-          <Image src={`${learningInfo.img_url}`} alt="profile_image" rounded fluid></Image>
-        </Col>
-        <Col xs={7} className="d-flex flex-column align-items-start">
-          <Text>날짜 : {learningInfo.created_at}</Text>
-          <Text>경과시간 : {learningInfo.answer_time}</Text>
-          <Text>내 발음 점수 : {learningInfo.score}</Text>
-          <Text>1차 녹음본 : </Text>
-          <Text>2차 녹음본 : </Text>
-          <Text>AI 답변 / 내 답변</Text>
-          <Button style={{ display : isCheckAnswer ? 'none' : ''}} onClick={() => {onToggleOpen()}}>Open</Button>
-          <span style={{ display : isCheckAnswer ? '' : 'none'}}>
-            <Text>AI 답변 : {learningInfo.AI_answers.join(",")}</Text>
-            <Text>내 답변 : {learningInfo.my_answer}</Text>
-          </span>          
-        </Col>
-      </Row>
-    </div>
+    <>
+      {learningInfo && 
+        <div>
+          <Row>
+            <Col xs={5}>
+              <Image 
+                src={`https://d3qljd3xvkb8gz.cloudfront.net/${learningInfo.pictureUrl}`} 
+                alt="profile_image" 
+                rounded 
+                fluid 
+                style={{ width: '100%' }}
+              />
+            </Col>
+            <Col xs={7} className="d-flex flex-column align-items-start row text-start">
+              <S.Text>날짜 : {learningInfo.createdDate}</S.Text>
+              <S.Text>내 발음 점수 : {learningInfo.score}</S.Text>
+
+              <div className="row mb-2">
+                <S.Text className="mb-0 align-self-center">1차 녹음본</S.Text>
+                <audio controls>
+                  <source src={`https://d3qljd3xvkb8gz.cloudfront.net/${learningInfo.records[0].recordUrl}`} />
+                </audio>
+              </div>
+
+              <div className="row">
+                <S.Text className="mb-0 align-self-center">2차 녹음본</S.Text>
+                <audio controls>
+                  <source src={`https://d3qljd3xvkb8gz.cloudfront.net/${learningInfo.records[1].recordUrl}`} />
+                </audio>
+              </div>
+
+              <S.Text>AI 답변 / 내 답변</S.Text>
+              <S.AnswerButton onClick={() => {onToggleOpen()}}>{isCheckAnswer ? 'Close' : 'Open'}</S.AnswerButton>
+              <S.AnswerBox style={{ display : isCheckAnswer ? '' : 'none'}}>
+                <S.Text>AI 답변 : {learningInfo.words.join(",")}</S.Text>
+                <S.Text>내 답변 : {learningInfo.records[0].sentence}</S.Text>
+                <S.Text>내 답변 : {learningInfo.records[1].sentence}</S.Text>
+              </S.AnswerBox>          
+            </Col>
+          </Row>
+          <br />
+        </div>
+      }
+    </>
   )
 }

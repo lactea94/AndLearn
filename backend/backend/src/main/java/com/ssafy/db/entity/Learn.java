@@ -32,6 +32,10 @@ public class Learn extends BaseEntity{
     @OneToMany(mappedBy = "learn", fetch = FetchType.LAZY)
     private List<Record> records = new ArrayList<>();
 
+    @ManyToOne
+    @JoinColumn(name="user_id")
+    private User user;
+
 
 
 }

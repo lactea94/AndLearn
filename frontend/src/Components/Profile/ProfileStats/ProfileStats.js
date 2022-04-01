@@ -19,12 +19,17 @@ export function ProfileStats() {
     setMyLearns([
       { id: 0, created_at: '2021-03-23 11:14:00'},
       { id: 1, created_at: '2021-09-23 11:14:00'},
-      { id: 2, created_at: '2022-03-21 11:14:00'},
-      { id: 3, created_at: '2022-03-22 11:14:00'},
-      { id: 4, created_at: '2022-03-23 11:14:00'},
-      { id: 5, created_at: '2022-03-24 11:14:00'},
-      { id: 6, created_at: '2012-03-24 11:14:00'},
-      { id: 7, created_at: '2022-03-20 11:14:00'},
+      { id: 2, created_at: '2022-03-25 11:14:00'},
+      { id: 3, created_at: '2022-03-26 11:14:00'},
+      { id: 4, created_at: '2022-03-27 11:14:00'},
+      { id: 5, created_at: '2022-03-27 11:14:00'},
+      { id: 6, created_at: '2022-03-28 11:14:00'},
+      { id: 7, created_at: '2022-03-28 11:14:00'},
+      { id: 8, created_at: '2022-03-28 11:14:00'},
+      { id: 9, created_at: '2022-03-29 11:14:00'},
+      { id: 10, created_at: '2022-03-29 11:14:00'},
+      { id: 11, created_at: '2022-03-29 11:14:00'},
+      { id: 12, created_at: '2022-03-29 11:14:00'},
     ]);
   }, [])
 
@@ -44,12 +49,38 @@ export function ProfileStats() {
     }
   }, [myLearns])
 
+  const bgColor = (learnings) => {
+    const backgroundColors = [
+      'rgba(235, 237, 240)', 
+      'rgba(155, 233, 168)', 
+      'rgba(64, 196, 99)', 
+      'rgba(48, 161, 78)',
+      'rgba(33, 110, 57)'
+    ]
+
+    if (learnings === 0) {
+      return backgroundColors[0]
+    }
+    if (learnings <= 1) {
+      return backgroundColors[1]
+    }
+    if (learnings <= 2) {
+      return backgroundColors[2]
+    }
+    if (learnings <= 3) {
+      return backgroundColors[3]
+    }
+    if (learnings <= 4) {
+      return backgroundColors[4]
+    }
+  }
+
   // 1년 동안 공부한 내용을 바탕으로 잔디 색칠
   useEffect(() => {
     const myStats = () => {
       const week = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
       const month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-      const backgroundColors = ['gray', 'green']
+      // 색깔 범위? 0개 gray, 1~3개 옅게
       
       const newDate = new Date();
       const nowDate = new Date(newDate.getFullYear(), newDate.getMonth(), newDate.getDate())
@@ -65,8 +96,8 @@ export function ProfileStats() {
           const weekDate = new Date(newDate.getFullYear() - 1, newDate.getMonth(), newDate.getDate() - 1 + i)
           const weekNum = weekDate.getDay()
           result.push(
-            <S.DailyBox key={i} style={{ position: 'relative', backgroundColor: `${backgroundColors[myLearnCounts[i]]}` }}>
-              <p style={{position: 'absolute', left: '-23px', top: '-2px', fontSize: '9px'}}>{week[weekNum]}</p>
+            <S.DailyBox key={i} style={{ position: 'relative', backgroundColor: `${bgColor(myLearnCounts[i])}` }}>
+              <S.WeekText>{week[weekNum]}</S.WeekText>
             </S.DailyBox>
           )
         } else if (i % 7 === 0) {
@@ -75,18 +106,18 @@ export function ProfileStats() {
           if (checkMonth !== checkMonthDate.getMonth()) {
             checkMonth = (checkMonth + 1) % 12
             result.push(
-              <S.DailyBox key={i} style={{ position: 'relative', backgroundColor: `${backgroundColors[myLearnCounts[i]]}` }}>
-                <p style={{position: 'absolute', left: '0px', top: '-15px', fontSize: '9px'}}>{month[checkMonth]}</p>
+              <S.DailyBox key={i} style={{ position: 'relative', backgroundColor: `${bgColor(myLearnCounts[i])}` }}>
+                <S.MonthText>{month[checkMonth]}</S.MonthText>
               </S.DailyBox>
             )
           } else {
             result.push(
-              <S.DailyBox key={i} style={{ backgroundColor: `${backgroundColors[myLearnCounts[i]]}` }}></S.DailyBox>
+              <S.DailyBox key={i} style={{ backgroundColor: `${bgColor(myLearnCounts[i])}` }}></S.DailyBox>
             );
           }
         } else {
           result.push(
-            <S.DailyBox key={i} style={{ backgroundColor: `${backgroundColors[myLearnCounts[i]]}` }}></S.DailyBox>
+            <S.DailyBox key={i} style={{ backgroundColor: `${bgColor(myLearnCounts[i])}` }}></S.DailyBox>
           );
         }
       }
@@ -158,7 +189,7 @@ export function ProfileStats() {
   }, [myLearns])
 
   return(
-    <div>
+    <div style={{ minHeight:'100vh'}}>
       <S.CalendarBox className="d-flex flex-column justify-content-end align-items-end overflow-hidden mx-auto pt-2">
         <S.Calendar className="d-flex flex-column flex-wrap overflow-hidden ps-4 pt-3">
           {dailyBoxs}

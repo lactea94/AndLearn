@@ -3,7 +3,13 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export const Table = styled(Container)`
+  margin-top: 3rem;
   margin-bottom: 1rem;
+  background-color: white;
+  border-radius: 1rem;
+  width: 90%;
+  background-color: #F8F8F8;
+  overflow: hidden;
 `;
 
 export const TableHead = styled(Row)`
@@ -11,25 +17,19 @@ export const TableHead = styled(Row)`
 `;
 
 export const ColumnName = styled(Col)`
-
+  font-weight: bold;
 `;
 
 export const TableRow = styled(Row)`
   font-size: 0.8rem;
   padding: 0.5rem 0;
   align-items: center;
-  border-bottom: solid 1px lightgray;
+  border-top: solid 1px #DFDFDF;
+  background-color: ${props => props.notice ? "#58C063" : "inherit"};
+  
 
   &:hover {
-    background-color: lightgray;
-  }
-`;
-
-export const TableNoticeRow = styled(TableRow)`
-  background-color: #88B04B;
-
-  &:hover {
-    background-color: #ACC981;
+    background-color: ${props => props.notice ? "#58C063" : "#DFDFDF"};
   }
 `;
 

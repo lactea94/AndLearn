@@ -2,15 +2,17 @@ import { Col, Container, Row } from "react-bootstrap";
 import styled from "styled-components";
 
 export const Article = styled(Container)`
-  margin-bottom: 2rem;
+  width: 75%;
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+  border-radius: 1rem;
+  background-color: #F8F8F8;
+  padding: 2rem;
 `;
 
 export const Header = styled(Row)`
-  background-color: #88B04B;
+  display: inlnie;
   align-items: center;
-  border-bottom: 0.1rem solid gray;
-  border-top-left-radius: 1rem;
-  border-top-right-radius: 1rem;
   padding: 0.5rem 0.2rem;
 `;
 
@@ -24,10 +26,17 @@ export const Created = styled(Col)`
   font-size: 0.8rem;
 `;
 
+export const Updated = styled(Col)`
+  text-align: end;
+  font-size: 0.8rem;
+`;
+
 export const SubHeader = styled(Row)`
   align-items: center;
-  border-bottom: 0.1rem solid lightgray;
+  // justify-content: between;
+  background-color: #58C063;
   padding: 0.4rem 0;
+  border-radius: 0.3rem;
 `;
 
 export const User = styled(Col)`
@@ -38,5 +47,4 @@ export const User = styled(Col)`
 export const Body = styled(Row)`
   padding: 2rem 0.5rem;
   text-align: start;
-  border-bottom: 0.1rem solid lightgray;
 `;
