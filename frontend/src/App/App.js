@@ -12,20 +12,13 @@ import './App.css'
 import { useEffect } from 'react'
 import { ACCESS_TOKEN } from 'constants/index'
 import { useNavigate } from 'react-router-dom'
-import { apiInstance } from 'api'
 
 function App() {
   const token = localStorage.getItem(ACCESS_TOKEN)
   const nav = useNavigate()
-  const api = apiInstance();
   useEffect(() => {
     if (!token) {
       nav('/')
-    } else {
-      api.get("/users/me")
-        .then(res => {
-          console.log(res.data)
-        })
     }
   }, [])
   return (

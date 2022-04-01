@@ -183,7 +183,12 @@ export function ProfileContents() {
                 </div>
               )}
               selected={startDate} 
-              onChange={(date) => setStartDate(date)}
+              onChange={(date) => {
+                date.setHours(0)
+                date.setMinutes(0)
+                date.setSeconds(0)
+                setStartDate(date)
+              }}
               dateFormat="yyyy-MM-dd"
             />
             <div className='m-2'>~</div>
@@ -237,7 +242,12 @@ export function ProfileContents() {
                 </div>
               )}
               selected={endDate} 
-              onChange={(date) => setEndDate(date)}
+              onChange={(date) => {
+                date.setHours(23)
+                date.setMinutes(59)
+                date.setSeconds(59)
+                setEndDate(date)
+              }}
               dateFormat="yyyy-MM-dd"
             />
             <MyButton color="#58C063" className='m-2 py-0' onClick={() => {clickSearchButton()}}>

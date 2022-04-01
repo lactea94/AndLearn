@@ -15,7 +15,6 @@ export function Navigation() {
       setIsAuthenticated(true)
       api.get('users/me')
         .then(res => {
-          console.log(res.data)
           setMyInfo(res.data)
         })
     } else {

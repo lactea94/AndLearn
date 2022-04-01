@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Col } from "react-bootstrap";
 import { useParams } from "react-router-dom"
 import * as S from "./ProfileStatsStyle";
+import { apiInstance } from "api";
 
 export function ProfileStats() {
   const { userId } = useParams();
@@ -13,24 +14,14 @@ export function ProfileStats() {
   const [period, setPeriod] = useState('');
   const [streakDays, setStreakDays] = useState(0);
   const [streakPeriod, setStreakPeriod] = useState('');
+  const api = apiInstance();
 
-  // 임시 러닝 목록
+  // 러닝 목록
   useEffect(() => {
-    setMyLearns([
-      { id: 0, created_at: '2021-03-23 11:14:00'},
-      { id: 1, created_at: '2021-09-23 11:14:00'},
-      { id: 2, created_at: '2022-03-25 11:14:00'},
-      { id: 3, created_at: '2022-03-26 11:14:00'},
-      { id: 4, created_at: '2022-03-27 11:14:00'},
-      { id: 5, created_at: '2022-03-27 11:14:00'},
-      { id: 6, created_at: '2022-03-28 11:14:00'},
-      { id: 7, created_at: '2022-03-28 11:14:00'},
-      { id: 8, created_at: '2022-03-28 11:14:00'},
-      { id: 9, created_at: '2022-03-29 11:14:00'},
-      { id: 10, created_at: '2022-03-29 11:14:00'},
-      { id: 11, created_at: '2022-03-29 11:14:00'},
-      { id: 12, created_at: '2022-03-29 11:14:00'},
-    ]);
+    api.get("/learn/statistics")
+      .then(res => {
+        setMyLearns(res.data)
+      })
   }, [])
 
   // 러닝 목록에서 날짜를 추출한 뒤, 해당 날짜에 몇 번 공부했는지 카운트
@@ -39,7 +30,7 @@ export function ProfileStats() {
     const lastDate = new Date(newDate.getFullYear() - 1, newDate.getMonth(), newDate.getDate() - 1);
 
     for (let j = 0; j < myLearns.length; j++) {
-      const checkBoxDate = new Date(myLearns[j].created_at);
+      const checkBoxDate = new Date(myLearns[j].createdDate);
       const diffMSec = checkBoxDate.getTime() - lastDate.getTime();
       const diffDays = parseInt(diffMSec / 1000 / 60 / 60 / 24);
 
@@ -61,16 +52,16 @@ export function ProfileStats() {
     if (learnings === 0) {
       return backgroundColors[0]
     }
-    if (learnings <= 1) {
+    if (learnings >= 1 && learnings <= 3) {
       return backgroundColors[1]
     }
-    if (learnings <= 2) {
+    if (learnings >= 4 && learnings <= 6) {
       return backgroundColors[2]
     }
-    if (learnings <= 3) {
+    if (learnings >= 7 && learnings <= 9) {
       return backgroundColors[3]
     }
-    if (learnings <= 4) {
+    if (learnings >= 10) {
       return backgroundColors[4]
     }
   }

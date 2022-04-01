@@ -13,7 +13,7 @@ export function ProfileContentDetail() {
   useEffect(() => {
     api.get(`/learn/picture/${contentId}`)
       .then(res => {
-        setLearningInfo(res.data)
+        setLearningInfo(res.data);
       })
   }, [])
 
@@ -26,17 +26,17 @@ export function ProfileContentDetail() {
       {learningInfo && 
         <div>
           <Row>
-            <Col xs={5}>
+            <Col lg={5}>
               <Image 
                 src={`https://d3qljd3xvkb8gz.cloudfront.net/${learningInfo.pictureUrl}`} 
                 alt="profile_image" 
                 rounded 
                 fluid 
-                style={{ width: '100%' }}
+                style={{ width: '100%', marginBottom: '10px' }}
               />
             </Col>
-            <Col xs={7} className="d-flex flex-column align-items-start row text-start">
-              <S.Text>날짜 : {learningInfo.createdDate}</S.Text>
+            <Col lg={7} className="d-flex flex-column align-items-start row text-start">
+              <S.Text>날짜 : {learningInfo.createdDate.substr(0, 19)}</S.Text>
               <S.Text>내 발음 점수 : {learningInfo.score}</S.Text>
 
               <div className="row mb-2">
@@ -56,9 +56,9 @@ export function ProfileContentDetail() {
               <S.Text>AI 답변 / 내 답변</S.Text>
               <S.AnswerButton onClick={() => {onToggleOpen()}}>{isCheckAnswer ? 'Close' : 'Open'}</S.AnswerButton>
               <S.AnswerBox style={{ display : isCheckAnswer ? '' : 'none'}}>
-                <S.Text>AI 답변 : {learningInfo.words.join(",")}</S.Text>
-                <S.Text>내 답변 : {learningInfo.records[0].sentence}</S.Text>
-                <S.Text>내 답변 : {learningInfo.records[1].sentence}</S.Text>
+                <S.Text>AI 답변 : {learningInfo.words.map(word => word.content).join(", ")}</S.Text>
+                <S.Text>답변 1: {learningInfo.records[0].sentence}</S.Text>
+                <S.Text>답변 2: {learningInfo.records[1].sentence}</S.Text>
               </S.AnswerBox>          
             </Col>
           </Row>
