@@ -86,15 +86,13 @@ export function Community() {
               </Row>
             </Container>
           </Row>
-          <Row className="justify-content-center align-items-center">
-            <Pagination 
-              total={filteredArticles.length}
-              limit={limit}
-              page={page}
-              setPage={setPage}
-              setLimit={setLimit}
-            />
-          </Row>
+          <Pagination 
+            total={filteredArticles.length}
+            limit={limit}
+            page={page}
+            setPage={setPage}
+            setLimit={setLimit}
+          />
         </Container>
       )}
     </>

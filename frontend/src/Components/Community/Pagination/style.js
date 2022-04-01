@@ -3,7 +3,6 @@ import styled from "styled-components";
 
 export const PageContainer = styled(ButtonGroup)`
   margin-top: 2rem;
-  margin-left: 2rem;
   margin-bottom: 3rem;
 `;
 
