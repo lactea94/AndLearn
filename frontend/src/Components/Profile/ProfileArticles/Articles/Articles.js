@@ -1,3 +1,4 @@
+import { DateFormat } from 'Util/DateFormat';
 import * as S from './Style';
 
 export default function Articles({ articles, offset, limit, currentUser }) {
@@ -21,7 +22,7 @@ export default function Articles({ articles, offset, limit, currentUser }) {
             </S.DetailLink>
           </S.Column>
           <S.Column xs={2}>{article.userId}</S.Column>
-          <S.Column xs={2}>임시</S.Column>
+          <S.Column xs={2}>{DateFormat(article.createdDate)}</S.Column>
         </S.TableRow>
       ))}
     </S.Table>

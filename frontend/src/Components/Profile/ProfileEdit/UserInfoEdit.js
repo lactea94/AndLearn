@@ -15,10 +15,11 @@ const MyForm = styled(Form)`
 
 export function UserInfoEdit() {
   const { userId } = useParams();
-  const [userName, setUserName] = useState('')
-  const [userNameError, setUserNameError] = useState(false)
-  const [dName, setDName] = useState('')
-  const [checkName, setCheckName] = useState(false)
+  const [userName, setUserName] = useState('');
+  const [userNameError, setUserNameError] = useState(false);
+  const [dName, setDName] = useState('');
+  const [checkName, setCheckName] = useState(false);
+  const [checkValues, setCheckValues] = useState('');
   const [imgBase64, setImgBase64] = useState([]); // 파일 base64
   const [imgFile, setImgFile] = useState(null);	//파일
 
@@ -32,6 +33,7 @@ export function UserInfoEdit() {
 
   const handleChangeFile = (event) => {
     setImgFile(event.target.files[0]);
+    console.log(imgFile)
     setImgBase64([]);
     
     let reader = new FileReader();
@@ -64,32 +66,39 @@ export function UserInfoEdit() {
   }
 
   function onSubmit() {
-    // 닉네임 수정 api
-    if (userName) {
-      api
-      .put("/users/edit", {
-        nickname: userName,
-      })
-      .then(res => {
-      })
-    }     
+    if (userName || imgFile) {
+      // 닉네임 수정 api
+      if (userName) {
+        api
+        .put("/users/edit", {
+          nickname: userName,
+        })
+        .then(res => {
+        })
+      }     
 
-    if (imgFile) {
-      const fd = new FormData();
-      fd.append("multipartFile", imgFile);
+      if (imgFile) {
+        const fd = new FormData();
+        fd.append("multipartFile", imgFile);
 
-      // 프로필 사진 수정 api
-      api
-      .put("/users/image", fd, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        }
-      })
-      .then(res => {
-      })
+        // 프로필 사진 수정 api
+        api
+        .put("/users/image", fd, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          }
+        })
+        .then(res => {
+        })
+      }
+      if (userName) {
+        window.location.replace(`/profile/${userName}/content`)
+      } else {
+        window.location.replace(`/profile/${userId}/content`)
+      }
+    } else {
+      setCheckValues('변경사항이 없습니다.')
     }
-    
-    window.location.replace(`/profile/${userName}/content`)
   }
 
   return (
@@ -131,6 +140,7 @@ export function UserInfoEdit() {
         <div className="d-grid gap-1 mb-3">
           <MyButton color="#58C063" onClick={() => {onSubmit(); onCheckName();}}>회원 정보 수정</MyButton>
         </div>
+        <p>{checkValues}</p>
         <div>
           <Link to={`password`}>
             <MyButton color="#58C063">비밀번호 수정</MyButton>
