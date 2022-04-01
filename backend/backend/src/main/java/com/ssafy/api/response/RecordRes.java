@@ -9,13 +9,13 @@ import lombok.Setter;
 public class RecordRes {
     private Long id;
     private String recordUrl;
-    private Integer recordTime;
+//    private Integer recordTime;
     private String sentence;
 
     public RecordRes(Record record) {
         this.id = record.getId();
         this.recordUrl = record.getRecordUrl();
-        this.recordTime = record.getRecordTime();
+//        this.recordTime = record.getRecordTime();
         this.sentence = record.getSentence();
     }
 }

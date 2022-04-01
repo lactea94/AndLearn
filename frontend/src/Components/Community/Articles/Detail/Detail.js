@@ -6,7 +6,6 @@ import { MyButton } from "styles/Button";
 import { Col } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import { apiInstance } from "api";
-import { API_BASE_URL } from "constants";
 import { DateFormat } from 'Util/DateFormat';
 
 export function Detail() {
@@ -14,16 +13,22 @@ export function Detail() {
   const { state } = useLocation();
   const navigate = useNavigate();
   const [article, setArticle] = useState({});
-  
+
   useEffect(() => {
-    apiInstance().get(API_BASE_URL + `/community/${articleId}`)
+    apiInstance().get(`/community/${articleId}`)
     .then(resposne => setArticle(resposne.data))
   }, [articleId])
 
   const handleClick = () => {
-    apiInstance().delete(API_BASE_URL + `/community/${articleId}`)
+    if (state.isNotice === 1) {
+      apiInstance().delete(`/community/notice/${articleId}`)
       .then(navigate('/community'))
       .then(navigate(0))
+    } else {
+      apiInstance().delete(`/community/${articleId}`)
+      .then(navigate('/community'))
+      .then(navigate(0))
+    }
   }
 
   return (
@@ -35,29 +40,29 @@ export function Detail() {
       </S.Header>
       <S.SubHeader>
         <S.User xs={2}>{article.nickname}</S.User>
-        <Col xs={2} sm={5} md={6}/>
-        {(article.nickname === state.user.nickname || state.user.admin) && 
-          <Col>
-            <MyButton
-              color="red"
-              size="sm"
-              onClick={handleClick}
-            >
-              삭제
-            </MyButton>
-          </Col>}
-        {article.nickname === state.user.nickname && 
-          <Update
+        {(article.nickname === state.user.nickname) && 
+          <>
+            <Col>
+              <MyButton
+                color="red"
+                size="sm"
+                onClick={handleClick}
+              >
+                삭제
+              </MyButton>
+            </Col>
+            <Update
             title={article.title}
             content={article.content}
-        />}
+            />
+          </>}
       </S.SubHeader>
       <S.Body style={{
         whiteSpace: "pre-wrap"
       }}>
         {article.content}
       </S.Body>
-      <Comments />
+      <Comments articleI={articleId} usernickname={state.user.nickname}/>
     </S.Article>
   )
 };
