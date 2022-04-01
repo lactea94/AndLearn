@@ -4,6 +4,7 @@ import styled from "styled-components"
 
 export const MyNavbar = styled(Navbar)`
   position: sticky;
+  z-index: 1;
   top: 0;
   background-color: #58C063;
 `
