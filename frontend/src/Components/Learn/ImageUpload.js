@@ -17,7 +17,7 @@ export function ImageUpload({ setFileImage, setImageId, next }) {
     const formData = new FormData()
     formData.append('file', image[0])
     api
-      .post('file', formData, {
+      .post('image', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
