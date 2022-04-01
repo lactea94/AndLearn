@@ -1,10 +1,11 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import { GrammarlyEditorPlugin, Grammarly } from '@grammarly/editor-sdk-react'
 
 export function GrammarlyEditor({ script, next }) {
   const onNext = useCallback(() => {
     next()
-  },[script])
+  }, [script])
+  useEffect(()=>{},[script])
   return (
     <Grammarly
       clientId="leesk3732"

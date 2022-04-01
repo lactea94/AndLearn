@@ -3,6 +3,7 @@ import { ImageUpload } from './ImageUpload.js'
 import { AudioRecord } from './AudioRecord'
 import { GrammarlyEditor } from './GrammarlyEditor'
 import plusDefault from './plusDefault.png'
+import { Fullscreen } from 'react-bootstrap-icons'
 export function Learn() {
   const [fileImage, setFileImage] = useState(plusDefault)
   const [imageId, setImageId] = useState('')
@@ -20,6 +21,12 @@ export function Learn() {
     setStage(stage + 1)
     console.log(stage)
   }
+  function onCheck(e) {
+    console.log(e.target.value)
+    setScript1(e.target.value)
+    console.log(script1)
+  }
+  useEffect(()=>{},[script1])
 
   return (
     <div>
@@ -50,7 +57,9 @@ export function Learn() {
       </div>
       <div>
         {stage >= 2 && (
-          <GrammarlyEditor script={script1} stage={stage} next={next} />
+          <>
+            <GrammarlyEditor script={script1} stage={stage} next={next} />
+          </>
         )}
       </div>
       <div>
@@ -68,9 +77,7 @@ export function Learn() {
           </>
         )}
       </div>
-      <div>
-        {script2}
-      </div>
+      <div>{script2}</div>
     </div>
   )
 }
