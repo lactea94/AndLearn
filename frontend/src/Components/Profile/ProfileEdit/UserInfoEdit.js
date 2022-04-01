@@ -1,6 +1,6 @@
 import { Form } from "react-bootstrap"
 import { useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate, useParams } from "react-router-dom"
 import { MyButton } from "styles/Button"
 import styled from "styled-components"
 import { apiInstance } from "api"
@@ -14,6 +14,7 @@ const MyForm = styled(Form)`
 `
 
 export function UserInfoEdit() {
+  const { userId } = useParams();
   const [userName, setUserName] = useState('')
   const [userNameError, setUserNameError] = useState(false)
   const [dName, setDName] = useState('')
@@ -21,6 +22,7 @@ export function UserInfoEdit() {
   const [imgBase64, setImgBase64] = useState([]); // 파일 base64
   const [imgFile, setImgFile] = useState(null);	//파일
 
+  const navigate = useNavigate();
   const api = apiInstance();
 
   function onChangeUserName(e) {
@@ -30,7 +32,6 @@ export function UserInfoEdit() {
 
   const handleChangeFile = (event) => {
     setImgFile(event.target.files[0]);
-    console.log(imgFile)
     setImgBase64([]);
     
     let reader = new FileReader();
@@ -39,7 +40,6 @@ export function UserInfoEdit() {
     reader.onloadend = () => {
       // 2. 읽기가 완료되면 아래코드가 실행됩니다.
       const base64 = reader.result;
-      console.log(base64)
       if (base64) {
       var base64Sub = base64.toString()
         
@@ -65,33 +65,31 @@ export function UserInfoEdit() {
 
   function onSubmit() {
     // 닉네임 수정 api
-    api
+    if (userName) {
+      api
       .put("/users/edit", {
         nickname: userName,
       })
       .then(res => {
-        console.log(res)
       })
-      .catch(e => {
-        console.log(e)
+    }     
+
+    if (imgFile) {
+      const fd = new FormData();
+      fd.append("multipartFile", imgFile);
+
+      // 프로필 사진 수정 api
+      api
+      .put("/users/image", fd, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        }
       })
-
-    const fd = new FormData();
-    fd.append("multipartFile", imgFile);
-
-    // 프로필 사진 수정 api
-    api
-    .put("/users/image", fd, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      }
-    })
-    .then(res => {
-      console.log(res)
-    })
-    .catch(e => {
-      console.log(e)
-    })
+      .then(res => {
+      })
+    }
+    
+    window.location.replace(`/profile/${userName}/content`)
   }
 
   return (
