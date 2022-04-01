@@ -9,7 +9,7 @@ export const Contents = styled(Container)`
 }
 
 @media ( min-width: 1280px ) {
-  width: 70%;
+  width: 60%;
 }
 
 `
