@@ -8,14 +8,14 @@ export function ImageUpload({ setFileImage, setImageId, next }) {
   const api = djangoInstance()
 
   function onLoad(e) {
-    setImage(URL.createObjectURL(e.target.files[0]))
+    setImage(e.target.files[0])
     setFileImage(URL.createObjectURL(e.target.files[0]))
   }
 
   function onImageUpload(e) {
     next()
     const formData = new FormData()
-    formData.append('file', image[0])
+    formData.append('file', image)
     api
       .post('image', formData, {
         headers: {
