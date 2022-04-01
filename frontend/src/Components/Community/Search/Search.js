@@ -36,6 +36,7 @@ export function Search({ setSearchText, setSearchCategory, setPage }) {
         <option value="content">내용</option>
       </Select>
       <Input
+        // style={{width: '5rem' }}
         type="text"
         value={text}
         onChange={e => {
