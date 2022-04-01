@@ -14,6 +14,11 @@ export const Table = styled(Container)`
 
 export const TableHead = styled(Row)`
   padding: 1rem 0;
+  font-size: 0.3rem;
+
+  @media ( min-width: 820px ) {
+    font-size: 1rem;
+  }
 `;
 
 export const ColumnName = styled(Col)`
@@ -21,7 +26,7 @@ export const ColumnName = styled(Col)`
 `;
 
 export const TableRow = styled(Row)`
-  font-size: 0.8rem;
+  font-size: 0.2rem;
   padding: 0.5rem 0;
   align-items: center;
   border-top: solid 1px #DFDFDF;
@@ -30,6 +35,10 @@ export const TableRow = styled(Row)`
 
   &:hover {
     background-color: ${props => props.notice ? "#58C063" : "#DFDFDF"};
+  }
+
+  @media ( min-width: 820px ) {
+    font-size: 0.8rem;
   }
 `;
 
@@ -40,5 +49,5 @@ export const Column = styled(Col)`
 export const DetailLink = styled(Link)`
   text-decoration: none;
   font-weight: bold;
-  font-size: 1rem;
+  color: black;
 `;
