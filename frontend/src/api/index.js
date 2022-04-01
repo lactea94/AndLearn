@@ -32,7 +32,6 @@ export function djangoInstance() {
     headers: {
       'Content-type': 'application/json',
       'Access-Control-Allow-Origin': '*',
-      Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
     },
   })
   return instance
