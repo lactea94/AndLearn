@@ -88,7 +88,12 @@ export default function Pagination({ total, limit, page, setPage, setLimit }) {
     )};
 
   return (
-    <Row className="justify-content-center align-items-center">
+    <Row
+      style={{
+        justifyContent: "center",
+        alignItems: "center"
+      }}
+    >
       <Col xs={12} md={6} style={{margin: "0"}}>
         <S.PageContainer>
           <S.PageItem onClick={() => setPage(1)} disabled={page === 1}>
