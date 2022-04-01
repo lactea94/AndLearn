@@ -50,8 +50,6 @@ public class CommentController {
         List<Comment> list = commentRepository.findAllByCommunityId(communityId);
         List<CommentListRes> commentList = new ArrayList<>();
 
-        Collections.reverse(list);
-
         for (Comment entity : list) {
             commentList.add(new CommentListRes(entity));
         }
