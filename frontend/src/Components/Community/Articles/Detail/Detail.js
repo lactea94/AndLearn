@@ -57,9 +57,7 @@ export function Detail() {
             />
           </>}
       </S.SubHeader>
-      <S.Body style={{
-        whiteSpace: "pre-wrap"
-      }}>
+      <S.Body>
         {article.content}
       </S.Body>
       <Comments articleI={articleId} usernickname={state.user.nickname}/>

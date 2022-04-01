@@ -63,6 +63,7 @@ export const UserImg = styled.img`
 
 export const Body = styled.div`
   font-size: 0.9rem;
+  white-space: pre-wrap;
 `;
 
 export const Created = styled.div`
