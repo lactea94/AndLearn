@@ -2,8 +2,7 @@ import { Button, ButtonGroup, Form } from "react-bootstrap";
 import styled from "styled-components";
 
 export const PageContainer = styled(ButtonGroup)`
-  margin-top: 2rem;
-  margin-bottom: 3rem;
+  margin-top: 1rem;
 `;
 
 export const PageItem = styled(Button)`
