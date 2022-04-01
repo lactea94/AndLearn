@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import { GrammarlyEditorPlugin, Grammarly } from '@grammarly/editor-sdk-react'
 import { MyButton } from 'styles/Button'
 
