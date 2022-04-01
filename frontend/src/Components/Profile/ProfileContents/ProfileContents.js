@@ -65,58 +65,10 @@ export function ProfileContents() {
 
   // 전체 Contents 목록 불러오기 (현재 임시 값)
   useEffect(() => {
-    setContents([
-      {
-        id: 1,
-        imgUrl: 'http://placeimg.com/400/400/nature',
-        created_at: '2021-03-23 11:14:00'
-      },
-      {
-        id: 2,
-        imgUrl: 'http://placeimg.com/400/400/nature',
-        created_at: '2021-09-23 11:14:00'
-      },
-      {
-        id: 3,
-        imgUrl: 'http://placeimg.com/400/400/nature',
-        created_at: '2021-09-24 11:14:00'
-      },
-      {
-        id: 4,
-        imgUrl: 'http://placeimg.com/400/400/nature',
-        created_at: '2021-12-23 11:14:00'
-      },
-      {
-        id: 5,
-        imgUrl: 'http://placeimg.com/400/400/nature',
-        created_at: '2022-01-23 11:14:00'
-      },
-      {
-        id: 6,
-        imgUrl: 'http://placeimg.com/400/400/nature',
-        created_at: '2022-03-23 11:14:00'
-      },
-      {
-        id: 7,
-        imgUrl: 'http://placeimg.com/400/400/nature',
-        created_at: '2022-03-24 11:14:00'
-      },
-      {
-        id: 8,
-        imgUrl: 'http://placeimg.com/400/400/nature',
-        created_at: '2022-03-25 11:14:00'
-      },
-      {
-        id: 9,
-        imgUrl: 'http://placeimg.com/400/400/nature',
-        created_at: '2022-03-26 11:14:00'
-      },
-      {
-        id: 10,
-        imgUrl: 'http://placeimg.com/400/400/nature',
-        created_at: '2022-03-27 11:14:00'
-      },
-    ]);
+    api.get("/learn/pictures")
+      .then(res => {
+        setContents(res.data)
+      })
   }, [])
 
   // 처음 contents 목록 받아올 때, 모든 contents 값을 default로 설정
@@ -130,7 +82,7 @@ export function ProfileContents() {
     const endMSec = endDate.getTime();
 
     const result = contents.filter(content => 
-      startMSec <= new Date(content.created_at).getTime() && new Date(content.created_at).getTime() <= endMSec
+      startMSec <= new Date(content.createdDate).getTime() && new Date(content.createdDate).getTime() <= endMSec
     )
 
     setSelectedContents(result);
@@ -158,139 +110,142 @@ export function ProfileContents() {
   }
 
   return (
-    <div>
-      <Row>
-        {selectedContents.map((content) => {
-          return (
-            <Col xs={4} key={content.id}>
-              <ProfileContent imgUrl={content.imgUrl} contentId={content.id}/>
-              {/* <ProfileContent content={content} /> */}
-            </Col>
-          )
-        })}
-      </Row>
-      <Remote
-        draggable 
-        onDragStart={dragStartHandler} 
-        onDrag={dragHandler} 
-        onDragEnd={dragEndHandler}
-        style={{ display: `${ isRemoteOn ? '' : 'none' }` }}
-      >
-        <div className='m-2'>
-          기간 검색
+    <>
+      {selectedContents && 
+        <div>
+          <Row>
+            {selectedContents.map((content) => {
+              return (
+                <Col xs={4} key={content.id}>
+                  <ProfileContent content={content}/>
+                </Col>
+              )
+            })}
+          </Row>
+          <Remote
+            draggable 
+            onDragStart={dragStartHandler} 
+            onDrag={dragHandler} 
+            onDragEnd={dragEndHandler}
+            style={{ display: `${ isRemoteOn ? '' : 'none' }` }}
+          >
+            <div className='m-2'>
+              기간 검색
+            </div>
+            <button className="btn-close" onClick={() => {handleRemote()}} style={{ position: 'absolute', left: '134px', top: '2px' }} />
+            <MyDatePicker
+              closeOnScroll={true}
+              renderCustomHeader={({
+                date,
+                changeYear,
+                changeMonth,
+                decreaseMonth,
+                increaseMonth,
+                prevMonthButtonDisabled,
+                nextMonthButtonDisabled,
+              }) => (
+                <div
+                  style={{
+                    margin: 10,
+                    display: "flex",
+                    justifyContent: "center",
+                  }}
+                >
+                  <button onClick={decreaseMonth} disabled={prevMonthButtonDisabled}>
+                    {"<"}
+                  </button>
+                  <select
+                    value={date.getFullYear()}
+                    onChange={({ target: { value } }) => changeYear(value)}
+                  >
+                    {years.map((option) => (
+                      <option key={option} value={option}>
+                        {option}
+                      </option>
+                    ))}
+                  </select>
+
+                  <select
+                    value={months[date.getMonth()]}
+                    onChange={({ target: { value } }) =>
+                      changeMonth(months.indexOf(value))
+                    }
+                  >
+                    {months.map((option) => (
+                      <option key={option} value={option}>
+                        {option}
+                      </option>
+                    ))}
+                  </select>
+                  <button onClick={increaseMonth} disabled={nextMonthButtonDisabled}>
+                    {">"}
+                  </button>
+                </div>
+              )}
+              selected={startDate} 
+              onChange={(date) => setStartDate(date)}
+              dateFormat="yyyy-MM-dd"
+            />
+            <div className='m-2'>~</div>
+            <MyDatePicker
+              closeOnScroll={true}
+              renderCustomHeader={({
+                date,
+                changeYear,
+                changeMonth,
+                decreaseMonth,
+                increaseMonth,
+                prevMonthButtonDisabled,
+                nextMonthButtonDisabled,
+              }) => (
+                <div
+                  style={{
+                    margin: 10,
+                    display: "flex",
+                    justifyContent: "center",
+                  }}
+                >
+                  <button onClick={decreaseMonth} disabled={prevMonthButtonDisabled}>
+                    {"<"}
+                  </button>
+                  <select
+                    value={date.getFullYear()}
+                    onChange={({ target: { value } }) => changeYear(value)}
+                  >
+                    {years.map((option) => (
+                      <option key={option} value={option}>
+                        {option}
+                      </option>
+                    ))}
+                  </select>
+
+                  <select
+                    value={months[date.getMonth()]}
+                    onChange={({ target: { value } }) =>
+                      changeMonth(months.indexOf(value))
+                    }
+                  >
+                    {months.map((option) => (
+                      <option key={option} value={option}>
+                        {option}
+                      </option>
+                    ))}
+                  </select>
+                  <button onClick={increaseMonth} disabled={nextMonthButtonDisabled}>
+                    {">"}
+                  </button>
+                </div>
+              )}
+              selected={endDate} 
+              onChange={(date) => setEndDate(date)}
+              dateFormat="yyyy-MM-dd"
+            />
+            <MyButton color="#58C063" className='m-2 py-0' onClick={() => {clickSearchButton()}}>
+              검색
+            </MyButton>
+          </Remote>
         </div>
-        <button className="btn-close" onClick={() => {handleRemote()}} style={{ position: 'absolute', left: '134px', top: '2px' }} />
-        <MyDatePicker
-          closeOnScroll={true}
-          renderCustomHeader={({
-            date,
-            changeYear,
-            changeMonth,
-            decreaseMonth,
-            increaseMonth,
-            prevMonthButtonDisabled,
-            nextMonthButtonDisabled,
-          }) => (
-            <div
-              style={{
-                margin: 10,
-                display: "flex",
-                justifyContent: "center",
-              }}
-            >
-              <button onClick={decreaseMonth} disabled={prevMonthButtonDisabled}>
-                {"<"}
-              </button>
-              <select
-                value={date.getFullYear()}
-                onChange={({ target: { value } }) => changeYear(value)}
-              >
-                {years.map((option) => (
-                  <option key={option} value={option}>
-                    {option}
-                  </option>
-                ))}
-              </select>
-
-              <select
-                value={months[date.getMonth()]}
-                onChange={({ target: { value } }) =>
-                  changeMonth(months.indexOf(value))
-                }
-              >
-                {months.map((option) => (
-                  <option key={option} value={option}>
-                    {option}
-                  </option>
-                ))}
-              </select>
-              <button onClick={increaseMonth} disabled={nextMonthButtonDisabled}>
-                {">"}
-              </button>
-            </div>
-          )}
-          selected={startDate} 
-          onChange={(date) => setStartDate(date)}
-          dateFormat="yyyy-MM-dd"
-        />
-        <div className='m-2'>~</div>
-        <MyDatePicker
-          closeOnScroll={true}
-          renderCustomHeader={({
-            date,
-            changeYear,
-            changeMonth,
-            decreaseMonth,
-            increaseMonth,
-            prevMonthButtonDisabled,
-            nextMonthButtonDisabled,
-          }) => (
-            <div
-              style={{
-                margin: 10,
-                display: "flex",
-                justifyContent: "center",
-              }}
-            >
-              <button onClick={decreaseMonth} disabled={prevMonthButtonDisabled}>
-                {"<"}
-              </button>
-              <select
-                value={date.getFullYear()}
-                onChange={({ target: { value } }) => changeYear(value)}
-              >
-                {years.map((option) => (
-                  <option key={option} value={option}>
-                    {option}
-                  </option>
-                ))}
-              </select>
-
-              <select
-                value={months[date.getMonth()]}
-                onChange={({ target: { value } }) =>
-                  changeMonth(months.indexOf(value))
-                }
-              >
-                {months.map((option) => (
-                  <option key={option} value={option}>
-                    {option}
-                  </option>
-                ))}
-              </select>
-              <button onClick={increaseMonth} disabled={nextMonthButtonDisabled}>
-                {">"}
-              </button>
-            </div>
-          )}
-          selected={endDate} 
-          onChange={(date) => setEndDate(date)}
-          dateFormat="yyyy-MM-d"
-        />
-        <MyButton color="#58C063" className='m-2 py-0' onClick={() => {clickSearchButton()}}>
-          검색
-        </MyButton>
-      </Remote>
-    </div>
+      }
+    </>
   )
 }

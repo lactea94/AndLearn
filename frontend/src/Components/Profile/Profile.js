@@ -21,12 +21,14 @@ export function Profile() {
   const api = apiInstance();
 
   const randomProfileImgUrl = "http://placeimg.com/240/240/animals";
-  
+
+  useEffect(() => {
+  }, [userId, userNickname, userImgUrl])
+
   useEffect(() => {
     if (token) {
       api.get('users/me')
         .then(res => {
-          console.log(res.data)
           setUserId(res.data.userId);
           setUserNickname(res.data.nickname);
           setUserImgUrl(res.data.imageUrl);
@@ -37,11 +39,6 @@ export function Profile() {
   }, [])
 
   useEffect(() => {
-    
-  }, [userId, userNickname, userImgUrl])
-
-  useEffect(() => {
-    console.log(userImgUrl)
     setProfileImgUrl(userImgUrl);
   }, [userImgUrl])
 
@@ -57,7 +54,7 @@ export function Profile() {
           <Col lg={6}>
             <div className='d-flex flex-column align-items-start ps-5'>
               <div className='mt-2 mb-3'>
-                <h1 className='m-0'>닉네임 : {userNickname}</h1>
+                <h1 className='m-0'>{userNickname}</h1>
               </div>
               <div>
                 <h4>이메일 : {userId}</h4>
