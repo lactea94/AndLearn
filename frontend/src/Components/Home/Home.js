@@ -37,12 +37,12 @@ export function Home() {
             "People are having a birthday party."<br/>
             이 사진을 보고 바로 영어로 말할 수 있으셨나요?<br/>
           </Col>
-          <Col>
+          <Col xs={4}>
             <S.Image src="/images/allu-1.png"/>
           </Col>
         </S.Content>
         <S.Content>
-          <Col>
+          <Col xs={4}>
             <S.Image src="/images/allu-2.png"/>
           </Col>
           <Col>

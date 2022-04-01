@@ -29,6 +29,7 @@ export const Body = styled(Row)`
   margin-top: 10rem;
   justify-content: center;
   font-family: BMEULJIRO;
+  font-size: 1.5rem;
 `
 export const Content = styled(Row)`
   margin: 2rem;
