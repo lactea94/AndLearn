@@ -8,7 +8,6 @@ import Pagination from './Pagination/Pagination';
 import { Search } from './Search/Search';
 import { apiInstance } from 'api';
 import * as S from './Style';
-import { API_BASE_URL } from 'constants';
 
 export function Community() {
   const [notices, setNotices] = useState([]);
@@ -23,17 +22,17 @@ export function Community() {
   const [me, setMe] = useState({});
 
   useEffect(() => {
-    apiInstance().get(API_BASE_URL + '/users/me')
+    apiInstance().get('/users/me')
       .then((response) => setMe(response.data))
   }, [])
 
   useEffect(() => {
-    apiInstance().get(API_BASE_URL + '/community')
+    apiInstance().get('/community')
     .then((response) => setArticles(response.data))
   }, []);
 
   useEffect(() => {
-    apiInstance().get(API_BASE_URL + '/community/notice')
+    apiInstance().get('/community/notice')
     .then((response) => setNotices(response.data))
   }, []);
 

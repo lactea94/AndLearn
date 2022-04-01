@@ -1,26 +1,33 @@
 import { Create } from "./Create/Create";
 import { DateFormat } from "Util/DateFormat";
 import * as S from "./Style";
+import { useEffect, useState } from "react";
+import { apiInstance } from "api";
+import { API_BASE_URL } from "constants";
+import { useParams } from "react-router-dom";
+import { Delete } from "./Delete/Delete";
 
-const comments = [
-  {id: 1, userId: 1, body: "안녕하세요", created_at: "2022. 03. 14 11:10"},
-  {id: 2, userId: 2, body: "반갑습니다", created_at: "2022. 03. 15 11:10"},
-  {id: 3, userId: 3, body: "안녕히 계세요", created_at: "2022. 03. 16 11:10"},
-  {id: 4, userId: 4, body: "수고하세요", created_at: "2022. 03. 21 11:10"},
-];
 
-export function Comments({ currentUser }) {
+export function Comments({ usernickname }) {
+  const { articleId } = useParams();
+  const [comments, setcCmments] = useState([]);
+
+  useEffect(() => {
+    apiInstance().get(API_BASE_URL + `/community/${articleId}/comment`)
+    .then((response) => setcCmments(response.data))
+  }, [articleId]);
+
   return (
     <S.Comments>
       <S.Header>댓글 {comments.length}개</S.Header>
       {comments.map((comment) => {
-        if (currentUser === comment.id) {
+        if (usernickname === comment.nickname) {
           return (
             <S.MyComment key={comment.id} >
               <S.MyCommentContent>
-                <S.Body>{comment.body}</S.Body>
-                <S.Created>{DateFormat(comment.created_at)}</S.Created>
-                <S.Button>삭제</S.Button>
+                <S.Body>{comment.content}</S.Body>
+                <S.Created>{DateFormat(comment.createdDate)}</S.Created>
+                <Delete commentId={comment.id}/>
               </S.MyCommentContent>
             </S.MyComment>
           )
@@ -31,9 +38,9 @@ export function Comments({ currentUser }) {
                 <S.UserImg alt={comment.userId} src="/images/default_user.jpg" />
               </S.ImgBox>
               <S.CommentContent>
-                <S.User>{comment.userId}</S.User>
-                <S.Body>{comment.body}</S.Body>
-                <S.Created>{DateFormat(comment.created_at)}</S.Created>
+                <S.User>{comment.nickname}</S.User>
+                <S.Body>{comment.content}</S.Body>
+                <S.Created>{DateFormat(comment.createdDate)}</S.Created>
               </S.CommentContent>
             </S.Comment>
           )
