@@ -2,6 +2,7 @@ import React, { useState, useCallback } from 'react'
 import SpeechRecognition, {
   useSpeechRecognition,
 } from 'react-speech-recognition'
+import { MyButton } from 'styles/Button'
 
 export function AudioRecord({ setScript, next, setAudioUrl1, setAud1 }) {
   const [stream, setStream] = useState()
@@ -100,7 +101,7 @@ export function AudioRecord({ setScript, next, setAudioUrl1, setAud1 }) {
     if (audioUrl) {
       console.log(URL.createObjectURL(audioUrl)) // 출력된 링크에서 녹음된아이포트폴리오
       setAudio1(URL.createObjectURL(audioUrl))
-      setAud1(URL.createObjectURL(audioUrl))
+      setAud1(audioUrl)
     }
     // File 생성자를 사용해 파일로 변환
     const sound = new File([audioUrl], 'soundBlob', {
@@ -115,21 +116,18 @@ export function AudioRecord({ setScript, next, setAudioUrl1, setAud1 }) {
       {!hidden && (
         <>
           {onRec ? (
-            <button onClick={onRecAudio}>녹음</button>
+            <MyButton onClick={onRecAudio}>녹음</MyButton>
           ) : (
-            <button onClick={offRecAudio}>정지</button>
+            <MyButton onClick={offRecAudio}>정지</MyButton>
           )}
-          <button onClick={onSubmitAudioFile}>결과 확인</button>
+          {finalTranscript && <MyButton onClick={onSubmitAudioFile}>다음</MyButton>}
         </>
       )}
 
-      {/* <p>
-        <audio controls src={audio1} controlsList="nodownload"></audio>
-      </p> */}
       {/* 실시간 스크립트 */}
-      <p>{transcript}</p>
+      {/* <p>{transcript}</p> */}
       {/* 최종 스크립트 */}
-      <p>{finalTranscript}</p>
+      {finalTranscript}
     </>
   )
 }

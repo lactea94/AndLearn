@@ -1,12 +1,16 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import { ImageUpload } from './ImageUpload.js'
 import { AudioRecord } from './AudioRecord'
 import { GrammarlyEditor } from './GrammarlyEditor'
 import plusDefault from './plusDefault.png'
+import { apiInstance } from 'api/index'
+
 export function Learn() {
+  const api = apiInstance()
   const [fileImage, setFileImage] = useState(plusDefault)
   const [imageId, setImageId] = useState('')
   const [stage, setStage] = useState(0)
+  const [keyDjango, setKeyDjango] = useState('')
 
   const [audioUrl1, setAudioUrl1] = useState()
   const [aud1, setAud1] = useState()
@@ -16,11 +20,33 @@ export function Learn() {
 
   const [script1, setScript1] = useState('')
   const [script2, setScript2] = useState('')
+
   function next() {
     setStage(stage + 1)
     console.log(stage)
   }
+  function onCheck(e) {
+    console.log(e.target.value)
+    setScript1(e.target.value)
+  }
+  function onSubmit() {
+    const formData = new FormData()
+    formData.append('file', aud1)
 
+    api
+      .post(`learn/${keyDjango}`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          'Access-Control-Allow-Credentials': true,
+        },
+      })
+      .then((res) => {
+        next()
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
   return (
     <div>
       <div>
@@ -30,6 +56,7 @@ export function Learn() {
             setFileImage={setFileImage}
             setImageId={setImageId}
             next={next}
+            setKeyDjango={setKeyDjango}
           />
         )}
       </div>
@@ -43,7 +70,12 @@ export function Learn() {
               setAud1={setAud1}
             />
             {aud1 && (
-              <audio controls src={aud1} controlsList="nodownload"></audio>
+              <>
+                <textarea value={script1} onChange={onCheck}>
+                  {script1}
+                </textarea>
+                <audio controls src={aud1} controlsList="nodownload"></audio>
+              </>
             )}
           </>
         )}
@@ -68,9 +100,7 @@ export function Learn() {
           </>
         )}
       </div>
-      <div>
-        {script2}
-      </div>
+      <div>{stage >= 4 && <div>다음</div>}</div>
     </div>
   )
 }

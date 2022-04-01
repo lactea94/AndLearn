@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { djangoInstance } from 'api/index'
-
+import { MyButton } from 'styles/Button'
 //import Dropzone from 'react-dropzone'
 
-export function ImageUpload({ setFileImage, setImageId, next }) {
+export function ImageUpload({ setFileImage, setImageId, next, setKeyDjango }) {
   const [image, setImage] = useState('')
   const api = djangoInstance()
 
@@ -26,6 +26,7 @@ export function ImageUpload({ setFileImage, setImageId, next }) {
         console.log(res)
         setImage(res.data)
         setImageId(res.data.id)
+        setKeyDjango()
         next()
       })
       .catch((error) => {
@@ -59,12 +60,14 @@ export function ImageUpload({ setFileImage, setImageId, next }) {
           className="btn btn-outline-primary"
           name="ImgBtn"
           htmlFor="imgInput"
+          width={180}
+          height={160}
         >
-          프로필 사진 등록
+          버튼을 눌러 사진을 업로드 해주세요{' '}
         </label>
       </div>
-      <button>랜덤사진</button>
-      <button onClick={onImageUpload}>시작!</button>
+      {/* <button>랜덤사진</button> */}
+      <MyButton onClick={onImageUpload}>시작!</MyButton>
     </div>
   )
 }
