@@ -3,7 +3,7 @@ import { Container, Form, Row, Col } from 'react-bootstrap'
 import { MyButton } from 'styles/Button'
 import { Link, useNavigate } from 'react-router-dom'
 import { userInstance } from '../../api/index'
-import { API_BASE_URL } from 'constants'
+import { MyForm } from 'styles/UserForm'
 
 export function Signup() {
   const [password, setPassword] = useState('')
@@ -117,98 +117,99 @@ export function Signup() {
   }
 
   return (
-    <div>
-      <Container className="panel">
-        <Form>
-          <Form.Group as={Row} className="mb-3">
-            <Col sm>
-              <div className="d-flex">
-                <Form.Control
-                  maxLength={50}
-                  type="input"
-                  placeholder="Email Address"
-                  value={email}
-                  onChange={onChangeEmail}
-                  className="w-90 flex-grow-1 "
-                />
-                <MyButton className="flex-shrink-1 " onClick={onCheckEmail}>
-                  확인
-                </MyButton>
+    <Container className="row justify-content-center align-items-center" style={{ minHeight:'100vh'}}>
+      <MyForm>
+        <Form.Group as={Row} className="mb-3">
+          <Col sm>
+            <div className="d-flex">
+              <Form.Control
+                maxLength={50}
+                type="input"
+                placeholder="Email Address"
+                value={email}
+                onChange={onChangeEmail}
+                className="flex-grow-1"
+                style={{ width: '80%' }}
+              />
+              <MyButton className="flex-shrink-1 " onClick={onCheckEmail}>
+                확인
+              </MyButton>
+            </div>
+            <p>{dEmail}</p>
+            {emailError && (
+              <div className="invalid-input">
+                유효한 이메일 주소를 입력해주세요
               </div>
-              <p>{dEmail}</p>
-              {emailError && (
-                <div className="invalid-input">
-                  유효한 이메일 주소를 입력해주세요
-                </div>
-              )}
-            </Col>
-          </Form.Group>
-          <Form.Group as={Row} className="mb-3">
-            <Col sm>
-              <div className="d-flex">
-                <Form.Control
-                  maxLength={20}
-                  placeholder="Nickname"
-                  value={userName}
-                  onChange={onChangeUserName}
-                />
-                <MyButton className="flex-shrink-1 mx-1" onClick={onCheckName}>
-                  확인
-                </MyButton>
-              </div>
-              <p>{dName}</p>
-              {userNameError && (
-                <div className="invalid-input">닉네임을 입력해주세요.</div>
-              )}
-            </Col>
-          </Form.Group>
-          <Form.Group as={Row} className="mb-3">
-            <Col sm>
+            )}
+          </Col>
+        </Form.Group>
+        <Form.Group as={Row} className="mb-3">
+          <Col sm>
+            <div className="d-flex">
               <Form.Control
                 maxLength={20}
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={onChangePassword}
+                placeholder="Nickname"
+                value={userName}
+                onChange={onChangeUserName}
+                className="flex-grow-1"
+                style={{ width: '80%' }}
               />
-              {passwordError && (
-                <div className="invalid-input">
-                  최소 8자리, 영문, 숫자를 포함해주세요.
-                </div>
-              )}
-            </Col>
-          </Form.Group>
-          <Form.Group as={Row} className="mb-3">
-            <Col sm>
-              <Form.Control
-                maxLength={20}
-                type="password"
-                placeholder="Confirm Password"
-                value={confirmPassword}
-                onChange={onChangeConfirmPassword}
-              />
-              {confirmPasswordError && (
-                <div className="invalid-input">
-                  비밀번호가 일치하지 않습니다.
-                </div>
-              )}
-            </Col>
-          </Form.Group>
+              <MyButton className="flex-shrink-1" onClick={onCheckName}>
+                확인
+              </MyButton>
+            </div>
+            <p>{dName}</p>
+            {userNameError && (
+              <div className="invalid-input">닉네임을 입력해주세요.</div>
+            )}
+          </Col>
+        </Form.Group>
+        <Form.Group as={Row} className="mb-3">
+          <Col sm>
+            <Form.Control
+              maxLength={20}
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={onChangePassword}
+            />
+            {passwordError && (
+              <div className="invalid-input">
+                최소 8자리, 영문, 숫자를 포함해주세요.
+              </div>
+            )}
+          </Col>
+        </Form.Group>
+        <Form.Group as={Row} className="mb-3">
+          <Col sm>
+            <Form.Control
+              maxLength={20}
+              type="password"
+              placeholder="Confirm Password"
+              value={confirmPassword}
+              onChange={onChangeConfirmPassword}
+            />
+            {confirmPasswordError && (
+              <div className="invalid-input">
+                비밀번호가 일치하지 않습니다.
+              </div>
+            )}
+          </Col>
+        </Form.Group>
 
-          <br />
-          <div className="d-grid gap-1">
-            <MyButton onClick={onSubmit}>회원 가입</MyButton>
-          </div>
-        </Form>
         <br />
-        <span className="text">
-          이미 계정이 있습니까?
-          <br />
-          <Link to="/login" className="link">
-            로그인
-          </Link>
-        </span>
-      </Container>
-    </div>
+        <div className="d-grid gap-1">
+          <MyButton onClick={onSubmit}>회원 가입</MyButton>
+        </div>
+      </MyForm>
+      <br />
+      <span className="text">
+        이미 계정이 있습니까?
+        <br />
+        <Link to="/login" className="link">
+          로그인
+        </Link>
+      </span>
+    </Container>
   )
 }
