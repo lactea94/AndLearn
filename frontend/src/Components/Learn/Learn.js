@@ -33,17 +33,20 @@ export function Learn() {
   function onSubmit() {
     const formData = new FormData()
     formData.append('file', aud1)
-    formData.append('file2', aud2)
-    
+
+    // formData.append('file2', aud2)
+    console.log(aud1)
+    console.log(aud2)
     const data = {
       score: '5.0',
       words: words,
       sentences: [script1, script2],
     }
-    formData.append(
-      'learnPostReq',
-      new Blob([JSON.stringify(data)], { type: 'application/json' })
-    )
+    // formData.append(
+    //   'learnPostReq',
+    //   // new Blob([JSON.stringify(data)], { type: 'application/json' })
+    //   JSON.stringify(data)
+    // )
 
     api
       .post(`learn/${keyDjango}`, formData, {
@@ -87,11 +90,7 @@ export function Learn() {
                 <textarea value={script1} onChange={onCheck}>
                   {script1}
                 </textarea>
-                <audio
-                  controls
-                  src={audioUrl1}
-                  controlsList="nodownload"
-                ></audio>
+                <audio controls src={audioUrl1} controlsList='download'></audio>
               </>
             )}
           </>

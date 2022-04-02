@@ -103,11 +103,12 @@ export function AudioRecord({ setScript, next, setAudioUrl1, setAud1 }) {
       console.log(audioUrl)
     }
     // File 생성자를 사용해 파일로 변환
-    const sound = new File([audioUrl], 'soundBlob',{
+    const sound = new File([audioUrl], 'soundBlob', {
       lastModified: new Date().getTime(),
       type: 'audio',
     })
-    // const sound = new Audio(audioUrl)
+ 
+
     console.log(sound)
     setAud1(sound)
   }, [audioUrl])
