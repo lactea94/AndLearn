@@ -5,6 +5,7 @@ import { GrammarlyEditor } from './GrammarlyEditor'
 import plusDefault from './plusDefault.png'
 import { apiInstance } from 'api/index'
 import { MyButton } from 'styles/Button.js'
+import styled from "styled-components";
 
 export function Learn() {
   const api = apiInstance()
