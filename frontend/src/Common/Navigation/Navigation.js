@@ -4,7 +4,6 @@ import { NavLink, useNavigate } from "react-router-dom";
 import * as S from './Style'
 import { ACCESS_TOKEN } from 'constants/index'
 import { apiInstance } from 'api'
-import { MyButton } from 'styles/Button';
 
 export function Navigation() {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
