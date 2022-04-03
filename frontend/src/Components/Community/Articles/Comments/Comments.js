@@ -1,21 +1,41 @@
-import { Create } from "./Create/Create";
 import { DateFormat } from "Util/DateFormat";
 import * as S from "./Style";
 import { useEffect, useState } from "react";
 import { apiInstance } from "api";
-import { API_BASE_URL } from "constants";
-import { useParams } from "react-router-dom";
-import { Delete } from "./Delete/Delete";
+import { useNavigate, useParams } from "react-router-dom";
+import { Col } from "react-bootstrap";
+import { MyButton } from "styles/Button";
 
 
 export function Comments({ usernickname }) {
   const { articleId } = useParams();
-  const [comments, setcCmments] = useState([]);
+  const [comments, setComments] = useState([]);
+  const [content, setContent] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
-    apiInstance().get(API_BASE_URL + `/community/${articleId}/comment`)
-    .then((response) => setcCmments(response.data))
+    apiInstance().get(`/community/${articleId}/comment`)
+    .then((response) => setComments(response.data))
   }, [articleId]);
+
+  const validation = () => {
+    if (content) return true
+    else return false
+  }
+  const handleSubmit = () => {
+    if (validation()) {
+        apiInstance()
+        .post(`/community/${articleId}/comment`,
+          {
+            content: content,
+        }).then(navigate(0))
+    }
+  }
+
+  const handleClick = (e) => {
+    apiInstance().delete(`/community/${articleId}/comment/${e.target.value}`)
+    .then(navigate(0))
+  }
 
   return (
     <S.Comments>
@@ -27,7 +47,7 @@ export function Comments({ usernickname }) {
               <S.MyCommentContent>
                 <S.Body>{comment.content}</S.Body>
                 <S.Created>{DateFormat(comment.createdDate)}</S.Created>
-                <Delete commentId={comment.id}/>
+                <S.DeleteButton onClick={handleClick} value={comment.id}>삭제</S.DeleteButton>
               </S.MyCommentContent>
             </S.MyComment>
           )
@@ -46,7 +66,20 @@ export function Comments({ usernickname }) {
           )
         }
       })}
-      <Create />
+      <S.CreateForm>
+        <Col xs={12} md={10}>
+          <S.TextArea
+            rows="3"
+            placeholder="댓글"
+            onChange={e => {
+                setContent(e.target.value)
+              }}
+          />
+        </Col>
+        <Col>
+          <MyButton size="sm" onClick={handleSubmit}>작성</MyButton>
+        </Col>
+      </S.CreateForm>
     </S.Comments>
   )
 };

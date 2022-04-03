@@ -114,3 +114,36 @@ export const Button = styled.button`
     cursor: pointer;
   }
 `
+
+export const CreateForm = styled(Row)`
+  margin-top: 5rem;
+  align-items: center;
+`;
+
+export const TextArea = styled.textarea`
+  width: 100%;
+  resize: none;
+  font-size: 0.8rem;
+  padding: 0.5rem;
+  margin: 0;
+  border: none;
+  border-radius: 1rem;
+
+  &:focus {
+    outline: none;
+    background-color: #FFDD74;
+  }
+`;
+
+export const DeleteButton = styled.button`
+  font-size: 0.7rem;
+  text-decoration: underline;
+  color: red;
+  background-color: inherit;
+  border: none;
+
+  &:hover {
+    font-weight: bold;
+    cursor: pointer;
+  }
+`
