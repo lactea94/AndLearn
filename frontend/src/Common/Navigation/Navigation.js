@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react'
 import { Navbar, Container, Nav, Offcanvas } from 'react-bootstrap'
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import * as S from './Style'
 import { ACCESS_TOKEN } from 'constants/index'
 import { apiInstance } from 'api'
+import { MyButton } from 'styles/Button';
 
 export function Navigation() {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
@@ -31,6 +32,7 @@ export function Navigation() {
 
   function logout() {
     localStorage.removeItem(ACCESS_TOKEN);
+    navigate('/');
     navigate(0);
   }
 
@@ -42,57 +44,63 @@ export function Navigation() {
           <S.Offcanvas show={show} onHide={handleClose}>
             <Offcanvas.Header closeButton>
               <Offcanvas.Title>
-                <S.NavItem to="/" onClick={handleClose}>
+                <NavLink to="/" onClick={handleClose}>
                   <S.LogoImg src="/images/favicon.png" />
-                </S.NavItem>
+                </NavLink>
               </Offcanvas.Title>
             </Offcanvas.Header>
             <Offcanvas.Body>
               <Nav className="justify-content-end flex-grow-1 pe-3" >
-                <S.NavItem
+                <NavLink
                   to="/"
                   onClick={handleClose}
+                  style={S.navLinkStyle}
                 >
                   Home
-                </S.NavItem>
+                </NavLink>
                 {isAuthenticated ? (
                   <>
-                    <S.NavItem
+                    <NavLink
                       to={`profile/${myInfo.nickname}/content`}
                       onClick={handleClose}
+                      style={S.navLinkStyle}
                     >
                       Profile
-                    </S.NavItem>
-                    <S.NavItem
+                    </NavLink>
+                    <NavLink
                       to="learn"
                       onClick={handleClose}
+                      style={S.navLinkStyle}
                     >
                       Learn
-                    </S.NavItem>
-                    <S.NavItem
+                    </NavLink>
+                    <NavLink
                       to="community"
                       onClick={handleClose}
+                      style={S.navLinkStyle}
                     >
                       Community
-                    </S.NavItem>
-                    <S.NavItem to="/" onClick={logout}>
-                      logout
-                    </S.NavItem>
+                    </NavLink>
+                    <S.Logout onClick={logout}>
+                      Logout
+                    </S.Logout>
                   </>
                 ) : (
                   <>
-                    <S.NavItem
+                    <NavLink
                       to="login"
                       onClick={handleClose}
+                      style={S.navLinkStyle}
                     >
                       Login
-                    </S.NavItem>
-                    <S.NavItem
+                    </NavLink>
+                    <NavLink
                       to="signup"
                       onClick={handleClose}
+                      style={S.navLinkStyle}
                     >
                       Signup
-                    </S.NavItem>
+                    </NavLink>
                   </>
                 )}
               </Nav>
