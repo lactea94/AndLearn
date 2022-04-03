@@ -94,23 +94,6 @@ export default function Pagination({ total, limit, page, setPage, setLimit }) {
         alignItems: "center"
       }}
     >
-      <Col xs={12} md={6} style={{margin: "0"}}>
-        <S.PageContainer>
-          <S.PageItem onClick={() => setPage(1)} disabled={page === 1}>
-            <ChevronDoubleLeft/>
-          </S.PageItem>
-          <S.PageItem onClick={() => setPage(page - 1)} disabled={page === 1}>
-            <ChevronLeft/>
-          </S.PageItem>
-          <Pages/>
-          <S.PageItem onClick={() => setPage(page + 1)} disabled={page === numPages}>
-            <ChevronRight/>
-          </S.PageItem>
-          <S.PageItem onClick={() => setPage(numPages)} disabled={page === numPages}>
-            <ChevronDoubleRight/>
-          </S.PageItem>
-        </S.PageContainer>
-      </Col>
       <Col>
         <S.PageContainer>
           <OverlayTrigger
@@ -135,6 +118,23 @@ export default function Pagination({ total, limit, page, setPage, setLimit }) {
               <option value="20">20</option>
             </Select>
           </OverlayTrigger>
+        </S.PageContainer>
+      </Col>
+      <Col xs={12} md={6}>
+        <S.PageContainer>
+          <S.PageItem onClick={() => setPage(1)} disabled={page === 1}>
+            <ChevronDoubleLeft/>
+          </S.PageItem>
+          <S.PageItem onClick={() => setPage(page - 1)} disabled={page === 1}>
+            <ChevronLeft/>
+          </S.PageItem>
+          <Pages/>
+          <S.PageItem onClick={() => setPage(page + 1)} disabled={page === numPages}>
+            <ChevronRight/>
+          </S.PageItem>
+          <S.PageItem onClick={() => setPage(numPages)} disabled={page === numPages}>
+            <ChevronDoubleRight/>
+          </S.PageItem>
         </S.PageContainer>
       </Col>
     </Row>

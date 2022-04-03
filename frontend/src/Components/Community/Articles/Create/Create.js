@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Alert, Col, Form, Modal } from "react-bootstrap";
+import { Alert, Form, Modal } from "react-bootstrap";
 import * as S from './Style';
 import { MyButton } from "styles/Button";
 import { Input } from "styles/Input";
@@ -74,12 +74,7 @@ export default function Create({ me }) {
   }
 
   return (
-    <Col xs={2}
-      style={{
-        display: "flex",
-        justifyContent: "end",
-        alignItems: "center",
-      }}
+    <S.Contents xs={12} md={2}
     >
       <MyButton onClick={handleShow}>
         새 글
@@ -99,6 +94,6 @@ export default function Create({ me }) {
           </MyButton>
         </Modal.Footer>
       </Modal>
-    </Col>
+    </S.Contents>
   )
 };

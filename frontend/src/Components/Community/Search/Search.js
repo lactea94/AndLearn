@@ -20,7 +20,7 @@ export function Search({ setSearchText, setSearchCategory, setPage }) {
   }
 
   return (
-    <Col xs={6}
+    <Col xs={12} md={6}
       style={{
         display: "flex",
         justifyContent: "start",
@@ -36,7 +36,6 @@ export function Search({ setSearchText, setSearchCategory, setPage }) {
         <option value="content">내용</option>
       </Select>
       <Input
-        // style={{width: '5rem' }}
         type="text"
         value={text}
         onChange={e => {

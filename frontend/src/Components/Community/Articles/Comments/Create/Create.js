@@ -25,7 +25,7 @@ export function Create() {
 
   return (
     <S.CreateForm>
-      <Col xs={10}>
+      <Col xs={12} md={10}>
         <S.TextArea
           rows="3"
           placeholder="댓글"
