@@ -14,6 +14,7 @@ export function Community() {
   const [loading, setLoading] = useState(true);
   const [articles, setArticles] = useState([]);
   const [limit, setLimit] = useState(10);
+  const [reload, setReload] = useState(true);
   const [searchCategory, setSearchCategory] = useState("title");
   const [searchText, setSearchText] = useState("");
   const [filteredArticles, setFilterdArticle] = useState([]);
@@ -27,14 +28,12 @@ export function Community() {
   }, [])
 
   useEffect(() => {
+    if (reload)
     apiInstance().get('/community')
     .then((response) => setArticles(response.data))
-  }, []);
-
-  useEffect(() => {
-    apiInstance().get('/community/notice')
-    .then((response) => setNotices(response.data))
-  }, []);
+    .then(apiInstance().get('/community/notice').then((response) => setNotices(response.data)))
+    .then(setReload(false))
+  }, [reload]);
 
   useEffect(() => {
     if (searchCategory === 'title') {
@@ -82,7 +81,7 @@ export function Community() {
                   setSearchCategory={setSearchCategory}
                   setPage={setPage}
                 />
-                <Create me={me}/>
+                <Create me={me} setReload={setReload}/>
               </Row>
             </Container>
           </Row>

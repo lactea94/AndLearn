@@ -12,6 +12,6 @@ export function Delete({ commentId }) {
     }
 
     return (
-    <S.Button onClick={handleClick}>삭제</S.Button>
+        <S.Button onClick={handleClick}>삭제</S.Button>
     )
 }
