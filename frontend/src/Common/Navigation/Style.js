@@ -9,6 +9,10 @@ export const MyNavbar = styled(Navbar)`
   background-color: #58C063;
 `
 
+export const LogoImg = styled.img`
+  width: 3rem;
+`
+
 export const NavItem = styled(NavLink)`
   text-decoration: none;
   color: black;
