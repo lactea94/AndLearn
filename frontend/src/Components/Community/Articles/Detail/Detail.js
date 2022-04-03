@@ -52,8 +52,8 @@ export function Detail() {
               </MyButton>
             </Col>
             <Update
-            title={article.title}
-            content={article.content}
+              title={article.title}
+              content={article.content}
             />
           </>}
       </S.SubHeader>
