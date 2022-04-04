@@ -46,7 +46,7 @@ export function Home() {
             <S.Image src="/images/allu-2.png"/>
           </Col>
           <Col>
-            영어가 어려운 분들을 위한 서비스 입니다.<br/>
+            AndLearn은 영어가 낯선 분들을 위한 서비스 입니다.<br/>
             사진을 보고 자유롭게 연습해 보세요.<br/>
           </Col>
         </S.Content>
