@@ -1,7 +1,7 @@
 import { DateFormat } from 'Util/DateFormat';
 import * as S from './Style';
 
-export default function Articles({ articles, offset, limit }) {
+export default function Articles({ articles, offset, limit, user }) {
   return (
     <S.Table>
       <S.TableHead>
@@ -17,6 +17,9 @@ export default function Articles({ articles, offset, limit }) {
           <S.Column xs={7}>
             <S.DetailLink
               to={`/community/${article.id}`}
+              state={{
+                user: user
+              }}
             >
               {article.title}
             </S.DetailLink>

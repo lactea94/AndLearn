@@ -1,13 +1,14 @@
 import Loading from 'Common/Loading/Loading';
 import { useEffect, useState } from 'react';
 import { Container, Row } from 'react-bootstrap'
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import Articles from './Articles/Articles';
 import Pagination from './ProfilePagination';
 import { apiInstance } from 'api';
 
 export function ProfileArticles() {
   const [loading, setLoading] = useState(true);
+  const { state } = useLocation();
   const [articles, setArticles] = useState([]);
   const [limit, setLimit] = useState(10);
   const [searchCategory, setSearchCategory] = useState("title");
@@ -52,6 +53,7 @@ export function ProfileArticles() {
               articles={filteredArticles}
               offset={offset}
               limit={limit}
+              user={state.user}
             />
           </Row>
           <Row className="justify-content-center align-items-center">

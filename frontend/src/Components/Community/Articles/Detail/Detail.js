@@ -36,20 +36,12 @@ export function Detail() {
   }, [article])
 
   const handleClick = () => {
-    if (state.isNotice === 1) {
-      apiInstance().delete(`/community/notice/${articleId}`)
-      .then(setTimeout(() => {
-        navigate('/community')
-        navigate(0)
-      }, 500))
-    } else {
       apiInstance().delete(`/community/${articleId}`)
       .then(setTimeout(() => {
         navigate('/community')
         navigate(0)
       }, 500))
     }
-  }
 
   const handleUpdate = () => {
     if (validation()) {
