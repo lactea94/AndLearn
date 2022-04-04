@@ -18,6 +18,14 @@ export const MyNavbar = styled(Navbar)`
   background-color: #58C063;
 `
 
+export const Toggle = styled.img`
+  width: 3rem;
+
+  &:hover {
+    cursor: pointer;
+  }
+`
+
 export const LogoImg = styled.img`
   width: 3rem;
 `
