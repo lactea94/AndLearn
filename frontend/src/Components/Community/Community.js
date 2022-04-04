@@ -25,9 +25,11 @@ export function Community() {
   const [me, setMe] = useState({});
   const navigate = useNavigate();
 
-  if (!localStorage.getItem(ACCESS_TOKEN)) {
-    navigate('/')
-  }
+  useEffect(() => {
+    if (!localStorage.getItem(ACCESS_TOKEN)) {
+      navigate('/login')
+    }
+  }, [])
 
   useEffect(() => {
     apiInstance().get('/users/me')

@@ -52,9 +52,11 @@ export function Learn() {
   const [script2, setScript2] = useState('');
   const recommendWord = words.map((word) => <p key={word.id}>{word}</p>);
 
-  if (!localStorage.getItem(ACCESS_TOKEN)) {
-    navigate('/')
-  }
+  useEffect(() => {
+    if (!localStorage.getItem(ACCESS_TOKEN)) {
+      navigate('/login')
+    }
+  }, [])
 
   useEffect(() => {
 
