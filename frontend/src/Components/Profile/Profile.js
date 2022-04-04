@@ -11,6 +11,7 @@ import { MyButton } from 'styles/Button';
 import { ACCESS_TOKEN } from 'constants';
 import { apiInstance } from 'api';
 import styled from 'styled-components';
+import * as S from './Style';
 
 const EditButton = styled(Link)`
   color: black;
@@ -55,23 +56,25 @@ export function Profile() {
     <div>
       <Container style={{ marginTop: '5rem' }}>
         <Row style={{ marginBottom: '3rem' }}>
-          <Col lg={2}>
+          <Col xs={12}>
+            <S.ImgBox>
+              <S.UserImg
+                src={`${profileImgUrl}`}
+                alt="profile_image"
+              />
+            </S.ImgBox>
           </Col>
-          <Col lg={2}>
-            <Image src={`${profileImgUrl}`} alt="profile_image" roundedCircle fluid></Image>
-          </Col>
-          <Col lg={6}>
+          <Col>
             <div className='d-flex flex-column align-items-start ps-5'>
               <div className='mt-2 mb-3'>
                 <h1 className='m-0'>{userNickname}</h1>
               </div>
               <div>
                 <h4>
-                  {userId} {
-                    <EditButton to={`edit`}>
-                      <i className="fa-solid fa-pen-to-square"></i>
-                      </EditButton>
-                  }
+                  {userId}
+                  {<EditButton to={`edit`}>
+                    <i className="fa-solid fa-pen-to-square"></i>
+                  </EditButton>}
                 </h4>
               </div>           
             </div>
