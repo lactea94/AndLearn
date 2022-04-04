@@ -55,14 +55,14 @@ export function Profile() {
   return (
     <div>
       <Container style={{ marginTop: '5rem' }}>
-        <Row style={{ marginBottom: '3rem' }}>
-          <Col xs={12}>
+        <Row className='justify-content-center align-items-center' style={{ marginBottom: '3rem' }}>
+          <Col xs={12} md={4} lg={3}>
             <S.UserImg
               src={`${profileImgUrl}`}
               alt="profile_image"
             />
           </Col>
-          <Col xs={12}>
+          <Col xs={12} md={6} lg={5}>
             <Row className='mt-2 mb-3'>
               <h1 className='m-0'>{userNickname}</h1>
             </Row>
