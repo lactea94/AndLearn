@@ -29,7 +29,7 @@ export function Community() {
     if (!localStorage.getItem(ACCESS_TOKEN)) {
       navigate('/login')
     }
-  }, [])
+  }, [navigate])
 
   useEffect(() => {
     apiInstance().get('/users/me')
@@ -79,20 +79,13 @@ export function Community() {
               me={me}
             />
           </Row>
-          <Row>
-            <Container style={{width: '90%'}}>
-              <Row
-                className="justify-content-between align-items-center"
-                style={{marginTop: "1rem"}}
-              >
-                <Search
-                  setSearchText={setSearchText}
-                  setSearchCategory={setSearchCategory}
-                  setPage={setPage}
-                />
-                <Create me={me} setReload={setReload}/>
-              </Row>
-            </Container>
+          <Row className="justify-content-center">
+            <Search
+              setSearchText={setSearchText}
+              setSearchCategory={setSearchCategory}
+              setPage={setPage}
+            />
+            <Create me={me} setReload={setReload}/>
           </Row>
           <Pagination 
             total={filteredArticles.length}

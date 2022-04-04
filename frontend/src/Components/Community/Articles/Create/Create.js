@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Alert, Form, Modal } from "react-bootstrap";
+import { Alert, Col, Form, Modal } from "react-bootstrap";
 import * as S from './Style';
 import { MyButton } from "styles/Button";
 import { Input } from "styles/Input";
@@ -79,9 +79,10 @@ export default function Create({ me, setReload }) {
   }
 
   return (
-    <S.Contents xs={12} md={2}
-    >
-      <MyButton onClick={handleShow}>
+    <S.Contents xs={12} md={2}>
+      <MyButton
+        onClick={handleShow}
+      >
         새 글
       </MyButton>
 

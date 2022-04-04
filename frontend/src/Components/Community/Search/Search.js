@@ -3,6 +3,7 @@ import { Col } from "react-bootstrap";
 import { MyButton } from "styles/Button";
 import { Input } from "styles/Input";
 import { Select } from "styles/Select";
+import * as S from "./Style";
 
 export function Search({ setSearchText, setSearchCategory, setPage }) {
   const [text, setText] = useState("");
@@ -20,13 +21,7 @@ export function Search({ setSearchText, setSearchCategory, setPage }) {
   }
 
   return (
-    <Col xs={12} md={6}
-      style={{
-        display: "flex",
-        justifyContent: "start",
-        alignItems: "center"
-      }}
-    >
+    <S.Contents xs={12} md={8}>
       <Select
         onChange={e => {
           setCategory(e.target.value);
@@ -44,6 +39,6 @@ export function Search({ setSearchText, setSearchCategory, setPage }) {
         onKeyPress={handleKeyPress}
       />
       <MyButton onClick={handleClick}>검색</MyButton>
-    </Col>
+    </S.Contents>
   )
 }
