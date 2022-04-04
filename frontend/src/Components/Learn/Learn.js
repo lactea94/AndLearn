@@ -70,11 +70,15 @@ export function Learn() {
         console.log(error)
       })
   }
+  function onScore() {
+    // 점수 가져오기
+  }
   return (
     <Container>
       <div>
         <MyImage src={fileImage} alt="추가한 사진" />
         {stage === 0 && (
+          // 1. 이미지 업로드
           <ImageUpload
             setFileImage={setFileImage}
             next={next}
@@ -86,6 +90,7 @@ export function Learn() {
       <div>{recommendWord}</div>
       <div>
         {stage >= 1 && (
+          // 2. 오디오 녹음하기  무조건 30초 지나고 완성하기
           <>
             <AudioRecord
               setScript={setScript1}
@@ -95,6 +100,8 @@ export function Learn() {
             />
 
             {aud1 && (
+              // 2.1 오디오 녹음 완료시 스크립트 확인
+              // 추천 단어 보여주기
               <>
                 <textarea value={script1} onChange={onCheck}>
                   {script1}
@@ -106,7 +113,9 @@ export function Learn() {
         )}
       </div>
       <div>
+
         {stage >= 2 && (
+          // 3. 문법 오류확인
           <>
             <GrammarlyEditor script={script1} stage={stage} next={next} />
           </>
@@ -127,9 +136,14 @@ export function Learn() {
           </>
         )}
       </div>
-      <div>{stage >= 4 && <MyButton onClick={onSubmit}>다음</MyButton>}</div>
+
+      <div>{stage >= 4 &&
+        // 다음 버튼 누르기전에 발음평가 추가해서 score에 저장
+        <MyButton onClick={onScore}>다음</MyButton>}</div>
       <div>
-        {stage >= 5 && <MyButton onClick={onSubmit}>전송완료</MyButton>}
+        {stage >= 5 &&
+
+          <MyButton onClick={onSubmit}>전송완료</MyButton>}
       </div>
     </Container>
   )
