@@ -8,21 +8,18 @@ import { useEffect, useState } from "react";
 import { apiInstance } from "api";
 
 export function Detail() {
-  const { articleId, userId } = useParams();
+  const { articleId } = useParams();
   const [article, setArticle] = useState({});
   const api = apiInstance();
   const navigate = useNavigate();
 
   useEffect(() => {
-    api.get(`/community/${articleId}`)
+    apiInstance().get(`/community/${articleId}`)
     .then(resposne => setArticle(resposne.data))
   }, [articleId])
 
   const deleteArticle = () => {
-    api.delete(`/community/${articleId}`)
-    .then(response => {
-      navigate(`/profile/${userId}/articles`)
-    })
+    apiInstance().delete(`/community/${articleId}`)
   }
 
   return (
@@ -36,7 +33,7 @@ export function Detail() {
         <>
           <Col xs={7}/>
           <Col>
-            <MyButton onClick={() => {deleteArticle()}} color="red" size="sm">삭제</MyButton>
+            <MyButton onClick={deleteArticle} color="red" size="sm">삭제</MyButton>
           </Col>
           <Update />
         </>

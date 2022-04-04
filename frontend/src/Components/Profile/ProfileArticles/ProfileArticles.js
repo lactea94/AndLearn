@@ -7,7 +7,6 @@ import Pagination from './ProfilePagination';
 import { apiInstance } from 'api';
 
 export function ProfileArticles() {
-  const currentUser = 2
   const [loading, setLoading] = useState(true);
   const [articles, setArticles] = useState([]);
   const [limit, setLimit] = useState(10);
@@ -53,7 +52,6 @@ export function ProfileArticles() {
               articles={filteredArticles}
               offset={offset}
               limit={limit}
-              currentUser={currentUser}
             />
           </Row>
           <Row className="justify-content-center align-items-center">

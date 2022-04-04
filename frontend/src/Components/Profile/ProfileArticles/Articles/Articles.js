@@ -1,7 +1,7 @@
 import { DateFormat } from 'Util/DateFormat';
 import * as S from './Style';
 
-export default function Articles({ articles, offset, limit, currentUser }) {
+export default function Articles({ articles, offset, limit }) {
   return (
     <S.Table>
       <S.TableHead>
@@ -16,12 +16,12 @@ export default function Articles({ articles, offset, limit, currentUser }) {
           <S.Column xs={1}>{index + 1}</S.Column>
           <S.Column xs={7}>
             <S.DetailLink
-              to={`${article.id}`}
+              to={`/community/${article.id}`}
             >
               {article.title}
             </S.DetailLink>
           </S.Column>
-          <S.Column xs={2}>{article.userId}</S.Column>
+          <S.Column xs={2}>{article.nickname}</S.Column>
           <S.Column xs={2}>{DateFormat(article.createdDate)}</S.Column>
         </S.TableRow>
       ))}
