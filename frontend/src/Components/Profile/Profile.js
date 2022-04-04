@@ -79,17 +79,17 @@ export function Profile() {
         </Row>
         <Row style={{ marginTop: '2rem' }}>
           <Col>
-            <Link to={`content`}>
+            <Link to="content">
               <MyButton color="#58C063">공부내용</MyButton>
             </Link>
           </Col>
           <Col>
-            <Link to={`stats`}>
+            <Link to="stats">
               <MyButton color="#58C063">개인통계</MyButton>
             </Link>
           </Col>
           <Col>
-            <Link to={`articles`}>
+            <Link to="articles">
               <MyButton color="#58C063">
                 게시글
               </MyButton>
@@ -99,13 +99,17 @@ export function Profile() {
         <hr />
         <div style={{ marginTop: '2rem' }}>
           <Routes>
-            <Route path='/content' element={<ProfileContents/>}/>
-            <Route path='/content/:contentId' element={<ProfileContentDetail/>} />
-            <Route path='/stats' element={<ProfileStats/>} />
-            <Route path='/articles' element={<ProfileArticles />} />
-            <Route path='/articles/:articleId' element={<Detail />} />
-            <Route path='/edit' element={<UserInfoEdit />} />
-            <Route path='/edit/password' element={<PasswordEdit />} />
+            <Route index element={<ProfileContents/>} />
+            <Route path='content' element={<ProfileContents/>}>
+              <Route path=':contentId' element={<ProfileContentDetail/>} />
+            </Route>
+            <Route path='stats' element={<ProfileStats/>} />
+            <Route path='articles' element={<ProfileArticles />}>
+              <Route path=':articleId' element={<Detail />} />
+            </Route>
+            <Route path='edit' element={<UserInfoEdit />}>
+              <Route path='password' element={<PasswordEdit />} />
+            </Route>
           </Routes>
         </div>
       </Container>
