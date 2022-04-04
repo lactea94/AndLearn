@@ -38,15 +38,10 @@ export function Learn() {
 
     const formData = new FormData()
     formData.append('file', aud1)
-<<<<<<< HEAD
-    // formData.append('file2', aud2)
-    
-=======
 
     // formData.append('file2', aud2)
     console.log(aud1)
     console.log(aud2)
->>>>>>> front/learn
     const data = {
       score: 5.0,
       words: words,
@@ -54,23 +49,9 @@ export function Learn() {
     }
     // formData.append(
     //   'learnPostReq',
-<<<<<<< HEAD
-    //   new Blob([JSON.stringify(data)], { type: 'application/json' })
-    // )
-
-    for (let key of formData.keys()) {
-      console.log(key);
-    }
-    
-    // FormData의 value 확인
-    for (let value of formData.values()) {
-      console.log(value);
-    }
-=======
     //   // new Blob([JSON.stringify(data)], { type: 'application/json' })
     //   JSON.stringify(data)
     // )
->>>>>>> front/learn
 
     api
       .post(`learn/test/${keyDjango}`, formData, {
