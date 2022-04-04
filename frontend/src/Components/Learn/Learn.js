@@ -32,22 +32,35 @@ export function Learn() {
     setScript1(e.target.value)
   }
   function onSubmit() {
+    console.log(audioUrl1)
+    const sound1 = new File([audioUrl1], "soundBlob", { lastModified: new Date().getTime(), type: "audio/m4a" });
+    console.log(URL.createObjectURL(sound1))
+
     const formData = new FormData()
     formData.append('file', aud1)
-    formData.append('file2', aud2)
+    // formData.append('file2', aud2)
     
     const data = {
-      score: '5.0',
+      score: 5.0,
       words: words,
       sentences: [script1, script2],
     }
-    formData.append(
-      'learnPostReq',
-      new Blob([JSON.stringify(data)], { type: 'application/json' })
-    )
+    // formData.append(
+    //   'learnPostReq',
+    //   new Blob([JSON.stringify(data)], { type: 'application/json' })
+    // )
+
+    for (let key of formData.keys()) {
+      console.log(key);
+    }
+    
+    // FormData의 value 확인
+    for (let value of formData.values()) {
+      console.log(value);
+    }
 
     api
-      .post(`learn/${keyDjango}`, formData, {
+      .post(`learn/test/${keyDjango}`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
