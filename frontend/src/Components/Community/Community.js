@@ -70,6 +70,14 @@ export function Community() {
           <Row>
             <Outlet />
           </Row>
+          <Row className="justify-content-center">
+            <Search
+              setSearchText={setSearchText}
+              setSearchCategory={setSearchCategory}
+              setPage={setPage}
+            />
+            <Create me={me} setReload={setReload}/>
+          </Row>
           <Row>
             <Articles
               notices={notices}
@@ -78,14 +86,6 @@ export function Community() {
               limit={limit}
               me={me}
             />
-          </Row>
-          <Row className="justify-content-center">
-            <Search
-              setSearchText={setSearchText}
-              setSearchCategory={setSearchCategory}
-              setPage={setPage}
-            />
-            <Create me={me} setReload={setReload}/>
           </Row>
           <Pagination 
             total={filteredArticles.length}

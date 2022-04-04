@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Col } from "react-bootstrap";
 import { MyButton } from "styles/Button";
 import { Input } from "styles/Input";
 import { Select } from "styles/Select";

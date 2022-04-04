@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Alert, Col, Form, Modal } from "react-bootstrap";
+import { Alert, Form, Modal } from "react-bootstrap";
 import * as S from './Style';
 import { MyButton } from "styles/Button";
 import { Input } from "styles/Input";

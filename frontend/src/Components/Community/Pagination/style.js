@@ -10,6 +10,7 @@ export const PageItem = styled(Button)`
   background-color: ${props => props.current === 1 ? "#58C063" : "white"};
   color:  ${props => props.current === 1 ? "white" : "#58C063"};
   active: true;
+  width: 2rem;
 
   &:focus {
     background-color: #58C063;
@@ -31,10 +32,13 @@ export const PageItem = styled(Button)`
   &:active {
     box-shadow: none !important;
   }
+
+  @media ( min-width: 768px ) {
+    width: auto;
+  }
 `;
 
 export const FormControl = styled(Form.Control)`
-
   &:focus {
     border: solid 1px #58C063;
     box-shadow: none;
