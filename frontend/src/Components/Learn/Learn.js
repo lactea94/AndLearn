@@ -7,6 +7,8 @@ import { apiInstance } from 'api/index'
 import { MyButton } from 'styles/Button.js'
 import { Container, Image, Col, Row } from 'react-bootstrap'
 import styled from "styled-components";
+import { ACCESS_TOKEN } from 'constants/index.js'
+import { useNavigate } from 'react-router-dom'
 
 const MyImage = styled(Image)`
   margin-top: 3rem;
@@ -27,27 +29,32 @@ const MyImage2 = styled(Image)`
 `
 
 export function Learn() {
-  const api = apiInstance()
-  const [fileImage, setFileImage] = useState(plusDefault)
-  const [imageId, setImageId] = useState('')
-  const [stage, setStage] = useState(0)
+  const api = apiInstance();
+  const [fileImage, setFileImage] = useState(plusDefault);
+  const [imageId, setImageId] = useState('');
+  const [stage, setStage] = useState(0);
+  const navigate = useNavigate();
 
   const [isStart, setIsStart] = useState(false);
   const [isFirstRecord, setIsFirstRecord] = useState(false);
   const [isSecondRecord, setIsSecondRecord] = useState(false);
 
-  const [keyDjango, setKeyDjango] = useState(2)
-  const [words, setWords] = useState([])
+  const [keyDjango, setKeyDjango] = useState(2);
+  const [words, setWords] = useState([]);
 
-  const [audioUrl1, setAudioUrl1] = useState()
-  const [aud1, setAud1] = useState()
+  const [audioUrl1, setAudioUrl1] = useState();
+  const [aud1, setAud1] = useState();
 
-  const [audioUrl2, setAudioUrl2] = useState()
-  const [aud2, setAud2] = useState()
+  const [audioUrl2, setAudioUrl2] = useState();
+  const [aud2, setAud2] = useState();
 
-  const [script1, setScript1] = useState('')
-  const [script2, setScript2] = useState('')
-  const recommendWord = words.map((word) => <p key={word.id}>{word}</p>)
+  const [script1, setScript1] = useState('');
+  const [script2, setScript2] = useState('');
+  const recommendWord = words.map((word) => <p key={word.id}>{word}</p>);
+
+  if (!localStorage.getItem(ACCESS_TOKEN)) {
+    navigate('/')
+  }
 
   useEffect(() => {
 

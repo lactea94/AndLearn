@@ -7,6 +7,8 @@ import Create from './Articles/Create/Create';
 import Pagination from './Pagination/Pagination';
 import { Search } from './Search/Search';
 import { apiInstance } from 'api';
+import { ACCESS_TOKEN } from 'constants/index.js'
+import { useNavigate } from 'react-router-dom'
 import * as S from './Style';
 
 export function Community() {
@@ -21,6 +23,11 @@ export function Community() {
   const [page, setPage] = useState(1);
   const offset = (page - 1) * limit;
   const [me, setMe] = useState({});
+  const navigate = useNavigate();
+
+  if (!localStorage.getItem(ACCESS_TOKEN)) {
+    navigate('/')
+  }
 
   useEffect(() => {
     apiInstance().get('/users/me')
