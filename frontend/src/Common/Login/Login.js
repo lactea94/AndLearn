@@ -2,14 +2,15 @@ import React, { useState } from 'react'
 import { Container, Form, Col, Row } from 'react-bootstrap'
 import { MyButton } from 'styles/Button'
 import { useNavigate } from 'react-router-dom'
-import { API_BASE_URL } from '../../constants/index'
 import { userInstance } from '../../api/index'
+import * as S from './Style'
+import { Input } from 'styles/Input'
 
 export function Login() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const api = userInstance()
-  const nav = useNavigate()
+  const navigate = useNavigate()
 
   const onEmailHandler = (event) => {
     setEmail(event.currentTarget.value)
@@ -31,7 +32,7 @@ export function Login() {
         if (response.data.accessToken) {
           localStorage.setItem('accesstoken', response.data.accessToken)
         }
-        window.location.replace(`/`)
+        navigate(0)
       })
       .catch((error) => {
         if (error.response.status === 401) {
@@ -41,43 +42,37 @@ export function Login() {
   }
 
   return (
-    <Container>
-      <Form>
-        <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
-          <Col sm>
-            <Form.Control
-              name="email"
-              type="email"
-              placeholder="이메일"
-              value={email}
-              onChange={onEmailHandler}
-              className="loginr__input"
-            />
-          </Col>
-        </Form.Group>
-        <Form.Group as={Row} className="mb-3">
-          <Col sm>
-            <Form.Control
-              name="password"
-              type="password"
-              placeholder="비밀번호"
-              value={password}
-              onChange={onPasswordHandler}
-              className="login__input"
-            />
-          </Col>
-        </Form.Group>
-        <div className="d-grid gap-1">
-          <MyButton
-            variant="secondary"
-            type="submit"
-            onClick={onSubmit}
-            className="login__button"
-          >
-            로그인
-          </MyButton>
-        </div>
-      </Form>
-    </Container>
+    <S.Contents>
+      <Row className="justify-content-center">
+        <Col style={{marginBottom: "1rem"}}>
+          <Input
+            type="email"
+            style={{width: "100%", margin: "auto"}}
+            placeholder="이메일"
+            value={email}
+            onChange={onEmailHandler}
+          />
+        </Col>
+      </Row>
+      <Row className="justify-content-center">
+        <Col style={{marginBottom: "1rem"}}>
+          <Input
+            type="password"
+            style={{width: "100%", margin: "auto"}}
+            placeholder="비밀번호"
+            value={password}
+            onChange={onPasswordHandler}
+          />
+        </Col>
+      </Row>
+      <Row className="justify-content-center">
+        <MyButton
+          style={{width: "50%", marginBottom: "1rem"}}
+          onClick={onSubmit}
+        >
+          로그인
+        </MyButton>
+      </Row>
+    </S.Contents>
   )
 }
