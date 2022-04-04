@@ -11,4 +11,10 @@ export const Contents = styled(Container)`
     margin: 7rem auto;
     font-size: 1rem;
   }
+
+  @media ( min-width: 992px ) {
+    width: 30%;
+    margin: 7rem auto;
+    font-size: 1rem;
+  }
 `

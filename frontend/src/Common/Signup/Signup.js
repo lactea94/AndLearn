@@ -120,7 +120,7 @@ export function Signup() {
   return (
     <S.Contents>
       <Row className="justify-content-center align-items-center">
-        <Col xs={8} md={9} xl={10}>
+        <Col xs={8} md={9}>
           <Input
             maxLength={50}
             style={{width: "100%", margin: "auto"}}
@@ -143,7 +143,7 @@ export function Signup() {
         )}
       </Row>
       <Row className="justify-content-center align-items-center">
-        <Col xs={8} md={9} xl={10}>
+        <Col xs={8} md={9}>
           <Input
             maxLength={20}
             style={{width: "100%", margin: "auto"}}
@@ -163,7 +163,7 @@ export function Signup() {
         )}
       </Row>
       <Row className="justify-content-center">
-        <Col xs={12} style={{marginBottom: "1rem"}}>
+        <Col style={{marginBottom: "1rem"}}>
           <Input
             maxLength={20}
             style={{width: "100%", margin: "auto"}}
@@ -180,7 +180,7 @@ export function Signup() {
         )}
       </Row>
       <Row className="justify-content-center">
-        <Col xs={12} style={{marginBottom: "1rem"}}>
+        <Col style={{marginBottom: "1rem"}}>
           <Input
             maxLength={20}
             style={{width: "100%", margin: "auto"}}
