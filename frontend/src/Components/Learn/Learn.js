@@ -42,11 +42,11 @@ export function Learn() {
       words: words,
       sentences: [script1, script2],
     }
-    // formData.append(
-    //   'learnPostReq',
-    //   // new Blob([JSON.stringify(data)], { type: 'application/json' })
-    //   JSON.stringify(data)
-    // )
+    formData.append(
+      'learnPostReq',
+      new Blob([JSON.stringify(data)], { type: 'application/json' })
+      // JSON.stringify(data)
+    )
 
     api
       .post(`learn/${keyDjango}`, formData, {
