@@ -1,4 +1,5 @@
 import { Container } from "react-bootstrap";
+import { CheckCircle, CheckCircleFill } from 'react-bootstrap-icons';
 import styled from "styled-components";
 
 export const Contents = styled(Container)`
@@ -17,4 +18,18 @@ export const Contents = styled(Container)`
     margin: 7rem auto;
     font-size: 1rem;
   }
+`
+
+export const CheckButton = styled(CheckCircle)`
+  margin: 0;
+  color: #58C063;
+
+  @:hover {
+    cursor: pointer;
+  }
+
+`
+
+export const CheckFillButton = styled(CheckCircleFill)`
+  color: #58C063;
 `

@@ -75,17 +75,19 @@ export function Signup() {
   };
 
   function onCheckEmail() {
-    api
-      .post('/users/duplicate-check-id', { id: email })
-      .then((res) => {
-        setCheckEmail(true)
-        setDEmail('확인 완료')
-      })
-      .catch((error) => {
-        if (error.response.status === 409) {
-          setDEmail('이미 존재하는 아이디입니다.')
-        }
-      })
+    if (!emailError) {
+      api
+        .post('/users/duplicate-check-id', { id: email })
+        .then((res) => {
+          setCheckEmail(true)
+          setDEmail('확인 완료')
+        })
+        .catch((error) => {
+          if (error.response.status === 409) {
+            setDEmail('이미 존재하는 아이디입니다.')
+          }
+        })
+    }
   };
 
   function onCheckName() {
@@ -111,7 +113,7 @@ export function Signup() {
       .post('/users', { id: email, nickname: userName, password: password })
       .then((res) => {
         console.log(res.data)
-        navigate(`/login`)
+        navigate('/login')
       })
       .catch((error) => {
         console.log(error)
@@ -121,7 +123,7 @@ export function Signup() {
   return (
     <S.Contents>
       <Row className="justify-content-center align-items-center">
-        <Col xs={8} md={9}>
+        <Col xs={11} style={{margin: "1rem 0"}}>
           <Input
             maxLength={50}
             style={{width: "100%", margin: "auto"}}
@@ -129,14 +131,15 @@ export function Signup() {
             placeholder="이메일"
             value={email}
             onChange={onChangeEmail}
+            disabled={checkEmail}
           />
         </Col>
-        <Col>
-          <MyButton onClick={onCheckEmail}>
-            확인
-          </MyButton>
+        <Col style={{padding: 0}}>
+          {checkEmail ? 
+            <S.CheckFillButton /> :
+            <S.CheckButton onClick={onCheckEmail}/>}
         </Col>
-        <p>{dEmail}</p>
+        {(dEmail !== "확인 완료") && <div>{dEmail}</div>}
         {emailError && (
           <Alert variant="warning">
             유효한 이메일 주소를 입력해주세요
@@ -144,27 +147,30 @@ export function Signup() {
         )}
       </Row>
       <Row className="justify-content-center align-items-center">
-        <Col xs={8} md={9}>
+        <Col xs={11} style={{margin: "1rem 0"}}>
           <Input
             maxLength={20}
             style={{width: "100%", margin: "auto"}}
             placeholder="닉네임"
             value={userName}
             onChange={onChangeUserName}
+            disabled={checkName}
           />
         </Col>
-        <Col>
-          <MyButton onClick={onCheckName}>
-            확인
-          </MyButton>
+        <Col style={{padding: 0}}>
+          {checkName ?
+            <S.CheckFillButton /> :
+            <S.CheckButton onClick={onCheckName}/>}
         </Col>
-        <p>{dName}</p>
+        {(dName !== "확인 완료") && <div>{dName}</div>}
         {userNameError && (
-          <Alert variant="warning">닉네임을 입력해주세요.</Alert>
+          <Alert variant="warning">
+            닉네임을 입력해주세요.
+          </Alert>
         )}
       </Row>
       <Row className="justify-content-center">
-        <Col style={{marginBottom: "1rem"}}>
+        <Col style={{margin: "1rem 0"}}>
           <Input
             maxLength={20}
             style={{width: "100%", margin: "auto"}}
@@ -181,7 +187,7 @@ export function Signup() {
         )}
       </Row>
       <Row className="justify-content-center">
-        <Col style={{marginBottom: "1rem"}}>
+        <Col style={{margin: "1rem 0"}}>
           <Input
             maxLength={20}
             style={{width: "100%", margin: "auto"}}
