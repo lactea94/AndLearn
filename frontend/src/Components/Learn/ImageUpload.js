@@ -3,7 +3,7 @@ import { djangoInstance } from 'api/index'
 import { MyButton } from 'styles/Button'
 //import Dropzone from 'react-dropzone'
 
-export function ImageUpload({ setFileImage, next, setKeyDjango, setWords }) {
+export function ImageUpload({ setFileImage, next, setKeyDjango, setWords, setIsStart }) {
   const [image, setImage] = useState('')
   const api = djangoInstance()
 
@@ -15,6 +15,7 @@ export function ImageUpload({ setFileImage, next, setKeyDjango, setWords }) {
 
   function onImageUpload(e) {
     next()
+    setIsStart(true);
     const formData = new FormData()
     formData.append('file', image)
 
