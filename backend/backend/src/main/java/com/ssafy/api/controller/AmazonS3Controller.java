@@ -41,8 +41,6 @@ public class AmazonS3Controller {
     private final WordRepository wordRepository;
     private final RecordRepository recordRepository;
     private final UserService userService;
-    private final RecordRepository recordRepository;
-    private final UserService userService;
 
     @PostMapping("/test/{key}")
     public ResponseEntity test(@PathVariable Long key,
