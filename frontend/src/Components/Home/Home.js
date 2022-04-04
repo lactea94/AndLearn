@@ -1,9 +1,11 @@
+import { ACCESS_TOKEN } from 'constants'
 import { Carousel, Col } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { MyButton } from 'styles/Button'
 import * as S from './Style'
 
 export function Home() {
+  const token = localStorage.getItem(ACCESS_TOKEN)
   const items = [
     {id: 1, img: '/images/allu-1.png'},
     {id: 2, img: '/images/allu-2.png'},
@@ -35,12 +37,12 @@ export function Home() {
             "People are having a birthday party."<br/>
             이 사진을 보고 바로 영어로 말할 수 있으셨나요?<br/>
           </Col>
-          <Col>
+          <Col xs={4}>
             <S.Image src="/images/allu-1.png"/>
           </Col>
         </S.Content>
         <S.Content>
-          <Col>
+          <Col xs={4}>
             <S.Image src="/images/allu-2.png"/>
           </Col>
           <Col>
@@ -54,11 +56,19 @@ export function Home() {
           </Carousel>
         </S.Content>
         <S.Content>
+          { token ? 
           <Link to='learn'>
             <MyButton>
               시도해 보시겠어요?
             </MyButton>
           </Link>
+          :
+          <Link to='login'>
+            <MyButton>
+              시도해 보시겠어요?
+            </MyButton>
+          </Link>
+          }
         </S.Content>
       </S.Body>
     </S.Contents>
