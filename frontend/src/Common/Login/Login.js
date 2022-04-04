@@ -4,7 +4,6 @@ import { MyButton } from 'styles/Button'
 import { useNavigate } from 'react-router-dom'
 import { API_BASE_URL } from '../../constants/index'
 import { userInstance } from '../../api/index'
-import { MyForm } from 'styles/UserForm'
 
 export function Login() {
   const [email, setEmail] = useState('')
@@ -43,7 +42,7 @@ export function Login() {
 
   return (
     <Container className="" style={{ minHeight:'60vh', marginRight: '0px', marginLeft: '0px', width: '100%' }}>
-      <MyForm>
+      <Form>
         <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
           <Col sm>
             <Form.Control
@@ -78,7 +77,7 @@ export function Login() {
             로그인
           </MyButton>
         </div>
-      </MyForm>
+      </Form>
     </Container>
   )
 }
