@@ -21,15 +21,18 @@ export const Contents = styled(Container)`
 `
 
 export const CheckButton = styled(CheckCircle)`
-  margin: 0;
   color: #58C063;
 
-  @:hover {
+  &:hover {
     cursor: pointer;
   }
 
 `
-
 export const CheckFillButton = styled(CheckCircleFill)`
   color: #58C063;
+
+  // &:hover {
+  //   cursor: pointer;
+  // }
+
 `

@@ -131,11 +131,11 @@ export function Signup() {
             placeholder="이메일"
             value={email}
             onChange={onChangeEmail}
-            disabled={checkEmail}
+            disabled={checkEmail && email}
           />
         </Col>
         <Col style={{padding: 0}}>
-          {checkEmail ? 
+          {(checkEmail && email) ? 
             <S.CheckFillButton /> :
             <S.CheckButton onClick={onCheckEmail}/>}
         </Col>
@@ -154,11 +154,11 @@ export function Signup() {
             placeholder="닉네임"
             value={userName}
             onChange={onChangeUserName}
-            disabled={checkName}
+            disabled={checkName && userName}
           />
         </Col>
         <Col style={{padding: 0}}>
-          {checkName ?
+          {(checkName && userName)?
             <S.CheckFillButton /> :
             <S.CheckButton onClick={onCheckName}/>}
         </Col>
