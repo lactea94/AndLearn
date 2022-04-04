@@ -2,12 +2,14 @@ import { useState } from "react"
 import { Form } from "react-bootstrap"
 import { MyButton } from "styles/Button";
 import { apiInstance } from "api";
+import { useNavigate } from "react-router-dom";
 
 export function PasswordEdit() {
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [passwordError, setPasswordError] = useState(false)
   const [confirmPasswordError, setConfirmPasswordError] = useState(false)
+  const navigate = useNavigate();
   const api = apiInstance();
 
   function onChangePassword(e) {
@@ -31,9 +33,9 @@ export function PasswordEdit() {
   function onSubmit() {
     api
       .put('/users/edit-password', { password: password })
-      .then((res) => {
-        console.log(res.data)
-      })
+      .then(setTimeout(() => {
+        navigate(0)
+      }, 500))
       .catch((error) => {
         console.log(error)
       })
