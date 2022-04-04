@@ -171,12 +171,14 @@ export function ProfileStats() {
     const endDate = new Date(new Date().getFullYear() - 1, new Date().getMonth(), new Date().getDate() - 1 + dateNums[0])
     const month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
   
-    const result = `${month[startDate.getMonth()]} ${startDate.getDate()}
-                    - ${month[endDate.getMonth()]} ${endDate.getDate()}
-                  `
+    if (startDate && endDate && days) {
+      const result = `${month[startDate.getMonth()]} ${startDate.getDate()}
+                      - ${month[endDate.getMonth()]} ${endDate.getDate()}
+                    `
 
-    setStreakDays(days);
-    setStreakPeriod(result)
+      setStreakDays(days);
+      setStreakPeriod(result)
+    }
   }, [myLearns])
 
   return(

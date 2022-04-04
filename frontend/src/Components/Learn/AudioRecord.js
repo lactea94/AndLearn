@@ -56,7 +56,6 @@ export function AudioRecord({ setScript, next, setAudioUrl1, setAud1 }) {
 
           mediaRecorder.ondataavailable = function (e) {
             setAudioUrl(e.data)
-            setAudioUrl1(e.data)
             setOnRec(true)
           }
           SpeechRecognition.stopListening()
@@ -74,7 +73,6 @@ export function AudioRecord({ setScript, next, setAudioUrl1, setAud1 }) {
 
     media.ondataavailable = function (e) {
       setAudioUrl(e.data)
-      setAudioUrl1(e.data)
       setOnRec(true)
     }
 
@@ -99,16 +97,20 @@ export function AudioRecord({ setScript, next, setAudioUrl1, setAud1 }) {
       alert('녹음을 완료해주세요!.')
     }
     if (audioUrl) {
-      console.log(URL.createObjectURL(audioUrl)) // 출력된 링크에서 녹음된아이포트폴리오
+      // 출력된 링크에서 녹음된아이포트폴리오
       setAudio1(URL.createObjectURL(audioUrl))
-      setAud1(audioUrl)
+      setAudioUrl1(URL.createObjectURL(audioUrl))
+      console.log(audioUrl)
     }
     // File 생성자를 사용해 파일로 변환
     const sound = new File([audioUrl], 'soundBlob', {
       lastModified: new Date().getTime(),
-      type: 'audio',
+      type: 'audio/mp3',
     })
-    console.log(sound) // File 정보 출력
+ 
+
+    console.log(sound)
+    setAud1(sound)
   }, [audioUrl])
 
   return (
@@ -120,7 +122,9 @@ export function AudioRecord({ setScript, next, setAudioUrl1, setAud1 }) {
           ) : (
             <MyButton onClick={offRecAudio}>정지</MyButton>
           )}
-          {finalTranscript && <MyButton onClick={onSubmitAudioFile}>다음</MyButton>}
+          {finalTranscript && (
+            <MyButton onClick={onSubmitAudioFile}>다음</MyButton>
+          )}
         </>
       )}
 
