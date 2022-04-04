@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Form, Row, Col, Alert } from 'react-bootstrap'
+import { Row, Col, Alert } from 'react-bootstrap'
 import { MyButton } from 'styles/Button'
 import { Link, useNavigate } from 'react-router-dom'
 import { userInstance } from '../../api/index'
@@ -123,7 +123,7 @@ export function Signup() {
         <Col xs={8} md={9} xl={10}>
           <Input
             maxLength={50}
-            style={{width: "100%"}}
+            style={{width: "100%", margin: "auto"}}
             type="email"
             placeholder="Email Address"
             value={email}
@@ -146,7 +146,7 @@ export function Signup() {
         <Col xs={8} md={9} xl={10}>
           <Input
             maxLength={20}
-            style={{width: "100%"}}
+            style={{width: "100%", margin: "auto"}}
             placeholder="Nickname"
             value={userName}
             onChange={onChangeUserName}
@@ -162,11 +162,11 @@ export function Signup() {
           <Alert variant="warning">닉네임을 입력해주세요.</Alert>
         )}
       </Row>
-      <Row className="justify-content-center align-items-center">
-        <Col xs={12}>
+      <Row className="justify-content-center">
+        <Col xs={12} style={{marginBottom: "1rem"}}>
           <Input
             maxLength={20}
-            style={{width: "100%"}}
+            style={{width: "100%", margin: "auto"}}
             type="password"
             placeholder="Password"
             value={password}
@@ -179,11 +179,11 @@ export function Signup() {
           </Alert>
         )}
       </Row>
-      <Row className="justify-content-center align-items-center">
-        <Col xs={12}>
+      <Row className="justify-content-center">
+        <Col xs={12} style={{marginBottom: "1rem"}}>
           <Input
             maxLength={20}
-            style={{width: "100%"}}
+            style={{width: "100%", margin: "auto"}}
             type="password"
             placeholder="Confirm Password"
             value={confirmPassword}
@@ -196,13 +196,18 @@ export function Signup() {
           </Alert>
         )}
       </Row>
-      <Row className="justify-content-center align-items-center">
-        <MyButton onClick={onSubmit}>회원 가입</MyButton>
+      <Row className="justify-content-center">
+        <MyButton
+          onClick={onSubmit}
+          style={{width: "50%", marginBottom: "1rem"}}
+        >
+          회원 가입
+        </MyButton>
       </Row>
-      <Row className="justify-content-center align-items-center">
+      <Row className="justify-content-center">
         이미 계정이 있습니까?
       </Row>
-      <Row className="justify-content-center align-items-center">
+      <Row className="justify-content-center">
         <Link to="/login">
           로그인
         </Link>
