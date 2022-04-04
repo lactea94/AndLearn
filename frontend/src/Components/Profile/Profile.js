@@ -57,27 +57,25 @@ export function Profile() {
       <Container style={{ marginTop: '5rem' }}>
         <Row style={{ marginBottom: '3rem' }}>
           <Col xs={12}>
-            <S.ImgBox>
-              <S.UserImg
-                src={`${profileImgUrl}`}
-                alt="profile_image"
-              />
-            </S.ImgBox>
+            <S.UserImg
+              src={`${profileImgUrl}`}
+              alt="profile_image"
+            />
           </Col>
-          <Col>
-            <div className='d-flex flex-column align-items-start ps-5'>
-              <div className='mt-2 mb-3'>
-                <h1 className='m-0'>{userNickname}</h1>
-              </div>
-              <div>
-                <h4>
-                  {userId}
-                  {<EditButton to={`edit`}>
-                    <i className="fa-solid fa-pen-to-square"></i>
-                  </EditButton>}
-                </h4>
-              </div>           
-            </div>
+          <Col xs={12}>
+            <Row className='mt-2 mb-3'>
+              <h1 className='m-0'>{userNickname}</h1>
+            </Row>
+            <Row className='justify-content-center'>
+              <Col xs={7}>
+                {userId}
+              </Col>
+              <Col xs={1}>
+                <EditButton to={`edit`}>
+                  <i className="fa-solid fa-pen-to-square"></i>
+                </EditButton>
+              </Col>
+            </Row>
           </Col>
         </Row>
         <Row style={{ marginTop: '2rem' }}>
