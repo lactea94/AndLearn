@@ -100,16 +100,13 @@ export function AudioRecord({ setScript, next, setAudioUrl1, setAud1 }) {
       // 출력된 링크에서 녹음된아이포트폴리오
       setAudio1(URL.createObjectURL(audioUrl))
       setAudioUrl1(URL.createObjectURL(audioUrl))
-      console.log(audioUrl)
     }
     // File 생성자를 사용해 파일로 변환
-    const sound = new File([audioUrl], 'soundBlob', {
+    const sound = new File([audioUrl], 'soundBlob.m4a', {
       lastModified: new Date().getTime(),
-      type: 'audio/mp3',
+      type: 'audio/x-m4a',
     })
  
-
-    console.log(sound)
     setAud1(sound)
   }, [audioUrl])
 
