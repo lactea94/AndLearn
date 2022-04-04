@@ -28,13 +28,17 @@ export function Comments({ usernickname }) {
         .post(`/community/${articleId}/comment`,
           {
             content: content,
-        }).then(navigate(0))
+        }).then(setTimeout(() => {
+          navigate(0)
+        }, 1000))
     }
   }
 
   const handleClick = (e) => {
     apiInstance().delete(`/community/${articleId}/comment/${e.target.value}`)
-    .then(navigate(0))
+    .then(setTimeout(() => {
+      navigate(0)
+    }, 500))
   }
 
   return (

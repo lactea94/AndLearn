@@ -38,12 +38,16 @@ export function Detail() {
   const handleClick = () => {
     if (state.isNotice === 1) {
       apiInstance().delete(`/community/notice/${articleId}`)
-      .then(navigate('/community'))
-      .then(navigate(0))
+      .then(setTimeout(() => {
+        navigate('/community')
+        navigate(0)
+      }, 500))
     } else {
       apiInstance().delete(`/community/${articleId}`)
-      .then(navigate('/community'))
-      .then(navigate(0))
+      .then(setTimeout(() => {
+        navigate('/community')
+        navigate(0)
+      }, 500))
     }
   }
 
@@ -56,7 +60,9 @@ export function Detail() {
           content: content,
       })
         .then(setShow(false))
-        .then(navigate(0))
+        .then(setTimeout(() => {
+          navigate(0)
+        }, 500))
     }
   }
 

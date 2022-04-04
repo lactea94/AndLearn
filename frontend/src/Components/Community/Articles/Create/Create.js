@@ -21,19 +21,21 @@ export default function Create({ me, setReload }) {
     if (title && content) return true
     else return false
   }
+
   const handleSubmit = () => {
     if (validation()) {
       return (
-        apiInstance()
-        .post('/community',
+        apiInstance().post('/community',
           {
             title: title,
             content: content,
             isNotice: isSwitchOn,
         })
           .then(setShow(false))
-          .then(setReload(true))
-          .then(navigate('/community'))
+          .then(setTimeout(() => {
+            setReload(true)
+            navigate('/community')
+          }, 500))
       )
     }
   }

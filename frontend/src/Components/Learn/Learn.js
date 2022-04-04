@@ -32,29 +32,21 @@ export function Learn() {
     setScript1(e.target.value)
   }
   function onSubmit() {
-    console.log(audioUrl1)
-    const sound1 = new File([audioUrl1], "soundBlob", { lastModified: new Date().getTime(), type: "audio/m4a" });
-    console.log(URL.createObjectURL(sound1))
-
     const formData = new FormData()
     formData.append('file', aud1)
-
-    // formData.append('file2', aud2)
-    console.log(aud1)
-    console.log(aud2)
+    formData.append('file2', aud2)
     const data = {
       score: 5.0,
       words: words,
       sentences: [script1, script2],
     }
-    // formData.append(
-    //   'learnPostReq',
-    //   // new Blob([JSON.stringify(data)], { type: 'application/json' })
-    //   JSON.stringify(data)
-    // )
+    formData.append(
+      'learnPostReq',
+      new Blob([JSON.stringify(data)], { type: 'application/json' })
+    )
 
     api
-      .post(`learn/test/${keyDjango}`, formData, {
+      .post(`learn/${keyDjango}`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
