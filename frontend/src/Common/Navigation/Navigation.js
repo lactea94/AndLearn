@@ -18,13 +18,13 @@ export function Navigation() {
     if (token) {
       setIsAuthenticated(true)
     } 
-  }, [token])
+  }, [token]);
 
   function logout() {
     localStorage.removeItem(ACCESS_TOKEN);
     navigate('/');
     navigate(0);
-  }
+  };
 
   return (
     <S.MyNavbar collapseOnSelect expand={false}>

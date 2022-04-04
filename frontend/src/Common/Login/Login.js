@@ -1,31 +1,31 @@
-import React, { useState } from 'react'
-import { Col, Row } from 'react-bootstrap'
-import { MyButton } from 'styles/Button'
-import { userInstance } from '../../api/index'
-import * as S from './Style'
-import { Input } from 'styles/Input'
-import { useNavigate } from 'react-router-dom'
+import React, { useState } from 'react';
+import { Col, Row } from 'react-bootstrap';
+import { MyButton } from 'styles/Button';
+import { userInstance } from 'api/index';
+import * as S from './Style';
+import { Input } from 'styles/Input';
+import { useNavigate } from 'react-router-dom';
 
 export function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
-  const api = userInstance()
+  const api = userInstance();
 
   const onEmailHandler = (event) => {
     setEmail(event.currentTarget.value)
-  }
+  };
 
   const onPasswordHandler = (event) => {
     setPassword(event.currentTarget.value)
-  }
+  };
 
   const onSubmit = (event) => {
-    event.preventDefault()
+    event.preventDefault();
     const data = {
       id: email,
       password: password,
-    }
+    };
     api
       .post('/auth/login', data)
       .then((response) => {
@@ -41,7 +41,7 @@ export function Login() {
           alert('비밀번호를 다시 입력해주세요.')
         }
       })
-  }
+  };
 
   return (
     <S.Contents>
@@ -77,4 +77,4 @@ export function Login() {
       </Row>
     </S.Contents>
   )
-}
+};
