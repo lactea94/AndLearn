@@ -125,7 +125,7 @@ export function Signup() {
             maxLength={50}
             style={{width: "100%", margin: "auto"}}
             type="email"
-            placeholder="Email Address"
+            placeholder="이메일"
             value={email}
             onChange={onChangeEmail}
           />
@@ -147,7 +147,7 @@ export function Signup() {
           <Input
             maxLength={20}
             style={{width: "100%", margin: "auto"}}
-            placeholder="Nickname"
+            placeholder="닉네임"
             value={userName}
             onChange={onChangeUserName}
           />
@@ -168,7 +168,7 @@ export function Signup() {
             maxLength={20}
             style={{width: "100%", margin: "auto"}}
             type="password"
-            placeholder="Password"
+            placeholder="비밀번호"
             value={password}
             onChange={onChangePassword}
           />
@@ -185,7 +185,7 @@ export function Signup() {
             maxLength={20}
             style={{width: "100%", margin: "auto"}}
             type="password"
-            placeholder="Confirm Password"
+            placeholder="비밀번호 확인"
             value={confirmPassword}
             onChange={onChangeConfirmPassword}
           />

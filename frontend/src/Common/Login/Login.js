@@ -41,7 +41,7 @@ export function Login() {
   }
 
   return (
-    <Container className="" style={{ minHeight:'60vh', marginRight: '0px', marginLeft: '0px', width: '100%' }}>
+    <Container>
       <Form>
         <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
           <Col sm>

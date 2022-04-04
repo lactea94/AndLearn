@@ -12,7 +12,6 @@ import './App.css'
 import { useEffect } from 'react'
 import { ACCESS_TOKEN } from 'constants/index'
 import { useNavigate } from 'react-router-dom'
-import { apiInstance } from 'api'
 import { Footer } from 'Common/Footer/Footer'
 
 function App() {
