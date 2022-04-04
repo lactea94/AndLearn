@@ -42,14 +42,14 @@ export function ProfileContentDetail() {
               <div className="row mb-2">
                 <S.Text className="mb-0 align-self-center">1차 녹음본</S.Text>
                 <audio controls>
-                  <source src={`https://d3qljd3xvkb8gz.cloudfront.net/${learningInfo.records[0].recordUrl}`} />
+                  <source src={`${learningInfo.records[0].recordUrl}`} />
                 </audio>
               </div>
 
               <div className="row">
                 <S.Text className="mb-0 align-self-center">2차 녹음본</S.Text>
                 <audio controls>
-                  <source src={`https://d3qljd3xvkb8gz.cloudfront.net/${learningInfo.records[1].recordUrl}`} />
+                  <source src={`${learningInfo.records[1].recordUrl}`} />
                 </audio>
               </div>
 

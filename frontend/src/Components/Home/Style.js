@@ -16,6 +16,17 @@ export const Contents = styled(Container)`
     width: 60%;
   }
 `
+export const ho1 = styled.div`
+  font-size: 2.4rem;
+  align-items: center;
+
+  @media ( min-width: 820px ) {
+    font-size: 3.0rem;
+  }
+  @media ( min-width: 1280px ) {
+    font-size: 3.4rem;
+  }
+`
 
 export const Header = styled(Row)`
   padding-top: 5rem;

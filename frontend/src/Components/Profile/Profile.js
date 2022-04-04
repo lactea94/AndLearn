@@ -100,14 +100,12 @@ export function Profile() {
         <div style={{ marginTop: '2rem' }}>
           <Routes>
             <Route index element={<ProfileContents/>} />
-            <Route path='content' element={<ProfileContents/>}>
-              <Route path=':contentId' element={<ProfileContentDetail/>} />
-            </Route>
+            <Route path='content' element={<ProfileContents/>} />
+            <Route path='content/:contentId' element={<ProfileContentDetail/>} />
             <Route path='stats' element={<ProfileStats/>} />
             <Route path='articles' element={<ProfileArticles />} />
-            <Route path='edit' element={<UserInfoEdit />}>
-              <Route path='password' element={<PasswordEdit />} />
-            </Route>
+            <Route path='edit' element={<UserInfoEdit />} />
+            <Route path='edit/password' element={<PasswordEdit />} />
           </Routes>
         </div>
       </Container>

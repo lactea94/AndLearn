@@ -1,39 +1,30 @@
-import { useState, useEffect } from 'react'
-import { Navbar, Container, Nav, Offcanvas } from 'react-bootstrap'
+import { useState, useEffect } from 'react';
+import { Navbar, Container, Nav, Offcanvas } from 'react-bootstrap';
 import { NavLink, useNavigate } from "react-router-dom";
-import * as S from './Style'
-import { ACCESS_TOKEN } from 'constants/index'
-import { apiInstance } from 'api'
+import * as S from './Style';
+import { ACCESS_TOKEN } from 'constants/index';
 
 export function Navigation() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
-  const [myInfo, setMyInfo] = useState({});
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [show, setShow] = useState(false);
   const navigate = useNavigate();
   
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const token = localStorage.getItem(ACCESS_TOKEN)
-  const api = apiInstance();
+  const token = localStorage.getItem(ACCESS_TOKEN);
 
   useEffect(() => {
     if (token) {
       setIsAuthenticated(true)
-      api.get('users/me')
-        .then(res => {
-          setMyInfo(res.data)
-        })
-    } else {
-      setIsAuthenticated(false)
-    }
-  }, [])
+    } 
+  }, [token]);
 
   function logout() {
     localStorage.removeItem(ACCESS_TOKEN);
     navigate('/');
     navigate(0);
-  }
+  };
 
   return (
     <S.MyNavbar collapseOnSelect expand={false}>
@@ -109,4 +100,4 @@ export function Navigation() {
       </Container>
     </S.MyNavbar>
   )
-}
+};
