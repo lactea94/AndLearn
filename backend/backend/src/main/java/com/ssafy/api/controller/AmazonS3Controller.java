@@ -41,7 +41,7 @@ public class AmazonS3Controller {
     private final WordRepository wordRepository;
     private final RecordRepository recordRepository;
     private final UserService userService;
-
+    
     @ApiImplicitParam(name="key", value = "learn_id", required = true, dataType = "Long")
     @PostMapping("/{key}")
     @ApiOperation(value = "학습 내용 저장", notes = "사용자가 학습을 마치면 관련 내용을 DB에 저장한다.")
@@ -53,7 +53,8 @@ public class AmazonS3Controller {
     })
     public ResponseEntity learnSave(@PathVariable Long key,
                                     @ApiIgnore Authentication authentication,
-                                      @RequestPart(value="file", required = false) @ApiParam(value="음성 파일", required = true) List<MultipartFile> multipartFile,
+                                      @RequestPart(value="file", required = false) @ApiParam(value="음성 파일", required = true) MultipartFile multipartFile1,
+                                    @RequestPart(value="file2", required = false) @ApiParam(value="음성 파일", required = true) MultipartFile multipartFile2,
                                       @RequestPart(value="learnPostReq") @ApiParam(value="음성 파일을 제외한 나머지 학습 정보", required = true) LearnPostReq learnPostReq) {
 
         // key로 해당 컬럼 찾아서 rank 저장
@@ -83,20 +84,37 @@ public class AmazonS3Controller {
             wordRepository.save(word);
                 });
         // 음성 파일 저장
-        List<String> fileNameList = awsS3Service.uploadFiles(multipartFile);
-        for (int i=0; i< fileNameList.size(); i++) {
-            String fileName = fileNameList.get(i);
-//            String url = awsS3Service.getThumbnailPath(fileName);
-            Record record = new Record();
-            record.setRecordUrl("https://d3qljd3xvkb8gz.cloudfront.net/"+fileName);
-            record.setLearn(learn);
-//            Integer time = learnPostReq.getTimes().get(i);
-//            record.setRecordTime(time);
-            String sentence = learnPostReq.getSentences().get(i);
-            record.setSentence(sentence);
-            recordRepository.save(record);
+        String fileName = awsS3Service.uploadFile(multipartFile1);
+        Record record1 = new Record();
+        record1.setRecordUrl("https://d3qljd3xvkb8gz.cloudfront.net/"+fileName);
+        record1.setLearn(learn);
+        String sentence = learnPostReq.getSentences().get(0);
+        record1.setSentence(sentence);
+        recordRepository.save(record1);
 
-        }
+        String fileName2 = awsS3Service.uploadFile(multipartFile2);
+        Record record2 = new Record();
+        record2.setRecordUrl("https://d3qljd3xvkb8gz.cloudfront.net/"+fileName2);
+        record2.setLearn(learn);
+        String sentence2 = learnPostReq.getSentences().get(1);
+        record2.setSentence(sentence2);
+        recordRepository.save(record2);
+
+
+//        List<String> fileNameList = awsS3Service.uploadFiles(multipartFile);
+//        for (int i=0; i< fileNameList.size(); i++) {
+//            String fileName = fileNameList.get(i);
+////            String url = awsS3Service.getThumbnailPath(fileName);
+//            Record record = new Record();
+//            record.setRecordUrl("https://d3qljd3xvkb8gz.cloudfront.net/"+fileName);
+//            record.setLearn(learn);
+////            Integer time = learnPostReq.getTimes().get(i);
+////            record.setRecordTime(time);
+//            String sentence = learnPostReq.getSentences().get(i);
+//            record.setSentence(sentence);
+//            recordRepository.save(record);
+
+//        }
         return new ResponseEntity(HttpStatus.OK);
 
     }

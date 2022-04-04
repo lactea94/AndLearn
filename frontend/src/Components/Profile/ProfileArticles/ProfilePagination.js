@@ -7,6 +7,7 @@ import {
   ThreeDots
 } from "react-bootstrap-icons";
 import { 
+  Col,
   Form,
   OverlayTrigger,
   Popover,
@@ -54,7 +55,13 @@ export default function Pagination({ total, limit, page, setPage, setLimit }) {
 
   const Pages = () => {
     const array = () => {
-      if (page < 4) {
+      if (numPages < 5) {
+        let tmp = []
+        for (let p = 1; p < numPages + 1; p ++) {
+          tmp.push(p);
+        }
+        return tmp
+      } else if (page < 4) {
         return [1, 2, 3, 4, 5]
       } else if (page > numPages - 3) {
         return [numPages - 4, numPages - 3, numPages - 2, numPages - 1, numPages]
@@ -79,46 +86,50 @@ export default function Pagination({ total, limit, page, setPage, setLimit }) {
     )};
 
   return (
-    <div>
-      <S.PageContainer>
-        <S.PageItem onClick={() => setPage(1)} disabled={page === 1}>
-          <ChevronDoubleLeft/>
-        </S.PageItem>
-        <S.PageItem onClick={() => setPage(page - 1)} disabled={page === 1}>
-          <ChevronLeft/>
-        </S.PageItem>
-        <Pages/>
-        <S.PageItem onClick={() => setPage(page + 1)} disabled={page === numPages}>
-          <ChevronRight/>
-        </S.PageItem>
-        <S.PageItem onClick={() => setPage(numPages)} disabled={page === numPages}>
-          <ChevronDoubleRight/>
-        </S.PageItem>
-      </S.PageContainer>
-      <S.PageContainer>
-        <OverlayTrigger
-          overlay={
-            <Tooltip>
-              페이지 당 게시글 수
-            </Tooltip>
-          }
-        >
-          <S.PageLimit
-            type="number"
-            value={limit}
-            style={{width:'5rem'}}
-            onChange={({ target: { value } }) => {
-              setLimit(Number(value))
-              setPage(1)
-            }}
+    <>
+      <Col>
+        <S.PageContainer>
+          <OverlayTrigger
+            overlay={
+              <Tooltip>
+                페이지 당 게시글 수
+              </Tooltip>
+            }
           >
-            <option value="5">5</option>
-            <option value="10">10</option>
-            <option value="15">15</option>
-            <option value="20">20</option>
-          </S.PageLimit>
-        </OverlayTrigger>
-      </S.PageContainer>
-    </div>
+            <S.PageLimit
+              type="number"
+              value={limit}
+              style={{width:'5rem'}}
+              onChange={({ target: { value } }) => {
+                setLimit(Number(value))
+                setPage(1)
+              }}
+            >
+              <option value="5">5</option>
+              <option value="10">10</option>
+              <option value="15">15</option>
+              <option value="20">20</option>
+            </S.PageLimit>
+          </OverlayTrigger>
+        </S.PageContainer>
+      </Col>
+      <Col xs={12} md={6}>
+        <S.PageContainer>
+          <S.PageItem onClick={() => setPage(1)} disabled={page === 1}>
+            <ChevronDoubleLeft/>
+          </S.PageItem>
+          <S.PageItem onClick={() => setPage(page - 1)} disabled={page === 1}>
+            <ChevronLeft/>
+          </S.PageItem>
+          <Pages/>
+          <S.PageItem onClick={() => setPage(page + 1)} disabled={page === numPages}>
+            <ChevronRight/>
+          </S.PageItem>
+          <S.PageItem onClick={() => setPage(numPages)} disabled={page === numPages}>
+            <ChevronDoubleRight/>
+          </S.PageItem>
+        </S.PageContainer>
+      </Col>
+    </>
   )
 };

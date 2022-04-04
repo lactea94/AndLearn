@@ -3,21 +3,22 @@ import styled from "styled-components";
 
 
 export const Contents = styled(Container)`
+  font-family: BMEULJIRO;
+  font-size: 0.7rem;
 
-@media ( min-width: 820px ) {
-  width: 80%;
-}
+  @media ( min-width: 820px ) {
+    font-size: 1.3rem;
+    width: 80%;
+  }
 
-@media ( min-width: 1280px ) {
-  width: 70%;
-}
-
+  @media ( min-width: 1280px ) {
+    font-size: 1.5rem;
+    width: 60%;
+  }
 `
 
 export const Header = styled(Row)`
   padding-top: 5rem;
-  font-family: BMEULJIRO;
-  font-size: 5rem;
   align-items: center;
 `
 
@@ -28,7 +29,6 @@ export const Image = styled.img`
 export const Body = styled(Row)`
   margin-top: 10rem;
   justify-content: center;
-  font-family: BMEULJIRO;
 `
 export const Content = styled(Row)`
   margin: 2rem;

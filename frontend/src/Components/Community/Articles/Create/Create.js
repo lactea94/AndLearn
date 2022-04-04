@@ -1,16 +1,18 @@
 import { useState } from "react";
-import { Alert, Col, Form, Modal } from "react-bootstrap";
+import { Alert, Form, Modal } from "react-bootstrap";
 import * as S from './Style';
 import { MyButton } from "styles/Button";
 import { Input } from "styles/Input";
 import { apiInstance } from 'api';
 import { Switch } from "styles/Switch";
+import { useNavigate } from "react-router-dom";
 
-export default function Create({ me }) {
+export default function Create({ me, setReload }) {
   const [show, setShow] = useState(false);
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [isSwitchOn, setIsSwitchOn] = useState(false);
+  const navigate = useNavigate();
 
   const onSwitchAction = () => setIsSwitchOn(!isSwitchOn);
   const handleClose = () => setShow(false);
@@ -19,18 +21,21 @@ export default function Create({ me }) {
     if (title && content) return true
     else return false
   }
+
   const handleSubmit = () => {
     if (validation()) {
       return (
-        apiInstance()
-        .post('/community',
+        apiInstance().post('/community',
           {
             title: title,
             content: content,
             isNotice: isSwitchOn,
         })
           .then(setShow(false))
-          .then(window.location.reload())
+          .then(setTimeout(() => {
+            setReload(true)
+            navigate('/community')
+          }, 500))
       )
     }
   }
@@ -74,12 +79,7 @@ export default function Create({ me }) {
   }
 
   return (
-    <Col xs={2}
-      style={{
-        display: "flex",
-        justifyContent: "end",
-        alignItems: "center",
-      }}
+    <S.Contents xs={12} md={2}
     >
       <MyButton onClick={handleShow}>
         새 글
@@ -99,6 +99,6 @@ export default function Create({ me }) {
           </MyButton>
         </Modal.Footer>
       </Modal>
-    </Col>
+    </S.Contents>
   )
 };

@@ -7,28 +7,35 @@ import { ProfileStats } from './ProfileStats/ProfileStats';
 import { ProfileArticles } from './ProfileArticles/ProfileArticles';
 import { UserInfoEdit } from './ProfileEdit/UserInfoEdit';
 import { PasswordEdit } from './ProfileEdit/PasswordEdit';
-import { Detail } from './ProfileArticles/Articles/Detail/Detail';
 import { MyButton } from 'styles/Button';
 import { ACCESS_TOKEN } from 'constants';
 import { apiInstance } from 'api';
+import styled from 'styled-components';
+
+const EditButton = styled(Link)`
+  color: black;
+
+  &:hover {
+    color: #FFDD74;
+  }
+`
 
 export function Profile() {
-  const [profileImgUrl, setProfileImgUrl] = useState();
+  const [profileImgUrl, setProfileImgUrl] = useState("http://placeimg.com/240/240/animals");
+  const [user, setUser] = useState();
   const [userId, setUserId] = useState();
   const [userNickname, setUserNickname] = useState();
   const [userImgUrl, setUserImgUrl] = useState();
   const token = localStorage.getItem(ACCESS_TOKEN);
   const api = apiInstance();
 
-  const randomProfileImgUrl = "http://placeimg.com/240/240/animals";
-
   useEffect(() => {
   }, [userId, userNickname, userImgUrl])
-
   useEffect(() => {
     if (token) {
       api.get('users/me')
         .then(res => {
+          setUser(res.data)
           setUserId(res.data.userId);
           setUserNickname(res.data.nickname);
           setUserImgUrl(res.data.imageUrl);
@@ -39,17 +46,19 @@ export function Profile() {
   }, [])
 
   useEffect(() => {
-    setProfileImgUrl(userImgUrl);
+    if (userImgUrl) {
+      setProfileImgUrl(userImgUrl);
+    }
   }, [userImgUrl])
 
   return (
     <div>
-      <Container className='mt-3'>
-        <Row>
+      <Container style={{ marginTop: '5rem' }}>
+        <Row style={{ marginBottom: '3rem' }}>
           <Col lg={2}>
           </Col>
           <Col lg={2}>
-            <Image src={`${profileImgUrl ? profileImgUrl : randomProfileImgUrl}`} alt="profile_image" roundedCircle fluid></Image>
+            <Image src={`${profileImgUrl}`} alt="profile_image" roundedCircle fluid></Image>
           </Col>
           <Col lg={6}>
             <div className='d-flex flex-column align-items-start ps-5'>
@@ -57,47 +66,46 @@ export function Profile() {
                 <h1 className='m-0'>{userNickname}</h1>
               </div>
               <div>
-                <h4>이메일 : {userId}</h4>
+                <h4>
+                  {userId} {
+                    <EditButton to={`edit`}>
+                      <i className="fa-solid fa-pen-to-square"></i>
+                      </EditButton>
+                  }
+                </h4>
               </div>           
             </div>
           </Col>
-          <Col lg={2} className="row align-items-end">
-            <Link to={`edit`}>
-              <MyButton color="#58C063">
-                Update
-              </MyButton>
-            </Link>
-          </Col>
         </Row>
-        <hr/>
-        <Row>
+        <Row style={{ marginTop: '2rem' }}>
           <Col>
-            <Link to={`content`}>
+            <Link to="content">
               <MyButton color="#58C063">공부내용</MyButton>
             </Link>
           </Col>
           <Col>
-            <Link to={`stats`}>
+            <Link to="stats">
               <MyButton color="#58C063">개인통계</MyButton>
             </Link>
           </Col>
           <Col>
-            <Link to={`articles`}>
+            <Link to="articles" state={{ user:user }}>
               <MyButton color="#58C063">
                 게시글
               </MyButton>
             </Link>
           </Col>
         </Row>
-        <div className="mt-3">
+        <hr />
+        <div style={{ marginTop: '2rem' }}>
           <Routes>
-            <Route path='/content' element={<ProfileContents/>}/>
-            <Route path='/content/:contentId' element={<ProfileContentDetail/>} />
-            <Route path='/stats' element={<ProfileStats/>} />
-            <Route path='/articles' element={<ProfileArticles />} />
-            <Route path='/articles/:articleId' element={<Detail />} />
-            <Route path='/edit' element={<UserInfoEdit />} />
-            <Route path='/edit/password' element={<PasswordEdit />} />
+            <Route index element={<ProfileContents/>} />
+            <Route path='content' element={<ProfileContents/>} />
+            <Route path='content/:contentId' element={<ProfileContentDetail/>} />
+            <Route path='stats' element={<ProfileStats/>} />
+            <Route path='articles' element={<ProfileArticles />} />
+            <Route path='edit' element={<UserInfoEdit />} />
+            <Route path='edit/password' element={<PasswordEdit />} />
           </Routes>
         </div>
       </Container>

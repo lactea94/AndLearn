@@ -1,5 +1,16 @@
-import { Form } from "react-bootstrap";
+import { Col, Form } from "react-bootstrap";
 import styled from "styled-components";
+
+
+export const Contents = styled(Col)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  @media ( min-width: 768px ) {
+    justify-content: end;
+  }
+`
 
 export const Control = styled(Form.Control)`
   &:focus {

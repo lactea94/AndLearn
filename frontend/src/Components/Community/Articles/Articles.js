@@ -15,22 +15,21 @@ export default function Articles({ notices, articles, offset, limit, me }) {
   function ArticleComponent(article, notice) {
     return (
       <S.TableRow notice={notice} key={article.id}>
-        <S.Column xs={1}>
+        <S.Column xs={2} md={1}>
           {notice ? '공지' : `${article.id}`}
         </S.Column>
-        <S.Column xs={7}>
+        <S.Column xs={4} md={7}>
           <S.DetailLink
             to={`${article.id}`}
             state={{
               user: me,
-              isNotice: notice,
             }}
           >
             {article.title}
           </S.DetailLink>
         </S.Column>
-        <S.Column xs={2}>{article.nickname}</S.Column>
-        <S.Column xs={2}>
+        <S.Column xs={3} md={2}>{article.nickname}</S.Column>
+        <S.Column xs={3} md={2}>
           {DateFormat(article.createdDate)}
         </S.Column>
       </S.TableRow>
@@ -40,10 +39,10 @@ export default function Articles({ notices, articles, offset, limit, me }) {
   return (
     <S.Table>
       <S.TableHead>
-        <S.ColumnName xs={1}>#</S.ColumnName>
-        <S.ColumnName xs={7}>제목</S.ColumnName>
-        <S.ColumnName xs={2}>작성자</S.ColumnName>
-        <S.ColumnName xs={2}>날짜</S.ColumnName>
+        <S.ColumnName xs={2} md={1}>#</S.ColumnName>
+        <S.ColumnName xs={4} md={7}>제목</S.ColumnName>
+        <S.ColumnName xs={3} md={2}>작성자</S.ColumnName>
+        <S.ColumnName xs={3} md={2}>날짜</S.ColumnName>
       </S.TableHead>
       {notices.map((notice) => (
         ArticleComponent(notice, 1)
