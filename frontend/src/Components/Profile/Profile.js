@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Link, Route, Routes } from 'react-router-dom';
-import { Container, Row, Col, Image } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
 import { ProfileContents } from './ProfileContents/ProfileContents';
 import { ProfileContentDetail } from './ProfileContents/ProfileContentDetail';
 import { ProfileStats } from './ProfileStats/ProfileStats';
@@ -11,6 +11,7 @@ import { MyButton } from 'styles/Button';
 import { ACCESS_TOKEN } from 'constants';
 import { apiInstance } from 'api';
 import styled from 'styled-components';
+import * as S from './Style';
 
 const EditButton = styled(Link)`
   color: black;
@@ -54,27 +55,27 @@ export function Profile() {
   return (
     <div>
       <Container style={{ marginTop: '5rem' }}>
-        <Row style={{ marginBottom: '3rem' }}>
-          <Col lg={2}>
+        <Row className='justify-content-center align-items-center' style={{ marginBottom: '3rem' }}>
+          <Col xs={12} md={4} lg={3}>
+            <S.UserImg
+              src={`${profileImgUrl}`}
+              alt="profile_image"
+            />
           </Col>
-          <Col lg={2}>
-            <Image src={`${profileImgUrl}`} alt="profile_image" roundedCircle fluid></Image>
-          </Col>
-          <Col lg={6}>
-            <div className='d-flex flex-column align-items-start ps-5'>
-              <div className='mt-2 mb-3'>
-                <h1 className='m-0'>{userNickname}</h1>
-              </div>
-              <div>
-                <h4>
-                  {userId} {
-                    <EditButton to={`edit`}>
-                      <i className="fa-solid fa-pen-to-square"></i>
-                      </EditButton>
-                  }
-                </h4>
-              </div>           
-            </div>
+          <Col xs={12} md={6} lg={5}>
+            <Row className='mt-2 mb-3'>
+              <h1 className='m-0'>{userNickname}</h1>
+            </Row>
+            <Row className='justify-content-center'>
+              <Col xs={7}>
+                {userId}
+              </Col>
+              <Col xs={1}>
+                <EditButton to={`edit`}>
+                  <i className="fa-solid fa-pen-to-square"></i>
+                </EditButton>
+              </Col>
+            </Row>
           </Col>
         </Row>
         <Row style={{ marginTop: '2rem' }}>

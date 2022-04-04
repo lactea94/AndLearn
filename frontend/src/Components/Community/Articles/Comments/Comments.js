@@ -59,7 +59,9 @@ export function Comments({ usernickname }) {
           return (
             <S.Comment key={comment.id} >
               <S.ImgBox>
-                <S.UserImg alt={comment.userId} src="/images/default_user.jpg" />
+                { comment.imgUrl ?
+                  <S.UserImg src={`${comment.imgUrl}`} alt={comment.imgUrl}/> :
+                  <S.UserImg src="/images/default_user.jpg" alt={comment.imgUrl}/>}
               </S.ImgBox>
               <S.CommentContent>
                 <S.User>{comment.nickname}</S.User>

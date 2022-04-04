@@ -29,7 +29,7 @@ export function Navigation() {
   return (
     <S.MyNavbar collapseOnSelect expand={false}>
       <Container fluid>
-        <Navbar.Toggle onClick={handleShow}/>
+        <S.Toggle src="/images/favicon.png" onClick={handleShow}/>
         <Navbar.Collapse>
           <S.Offcanvas show={show} onHide={handleClose}>
             <Offcanvas.Header closeButton>

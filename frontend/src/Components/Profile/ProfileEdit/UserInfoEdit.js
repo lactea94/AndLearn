@@ -73,8 +73,9 @@ export function UserInfoEdit() {
         .put("/users/edit", {
           nickname: userName,
         })
-        .then(res => {
-        })
+        .then(setTimeout(() => {
+          navigate(0)
+        }, 500))
       }     
 
       if (imgFile) {
@@ -88,10 +89,10 @@ export function UserInfoEdit() {
             "Content-Type": "multipart/form-data",
           }
         })
-        .then(res => {
-        })
+        .then(setTimeout(() => {
+          navigate(0)
+        }, 500))
       }
-      window.location.replace(`/profile/content`)
     } else {
       setCheckValues('변경사항이 없습니다.')
     }
