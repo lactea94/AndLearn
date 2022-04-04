@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Link, Route, Routes } from 'react-router-dom';
-import { Container, Row, Col, Image } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
 import { ProfileContents } from './ProfileContents/ProfileContents';
 import { ProfileContentDetail } from './ProfileContents/ProfileContentDetail';
 import { ProfileStats } from './ProfileStats/ProfileStats';
