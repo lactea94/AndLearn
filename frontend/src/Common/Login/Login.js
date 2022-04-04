@@ -4,10 +4,12 @@ import { MyButton } from 'styles/Button'
 import { userInstance } from '../../api/index'
 import * as S from './Style'
 import { Input } from 'styles/Input'
+import { useNavigate } from 'react-router-dom'
 
 export function Login() {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const navigate = useNavigate();
   const api = userInstance()
 
   const onEmailHandler = (event) => {
@@ -30,7 +32,9 @@ export function Login() {
         if (response.data.accessToken) {
           localStorage.setItem('accesstoken', response.data.accessToken)
         }
-        window.location.replae('/')
+        // window.location.replae('/')
+        navigate('/');
+        navigate(0);
       })
       .catch((error) => {
         if (error.response.status === 401) {
