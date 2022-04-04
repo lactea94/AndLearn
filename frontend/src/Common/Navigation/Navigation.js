@@ -60,7 +60,7 @@ export function Navigation() {
                 {isAuthenticated ? (
                   <>
                     <NavLink
-                      to={`profile/${myInfo.nickname}/content`}
+                      to="profile"
                       onClick={handleClose}
                       style={S.navLinkStyle}
                     >
