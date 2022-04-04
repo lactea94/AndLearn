@@ -5,7 +5,18 @@ import { GrammarlyEditor } from './GrammarlyEditor'
 import plusDefault from './plusDefault.png'
 import { apiInstance } from 'api/index'
 import { MyButton } from 'styles/Button.js'
+import { Container, Image } from 'react-bootstrap'
 import styled from "styled-components";
+
+const MyImage = styled(Image)`
+  margin-top: 3rem;
+
+  @media screen and (min-width: 900px) {
+    width: 850px;
+    height: 500px;
+  }
+  width: 90%;
+`
 
 export function Learn() {
   const api = apiInstance()
@@ -26,6 +37,7 @@ export function Learn() {
   const recommendWord = words.map((word) => <p key={word.id}>{word}</p>)
   function next() {
     setStage(stage + 1)
+    console.log(stage)
   }
   function onCheck(e) {
     console.log(e.target.value)
@@ -59,9 +71,9 @@ export function Learn() {
       })
   }
   return (
-    <div>
+    <Container>
       <div>
-        <img src={fileImage} width={300} height={280} alt="추가한 사진" />
+        <MyImage src={fileImage} alt="추가한 사진" />
         {stage === 0 && (
           <ImageUpload
             setFileImage={setFileImage}
@@ -87,7 +99,7 @@ export function Learn() {
                 <textarea value={script1} onChange={onCheck}>
                   {script1}
                 </textarea>
-                <audio controls src={audioUrl1} controlsList='download'></audio>
+                <audio controls src={audioUrl1} controlsList='nodownload'></audio>
               </>
             )}
           </>
@@ -119,6 +131,6 @@ export function Learn() {
       <div>
         {stage >= 5 && <MyButton onClick={onSubmit}>전송완료</MyButton>}
       </div>
-    </div>
+    </Container>
   )
 }
