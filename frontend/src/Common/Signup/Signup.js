@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
-import { Row, Col, Alert } from 'react-bootstrap'
-import { MyButton } from 'styles/Button'
-import { Link, useNavigate } from 'react-router-dom'
-import { userInstance } from '../../api/index'
-import * as S from './Style'
-import { Input } from 'styles/Input'
+import React, { useState } from 'react';
+import { Row, Col, Alert } from 'react-bootstrap';
+import { MyButton } from 'styles/Button';
+import { Link, useNavigate } from 'react-router-dom';
+import { userInstance } from '../../api/index';
+import * as S from './Style';
+import { Input } from 'styles/Input';
 
 export function Signup() {
   const [password, setPassword] = useState('')
@@ -13,16 +13,16 @@ export function Signup() {
   const [email, setEmail] = useState('')
   const api = userInstance()
 
-  const [passwordError, setPasswordError] = useState(false)
-  const [confirmPasswordError, setConfirmPasswordError] = useState(false)
-  const [userNameError, setUserNameError] = useState(false)
-  const [emailError, setEmailError] = useState(false)
-  const [dEmail, setDEmail] = useState('')
-  const [dName, setDName] = useState('')
-  const [checkEmail, setCheckEmail] = useState(false)
-  const [checkName, setCheckName] = useState(false)
+  const [passwordError, setPasswordError] = useState(false);
+  const [confirmPasswordError, setConfirmPasswordError] = useState(false);
+  const [userNameError, setUserNameError] = useState(false);
+  const [emailError, setEmailError] = useState(false);
+  const [dEmail, setDEmail] = useState('');
+  const [dName, setDName] = useState('');
+  const [checkEmail, setCheckEmail] = useState(false);
+  const [checkName, setCheckName] = useState(false);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   function onChangePassword(e) {
     const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,}$/
@@ -34,31 +34,31 @@ export function Signup() {
       setConfirmPasswordError(false)
     else setConfirmPasswordError(true)
     setPassword(e.target.value)
-  }
+  };
   function onChangeConfirmPassword(e) {
     if (password === e.target.value) setConfirmPasswordError(false)
     else setConfirmPasswordError(true)
     setConfirmPassword(e.target.value)
-  }
+  };
   function onChangeUserName(e) {
     setUserNameError(false)
     setUserName(e.target.value)
-  }
+  };
   function onChangeEmail(e) {
     const emailRegex =
       /^(([^<>()\[\].,;:\s@"]+(\.[^<>()\[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i
     if (!e.target.value || emailRegex.test(e.target.value)) setEmailError(false)
     else setEmailError(true)
     setEmail(e.target.value)
-  }
+  };
 
   function validation(e) {
-    if (!password) setPasswordError(true)
-    if (!confirmPassword) setConfirmPasswordError(true)
-    if (!userName) setUserNameError(true)
-    if (!email) setEmailError(true)
-    if (!checkEmail) setDEmail('중복검사를 눌러주세요.')
-    if (!checkName) setDName('중복검사를 눌러주세요.')
+    if (!password) setPasswordError(true);
+    if (!confirmPassword) setConfirmPasswordError(true);
+    if (!userName) setUserNameError(true);
+    if (!email) setEmailError(true);
+    if (!checkEmail) setDEmail('중복검사를 눌러주세요.');
+    if (!checkName) setDName('중복검사를 눌러주세요.');
     if (
       password &&
       confirmPassword &&
@@ -72,7 +72,8 @@ export function Signup() {
     )
       return true
     else return false
-  }
+  };
+
   function onCheckEmail() {
     api
       .post('/users/duplicate-check-id', { id: email })
@@ -85,7 +86,7 @@ export function Signup() {
           setDEmail('이미 존재하는 아이디입니다.')
         }
       })
-  }
+  };
 
   function onCheckName() {
     api
@@ -101,7 +102,7 @@ export function Signup() {
           setDName('이미 존재하는 이름입니다.')
         }
       })
-  }
+  };
 
   function onSubmit(e) {
     if (!validation(e)) return
@@ -115,7 +116,7 @@ export function Signup() {
       .catch((error) => {
         console.log(error)
       })
-  }
+  };
 
   return (
     <S.Contents>
@@ -214,4 +215,4 @@ export function Signup() {
       </Row>
     </S.Contents>
   )
-}
+};
