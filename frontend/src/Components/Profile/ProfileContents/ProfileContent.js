@@ -17,10 +17,7 @@ export function ProfileContent({content}) {
   return (
     <div className="mb-4">
       <NavLink 
-        to={`/profile/${userId}/content/${content.id}`}
-        state={{
-          imgUrl: content.pictureUrl,
-        }}
+        to={`/profile/content/${content.id}`}
       >
         <MyImage 
           src={`https://d3qljd3xvkb8gz.cloudfront.net/${content.pictureUrl}`} 
