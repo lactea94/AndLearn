@@ -1,18 +1,18 @@
-import { useState, useEffect } from 'react'
-import { Navbar, Container, Nav, Offcanvas } from 'react-bootstrap'
+import { useState, useEffect } from 'react';
+import { Navbar, Container, Nav, Offcanvas } from 'react-bootstrap';
 import { NavLink, useNavigate } from "react-router-dom";
-import * as S from './Style'
-import { ACCESS_TOKEN } from 'constants/index'
+import * as S from './Style';
+import { ACCESS_TOKEN } from 'constants/index';
 
 export function Navigation() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [show, setShow] = useState(false);
   const navigate = useNavigate();
   
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const token = localStorage.getItem(ACCESS_TOKEN)
+  const token = localStorage.getItem(ACCESS_TOKEN);
 
   useEffect(() => {
     if (token) {
@@ -100,4 +100,4 @@ export function Navigation() {
       </Container>
     </S.MyNavbar>
   )
-}
+};
