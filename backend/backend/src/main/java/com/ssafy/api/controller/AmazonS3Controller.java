@@ -41,7 +41,20 @@ public class AmazonS3Controller {
     private final WordRepository wordRepository;
     private final RecordRepository recordRepository;
     private final UserService userService;
+    private final RecordRepository recordRepository;
+    private final UserService userService;
 
+    @PostMapping("/test/{key}")
+    public ResponseEntity test(@PathVariable Long key,
+                               @RequestPart(value="file", required = false) @ApiParam(value="음성 파일", required = true) MultipartFile multipartFile1) {
+        Optional<Learn> learnTmp = learnRepository.findById(key);
+        if (learnTmp.isEmpty()) {
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+        String fileName = awsS3Service.uploadFile(multipartFile1);
+        return ResponseEntity.status(HttpStatus.OK).body(fileName);
+    }
+    
     @ApiImplicitParam(name="key", value = "learn_id", required = true, dataType = "Long")
     @PostMapping("/{key}")
     @ApiOperation(value = "학습 내용 저장", notes = "사용자가 학습을 마치면 관련 내용을 DB에 저장한다.")
