@@ -54,7 +54,13 @@ export default function Pagination({ total, limit, page, setPage, setLimit }) {
 
   const Pages = () => {
     const array = () => {
-      if (page < 4) {
+      if (numPages < 5) {
+        let tmp = []
+        for (let p = 1; p < numPages + 1; p ++) {
+          tmp.push(p);
+        }
+        return tmp
+      } else if (page < 4) {
         return [1, 2, 3, 4, 5]
       } else if (page > numPages - 3) {
         return [numPages - 4, numPages - 3, numPages - 2, numPages - 1, numPages]
