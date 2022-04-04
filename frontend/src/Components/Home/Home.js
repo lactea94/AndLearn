@@ -21,11 +21,8 @@ export function Home() {
   return (
     <S.Contents>
       <S.Header>
-        <Col xs={8}>
-          <S.Image src="/images/logo.png"/>
-        </Col>
-        <Col xs={4}>
-          <S.Image src="/images/allu-3.png"/>
+        <Col>
+          <S.Image src="/images/logo.svg"/>
         </Col>
       </S.Header>
       <S.Body>
@@ -38,12 +35,12 @@ export function Home() {
             이 사진을 보고 바로 영어로 말할 수 있으셨나요?<br/>
           </Col>
           <Col xs={4}>
-            <S.Image src="/images/allu-1.png"/>
+          <S.Image src="/images/allu-1.svg"/>
           </Col>
         </S.Content>
         <S.Content>
           <Col xs={4}>
-            <S.Image src="/images/allu-2.png"/>
+            <S.Image src="/images/allu-2.svg"/>
           </Col>
           <Col>
             AndLearn은 영어가 낯선 분들을 위한 서비스 입니다.<br/>
