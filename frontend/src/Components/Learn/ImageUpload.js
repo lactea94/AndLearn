@@ -40,39 +40,42 @@ export function ImageUpload({ setFileImage, next, setKeyDjango, setWords }) {
   }
 
   return (
-    <div>
-      <div>
-        {/* <Dropzone onDrop={onLoad}>
-          {({ getRootProps, getInputProps }) => (
-            <section>
-              <div {...getRootProps()}>
-                <input {...getInputProps()} />
-                <p>Drag 'n' drop some files here, or click to select files</p>
-              </div>
-            </section>
-          )}
-        </Dropzone> */}
-        <input
-          id="imgInput"
-          className="image"
-          type="file"
-          accept="image/*"
-          style={{ display: 'none' }}
-          onChange={onLoad}
-        ></input>
+    <div style={{ marginTop: '1.5rem' }}>
+      {image ? 
+        <MyButton onClick={onImageUpload}>시작!</MyButton>
+      : 
+        <>
+          <MyButton style={{ width: '7rem', marginRight: '6rem' }}>
+            {/* <Dropzone onDrop={onLoad}>
+              {({ getRootProps, getInputProps }) => (
+                <section>
+                  <div {...getRootProps()}>
+                    <input {...getInputProps()} />
+                    <p>Drag 'n' drop some files here, or click to select files</p>
+                  </div>
+                </section>
+              )}
+            </Dropzone> */}
+            <input
+              id="imgInput"
+              className="image"
+              type="file"
+              accept="image/*"
+              style={{ display: 'none' }}
+              onChange={onLoad}
+            ></input>
 
-        <label
-          className="btn btn-outline-primary"
-          name="ImgBtn"
-          htmlFor="imgInput"
-          width={180}
-          height={160}
-        >
-          버튼을 눌러 사진을 업로드 해주세요{' '}
-        </label>
-      </div>
-      {/* <button>랜덤사진</button> */}
-      <MyButton onClick={onImageUpload}>시작!</MyButton>
+            <label
+              style={{ cursor: 'pointer' }}
+              name="ImgBtn"
+              htmlFor="imgInput"
+            >
+              사진 업로드
+            </label>
+          </MyButton>
+          <MyButton style={{ width: '7rem' }}>랜덤사진</MyButton>
+        </>
+      }
     </div>
   )
 }
