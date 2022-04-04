@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
-import { Container, Form, Col, Row } from 'react-bootstrap'
+import { Col, Row } from 'react-bootstrap'
 import { MyButton } from 'styles/Button'
-import { useNavigate } from 'react-router-dom'
 import { userInstance } from '../../api/index'
 import * as S from './Style'
 import { Input } from 'styles/Input'
@@ -10,7 +9,6 @@ export function Login() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const api = userInstance()
-  const navigate = useNavigate()
 
   const onEmailHandler = (event) => {
     setEmail(event.currentTarget.value)
@@ -32,7 +30,7 @@ export function Login() {
         if (response.data.accessToken) {
           localStorage.setItem('accesstoken', response.data.accessToken)
         }
-        navigate(0)
+        window.location.replae('/')
       })
       .catch((error) => {
         if (error.response.status === 401) {
