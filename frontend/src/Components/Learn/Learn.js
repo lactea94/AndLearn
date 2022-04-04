@@ -38,8 +38,15 @@ export function Learn() {
 
     const formData = new FormData()
     formData.append('file', aud1)
+<<<<<<< HEAD
     // formData.append('file2', aud2)
     
+=======
+
+    // formData.append('file2', aud2)
+    console.log(aud1)
+    console.log(aud2)
+>>>>>>> front/learn
     const data = {
       score: 5.0,
       words: words,
@@ -47,6 +54,7 @@ export function Learn() {
     }
     // formData.append(
     //   'learnPostReq',
+<<<<<<< HEAD
     //   new Blob([JSON.stringify(data)], { type: 'application/json' })
     // )
 
@@ -58,6 +66,11 @@ export function Learn() {
     for (let value of formData.values()) {
       console.log(value);
     }
+=======
+    //   // new Blob([JSON.stringify(data)], { type: 'application/json' })
+    //   JSON.stringify(data)
+    // )
+>>>>>>> front/learn
 
     api
       .post(`learn/test/${keyDjango}`, formData, {
@@ -101,11 +114,7 @@ export function Learn() {
                 <textarea value={script1} onChange={onCheck}>
                   {script1}
                 </textarea>
-                <audio
-                  controls
-                  src={audioUrl1}
-                  controlsList="nodownload"
-                ></audio>
+                <audio controls src={audioUrl1} controlsList='download'></audio>
               </>
             )}
           </>
