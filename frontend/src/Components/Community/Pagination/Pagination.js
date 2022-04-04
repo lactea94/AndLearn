@@ -88,12 +88,7 @@ export default function Pagination({ total, limit, page, setPage, setLimit }) {
     )};
 
   return (
-    <Row
-      style={{
-        justifyContent: "center",
-        alignItems: "center"
-      }}
-    >
+    <Row className="justify-content-center">
       <Col>
         <S.PageContainer>
           <OverlayTrigger
@@ -119,8 +114,6 @@ export default function Pagination({ total, limit, page, setPage, setLimit }) {
             </Select>
           </OverlayTrigger>
         </S.PageContainer>
-      </Col>
-      <Col xs={12} md={6}>
         <S.PageContainer>
           <S.PageItem onClick={() => setPage(1)} disabled={page === 1}>
             <ChevronDoubleLeft/>

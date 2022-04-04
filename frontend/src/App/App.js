@@ -9,21 +9,10 @@ import { NotFound } from '../Common/NotFound/NotFound'
 import { Login } from '../Common/Login/Login'
 import { Signup } from '../Common/Signup/Signup'
 import './App.css'
-import { useEffect, useState } from 'react'
-import { ACCESS_TOKEN } from 'constants/index'
-import { useNavigate } from 'react-router-dom'
 import { Footer } from 'Common/Footer/Footer'
 
 function App() {
-  const token = localStorage.getItem(ACCESS_TOKEN)
-  const location = useLocation()
-  const [auth, setAuth] = useState()
-  const nav = useNavigate()
-  useEffect(() => {
-    if (!token) {
-      nav('/')
-    }
-  }, [])
+  const location = useLocation();
   return (
     <div className="App">
       <Navigation />
