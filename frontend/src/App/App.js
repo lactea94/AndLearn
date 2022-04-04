@@ -17,7 +17,7 @@ import { Footer } from 'Common/Footer/Footer'
 
 function App() {
   const token = localStorage.getItem(ACCESS_TOKEN)
-  const location = useLocation();
+  const location = useLocation()
   const [auth, setAuth] = useState()
   const nav = useNavigate()
   useEffect(() => {
@@ -31,12 +31,9 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />}></Route>
         <Route path="profile/*" element={<Profile />} />
-        {auth && (
-          <>
-            <Route path="login" element={<Login />}></Route>
-            <Route path="signup" element={<Signup />}></Route>
-          </>
-        )}
+
+        <Route path="login" element={<Login />}></Route>
+        <Route path="signup" element={<Signup />}></Route>
 
         <Route path="learn" element={<Learn />}>
           <Route path="image" element={<Learn />}></Route>
