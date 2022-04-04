@@ -91,11 +91,7 @@ export function UserInfoEdit() {
         .then(res => {
         })
       }
-      if (userName) {
-        window.location.replace(`/profile/${userName}/content`)
-      } else {
-        window.location.replace(`/profile/${userId}/content`)
-      }
+      window.location.replace(`/profile/content`)
     } else {
       setCheckValues('변경사항이 없습니다.')
     }

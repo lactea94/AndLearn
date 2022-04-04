@@ -1,10 +1,10 @@
-import React, { useState, useCallback } from 'react'
+import React, { useState, useCallback, useEffect } from 'react'
 import SpeechRecognition, {
   useSpeechRecognition,
 } from 'react-speech-recognition'
 import { MyButton } from 'styles/Button'
 
-export function AudioRecord({ setScript, next, setAudioUrl1, setAud1 }) {
+export function AudioRecord({ setScript, setAudioUrl1, setAud1, setIsRecord }) {
   const [stream, setStream] = useState()
   const [media, setMedia] = useState()
   const [onRec, setOnRec] = useState(true)
@@ -92,7 +92,7 @@ export function AudioRecord({ setScript, next, setAudioUrl1, setAud1 }) {
   const onSubmitAudioFile = useCallback(() => {
     if (finalTranscript) {
       setHidden(true)
-      next()
+      // next()
     } else {
       alert('녹음을 완료해주세요!.')
     }
@@ -108,27 +108,28 @@ export function AudioRecord({ setScript, next, setAudioUrl1, setAud1 }) {
     })
  
     setAud1(sound)
+    setIsRecord(true)
   }, [audioUrl])
 
   return (
     <>
-      {!hidden && (
+      {/* {!hidden && ( */}
         <>
           {onRec ? (
-            <MyButton onClick={onRecAudio}>녹음</MyButton>
+            <MyButton onClick={onRecAudio} style={{ width: '7rem' }}>녹음</MyButton>
           ) : (
-            <MyButton onClick={offRecAudio}>정지</MyButton>
+            <MyButton onClick={() => {offRecAudio();}} style={{ width: '7rem' }}>정지</MyButton>
           )}
           {finalTranscript && (
-            <MyButton onClick={onSubmitAudioFile}>다음</MyButton>
+            <MyButton onClick={onSubmitAudioFile} style={{ width: '7rem', marginLeft: '2rem' }}>다음</MyButton>
           )}
         </>
-      )}
+      {/* )} */}
 
       {/* 실시간 스크립트 */}
       {/* <p>{transcript}</p> */}
       {/* 최종 스크립트 */}
-      {finalTranscript}
+      {/* {finalTranscript} */}
     </>
   )
 }

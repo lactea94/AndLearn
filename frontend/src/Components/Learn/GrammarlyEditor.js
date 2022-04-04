@@ -8,7 +8,7 @@ export function GrammarlyEditor({ script, next }) {
   },[])
   return (
     <Grammarly
-      clientId="leesk3732"
+      clientId="jor95111@gmail.com"
       config={{
         oauth: { redirectUri: 'example://grammarly-auth/' },
       }}

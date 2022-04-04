@@ -1,11 +1,11 @@
 import React, { useEffect, useState, useCallback } from 'react'
 import { ImageUpload } from './ImageUpload.js'
 import { AudioRecord } from './AudioRecord'
-import { GrammarlyEditor } from './GrammarlyEditor'
+// import { GrammarlyEditor } from './GrammarlyEditor'
 import plusDefault from './plusDefault.png'
 import { apiInstance } from 'api/index'
 import { MyButton } from 'styles/Button.js'
-import { Container, Image } from 'react-bootstrap'
+import { Container, Image, Col, Row } from 'react-bootstrap'
 import styled from "styled-components";
 
 const MyImage = styled(Image)`
@@ -18,11 +18,24 @@ const MyImage = styled(Image)`
   width: 90%;
 `
 
+const MyImage2 = styled(Image)`
+  ${'' /* @media screen and (min-width: 900px) {
+    width: 500px;
+    height: 350px;
+  } */}
+  width: 100%;
+`
+
 export function Learn() {
   const api = apiInstance()
   const [fileImage, setFileImage] = useState(plusDefault)
   const [imageId, setImageId] = useState('')
   const [stage, setStage] = useState(0)
+
+  const [isStart, setIsStart] = useState(false);
+  const [isFirstRecord, setIsFirstRecord] = useState(false);
+  const [isSecondRecord, setIsSecondRecord] = useState(false);
+
   const [keyDjango, setKeyDjango] = useState(2)
   const [words, setWords] = useState([])
 
@@ -35,6 +48,11 @@ export function Learn() {
   const [script1, setScript1] = useState('')
   const [script2, setScript2] = useState('')
   const recommendWord = words.map((word) => <p key={word.id}>{word}</p>)
+
+  useEffect(() => {
+
+  }, [audioUrl1])
+
   function next() {
     setStage(stage + 1)
     console.log(stage)
@@ -72,64 +90,86 @@ export function Learn() {
   }
   return (
     <Container>
-      <div>
-        <MyImage src={fileImage} alt="추가한 사진" />
-        {stage === 0 && (
+      <div>        
+        {!isStart && (
+          <>
+          <MyImage src={fileImage} alt="추가한 사진" />
           <ImageUpload
             setFileImage={setFileImage}
             next={next}
             setKeyDjango={setKeyDjango}
             setWords={setWords}
+            setIsStart={setIsStart}
           />
+          </>
         )}
       </div>
-      <div>{recommendWord}</div>
-      <div>
-        {stage >= 1 && (
+      <Row style={{ marginTop: '3rem'}}>
+        {isStart && (
           <>
-            <AudioRecord
-              setScript={setScript1}
-              next={next}
-              setAudioUrl1={setAudioUrl1}
-              setAud1={setAud1}
-            />
-
-            {aud1 && (
-              <>
-                <textarea value={script1} onChange={onCheck}>
-                  {script1}
-                </textarea>
-                <audio controls src={audioUrl1} controlsList='nodownload'></audio>
-              </>
+            <Col lg={2} />
+            <Col lg={6}>
+              <MyImage2 src={fileImage} alt="추가한 사진" />
+            </Col>
+            {isStart &&
+              <Col lg={4}>
+                <AudioRecord
+                  setScript={setScript1}
+                  next={next}
+                  setAudioUrl1={setAudioUrl1}
+                  setAud1={setAud1}
+                  setIsRecord={setIsFirstRecord}
+                />
+                {audioUrl1 && <audio controls src={audioUrl1} controlsList='nodownload'></audio>}
+              </Col>
+            }
+            {isFirstRecord && (
+              <Col lg={4}>
+                <AudioRecord
+                  setScript={setScript2}
+                  next={next}
+                  setAudioUrl1={setAudioUrl2}
+                  setAud1={setAud2}
+                  setIsRecord={setIsSecondRecord}
+                />
+                {aud2 && (
+                  <audio controls src={audioUrl2} controlsList="nodownload"></audio>
+                )}
+              </Col>
             )}
+            <Row id="answer-box">
+              <Col lg={2} />
+              {aud1 && (
+                <>
+                  <Col lg={6}>
+                    <textarea value={script1} style={{ width: '100%'}} onChange={onCheck}>
+                      {script1}
+                    </textarea>
+                  </Col>
+                  <Col lg={4}>
+                    Mollu Image
+                  </Col>
+                </>
+              )}
+              {aud2 && (
+                <>
+                  <Col lg={6}>
+                    <textarea value={script2} style={{ width: '100%'}} onChange={onCheck}>
+                      {script2}
+                    </textarea>
+                  </Col>
+                  <Col lg={4}>
+                    Mollu Image
+                  </Col>
+                </>
+              )}
+            </Row>
           </>
         )}
-      </div>
+      </Row>
+      <div>{isSecondRecord && <MyButton onClick={onSubmit}>다음</MyButton>}</div>
       <div>
-        {stage >= 2 && (
-          <>
-            <GrammarlyEditor script={script1} stage={stage} next={next} />
-          </>
-        )}
-      </div>
-      <div>
-        {stage >= 3 && (
-          <>
-            <AudioRecord
-              setScript={setScript2}
-              next={next}
-              setAudioUrl1={setAudioUrl2}
-              setAud1={setAud2}
-            />
-            {aud2 && (
-              <audio controls src={audioUrl2} controlsList="nodownload"></audio>
-            )}
-          </>
-        )}
-      </div>
-      <div>{stage >= 4 && <MyButton onClick={onSubmit}>다음</MyButton>}</div>
-      <div>
-        {stage >= 5 && <MyButton onClick={onSubmit}>전송완료</MyButton>}
+        {isSecondRecord && <MyButton onClick={onSubmit}>전송완료</MyButton>}
       </div>
     </Container>
   )
