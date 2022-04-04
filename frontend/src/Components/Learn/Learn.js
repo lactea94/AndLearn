@@ -6,7 +6,7 @@ import plusDefault from './plusDefault.png'
 import { apiInstance } from 'api/index'
 import { MyButton } from 'styles/Button.js'
 import { Container, Image, Col, Row } from 'react-bootstrap'
-import styled from "styled-components";
+import styled from 'styled-components'
 import { ACCESS_TOKEN } from 'constants/index.js'
 import { useNavigate } from 'react-router-dom'
 
@@ -21,36 +21,38 @@ const MyImage = styled(Image)`
 `
 
 const MyImage2 = styled(Image)`
-  ${'' /* @media screen and (min-width: 900px) {
+  ${
+    '' /* @media screen and (min-width: 900px) {
     width: 500px;
     height: 350px;
-  } */}
+  } */
+  }
   width: 100%;
 `
 
 export function Learn() {
-  const api = apiInstance();
-  const [fileImage, setFileImage] = useState(plusDefault);
-  const [imageId, setImageId] = useState('');
-  const [stage, setStage] = useState(0);
-  const navigate = useNavigate();
+  const api = apiInstance()
+  const [fileImage, setFileImage] = useState(plusDefault)
+  const [imageId, setImageId] = useState('')
+  const [stage, setStage] = useState(0)
+  const navigate = useNavigate()
 
-  const [isStart, setIsStart] = useState(false);
-  const [isFirstRecord, setIsFirstRecord] = useState(false);
-  const [isSecondRecord, setIsSecondRecord] = useState(false);
+  const [isStart, setIsStart] = useState(false)
+  const [isFirstRecord, setIsFirstRecord] = useState(false)
+  const [isSecondRecord, setIsSecondRecord] = useState(false)
 
-  const [keyDjango, setKeyDjango] = useState(2);
-  const [words, setWords] = useState([]);
+  const [keyDjango, setKeyDjango] = useState(2)
+  const [words, setWords] = useState([])
 
-  const [audioUrl1, setAudioUrl1] = useState();
-  const [aud1, setAud1] = useState();
+  const [audioUrl1, setAudioUrl1] = useState()
+  const [aud1, setAud1] = useState()
 
-  const [audioUrl2, setAudioUrl2] = useState();
-  const [aud2, setAud2] = useState();
+  const [audioUrl2, setAudioUrl2] = useState()
+  const [aud2, setAud2] = useState()
 
-  const [script1, setScript1] = useState('');
-  const [script2, setScript2] = useState('');
-  const recommendWord = words.map((word) => <p key={word.id}>{word}</p>);
+  const [script1, setScript1] = useState('')
+  const [script2, setScript2] = useState('')
+  const recommendWord = words.map((word) => <p key={word.id}>{word}</p>)
 
   useEffect(() => {
     if (!localStorage.getItem(ACCESS_TOKEN)) {
@@ -58,9 +60,7 @@ export function Learn() {
     }
   }, [])
 
-  useEffect(() => {
-
-  }, [audioUrl1])
+  useEffect(() => {}, [audioUrl1])
 
   function next() {
     setStage(stage + 1)
@@ -97,30 +97,33 @@ export function Learn() {
         console.log(error)
       })
   }
+  function onScore() {
+    // 점수 가져오기
+  }
   return (
     <Container>
-      <div>        
+      <div>
         {!isStart && (
           <>
-          <MyImage src={fileImage} alt="추가한 사진" />
-          <ImageUpload
-            setFileImage={setFileImage}
-            next={next}
-            setKeyDjango={setKeyDjango}
-            setWords={setWords}
-            setIsStart={setIsStart}
-          />
+            <MyImage src={fileImage} alt="추가한 사진" />
+            <ImageUpload
+              setFileImage={setFileImage}
+              next={next}
+              setKeyDjango={setKeyDjango}
+              setWords={setWords}
+              setIsStart={setIsStart}
+            />
           </>
         )}
       </div>
-      <Row style={{ marginTop: '3rem'}}>
+      <Row style={{ marginTop: '3rem' }}>
         {isStart && (
           <>
             <Col lg={2} />
             <Col lg={6}>
               <MyImage2 src={fileImage} alt="추가한 사진" />
             </Col>
-            {isStart &&
+            {isStart && (
               <Col lg={4}>
                 <AudioRecord
                   setScript={setScript1}
@@ -129,9 +132,15 @@ export function Learn() {
                   setAud1={setAud1}
                   setIsRecord={setIsFirstRecord}
                 />
-                {audioUrl1 && <audio controls src={audioUrl1} controlsList='nodownload'></audio>}
+                {audioUrl1 && (
+                  <audio
+                    controls
+                    src={audioUrl1}
+                    controlsList="nodownload"
+                  ></audio>
+                )}
               </Col>
-            }
+            )}
             {isFirstRecord && (
               <Col lg={4}>
                 <AudioRecord
@@ -142,7 +151,11 @@ export function Learn() {
                   setIsRecord={setIsSecondRecord}
                 />
                 {aud2 && (
-                  <audio controls src={audioUrl2} controlsList="nodownload"></audio>
+                  <audio
+                    controls
+                    src={audioUrl2}
+                    controlsList="nodownload"
+                  ></audio>
                 )}
               </Col>
             )}
@@ -151,32 +164,37 @@ export function Learn() {
               {aud1 && (
                 <>
                   <Col lg={6}>
-                    <textarea value={script1} style={{ width: '100%'}} onChange={onCheck}>
+                    <textarea
+                      value={script1}
+                      style={{ width: '100%' }}
+                      onChange={onCheck}
+                    >
                       {script1}
                     </textarea>
                   </Col>
-                  <Col lg={4}>
-                    Mollu Image
-                  </Col>
+                  <Col lg={4}>Mollu Image</Col>
                 </>
               )}
               {aud2 && (
                 <>
                   <Col lg={6}>
-                    <textarea value={script2} style={{ width: '100%'}} onChange={onCheck}>
+                    <textarea
+                      value={script2}
+                      style={{ width: '100%' }}
+                      onChange={onCheck}
+                    >
                       {script2}
                     </textarea>
                   </Col>
-                  <Col lg={4}>
-                    Mollu Image
-                  </Col>
+                  <Col lg={4}>Mollu Image</Col>
                 </>
               )}
             </Row>
           </>
         )}
       </Row>
-      <div>{isSecondRecord && <MyButton onClick={onSubmit}>다음</MyButton>}</div>
+      {/* 다음 버튼 누르기전에 발음평가 추가해서 score에 저장 */}
+      <div>{isSecondRecord && <MyButton onClick={onScore}>다음</MyButton>}</div>
       <div>
         {isSecondRecord && <MyButton onClick={onSubmit}>전송완료</MyButton>}
       </div>
