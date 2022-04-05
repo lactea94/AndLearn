@@ -12,6 +12,7 @@ export function AudioRecord({ setScript, setAudioUrl1, setAud1, setIsRecord }) {
   const [analyser, setAnalyser] = useState()
   const [audioUrl, setAudioUrl] = useState()
   const [isComplete, setIsComplete] = useState(false);
+  const [tmp, setTmp] = useState('');
 
   const { transcript, resetTranscript, finalTranscript } =
     useSpeechRecognition()
@@ -109,6 +110,23 @@ export function AudioRecord({ setScript, setAudioUrl1, setAud1, setIsRecord }) {
       lastModified: new Date().getTime(),
       type: 'audio/x-m4a',
     })
+
+    function getBase64(file, onLoadCallback) {
+      return new Promise(function(resolve, reject) {
+          var reader = new FileReader();
+          reader.onload = function() { resolve(reader.result); };
+          reader.onerror = reject;
+          reader.readAsDataURL(file);
+      });
+    }
+
+    async function please() {
+      var promise = getBase64(sound);
+      var my_pdf_file_as_base64 = await promise;
+      return my_pdf_file_as_base64
+    }
+
+    console.log(please())
  
     setAud1(sound);
     setIsRecord(true);
