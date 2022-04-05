@@ -7,7 +7,6 @@ import { ProfileStats } from './ProfileStats/ProfileStats';
 import { ProfileArticles } from './ProfileArticles/ProfileArticles';
 import { UserInfoEdit } from './ProfileEdit/UserInfoEdit';
 import { PasswordEdit } from './ProfileEdit/PasswordEdit';
-import { MyButton } from 'styles/Button';
 import { ACCESS_TOKEN } from 'constants';
 import { apiInstance } from 'api';
 import styled from 'styled-components';
