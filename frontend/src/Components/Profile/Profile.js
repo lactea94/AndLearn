@@ -1,12 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { NavLink, Outlet, Route, Routes, useLocation } from 'react-router-dom';
+import { NavLink, Outlet } from 'react-router-dom';
 import { Container, Row, Col } from 'react-bootstrap';
-import { ProfileContents } from './ProfileContents/ProfileContents';
-import { ProfileContentDetail } from './ProfileContents/ProfileContentDetail';
-import { ProfileStats } from './ProfileStats/ProfileStats';
-import { ProfileArticles } from './ProfileArticles/ProfileArticles';
-import { UserInfoEdit } from './ProfileEdit/UserInfoEdit';
-import { PasswordEdit } from './ProfileEdit/PasswordEdit';
 import { ACCESS_TOKEN } from 'constants';
 import { apiInstance } from 'api';
 import * as S from './Style';
