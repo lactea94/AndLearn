@@ -3,6 +3,7 @@ import { ImageUpload } from './ImageUpload.js'
 import { AudioRecord } from './AudioRecord'
 // import { GrammarlyEditor } from './GrammarlyEditor'
 import plusDefault from './plusDefault.png'
+import allu from './allu.png'
 import { apiInstance } from 'api/index'
 import { MyButton } from 'styles/Button.js'
 import { Container, Image, Col, Row } from 'react-bootstrap'
@@ -25,6 +26,22 @@ const MyImage2 = styled(Image)`
     height: 350px;
   } */}
   width: 100%;
+`
+
+const AlluImage = styled(Image)`
+  width:300px;
+  height:300px;
+
+`
+
+export const AIBox = styled.div`
+  text-align: left;
+  border: 1px solid gray;
+  width: 100%;
+  padding: 5px;
+  margin-left: 12px;
+  margin-right: 24px;
+  border-radius: 6px;
 `
 
 export function Learn() {
@@ -167,13 +184,13 @@ export function Learn() {
               <Col lg={2} />
               {aud1 && (
                 <>
-                  <Col lg={6}>
-                    <textarea value={script1} style={{ width: '100%'}} onChange={onCheck}>
+                  <Col lg={6} style={{ marginTop: '2rem'}}>
+                    <textarea value={script1} style={{  width: '100%'}} onChange={onCheck}>
                       {script1}
                     </textarea>
                   </Col>
                   <Col lg={4}>
-                    Mollu Image
+                    <AlluImage src={allu} alt="추가한 사진" />
                   </Col>
                 </>
               )}
