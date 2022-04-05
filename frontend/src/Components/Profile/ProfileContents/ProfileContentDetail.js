@@ -32,7 +32,7 @@ export function ProfileContentDetail() {
                 alt="profile_image" 
                 rounded 
                 fluid 
-                style={{ width: '100%', marginBottom: '10px' }}
+                style={{ width: '100%', marginBottom: '10px', overflow: 'hidden', objectFit: 'cover' }}
               />
             </Col>
             <Col lg={7} className="d-flex flex-column align-items-start row text-start">

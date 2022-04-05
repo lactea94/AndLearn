@@ -22,10 +22,10 @@ export const navLinkStyle = ({ isActive }) => (
     color: "white",
     fontSize: "1rem",
     fontFamily: "Maru Buri",
-    "padding-right": "0.8rem",
-    "padding-left": "0.8rem",
-    "padding-top": "0.53rem",
-    "padding-bottom": "0.53rem",
-    "border-radius": "0.31rem"
+    paddingRight: "0.8rem",
+    paddingLeft: "0.8rem",
+    paddingTop: "0.53rem",
+    paddingBottom: "0.53rem",
+    borderRadius: "0.31rem"
   }
 )

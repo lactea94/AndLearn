@@ -3,6 +3,8 @@ import { NavLink, useParams } from "react-router-dom"
 import styled from "styled-components";
 
 const MyImage = styled(Image)`
+  overflow: hidden;
+  object-fit: cover;
   @media (max-width: 1200px) and (min-width: 768px) {
     width: 240px;
     height: 240px;
