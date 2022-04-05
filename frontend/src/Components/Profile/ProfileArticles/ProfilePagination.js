@@ -11,8 +11,10 @@ import {
   Form,
   OverlayTrigger,
   Popover,
+  Row,
   Tooltip
 } from "react-bootstrap";
+import { Select } from "styles/Select";
 
 export default function Pagination({ total, limit, page, setPage, setLimit }) {
   const numPages = Math.ceil(total / limit);
@@ -86,7 +88,7 @@ export default function Pagination({ total, limit, page, setPage, setLimit }) {
     )};
 
   return (
-    <>
+    <Row className="justify-content-center">
       <Col>
         <S.PageContainer>
           <OverlayTrigger
@@ -96,7 +98,7 @@ export default function Pagination({ total, limit, page, setPage, setLimit }) {
               </Tooltip>
             }
           >
-            <S.PageLimit
+            <Select
               type="number"
               value={limit}
               style={{width:'5rem'}}
@@ -109,11 +111,9 @@ export default function Pagination({ total, limit, page, setPage, setLimit }) {
               <option value="10">10</option>
               <option value="15">15</option>
               <option value="20">20</option>
-            </S.PageLimit>
+            </Select>
           </OverlayTrigger>
         </S.PageContainer>
-      </Col>
-      <Col xs={12} md={6}>
         <S.PageContainer>
           <S.PageItem onClick={() => setPage(1)} disabled={page === 1}>
             <ChevronDoubleLeft/>
@@ -130,6 +130,6 @@ export default function Pagination({ total, limit, page, setPage, setLimit }) {
           </S.PageItem>
         </S.PageContainer>
       </Col>
-    </>
+    </Row>
   )
 };
