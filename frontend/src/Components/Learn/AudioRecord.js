@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react'
+import { Col, Row } from 'react-bootstrap'
 import SpeechRecognition, {
   useSpeechRecognition,
 } from 'react-speech-recognition'
@@ -12,6 +13,7 @@ export function AudioRecord({ setScript, setAudioUrl1, setAud1, setIsRecord }) {
   const [analyser, setAnalyser] = useState()
   const [audioUrl, setAudioUrl] = useState()
   const [isComplete, setIsComplete] = useState(false);
+  const [tmp, setTmp] = useState('');
 
   const { transcript, resetTranscript, finalTranscript } =
     useSpeechRecognition()
@@ -109,6 +111,23 @@ export function AudioRecord({ setScript, setAudioUrl1, setAud1, setIsRecord }) {
       lastModified: new Date().getTime(),
       type: 'audio/x-m4a',
     })
+
+    function getBase64(file, onLoadCallback) {
+      return new Promise(function(resolve, reject) {
+          var reader = new FileReader();
+          reader.onload = function() { resolve(reader.result); };
+          reader.onerror = reject;
+          reader.readAsDataURL(file);
+      });
+    }
+
+    async function please() {
+      var promise = getBase64(sound);
+      var my_pdf_file_as_base64 = await promise;
+      return my_pdf_file_as_base64
+    }
+
+    console.log(please())
  
     setAud1(sound);
     setIsRecord(true);
@@ -116,8 +135,7 @@ export function AudioRecord({ setScript, setAudioUrl1, setAud1, setIsRecord }) {
   }, [audioUrl])
 
   return (
-    <>
-      <>
+    <Col style={{margin: '1rem'}}>
         {onRec ? (
           isComplete ? 
             <MyButton onClick={onRecAudio} style={{ width: '7rem' }}>재녹음</MyButton>
@@ -127,14 +145,8 @@ export function AudioRecord({ setScript, setAudioUrl1, setAud1, setIsRecord }) {
           finalTranscript && <MyButton onClick={() => {offRecAudio();}} style={{ width: '7rem' }}>정지</MyButton>
         )}
         {finalTranscript && isComplete && (
-          <MyButton onClick={onSubmitAudioFile} style={{ width: '7rem', marginLeft: '2rem' }}>다음</MyButton>
+          <MyButton onClick={onSubmitAudioFile} style={{ width: '7rem', marginLeft: '2rem' }}>녹음 확인</MyButton>
         )}
-      </>
-
-      {/* 실시간 스크립트 */}
-      {/* <p>{transcript}</p> */}
-      {/* 최종 스크립트 */}
-      {/* {finalTranscript} */}
-    </>
+    </Col>
   )
 }
