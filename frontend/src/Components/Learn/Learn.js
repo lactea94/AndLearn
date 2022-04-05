@@ -133,7 +133,7 @@ export function Learn() {
       <Row style={{ marginTop: '3rem'}}>
         {isStart && (
           <>
-          <Row>
+            <Row>
               <Col lg={2} />
               <Col lg={6}>
                 <MyImage2 src={fileImage} alt="추가한 사진" />
