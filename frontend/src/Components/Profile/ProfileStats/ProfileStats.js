@@ -179,14 +179,18 @@ export function ProfileStats() {
     }
   }, [myLearnCounts, myLearns])
 
+  const [recentLearn, setRecentLearn] = useState([]);
   const [score, setScore] = useState([]);
   const [date, setDate] = useState([]);
 
-  console.log(myLearns)
   useEffect(() => {
-    setScore(myLearns.map((learn => learn.score)))
-    setDate(myLearns.map((learn => learn.createdDate.slice(2, 10))))
+    setRecentLearn(myLearns.slice(-11, -1))
   }, [myLearns])
+
+  useEffect(() => {
+    setScore(recentLearn.map((learn => learn.score)))
+    setDate(recentLearn.map((learn => learn.createdDate.slice(2, 10))))
+  }, [recentLearn])
 
   return(
     <Container>
@@ -208,23 +212,16 @@ export function ProfileStats() {
           <S.StatsText className="mt-0">{streakPeriod}</S.StatsText>
         </Col>
       </S.StatsRow>
-      <Row
-        style={{
-          justifyContent: "center"
-        }}
-      >
-        <Col lg={5}
-          style={{
-            justifyContent: "center"
-          }}
-        >
+      <Row>
+        <Col>
           <ApexCharts 
             series={[{
-              name: "날짜별 점수",
+              name: "점수",
               data: score
             }]}
             options={{
               chart: {
+                type: 'line',
                 zoom: {
                   enabled: false
                 }
@@ -236,7 +233,7 @@ export function ProfileStats() {
                 curve: 'straight'
               },
               title: {
-                text: '점수',
+                text: '최근 점수 추이',
                 align: 'left'
               },
               grid: {
@@ -252,9 +249,6 @@ export function ProfileStats() {
                 '#FFDD74'
               ]
             }}
-            type='line'
-            width={500}
-            height={300}
           />
         </Col>
       </Row>
