@@ -33,8 +33,6 @@ export function Profile() {
   const api = apiInstance();
 
   useEffect(() => {
-  }, [userId, userNickname, userImgUrl])
-  useEffect(() => {
     if (token) {
       api.get('users/me')
         .then(res => {
@@ -46,7 +44,7 @@ export function Profile() {
     } else {
       window.location.replace(`/`)
     }
-  }, [])
+  }, [api, token])
 
   useEffect(() => {
     if (userImgUrl) {

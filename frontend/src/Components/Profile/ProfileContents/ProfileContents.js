@@ -1,5 +1,4 @@
 import { Col, Row } from 'react-bootstrap';
-import { useParams } from 'react-router-dom';
 import { ProfileContent } from './ProfileContent';
 import styled from "styled-components";
 import { useState, useEffect } from "react"
@@ -72,7 +71,7 @@ export function ProfileContents() {
         setContents(res.data)
         console.log(new Date().getFullYear(), new Date().getMonth()+1, new Date().getDate() )
       })
-  }, [])
+  }, [api])
 
   // 처음 contents 목록 받아올 때, 모든 contents 값을 default로 설정
   useEffect(() => {
