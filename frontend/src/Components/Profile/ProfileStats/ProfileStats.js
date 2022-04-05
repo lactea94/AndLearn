@@ -184,13 +184,94 @@ export function ProfileStats() {
   const [date, setDate] = useState([]);
 
   useEffect(() => {
-    setRecentLearn(myLearns.slice(-11, -1))
+    setRecentLearn(myLearns.slice(-10))
+  }, [myLearns])
+
+  useEffect(() => {
+    console.log(myLearns)
   }, [myLearns])
 
   useEffect(() => {
     setScore(recentLearn.map((learn => learn.score)))
     setDate(recentLearn.map((learn => learn.createdDate.slice(2, 10))))
   }, [recentLearn])
+
+  const lineChartSeries = [{
+    name: "점수",
+    data: score
+  }]
+  const lineChartOptions = {
+    chart: {
+      zoom: {
+        enabled: false
+      }
+    },
+    dataLabels: {
+      enabled: false
+    },
+    stroke: {
+      curve: 'straight'
+    },
+    title: {
+      text: '최근 점수 추이',
+      align: 'left'
+    },
+    grid: {
+      row: {
+        colors: ['#F3F3f3F3', 'transparent'],
+        opacity: 0.5
+      },
+    },
+    xaxis: {
+      categories: date,
+    },
+    colors: [
+      '#FFDD74'
+    ]
+  }
+
+  const columnChartSeries = [{
+    name: '누적',
+    data: score
+  }]
+
+  const columnChartOptions = {
+    plotOptions: {
+      bar: {
+        horizontal: true,
+        dataLabels: {
+          position: 'top',
+        },
+      }
+    },
+    dataLabels: {
+      enabled: true,
+      offsetX: -6,
+      style: {
+        fontSize: '12px',
+        colors: ['#fff']
+      }
+    },
+    stroke: {
+      show: true,
+      width: 1,
+      colors: ['#fff']
+    },
+    title: {
+      text: '월별 학습 횟수',
+      align: 'left'
+    },
+    tooltip: {
+      shared: true,
+      intersect: false
+    },
+    xaxis: {
+      categories: date,
+    },
+    colors: [
+      '#FFDD74'
+    ]
+  }
 
   return(
     <Container>
@@ -212,45 +293,26 @@ export function ProfileStats() {
           <S.StatsText className="mt-0">{streakPeriod}</S.StatsText>
         </Col>
       </S.StatsRow>
-      <Row>
-        <Col>
-          <ApexCharts 
-            series={[{
-              name: "점수",
-              data: score
-            }]}
-            options={{
-              chart: {
-                type: 'line',
-                zoom: {
-                  enabled: false
-                }
-              },
-              dataLabels: {
-                enabled: false
-              },
-              stroke: {
-                curve: 'straight'
-              },
-              title: {
-                text: '최근 점수 추이',
-                align: 'left'
-              },
-              grid: {
-                row: {
-                  colors: ['#F3F3f3F3', 'transparent'],
-                  opacity: 0.5
-                },
-              },
-              xaxis: {
-                categories: date,
-              },
-              colors: [
-                '#FFDD74'
-              ]
-            }}
-          />
-        </Col>
+      <Row
+        style={{
+          margin: '2rem'
+        }}
+      >
+        <ApexCharts 
+          series={lineChartSeries}
+          options={lineChartOptions}
+        />
+      </Row>
+      <Row
+        style={{
+          margin: '2rem'
+        }}
+      >
+        <ApexCharts 
+          type="bar"
+          series={columnChartSeries}
+          options={columnChartOptions}
+        />
       </Row>
     </Container>
   )
