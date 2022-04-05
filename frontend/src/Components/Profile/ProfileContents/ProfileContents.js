@@ -17,10 +17,12 @@ const Remote = styled.div`
   cursor: move;
   background-color: white;
   width: 10rem;
-  height: 20rem;
+  height: 13rem;
   border: 1px solid black;
   border-radius: 6px;
   font-size: 15px;
+  opacity: 0.3;
+  &:hover { opacity: 0.87 }
 `
 
 const MyDatePicker = styled(ReactDatePicker)`
@@ -68,6 +70,7 @@ export function ProfileContents() {
     api.get("/learn/pictures")
       .then(res => {
         setContents(res.data)
+        console.log(new Date().getFullYear(), new Date().getMonth()+1, new Date().getDate() )
       })
   }, [])
 
@@ -78,7 +81,7 @@ export function ProfileContents() {
 
   // 버튼 클릭시 기간설정을 바탕으로 selectedContents 업데이트
   const clickSearchButton = () => {
-    const startMSec = startDate.getTime();
+    const startMSec = startDate.getTime() - startDate.getHours()*3600000 - startDate.getMinutes()*60000 - startDate.getSeconds()*1000 - startDate.getMilliseconds();
     const endMSec = endDate.getTime();
 
     const result = contents.filter(content => 
@@ -86,6 +89,7 @@ export function ProfileContents() {
     )
 
     setSelectedContents(result);
+    console.log(startMSec)
   }
 
   // Remote 관련 함수
