@@ -7,3 +7,25 @@ export const UserImg = styled.img`
   overflow: hidden;
   object-fit: cover;
 `
+
+export const BtnAction = styled.button`
+  border: none;
+  background-color: #58C063;
+  &:hover {
+    background-color: #915450;
+  }
+`
+export const navLinkStyle = ({ isActive }) => (
+  {
+    textDecoration: "none",
+    backgroundColor: isActive ? "#FFDD74" : "#58C063",
+    color: "white",
+    fontSize: "1rem",
+    fontFamily: "Maru Buri",
+    paddingRight: "0.8rem",
+    paddingLeft: "0.8rem",
+    paddingTop: "0.53rem",
+    paddingBottom: "0.53rem",
+    borderRadius: "0.31rem"
+  }
+)
