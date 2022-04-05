@@ -96,7 +96,7 @@ public class GoogleController {
                 if (tmpUser.isEmpty()) { // 존재하지 않은 email이면 회원가입을 시켜줘야 함
                     System.out.println(ResponseEntity.ok().body(userInfoDto));
 //                    return ResponseEntity.ok().body("ok");
-                    URI redirectUri = new URI("http://localhost:8082/api/google/register?email=${}");
+                    URI redirectUri = new URI("https://j6c201.p.ssafy.io/signup");
                     HttpHeaders httpHeaders = new HttpHeaders();
                     httpHeaders.setLocation(redirectUri);
                     return new ResponseEntity<>(httpHeaders, HttpStatus.SEE_OTHER);
