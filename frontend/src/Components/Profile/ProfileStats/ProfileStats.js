@@ -307,6 +307,7 @@ export function ProfileStats() {
         <ApexCharts 
           series={lineChartSeries}
           options={lineChartOptions}
+          height={300}
         />
       </Row>
       <Row
@@ -318,6 +319,7 @@ export function ProfileStats() {
           type="bar"
           series={columnChartSeries}
           options={columnChartOptions}
+          height={300}
         />
       </Row>
     </Container>
