@@ -1,3 +1,5 @@
+import { Col } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export const UserImg = styled.img`
@@ -15,6 +17,26 @@ export const BtnAction = styled.button`
     background-color: #915450;
   }
 `
+
+export const UserId = styled(Col)`
+  @media ( min-width: 768px ) {
+    font-size: 1.5rem;
+  }
+  @media ( min-width: 1280px ) {
+    font-size: 1.8rem;
+  }
+`
+
+export const EditButton = styled(Link)`
+  color: black;
+  font-size: 29px;
+
+
+  &:hover {
+    color: #FFDD74;
+  }
+`
+
 export const navLinkStyle = ({ isActive }) => (
   {
     textDecoration: "none",
