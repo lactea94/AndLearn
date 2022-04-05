@@ -21,38 +21,33 @@ export function Home() {
   return (
     <S.Contents>
       <br/>
-      <S.ho1>오늘의 인공지능은</S.ho1>
-      <br/>
+      <S.HeaderText>재밌는 영어 공부, AI랑 같이 해요!</S.HeaderText>
       <S.Header>
         <Col>
           <S.Image src="/images/logo.svg"/>
         </Col>
       </S.Header>
+      <S.HeaderInfo>▼ 밑으로 내려보세요!</S.HeaderInfo>
       <S.Body>
         <br/>
-        <br/>
-        <br/>
         <S.Content>
-          <Col xs={5}>
-
-          <h1>AndLearn 서비스란??</h1>
-          </Col>
-          <Col xs={7}></Col>
-          <Col xs={8}>영어가 낯선사람을 위한 언어습득 서비스 입니다.</Col>
-          <Col xs={4}></Col>
-          <Col xs={12}>외국어를 습득에 있어 가장 효과적인 방법들을 바탕으로 서비스를 제작하였습니다. </Col>
-          <Col xs={12}>아래의 과정을 통해 언어 습득의 3가지 관점에 따라 언어를 습득하는 방법을 제공합니다.</Col>
-          <S.Image src="/images/example.jpg"/>
+          <S.ServiceTitle><span style={{ color: '#58C063' }}>AndLearn</span>이란??</S.ServiceTitle>
+          <S.ServiceText>영어가 낯선사람을 위한 언어학습 서비스 입니다.</S.ServiceText>
+          <S.ServiceText>외국어를 학습에 있어 가장 효과적인 방법들을 바탕으로 서비스를 제작하였습니다. </S.ServiceText>
+          <S.ServiceText>아래의 과정을 통해 언어 습득의 3가지 관점에 따라 언어를 학습하는 방법을 제공합니다.</S.ServiceText>
+          <S.ServiceEmphasizeText><span style={{ color: '#58C063' }}>그럼 저희 서비스 한번 보실래요?</span></S.ServiceEmphasizeText>
         </S.Content>
+        <S.Image src="/images/example.jpg"/>
         <S.Content>
           <Col xs={8}>
-            <h1>어떻게 묘사하실 건가요??</h1><br/>
-            이 사진을 보고 바로 영어로 말할 수 있으셨나요?<br/>
-            <h2>인지적 관점에 따르면 해당 활동을 통해</h2>
-          <Col xs={12}>이미지를 보고 자신의 언어로 변환하는 과정을 통해 자연스럽게 언어를 습득하게 됩니다!!</Col>
+            <S.ContentTitle>어떻게 묘사하실 건가요??</S.ContentTitle>
+            <br/>
+            <S.ContentText>이 사진을 보고 바로 영어로 말할 수 있으셨나요?</S.ContentText>
+            <S.ContentEmphasizeText><span style={{ color: '#58C063' }}>인지적 관점에 따르면</span></S.ContentEmphasizeText>
+            <S.ContentText>이미지를 보고 표현하는 과정을 통해 자연스럽게 언어를 학습하게 됩니다!</S.ContentText>
           </Col>
           <Col xs={4}>
-          <S.Image src="/images/allu-1.svg"/>
+            <S.Image src="/images/allu-1.svg"/>
           </Col>
         </S.Content>
         <S.Content>
@@ -62,15 +57,15 @@ export function Home() {
             <S.Image src="/images/allu-2.svg"/>
           </Col>
           <Col xs={8}>
-            추가된 단어들을 넣어 새로운 묘사를 진행해 보세요.<br/>
-            새 언어에 노출이 되고 이미 알고있는 사전 지식 안으로 통합하는 과정으로 언어를 내것으로 만들 수 있어요<br/>
-            새로운 단어를 내것으로 만드는 구성적 관점과 반복과 모방을 통한 행동적 관점의 학습 방법을 제공합니다.
+            <S.ContentTitle>AI가 보여주는 단어들로 새 문장을 만들어봐요!</S.ContentTitle>
+            <S.ContentEmphasizeText><span style={{ color: '#58C063' }}>새로운 단어를 내것으로 만드는 구성적 관점</span>과</S.ContentEmphasizeText> 
+            <S.ContentEmphasizeText><span style={{ color: '#58C063' }}>반복과 모방을 통한 행동적 관점</span>의 학습 방법을 제공합니다.</S.ContentEmphasizeText> 
           </Col>
-          <Col>
-            AndLearn은 영어가 낯선 분들을 위한 서비스 입니다.<br/>
-            사진을 보고 자유롭게 연습해 보세요.<br/>
-            </Col>
         </S.Content>
+        <Col>
+            <S.RecommandEmphasizeText><span style={{ color: '#58C063' }}>AndLearn</span>은 영어가 낯선 분들을 위한 서비스 입니다.</S.RecommandEmphasizeText>
+            <S.RecommandEmphasizeText>사진을 보고 자유롭게 연습해 보세요.</S.RecommandEmphasizeText>
+        </Col>
         <S.Content>
           <Carousel>
             {Carousels}
@@ -79,13 +74,13 @@ export function Home() {
         <S.Content>
           { token ? 
           <Link to='learn'>
-            <MyButton>
+            <MyButton style={{ padding : "1.5rem", fontSize: "2rem"}}>
               시도해 보시겠어요?
             </MyButton>
           </Link>
           :
           <Link to='login'>
-            <MyButton>
+            <MyButton style={{ padding : "3rem", fontSize: "2rem" }}>
               시도해 보시겠어요?
             </MyButton>
           </Link>
