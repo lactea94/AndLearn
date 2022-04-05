@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { djangoInstance } from 'api/index'
 import { MyButton } from 'styles/Button'
+import { Col } from 'react-bootstrap'
 //import Dropzone from 'react-dropzone'
 
 export function ImageUpload({ setFileImage, setKeyDjango, setWords, setIsStart }) {
@@ -36,12 +37,12 @@ export function ImageUpload({ setFileImage, setKeyDjango, setWords, setIsStart }
   }
 
   return (
-    <div style={{ marginTop: '1.5rem' }}>
+    <Col>
       {image ? 
-        <MyButton onClick={onImageUpload}>시작!</MyButton>
+        <MyButton style={{margin: "1rem"}} onClick={onImageUpload}>시작!</MyButton>
       : 
         <>
-          <MyButton style={{ width: '7rem', marginRight: '6rem' }}>
+          <MyButton style={{margin: "1rem"}}>
             {/* <Dropzone onDrop={onLoad}>
               {({ getRootProps, getInputProps }) => (
                 <section>
@@ -69,9 +70,9 @@ export function ImageUpload({ setFileImage, setKeyDjango, setWords, setIsStart }
               사진 업로드
             </label>
           </MyButton>
-          <MyButton style={{ width: '7rem' }}>랜덤사진</MyButton>
+          <MyButton style={{margin: "1rem"}}>랜덤사진</MyButton>
         </>
       }
-    </div>
+    </Col>
   )
 }

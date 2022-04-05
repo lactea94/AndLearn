@@ -26,7 +26,7 @@ const MyImage2 = styled(Image)`
     width: 500px;
     height: 350px;
   } */}
-  width: 80%;
+  width: 100%;
 `
 
 const AlluImage = styled(Image)`
@@ -51,16 +51,12 @@ const Text3 = styled.div`
 `
 
 const AIBox = styled.div`
-  margin-top: 20px;
+  margin-top: 1rem;
   text-align: center;
   border: 1px solid gray;
   width: 100%;
-  padding: 5px;
-  margin-left: 12px;
-  margin-right: 24px;
-  margin-bottom: 30px;
-  border-radius: 6px;
-  padding-top:13px;
+  padding: 1rem;
+  border-radius: 1rem;
 `
 
 export function Learn() {
@@ -72,7 +68,6 @@ export function Learn() {
   const [isStart, setIsStart] = useState(false);
   const [isFirstRecord, setIsFirstRecord] = useState(false);
   const [isSecondRecord, setIsSecondRecord] = useState(false);
-  const [isSubmit, setIsSubmit] = useState(false);
 
   const [keyDjango, setKeyDjango] = useState(2)
   const [words, setWords] = useState([])
@@ -100,9 +95,14 @@ export function Learn() {
     setStage(stage + 1)
   }
 
-  function onCheck(e) {
+  function onCheck1(e) {
     console.log(e.target.value)
     setScript1(e.target.value)
+  }
+
+  function onCheck2(e) {
+    console.log(e.target.value)
+    setScript2(e.target.value)
   }
 
   function onSubmit() {
@@ -162,122 +162,97 @@ export function Learn() {
         },
       })
       .then((res) => {
-        setIsSubmit(true)
         console.log(res)
       })
+      .then(setTimeout(() => {
+        navigate('/profile')
+      }, 500))
       .catch((error) => {
         console.log(error)
       })
   }
 
-  const onComplete = () => {
-    navigate('/profile/content')
-  }
-
   return (
     <Container>
-      <div id="before-after-upload-image">
-        {!isStart && (
-          <>
-            <MyImage src={fileImage} alt="추가한 사진" />
+        {!isStart ? (
+          <Row>
+            <Col xs={12}>
+              <MyImage src={fileImage} alt="추가한 사진" />
+            </Col>
             <ImageUpload
               setFileImage={setFileImage}
               setKeyDjango={setKeyDjango}
               setWords={setWords}
               setIsStart={setIsStart}
             />
-          </>
-        )}
-      </div>
-      <Row style={{ marginTop: '3rem'}}>
-        {isStart && (
-          <>
-            <Row>
-              <Col lg={2} />
-              <Col lg={6}>
-                <MyImage2 src={fileImage} alt="추가한 사진" />
-              </Col>
-              
-              {/* Record 부분 */}
-              <Col lg={4}>
-                {isStart &&
-                  <span id="first-record">
-                    {audioUrl1 && 
-                      <>
-                        <Text1>1차 녹음</Text1>
-                        <audio controls src={audioUrl1} controlsList='nodownload'></audio>
-                      </>
-                    }
-                    {!isFirstRecord && 
-                      <AudioRecord
-                        setScript={setScript1}
-                        setAudioUrl1={setAudioUrl1}
-                        setAud1={setAud1}
-                        setIsRecord={setIsFirstRecord}
-                      />
-                    }
-                  </span>
-                }
-                {isFirstRecord && 
-                  <span id="second-record">
-                    {audioUrl2 && (
-                      <>
-                        <Text2>2차 녹음</Text2>
-                        <audio controls src={audioUrl2} controlsList="nodownload"></audio>
-                      </>
-                    )}
-                    {!isSecondRecord &&
-                      <AudioRecord
-                        setScript={setScript2}
-                        setAudioUrl1={setAudioUrl2}
-                        setAud1={setAud2}
-                        setIsRecord={setIsSecondRecord}
-                      />
-                    }
-                  </span>
-                }
-                 <Text3>AI가 추천한 단어</Text3>
+          </Row>
+        ) : (
+          <Row className='justify-content-center'>
+            <Col xs={12}>
+              <MyImage2 src={fileImage} alt="추가한 사진" />
+            </Col>
+            {/* Record 부분 */}
+            <Col>
+              {isStart &&
+                <span id="first-record">
+                  {!isFirstRecord && 
+                    <AudioRecord
+                      setScript={setScript1}
+                      setAudioUrl1={setAudioUrl1}
+                      setAud1={setAud1}
+                      setIsRecord={setIsFirstRecord}
+                    />
+                  }
+                  {audioUrl1 && 
+                    <>
+                      <Text1>1차 녹음</Text1>
+                      <audio controls src={audioUrl1} controlsList='nodownload'></audio>
+                      {aud1 && (
+                        <textarea value={script1} style={{ width: '100%' }} onChange={onCheck1}>
+                          {script1}
+                        </textarea>
+                      )}
+                    </>
+                  }
+                </span>
+              }
+              {isFirstRecord && 
+                <span id="second-record">
+                  {!isSecondRecord &&
+                    <AudioRecord
+                      setScript={setScript2}
+                      setAudioUrl1={setAudioUrl2}
+                      setAud1={setAud2}
+                      setIsRecord={setIsSecondRecord}
+                    />
+                  }
+                  {audioUrl2 && (
+                    <>
+                      <Text2>2차 녹음</Text2>
+                      <audio controls src={audioUrl2} controlsList="nodownload"></audio>
+                      {aud2 && (
+                        <textarea value={script2} style={{ width: '100%' }} onChange={onCheck2}>
+                          {script2}
+                        </textarea>
+                      )}
+                    </>
+                  )}
+                </span>
+              }
+              { (audioUrl1 && words.length > 0) &&
                 <AIBox> 
                   {recommendWord}
                 </AIBox>
-              </Col>
-            </Row>
+              }
+            </Col>
             {/* Answer Box 부분 */}
-            <Row id="answer-box">
-              <Col lg={2} />
-              {aud1 && (
-                <>
-                  <Col lg={6} style={{ marginTop: '2rem'}}>
-                    <p>내가 말한 문장</p>
-                    <textarea value={script1} style={{  width: '100%'}} onChange={onCheck}>
-                      {script1}
-                    </textarea>
-                  </Col>
-                  <Col lg={4}>
-                  <AlluImage src={allu} alt="추가한 사진" />
-                  </Col>
-                </>
-              )}
-              <Col lg={2} />
-              {aud2 && (
-                <>
-                  <Col lg={6}>
-                    <textarea value={script2} style={{ width: '100%'}} onChange={onCheck}>
-                      {script2}
-                    </textarea>
-                  </Col>
-                  <Col lg={4}>
-                  </Col>
-                </>
-              )}
-            </Row>
-          </>
+            <Col className="justify-content-center">
+              <AlluImage src={allu} alt="추가한 사진" />
+            </Col>
+          </Row>
         )}
-      </Row>
-      <div>{isSecondRecord && !isSubmit && <MyButton onClick={onSubmit}>전송</MyButton>}</div>
-      <div>
-        {isSubmit && <MyButton onClick={() => {onComplete()}}>전송완료</MyButton>}
-      </div>
+
+      {isSecondRecord && <MyButton onClick={onSubmit}>완료</MyButton>}
     </Container>
   )
 }
