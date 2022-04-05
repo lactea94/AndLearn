@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
-import { Col } from "react-bootstrap";
-import { useParams } from "react-router-dom"
+import { Col, Container, Row } from "react-bootstrap";
 import * as S from "./ProfileStatsStyle";
 import { apiInstance } from "api";
+import ApexCharts from "react-apexcharts";
 
 export function ProfileStats() {
-  const { userId } = useParams();
   const [myLearns, setMyLearns] = useState([]);
   const [myLearnCounts, setMyLearnCounts] = useState(Array.from({length: 368}, () => 0));
   const [dailyBoxs, setDailyBoxs] = useState();
@@ -14,11 +13,10 @@ export function ProfileStats() {
   const [period, setPeriod] = useState('');
   const [streakDays, setStreakDays] = useState(0);
   const [streakPeriod, setStreakPeriod] = useState('');
-  const api = apiInstance();
 
   // 러닝 목록
   useEffect(() => {
-    api.get("/learn/statistics")
+    apiInstance().get("/learn/statistics")
       .then(res => {
         setMyLearns(res.data)
       })
@@ -38,7 +36,7 @@ export function ProfileStats() {
         myLearnCounts[diffDays] += 1;
       }      
     }
-  }, [myLearns])
+  }, [myLearnCounts, myLearns])
 
   const bgColor = (learnings) => {
     const backgroundColors = [
@@ -116,7 +114,7 @@ export function ProfileStats() {
     }
 
     setDailyBoxs(myStats());
-  }, [myLearns])
+  }, [myLearnCounts, myLearns])
 
   // 총 학습량 계산
   const totalLearnNum = () => {
@@ -143,7 +141,7 @@ export function ProfileStats() {
     };
 
     setPeriod(yearLearnPeriod());
-  }, [])
+  }, [myLastDate, myNowDate])
 
   // 최근 연속 학습일 계산
   useEffect(() => {
@@ -179,10 +177,19 @@ export function ProfileStats() {
       setStreakDays(days);
       setStreakPeriod(result)
     }
+  }, [myLearnCounts, myLearns])
+
+  const [score, setScore] = useState([]);
+  const [date, setDate] = useState([]);
+
+  console.log(myLearns)
+  useEffect(() => {
+    setScore(myLearns.map((learn => learn.score)))
+    setDate(myLearns.map((learn => learn.createdDate.slice(2, 10))))
   }, [myLearns])
 
   return(
-    <div style={{ minHeight:'100vh'}}>
+    <Container>
       <S.CalendarBox className="d-flex flex-column justify-content-end align-items-end overflow-hidden mx-auto pt-2">
         <S.Calendar className="d-flex flex-column flex-wrap overflow-hidden ps-4 pt-3">
           {dailyBoxs}
@@ -201,6 +208,56 @@ export function ProfileStats() {
           <S.StatsText className="mt-0">{streakPeriod}</S.StatsText>
         </Col>
       </S.StatsRow>
-    </div>
+      <Row
+        style={{
+          justifyContent: "center"
+        }}
+      >
+        <Col lg={5}
+          style={{
+            justifyContent: "center"
+          }}
+        >
+          <ApexCharts 
+            series={[{
+              name: "날짜별 점수",
+              data: score
+            }]}
+            options={{
+              chart: {
+                zoom: {
+                  enabled: false
+                }
+              },
+              dataLabels: {
+                enabled: false
+              },
+              stroke: {
+                curve: 'straight'
+              },
+              title: {
+                text: '점수',
+                align: 'left'
+              },
+              grid: {
+                row: {
+                  colors: ['#F3F3f3F3', 'transparent'],
+                  opacity: 0.5
+                },
+              },
+              xaxis: {
+                categories: date,
+              },
+              colors: [
+                '#FFDD74'
+              ]
+            }}
+            type='line'
+            width={500}
+            height={300}
+          />
+        </Col>
+      </Row>
+    </Container>
   )
 }
