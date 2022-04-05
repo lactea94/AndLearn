@@ -36,7 +36,6 @@ export function ProfileContents() {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [isRemoteOn, setIsRemoteOn] = useState(true);
-  const api = apiInstance();
 
   function range(start, end) {
     var arr = [];
@@ -66,12 +65,11 @@ export function ProfileContents() {
 
   // 전체 Contents 목록 불러오기 (현재 임시 값)
   useEffect(() => {
-    api.get("/learn/pictures")
+    apiInstance().get("/learn/pictures")
       .then(res => {
         setContents(res.data)
-        console.log(new Date().getFullYear(), new Date().getMonth()+1, new Date().getDate() )
       })
-  }, [api])
+  }, [])
 
   // 처음 contents 목록 받아올 때, 모든 contents 값을 default로 설정
   useEffect(() => {
