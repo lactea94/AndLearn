@@ -11,13 +11,15 @@ export function AudioRecord({ setScript, setAudioUrl1, setAud1, setIsRecord }) {
   const [source, setSource] = useState()
   const [analyser, setAnalyser] = useState()
   const [audioUrl, setAudioUrl] = useState()
-  const [audio1, setAudio1] = useState()
-  const [hidden, setHidden] = useState(false)
+  const [isComplete, setIsComplete] = useState(false);
 
   const { transcript, resetTranscript, finalTranscript } =
     useSpeechRecognition()
 
+  // 사용자가 음성 녹음을 시작했을 때
   const onRecAudio = () => {
+    setIsComplete(false)
+    setOnRec(false)
     // 음원정보를 담은 노드를 생성하거나 음원을 실행또는 디코딩 시키는 일을 한다
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)()
     // 자바스크립트를 통해 음원의 진행상태에 직접접근에 사용된다.
@@ -68,10 +70,13 @@ export function AudioRecord({ setScript, setAudioUrl1, setAud1, setIsRecord }) {
 
   // 사용자가 음성 녹음을 중지했을 때
   const offRecAudio = () => {
+    setIsComplete(true);
+    setOnRec(true)
     // dataavailable 이벤트로 Blob 데이터에 대한 응답을 받을 수 있음
     SpeechRecognition.stopListening()
 
     media.ondataavailable = function (e) {
+      setAudioUrl1(URL.createObjectURL(e.data))
       setAudioUrl(e.data)
       setOnRec(true)
     }
@@ -90,15 +95,13 @@ export function AudioRecord({ setScript, setAudioUrl1, setAud1, setIsRecord }) {
   }
 
   const onSubmitAudioFile = useCallback(() => {
-    if (finalTranscript) {
-      setHidden(true)
-      // next()
-    } else {
-      alert('녹음을 완료해주세요!.')
-    }
+    // if (finalTranscript) {
+    // } else {
+    //   alert('녹음을 완료해주세요!.')
+    // }
+
     if (audioUrl) {
       // 출력된 링크에서 녹음된아이포트폴리오
-      setAudio1(URL.createObjectURL(audioUrl))
       setAudioUrl1(URL.createObjectURL(audioUrl))
     }
     // File 생성자를 사용해 파일로 변환
@@ -107,24 +110,26 @@ export function AudioRecord({ setScript, setAudioUrl1, setAud1, setIsRecord }) {
       type: 'audio/x-m4a',
     })
  
-    setAud1(sound)
-    setIsRecord(true)
+    setAud1(sound);
+    setIsRecord(true);
+    setIsComplete(false);
   }, [audioUrl])
 
   return (
     <>
-      {/* {!hidden && ( */}
-        <>
-          {onRec ? (
+      <>
+        {onRec ? (
+          isComplete ? 
+            <MyButton onClick={onRecAudio} style={{ width: '7rem' }}>재녹음</MyButton>
+            :
             <MyButton onClick={onRecAudio} style={{ width: '7rem' }}>녹음</MyButton>
-          ) : (
-            finalTranscript && <MyButton onClick={() => {offRecAudio();}} style={{ width: '7rem' }}>정지</MyButton>
-          )}
-          {finalTranscript && (
-            <MyButton onClick={onSubmitAudioFile} style={{ width: '7rem', marginLeft: '2rem' }}>다음</MyButton>
-          )}
-        </>
-      {/* )} */}
+        ) : (
+          finalTranscript && <MyButton onClick={() => {offRecAudio();}} style={{ width: '7rem' }}>정지</MyButton>
+        )}
+        {finalTranscript && isComplete && (
+          <MyButton onClick={onSubmitAudioFile} style={{ width: '7rem', marginLeft: '2rem' }}>다음</MyButton>
+        )}
+      </>
 
       {/* 실시간 스크립트 */}
       {/* <p>{transcript}</p> */}

@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
-import { Col } from "react-bootstrap";
-import { useParams } from "react-router-dom"
+import { Col, Container, Row } from "react-bootstrap";
 import * as S from "./ProfileStatsStyle";
 import { apiInstance } from "api";
+import ApexCharts from "react-apexcharts";
 
 export function ProfileStats() {
-  const { userId } = useParams();
   const [myLearns, setMyLearns] = useState([]);
   const [myLearnCounts, setMyLearnCounts] = useState(Array.from({length: 368}, () => 0));
   const [dailyBoxs, setDailyBoxs] = useState();
@@ -14,11 +13,10 @@ export function ProfileStats() {
   const [period, setPeriod] = useState('');
   const [streakDays, setStreakDays] = useState(0);
   const [streakPeriod, setStreakPeriod] = useState('');
-  const api = apiInstance();
 
   // 러닝 목록
   useEffect(() => {
-    api.get("/learn/statistics")
+    apiInstance().get("/learn/statistics")
       .then(res => {
         setMyLearns(res.data)
       })
@@ -38,7 +36,7 @@ export function ProfileStats() {
         myLearnCounts[diffDays] += 1;
       }      
     }
-  }, [myLearns])
+  }, [myLearnCounts, myLearns])
 
   const bgColor = (learnings) => {
     const backgroundColors = [
@@ -116,7 +114,7 @@ export function ProfileStats() {
     }
 
     setDailyBoxs(myStats());
-  }, [myLearns])
+  }, [myLearnCounts, myLearns])
 
   // 총 학습량 계산
   const totalLearnNum = () => {
@@ -143,7 +141,7 @@ export function ProfileStats() {
     };
 
     setPeriod(yearLearnPeriod());
-  }, [])
+  }, [myLastDate, myNowDate])
 
   // 최근 연속 학습일 계산
   useEffect(() => {
@@ -179,10 +177,104 @@ export function ProfileStats() {
       setStreakDays(days);
       setStreakPeriod(result)
     }
+  }, [myLearnCounts, myLearns])
+
+  const [recentLearn, setRecentLearn] = useState([]);
+  const [score, setScore] = useState([]);
+  const [date, setDate] = useState([]);
+
+  useEffect(() => {
+    setRecentLearn(myLearns.slice(-10))
   }, [myLearns])
 
+  useEffect(() => {
+    console.log(myLearns)
+  }, [myLearns])
+
+  useEffect(() => {
+    setScore(recentLearn.map((learn => learn.score)))
+    setDate(recentLearn.map((learn => learn.createdDate.slice(2, 10))))
+  }, [recentLearn])
+
+  const lineChartSeries = [{
+    name: "점수",
+    data: score
+  }]
+  const lineChartOptions = {
+    chart: {
+      zoom: {
+        enabled: false
+      }
+    },
+    dataLabels: {
+      enabled: false
+    },
+    stroke: {
+      curve: 'straight'
+    },
+    title: {
+      text: '최근 점수 추이',
+      align: 'left'
+    },
+    grid: {
+      row: {
+        colors: ['#F3F3f3F3', 'transparent'],
+        opacity: 0.5
+      },
+    },
+    xaxis: {
+      categories: date,
+    },
+    colors: [
+      '#FFDD74'
+    ]
+  }
+
+  const columnChartSeries = [{
+    name: '누적',
+    data: score
+  }]
+
+  const columnChartOptions = {
+    plotOptions: {
+      bar: {
+        horizontal: true,
+        dataLabels: {
+          position: 'top',
+        },
+      }
+    },
+    dataLabels: {
+      enabled: true,
+      offsetX: -6,
+      style: {
+        fontSize: '12px',
+        colors: ['#fff']
+      }
+    },
+    stroke: {
+      show: true,
+      width: 1,
+      colors: ['#fff']
+    },
+    title: {
+      text: '월별 학습 횟수',
+      align: 'left'
+    },
+    tooltip: {
+      shared: true,
+      intersect: false
+    },
+    xaxis: {
+      categories: date,
+    },
+    colors: [
+      '#FFDD74'
+    ]
+  }
+
   return(
-    <div style={{ minHeight:'100vh'}}>
+    <Container>
       <S.CalendarBox className="d-flex flex-column justify-content-end align-items-end overflow-hidden mx-auto pt-2">
         <S.Calendar className="d-flex flex-column flex-wrap overflow-hidden ps-4 pt-3">
           {dailyBoxs}
@@ -201,6 +293,27 @@ export function ProfileStats() {
           <S.StatsText className="mt-0">{streakPeriod}</S.StatsText>
         </Col>
       </S.StatsRow>
-    </div>
+      <Row
+        style={{
+          margin: '2rem'
+        }}
+      >
+        <ApexCharts 
+          series={lineChartSeries}
+          options={lineChartOptions}
+        />
+      </Row>
+      <Row
+        style={{
+          margin: '2rem'
+        }}
+      >
+        <ApexCharts 
+          type="bar"
+          series={columnChartSeries}
+          options={columnChartOptions}
+        />
+      </Row>
+    </Container>
   )
 }
