@@ -6,11 +6,11 @@ export const Contents = styled(Container)`
   font-family: BMEULJIRO;
   font-size: 0.7rem;
 
-  @media ( min-width: 420px ) {
+  @media ( min-width: 375px ) {
     font-size: 1.0rem;
   }
 
-  @media ( min-width: 820px ) {
+  @media ( min-width: 768px ) {
     font-size: 1.3rem;
     width: 80%;
   }
@@ -23,12 +23,13 @@ export const Contents = styled(Container)`
 export const HeaderText = styled.div`
   font-size: 1.6rem;
   align-items: center;
-  margin-top : 2rem;
+  margin-top : 5rem;
 
-  @media ( min-width: 420px ) {
+  @media ( min-width: 375px ) {
     font-size: 2.2rem;
+    margin-top : 3rem;
   }
-  @media ( min-width: 820px ) {
+  @media ( min-width: 768px ) {
     font-size: 2.8rem;
   }
   @media ( min-width: 1280px ) {
@@ -41,8 +42,12 @@ export const HeaderText = styled.div`
 `
 
 export const Header = styled(Row)`
-  padding-top: 5rem;
+  padding-top: 2rem;
   align-items: center;
+
+  @media ( min-width: 420px ) {
+    padding-top : 10rem; 
+  }
 `
 
 export const HeaderInfo = styled.div`
