@@ -9,6 +9,7 @@ import { MyButton } from 'styles/Button.js'
 import { Container, Image, Col, Row } from 'react-bootstrap'
 import styled from "styled-components";
 import { useNavigate } from 'react-router-dom'
+import axios from 'axios';
 
 const MyImage = styled(Image)`
   margin-top: 3rem;
@@ -69,8 +70,15 @@ export function Learn() {
   const [script1, setScript1] = useState('')
   const [script2, setScript2] = useState('')
 
+  const [recommendWord, setRecommendWord] = useState();
+
   const navigate = useNavigate();
-  const recommendWord = words.map((word) => <p key={word.id}>{word}</p>)
+  // const recommendWord = words.map((word) => <div key={word.id}>{word}</div>)
+
+  useEffect(() => {
+    const wordList = words.map((word) => <div key={word.id}>{word}</div>)
+    setRecommendWord(wordList)
+  }, [words])
 
   function next() {
     setStage(stage + 1)
@@ -82,6 +90,41 @@ export function Learn() {
   }
 
   function onSubmit() {
+    function getBase64(file) {
+      var reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = function () {
+        console.log(reader.result);
+        return(reader.result)
+      };
+      reader.onerror = function (error) {
+        console.log('Error: ', error);
+      };
+    }
+    const audioToString = getBase64(aud2)
+
+    const scoreData = {
+      'access_key': '83178bba-2ea7-46a2-b88f-47e9d6915d3b',
+      'argument': {
+          'language_code': 'english',
+          'audio': `${audioToString}`
+      }
+    }
+
+    const scoreBody = JSON.stringify(scoreData)
+
+    axios
+      .post('http://aiopen.etri.re.kr:8000/WiseASR/Pronunciation', scoreBody, {
+      headers: {
+        'Content-Type':'application/json; charset=UTF-8'
+      },
+    })
+      .then(res => {
+        console.log(res)
+      })
+      .catch(e => {
+        console.log(e)
+      })
     
     const formData = new FormData()
     formData.append('file', aud1)
@@ -143,6 +186,12 @@ export function Learn() {
               <Col lg={4}>
                 {isStart &&
                   <span id="first-record">
+                    {audioUrl1 && 
+                      <>
+                        <p>1차 녹음</p>
+                        <audio controls src={audioUrl1} controlsList='nodownload'></audio>
+                      </>
+                    }
                     {!isFirstRecord && 
                       <AudioRecord
                         setScript={setScript1}
@@ -151,16 +200,16 @@ export function Learn() {
                         setIsRecord={setIsFirstRecord}
                       />
                     }
-                    {audioUrl1 && 
-                      <>
-                        <p>1차 녹음</p>
-                        <audio controls src={audioUrl1} controlsList='nodownload'></audio>
-                      </>
-                    }
                   </span>
                 }
                 {isFirstRecord && 
                   <span id="second-record">
+                    {audioUrl2 && (
+                      <>
+                        <p>2차 녹음</p>
+                        <audio controls src={audioUrl2} controlsList="nodownload"></audio>
+                      </>
+                    )}
                     {!isSecondRecord &&
                       <AudioRecord
                         setScript={setScript2}
@@ -169,18 +218,16 @@ export function Learn() {
                         setIsRecord={setIsSecondRecord}
                       />
                     }
-                    {audioUrl2 && (
-                      <>
-                        <p>2차 녹음</p>
-                        <audio controls src={audioUrl2} controlsList="nodownload"></audio>
-                      </>
-                    )}
                   </span>
                 }
-                 <div>AI가 추천한 단어</div>
-                <AIBox> 
-                  {recommendWord}
-                </AIBox>
+                {words && aud1 &&
+                  <>
+                    <div>AI가 추천한 단어</div>
+                    <AIBox> 
+                      {recommendWord}
+                    </AIBox>
+                  </>
+                }
               </Col>
             </Row>
             {/* Answer Box 부분 */}
