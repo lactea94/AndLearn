@@ -63,6 +63,7 @@ export function Learn() {
   }
 
   function onSubmit() {
+    
     const formData = new FormData()
     formData.append('file', aud1)
     formData.append('file2', aud2)
@@ -84,7 +85,7 @@ export function Learn() {
       })
       .then((res) => {
         setIsSubmit(true)
-        next()
+        console.log(res)
       })
       .catch((error) => {
         console.log(error)
@@ -97,13 +98,12 @@ export function Learn() {
 
   return (
     <Container>
-      <div id="first-page">
+      <div id="before-after-upload-image">
         {!isStart && (
           <>
             <MyImage src={fileImage} alt="추가한 사진" />
             <ImageUpload
               setFileImage={setFileImage}
-              next={next}
               setKeyDjango={setKeyDjango}
               setWords={setWords}
               setIsStart={setIsStart}
@@ -126,31 +126,40 @@ export function Learn() {
                   {!isFirstRecord && 
                     <AudioRecord
                       setScript={setScript1}
-                      next={next}
                       setAudioUrl1={setAudioUrl1}
                       setAud1={setAud1}
                       setIsRecord={setIsFirstRecord}
                     />
                   }
-                  {aud1 && 
-                    <audio controls src={audioUrl1} controlsList='nodownload'></audio>
+                  {audioUrl1 && 
+                    <>
+                      <p>1차 녹음</p>
+                      <audio controls src={audioUrl1} controlsList='nodownload'></audio>
+                    </>
                   }
                 </span>
               }
               {isFirstRecord && 
-                <>
-                  <AudioRecord
-                    setScript={setScript2}
-                    next={next}
-                    setAudioUrl1={setAudioUrl2}
-                    setAud1={setAud2}
-                    setIsRecord={setIsSecondRecord}
-                  />
-                  {aud2 && (
-                    <audio controls src={audioUrl2} controlsList="nodownload"></audio>
+                <span id="second-record">
+                  {!isSecondRecord &&
+                    <AudioRecord
+                      setScript={setScript2}
+                      setAudioUrl1={setAudioUrl2}
+                      setAud1={setAud2}
+                      setIsRecord={setIsSecondRecord}
+                    />
+                  }
+                  {audioUrl2 && (
+                    <>
+                      <p>2차 녹음</p>
+                      <audio controls src={audioUrl2} controlsList="nodownload"></audio>
+                    </>
                   )}
-                </>
+                </span>
               }
+              <div>
+                {recommendWord}
+              </div>
             </Col>
 
             {/* Answer Box 부분 */}
@@ -185,7 +194,7 @@ export function Learn() {
           </>
         )}
       </Row>
-      <div>{isSecondRecord && !isSubmit && <MyButton onClick={onSubmit}>다음</MyButton>}</div>
+      <div>{isSecondRecord && !isSubmit && <MyButton onClick={onSubmit}>전송</MyButton>}</div>
       <div>
         {isSubmit && <MyButton onClick={() => {onComplete()}}>전송완료</MyButton>}
       </div>
