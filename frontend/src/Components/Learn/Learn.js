@@ -33,8 +33,23 @@ const AlluImage = styled(Image)`
   height:200px;
 
 `
+const Text1 = styled.div`
+  margin-bottom:15px;
+  font-weight:bold;
+`
 
-export const AIBox = styled.div`
+const Text2 = styled.div`
+  margin-bottom:15px;
+  margin-top:30px;
+  font-weight:bold;
+`
+
+const Text3 = styled.div`
+  margin-top: 30px;
+  font-weight: bold;
+`
+
+const AIBox = styled.div`
   margin-top: 20px;
   text-align: center;
   border: 1px solid gray;
@@ -44,6 +59,7 @@ export const AIBox = styled.div`
   margin-right: 24px;
   margin-bottom: 30px;
   border-radius: 6px;
+  padding-top:13px;
 `
 
 export function Learn() {
@@ -153,7 +169,7 @@ export function Learn() {
                     }
                     {audioUrl1 && 
                       <>
-                        <p>1차 녹음</p>
+                        <Text1>1차 녹음</Text1>
                         <audio controls src={audioUrl1} controlsList='nodownload'></audio>
                       </>
                     }
@@ -171,13 +187,13 @@ export function Learn() {
                     }
                     {audioUrl2 && (
                       <>
-                        <p>2차 녹음</p>
+                        <Text2>2차 녹음</Text2>
                         <audio controls src={audioUrl2} controlsList="nodownload"></audio>
                       </>
                     )}
                   </span>
                 }
-                 <div>AI가 추천한 단어</div>
+                 <Text3>AI가 추천한 단어</Text3>
                 <AIBox> 
                   {recommendWord}
                 </AIBox>
@@ -189,6 +205,7 @@ export function Learn() {
               {aud1 && (
                 <>
                   <Col lg={6} style={{ marginTop: '2rem'}}>
+                    <p>내가 말한 문장</p>
                     <textarea value={script1} style={{  width: '100%'}} onChange={onCheck}>
                       {script1}
                     </textarea>
