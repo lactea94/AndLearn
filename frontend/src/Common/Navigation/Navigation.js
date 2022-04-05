@@ -3,30 +3,18 @@ import { Navbar, Container, Nav, Offcanvas } from 'react-bootstrap'
 import { NavLink, useNavigate } from 'react-router-dom'
 import * as S from './Style'
 import { ACCESS_TOKEN } from 'constants/index'
-import { apiInstance } from 'api'
 
 export function Navigation() {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
-  const [myInfo, setMyInfo] = useState({})
   const [show, setShow] = useState(false)
   const navigate = useNavigate()
 
   const handleClose = () => setShow(false)
   const handleShow = () => setShow(true)
 
-  const token = localStorage.getItem(ACCESS_TOKEN)
-  const api = apiInstance()
-
   useEffect(() => {
-    if (token) {
+    if (localStorage.getItem(ACCESS_TOKEN))
       setIsAuthenticated(true)
-      api.get('users/me').then((res) => {
-        setMyInfo(res.data)
-      })
-    } else {
-      setIsAuthenticated(false)
-
-    }
   }, [])
 
   function logout() {
