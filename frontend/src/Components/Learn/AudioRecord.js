@@ -113,18 +113,16 @@ export function AudioRecord({ setScript, setAudioUrl1, setAud1, setIsRecord }) {
 
   return (
     <>
-      {/* {!hidden && ( */}
-        <>
-          {onRec ? (
-            <MyButton onClick={onRecAudio} style={{ width: '7rem' }}>녹음</MyButton>
-          ) : (
-            finalTranscript && <MyButton onClick={() => {offRecAudio();}} style={{ width: '7rem' }}>정지</MyButton>
-          )}
-          {finalTranscript && (
-            <MyButton onClick={onSubmitAudioFile} style={{ width: '7rem', marginLeft: '2rem' }}>다음</MyButton>
-          )}
-        </>
-      {/* )} */}
+      <>
+        {onRec ? (
+          <MyButton onClick={onRecAudio} style={{ width: '7rem' }}>녹음</MyButton>
+        ) : (
+          finalTranscript && <MyButton onClick={() => {offRecAudio();}} style={{ width: '7rem' }}>정지</MyButton>
+        )}
+        {finalTranscript && (
+          <MyButton onClick={onSubmitAudioFile} style={{ width: '7rem', marginLeft: '2rem' }}>다음</MyButton>
+        )}
+      </>
 
       {/* 실시간 스크립트 */}
       {/* <p>{transcript}</p> */}

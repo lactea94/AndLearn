@@ -97,17 +97,17 @@ export function Learn() {
 
   return (
     <Container>
-      <div>        
+      <div id="first-page">
         {!isStart && (
           <>
-          <MyImage src={fileImage} alt="추가한 사진" />
-          <ImageUpload
-            setFileImage={setFileImage}
-            next={next}
-            setKeyDjango={setKeyDjango}
-            setWords={setWords}
-            setIsStart={setIsStart}
-          />
+            <MyImage src={fileImage} alt="추가한 사진" />
+            <ImageUpload
+              setFileImage={setFileImage}
+              next={next}
+              setKeyDjango={setKeyDjango}
+              setWords={setWords}
+              setIsStart={setIsStart}
+            />
           </>
         )}
       </div>
@@ -120,34 +120,38 @@ export function Learn() {
             </Col>
             
             {/* Record 부분 */}
-            {isStart && !isFirstRecord &&
-              <Col lg={4}>
-                <AudioRecord
-                  setScript={setScript1}
-                  next={next}
-                  setAudioUrl1={setAudioUrl1}
-                  setAud1={setAud1}
-                  setIsRecord={setIsFirstRecord}
-                />
-                {audioUrl1 && 
-                  <audio controls src={audioUrl1} controlsList='nodownload'></audio>
-                }
-              </Col>
-            }
-            {isFirstRecord && (
-              <Col lg={4}>
-                <AudioRecord
-                  setScript={setScript2}
-                  next={next}
-                  setAudioUrl1={setAudioUrl2}
-                  setAud1={setAud2}
-                  setIsRecord={setIsSecondRecord}
-                />
-                {aud2 && (
-                  <audio controls src={audioUrl2} controlsList="nodownload"></audio>
-                )}
-              </Col>
-            )}
+            <Col lg={4}>
+              {isStart &&
+                <span id="first-record">
+                  {!isFirstRecord && 
+                    <AudioRecord
+                      setScript={setScript1}
+                      next={next}
+                      setAudioUrl1={setAudioUrl1}
+                      setAud1={setAud1}
+                      setIsRecord={setIsFirstRecord}
+                    />
+                  }
+                  {aud1 && 
+                    <audio controls src={audioUrl1} controlsList='nodownload'></audio>
+                  }
+                </span>
+              }
+              {isFirstRecord && 
+                <>
+                  <AudioRecord
+                    setScript={setScript2}
+                    next={next}
+                    setAudioUrl1={setAudioUrl2}
+                    setAud1={setAud2}
+                    setIsRecord={setIsSecondRecord}
+                  />
+                  {aud2 && (
+                    <audio controls src={audioUrl2} controlsList="nodownload"></audio>
+                  )}
+                </>
+              }
+            </Col>
 
             {/* Answer Box 부분 */}
             <Row id="answer-box">
