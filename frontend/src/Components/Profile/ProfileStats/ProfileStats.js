@@ -188,13 +188,18 @@ export function ProfileStats() {
   }, [myLearns])
 
   useEffect(() => {
-    console.log(myLearns)
-  }, [myLearns])
-
-  useEffect(() => {
     setScore(recentLearn.map((learn => learn.score)))
     setDate(recentLearn.map((learn => learn.createdDate.slice(2, 10))))
   }, [recentLearn])
+
+  const [monthStat, setMonthStat] = useState([]);
+
+  useEffect(() => {
+    apiInstance().get('/learn/graph')
+    .then(res => {
+      setMonthStat(res.data)
+    })
+  }, [])
 
   const lineChartSeries = [{
     name: "점수",
@@ -202,9 +207,10 @@ export function ProfileStats() {
   }]
   const lineChartOptions = {
     chart: {
+      
       zoom: {
         enabled: false
-      }
+      },
     },
     dataLabels: {
       enabled: false
@@ -232,7 +238,7 @@ export function ProfileStats() {
 
   const columnChartSeries = [{
     name: '누적',
-    data: score
+    data: Object.values(monthStat)
   }]
 
   const columnChartOptions = {
@@ -266,7 +272,7 @@ export function ProfileStats() {
       intersect: false
     },
     xaxis: {
-      categories: date,
+      categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
     },
     colors: [
       '#FFDD74'
