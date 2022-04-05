@@ -2,8 +2,14 @@ import { Button } from "react-bootstrap";
 import styled from "styled-components";
 
 export const Text = styled.div`
-  font-size: 17px;
-  margin-bottom: 5px;
+  text-align: left;
+  font-size: 22px;
+  margin-bottom: 15px;
+`
+export const Text1 = styled.div`
+  text-align: center;
+  font-size: 22px;
+  margin-bottom: 15px;
 `
 
 export const AnswerBox = styled.div`

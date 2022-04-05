@@ -3,12 +3,24 @@ import { NavLink, useParams } from "react-router-dom"
 import styled from "styled-components";
 
 const MyImage = styled(Image)`
-  @media screen and (min-width: 576px) {
+  overflow: hidden;
+  object-fit: cover;
+  @media (max-width: 1200px) and (min-width: 768px) {
     width: 240px;
     height: 240px;
+  }  
+
+  @media (max-width: 768px) and (min-width: 480px) {
+    width: 180px;
+    height: 180px;
+  }
+  @media screen and (min-width: 1200px) {
+    width: 360px;
+    height: 360px;
   }
   width: 120px;
   height: 120px;
+
 `
 
 export function ProfileContent({content}) {
