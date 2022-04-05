@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react'
+import { Col, Row } from 'react-bootstrap'
 import SpeechRecognition, {
   useSpeechRecognition,
 } from 'react-speech-recognition'
@@ -116,8 +117,7 @@ export function AudioRecord({ setScript, setAudioUrl1, setAud1, setIsRecord }) {
   }, [audioUrl])
 
   return (
-    <>
-      <>
+    <Col style={{margin: '1rem'}}>
         {onRec ? (
           isComplete ? 
             <MyButton onClick={onRecAudio} style={{ width: '7rem' }}>재녹음</MyButton>
@@ -129,12 +129,6 @@ export function AudioRecord({ setScript, setAudioUrl1, setAud1, setIsRecord }) {
         {finalTranscript && isComplete && (
           <MyButton onClick={onSubmitAudioFile} style={{ width: '7rem', marginLeft: '2rem' }}>녹음 확인</MyButton>
         )}
-      </>
-
-      {/* 실시간 스크립트 */}
-      {/* <p>{transcript}</p> */}
-      {/* 최종 스크립트 */}
-      {/* {finalTranscript} */}
-    </>
+    </Col>
   )
 }

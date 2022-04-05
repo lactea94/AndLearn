@@ -67,7 +67,6 @@ export function Learn() {
   const [isStart, setIsStart] = useState(false);
   const [isFirstRecord, setIsFirstRecord] = useState(false);
   const [isSecondRecord, setIsSecondRecord] = useState(false);
-  const [isSubmit, setIsSubmit] = useState(false);
 
   const [keyDjango, setKeyDjango] = useState(2)
   const [words, setWords] = useState([])
@@ -120,105 +119,97 @@ export function Learn() {
         },
       })
       .then((res) => {
-        setIsSubmit(true)
         console.log(res)
       })
+      .then(setTimeout(() => {
+        navigate('/profile')
+      }, 500))
       .catch((error) => {
         console.log(error)
       })
   }
 
-  const onComplete = () => {
-    navigate('/profile/content')
-  }
-
   return (
     <Container>
-      <div id="before-after-upload-image">
         {!isStart ? (
-          <>
-            <MyImage src={fileImage} alt="추가한 사진" />
+          <Row>
+            <Col xs={12}>
+              <MyImage src={fileImage} alt="추가한 사진" />
+            </Col>
             <ImageUpload
               setFileImage={setFileImage}
               setKeyDjango={setKeyDjango}
               setWords={setWords}
               setIsStart={setIsStart}
             />
-          </>
+          </Row>
         ) : (
-          <>
-            <Row className='justify-content-center'>
-              <Col xs={12}>
-                <MyImage2 src={fileImage} alt="추가한 사진" />
-              </Col>
-              
-              {/* Record 부분 */}
-              <Col lg={4}>
-                {isStart &&
-                  <span id="first-record">
-                    {!isFirstRecord && 
-                      <AudioRecord
-                        setScript={setScript1}
-                        setAudioUrl1={setAudioUrl1}
-                        setAud1={setAud1}
-                        setIsRecord={setIsFirstRecord}
-                      />
-                    }
-                    {audioUrl1 && 
-                      <>
-                        <Text1>1차 녹음</Text1>
-                        <audio controls src={audioUrl1} controlsList='nodownload'></audio>
-                        {aud1 && (
-                          <textarea value={script1} style={{ width: '100%' }} onChange={onCheck1}>
-                            {script1}
-                          </textarea>
-                        )}
-                      </>
-                    }
-                  </span>
-                }
-                {isFirstRecord && 
-                  <span id="second-record">
-                    {!isSecondRecord &&
-                      <AudioRecord
-                        setScript={setScript2}
-                        setAudioUrl1={setAudioUrl2}
-                        setAud1={setAud2}
-                        setIsRecord={setIsSecondRecord}
-                      />
-                    }
-                    {audioUrl2 && (
-                      <>
-                        <Text2>2차 녹음</Text2>
-                        <audio controls src={audioUrl2} controlsList="nodownload"></audio>
-                        {aud2 && (
-                          <textarea value={script2} style={{ width: '100%' }} onChange={onCheck2}>
-                            {script2}
-                          </textarea>
-                        )}
-                      </>
-                    )}
-                  </span>
-                }
-                { (audioUrl1 && words.length > 0) &&
-                  <AIBox> 
-                    {recommendWord}
-                  </AIBox>
-                }
-              </Col>
-            </Row>
+          <Row className='justify-content-center'>
+            <Col xs={12}>
+              <MyImage2 src={fileImage} alt="추가한 사진" />
+            </Col>
+            {/* Record 부분 */}
+            <Col>
+              {isStart &&
+                <span id="first-record">
+                  {!isFirstRecord && 
+                    <AudioRecord
+                      setScript={setScript1}
+                      setAudioUrl1={setAudioUrl1}
+                      setAud1={setAud1}
+                      setIsRecord={setIsFirstRecord}
+                    />
+                  }
+                  {audioUrl1 && 
+                    <>
+                      <Text1>1차 녹음</Text1>
+                      <audio controls src={audioUrl1} controlsList='nodownload'></audio>
+                      {aud1 && (
+                        <textarea value={script1} style={{ width: '100%' }} onChange={onCheck1}>
+                          {script1}
+                        </textarea>
+                      )}
+                    </>
+                  }
+                </span>
+              }
+              {isFirstRecord && 
+                <span id="second-record">
+                  {!isSecondRecord &&
+                    <AudioRecord
+                      setScript={setScript2}
+                      setAudioUrl1={setAudioUrl2}
+                      setAud1={setAud2}
+                      setIsRecord={setIsSecondRecord}
+                    />
+                  }
+                  {audioUrl2 && (
+                    <>
+                      <Text2>2차 녹음</Text2>
+                      <audio controls src={audioUrl2} controlsList="nodownload"></audio>
+                      {aud2 && (
+                        <textarea value={script2} style={{ width: '100%' }} onChange={onCheck2}>
+                          {script2}
+                        </textarea>
+                      )}
+                    </>
+                  )}
+                </span>
+              }
+              { (audioUrl1 && words.length > 0) &&
+                <AIBox> 
+                  {recommendWord}
+                </AIBox>
+              }
+            </Col>
             {/* Answer Box 부분 */}
-            <Row className="justify-content-center">
+            <Col className="justify-content-center">
               <AlluImage src={allu} alt="추가한 사진" />
-            </Row>
-          </>
+            </Col>
+          </Row>
         )}
-      </div>
 
-      <div>{isSecondRecord && !isSubmit && <MyButton onClick={onSubmit}>전송</MyButton>}</div>
-      <div>
-        {isSubmit && <MyButton onClick={() => {onComplete()}}>전송완료</MyButton>}
-      </div>
+      {isSecondRecord && <MyButton onClick={onSubmit}>완료</MyButton>}
     </Container>
   )
 }
