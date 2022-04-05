@@ -31,7 +31,6 @@ export const EditButton = styled(Link)`
   color: black;
   font-size: 29px;
 
-
   &:hover {
     color: #FFDD74;
   }

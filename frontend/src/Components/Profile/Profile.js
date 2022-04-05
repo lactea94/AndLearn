@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { NavLink, Route, Routes } from 'react-router-dom';
+import { NavLink, Outlet, Route, Routes, useLocation } from 'react-router-dom';
 import { Container, Row, Col } from 'react-bootstrap';
 import { ProfileContents } from './ProfileContents/ProfileContents';
 import { ProfileContentDetail } from './ProfileContents/ProfileContentDetail';
@@ -18,11 +18,10 @@ export function Profile() {
   const [userNickname, setUserNickname] = useState();
   const [userImgUrl, setUserImgUrl] = useState();
   const token = localStorage.getItem(ACCESS_TOKEN);
-  const api = apiInstance();
 
   useEffect(() => {
     if (token) {
-      api.get('users/me')
+      apiInstance().get('users/me')
         .then(res => {
           setUser(res.data)
           setUserId(res.data.userId);
@@ -32,7 +31,7 @@ export function Profile() {
     } else {
       window.location.replace(`/`)
     }
-  }, [api, token])
+  }, [token])
 
   useEffect(() => {
     if (userImgUrl) {
@@ -85,15 +84,7 @@ export function Profile() {
         </Row>
         <hr />
         <div style={{ marginTop: '2rem' }}>
-          <Routes>
-            <Route index element={<ProfileContents/>} />
-            <Route path='content' element={<ProfileContents/>} />
-            <Route path='content/:contentId' element={<ProfileContentDetail/>} />
-            <Route path='stats' element={<ProfileStats/>} />
-            <Route path='articles' element={<ProfileArticles />} />
-            <Route path='edit' element={<UserInfoEdit />} />
-            <Route path='edit/password' element={<PasswordEdit />} />
-          </Routes>
+          <Outlet/>
         </div>
       </Container>
     </div>
