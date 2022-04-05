@@ -1,10 +1,7 @@
 package com.ssafy.api.controller;
 
 import com.ssafy.api.request.LearnPostReq;
-import com.ssafy.api.response.LearnDetailRes;
-import com.ssafy.api.response.PicturesRes;
-import com.ssafy.api.response.StatisticsRes;
-import com.ssafy.api.response.UserRes;
+import com.ssafy.api.response.*;
 import com.ssafy.api.service.AwsS3Service;
 import com.ssafy.api.service.UserService;
 import com.ssafy.common.auth.SsafyUserDetails;
@@ -282,6 +279,39 @@ public class AmazonS3Controller {
             }
             return ResponseEntity.status(HttpStatus.OK).body(pictureList);
         }
+    }
+
+
+    @ApiOperation(value = "월별 학습량 데이터 조회", notes = "사용자의 월별 학습량을 위한 데이터를 불러온다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 401, message = "인증 실패"),
+            @ApiResponse(code = 404, message = "사용자 없음"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    @GetMapping("/graph")
+    public ResponseEntity<GraphRes> getMonthlyData(@ApiIgnore Authentication authentication){
+        SsafyUserDetails userDetails = (SsafyUserDetails)authentication.getDetails();
+        String userId = userDetails.getUsername();
+        User user = userService.getUserByUserId(userId);
+        Long pk = user.getId();
+        int cnt1 = learnRepository.findByMonth("01",pk);
+        int cnt2 = learnRepository.findByMonth("02",pk);
+        int cnt3 = learnRepository.findByMonth("03",pk);
+        int cnt4 = learnRepository.findByMonth("04",pk);
+        int cnt5 = learnRepository.findByMonth("05",pk);
+        int cnt6 = learnRepository.findByMonth("06",pk);
+        int cnt7 = learnRepository.findByMonth("07",pk);
+        int cnt8 = learnRepository.findByMonth("08",pk);
+        int cnt9 = learnRepository.findByMonth("09",pk);
+        int cnt10 = learnRepository.findByMonth("10",pk);
+        int cnt11 = learnRepository.findByMonth("11",pk);
+        int cnt12 = learnRepository.findByMonth("12",pk);
+        return ResponseEntity.status(HttpStatus.OK).body(new GraphRes(cnt1,cnt2,cnt3,cnt4,cnt5,cnt6,cnt7,cnt8,cnt9,cnt10,cnt11,cnt12));
+
+
+
+
     }
 
     @ApiImplicitParam(name="key", value = "learn_id", required = true, dataType = "Long")
