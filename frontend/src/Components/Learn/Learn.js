@@ -36,7 +36,7 @@ const AlluImage = styled(Image)`
 
 export const AIBox = styled.div`
   margin-top: 20px;
-  text-align: left;
+  text-align: center;
   border: 1px solid gray;
   width: 100%;
   padding: 5px;
