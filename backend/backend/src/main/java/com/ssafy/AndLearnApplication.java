@@ -12,10 +12,10 @@ import org.springframework.boot.context.ApplicationPidFileWriter;
 import java.nio.charset.StandardCharsets;
 
 @SpringBootApplication
-public class GroupCallApplication {
+public class AndLearnApplication {
 	public static void main(String[] args) {
         // SpringApplication.run(GroupCallApplication.class, args);
-        SpringApplication app = new SpringApplication(GroupCallApplication.class);
+        SpringApplication app = new SpringApplication(AndLearnApplication.class);
         app.addListeners(new ApplicationPidFileWriter()); // pid 파일을 생성하는 writer 등록
         app.run(args);
     }
