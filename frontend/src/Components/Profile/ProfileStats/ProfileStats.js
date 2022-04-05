@@ -319,7 +319,7 @@ export function ProfileStats() {
           type="bar"
           series={columnChartSeries}
           options={columnChartOptions}
-          height={300}
+          height={500}
         />
       </Row>
     </Container>
