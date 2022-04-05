@@ -19,9 +19,13 @@ public class StatisticsRes {
     @ApiModelProperty(name="learn 생성 날짜", example="2022-03-29 17:18:49.344082")
     private LocalDateTime createdDate;
 
+    @ApiModelProperty(name="발음 평가 점수", example="3.5")
+    private Float score;
+
     public StatisticsRes(Learn entity) {
         this.id = entity.getId();
         this.createdDate = entity.getCreatedDate();
+        this.score = entity.getScore();
 
     }
 

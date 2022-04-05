@@ -119,6 +119,98 @@ public class AmazonS3Controller {
 
     }
 
+//    public ResponseEntity learnSave(@PathVariable Long key,
+//                                    @ApiIgnore Authentication authentication,
+//                                    @RequestPart(value="learnPostReq") @ApiParam(value="음성 파일을 제외한 나머지 학습 정보", required = true) LearnPostReq learnPostReq) {
+//
+//        // key로 해당 컬럼 찾아서 rank 저장
+//
+//        Optional<Learn> learnTmp = learnRepository.findById(key);
+//        float rank = learnPostReq.getScore();
+//
+//        if (learnTmp.isEmpty()) {
+//            return new ResponseEntity(HttpStatus.NOT_FOUND);
+//        }
+//        SsafyUserDetails userDetails = (SsafyUserDetails)authentication.getDetails();
+//        String userId = userDetails.getUsername();
+//        User user = userService.getUserByUserId(userId);
+//
+//        Learn learn = learnTmp.get();
+//        learn.setUser(user);
+//        learn.setScore(rank);
+//        learn.setCreatedDate(LocalDateTime.now());
+//        learnRepository.save(learn);
+//
+//        // AI-words 저장
+//        List<String> words = learnPostReq.getWords();
+//        words.forEach(aiWord -> {
+//            Word word = new Word();
+//            word.setContent(aiWord);
+//            word.setLearn(learn);
+//            wordRepository.save(word);
+//        });
+//
+//        List<String> sentences = learnPostReq.getSentences();
+//        sentences.forEach(sen -> {
+//            Record record = new Record();
+//            record.setSentence(sen);
+//            record.setLearn(learn);
+//            recordRepository.save(record);
+//
+//        });
+//
+//        return new ResponseEntity(HttpStatus.OK);
+//
+//    }
+//
+//
+//    @ApiImplicitParam(name="key", value = "learn_id", required = true, dataType = "Long")
+//    @PostMapping("/{key}")
+//    @ApiOperation(value = "학습 내용 저장", notes = "사용자가 학습을 마치면 관련 내용을 DB에 저장한다.")
+//    @ApiResponses({
+//            @ApiResponse(code = 200, message = "성공"),
+//            @ApiResponse(code = 401, message = "인증 실패"),
+//            @ApiResponse(code = 404, message = "learn_id에 해당하는 데이터를 찾을 수 없음"),
+//            @ApiResponse(code = 500, message = "서버 오류")
+//    })
+//    public ResponseEntity learnSave(@PathVariable Long key,
+//                                    @ApiIgnore Authentication authentication,
+//                                    @RequestPart(value="file", required = false) @ApiParam(value="음성 파일", required = true) List<MultipartFile> multipartFile
+//                                    ) {
+//
+//        // key로 해당 컬럼 찾아서 rank 저장
+//
+//        Optional<Learn> learnTmp = learnRepository.findById(key);
+//
+//        if (learnTmp.isEmpty()) {
+//            return new ResponseEntity(HttpStatus.NOT_FOUND);
+//        }
+//        SsafyUserDetails userDetails = (SsafyUserDetails)authentication.getDetails();
+//        String userId = userDetails.getUsername();
+//        User user = userService.getUserByUserId(userId);
+//
+//        Learn learn = learnTmp.get();
+//
+//
+//        // 음성 파일 저장
+//        List<String> fileNameList = awsS3Service.uploadFiles(multipartFile);
+//        for (int i=0; i< fileNameList.size(); i++) {
+//            String fileName = fileNameList.get(i);
+////            String url = awsS3Service.getThumbnailPath(fileName);
+//            Record record = new Record();
+//            record.setRecordUrl("https://d3qljd3xvkb8gz.cloudfront.net/"+fileName);
+//
+//            recordRepository.save(record);
+//
+//        }
+//        return new ResponseEntity(HttpStatus.OK);
+//
+//    }
+
+
+
+
+
 
 //    @ApiOperation(value = "Amazon S3에 파일 업로드", notes = "Amazon S3에 파일 업로드 ")
 //    @PostMapping("/file")
