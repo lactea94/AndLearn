@@ -11,8 +11,8 @@ import { apiInstance } from 'api';
 const Remote = styled.div`
   display: block; 
   position: fixed; 
-  top: 250px; 
-  left: 1600px; 
+  top: 300px; 
+  left: 1300px; 
   z-index: 1000; 
   cursor: move;
   background-color: white;

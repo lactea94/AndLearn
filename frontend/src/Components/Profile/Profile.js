@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { NavLink, Link, Route, Routes } from 'react-router-dom';
+import { Link, Route, Routes } from 'react-router-dom';
 import { Container, Row, Col } from 'react-bootstrap';
 import { ProfileContents } from './ProfileContents/ProfileContents';
 import { ProfileContentDetail } from './ProfileContents/ProfileContentDetail';
@@ -13,11 +13,8 @@ import { apiInstance } from 'api';
 import styled from 'styled-components';
 import * as S from './Style';
 
-
 const EditButton = styled(Link)`
   color: black;
-  font-size: 29px;
-
 
   &:hover {
     color: #FFDD74;
@@ -70,10 +67,8 @@ export function Profile() {
               <h1 className='m-0'>{userNickname}</h1>
             </Row>
             <Row className='justify-content-center'>
-              <Col xs={11} style={{ marginTop: '0.7rem', paddingLeft:"5rem" }}>
-                <h4>
-                  {userId}
-                </h4>
+              <Col xs={7}>
+                {userId}
               </Col>
               <Col xs={1}>
                 <EditButton to={`edit`}>
@@ -85,19 +80,21 @@ export function Profile() {
         </Row>
         <Row style={{ marginTop: '2rem' }}>
           <Col>
-            <NavLink to="content" style={S.navLinkStyle}>
-              공부내용
-            </NavLink>
+            <Link to="content">
+              <MyButton color="#58C063">공부내용</MyButton>
+            </Link>
           </Col>
           <Col>
-            <NavLink to="stats" style={S.navLinkStyle}>
-              개인통계
-            </NavLink>
+            <Link to="stats">
+              <MyButton color="#58C063">개인통계</MyButton>
+            </Link>
           </Col>
           <Col>
-            <NavLink to="articles" state={{ user:user }} style={S.navLinkStyle}>
+            <Link to="articles" state={{ user:user }}>
+              <MyButton color="#58C063">
                 게시글
-            </NavLink>
+              </MyButton>
+            </Link>
           </Col>
         </Row>
         <hr />
