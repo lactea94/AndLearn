@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Row } from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
 
 export const CalendarBox = styled.div`
   box-sizing: border-box;
@@ -64,4 +64,22 @@ export const WeekText = styled.p`
   left: -23px;
   top: -2px;
   fontSize: 9px;
+`
+
+export const StatCol = styled(Col)`
+  width: 84%;
+  margin-top: 2rem;
+  padding: 1rem 1rem;
+  border: 1px solid gray;
+  border-radius: 0.5rem;
+
+  @media ( min-width: 768px ) {
+    width: 87%;
+  }
+
+  @media ( min-width: 1200px ) {
+    margin-left: 1rem;
+    margin-right: 1rem;
+    width: 38%;
+  }
 `

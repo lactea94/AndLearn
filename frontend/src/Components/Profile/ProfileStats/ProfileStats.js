@@ -17,7 +17,7 @@ export function ProfileStats() {
   const [period, setPeriod] = useState('');
   const [streakDays, setStreakDays] = useState(0);
   const [streakPeriod, setStreakPeriod] = useState('');
-  
+
   // 러닝 목록
   useEffect(() => {
     apiInstance().get("/learn/statistics")
@@ -193,7 +193,7 @@ export function ProfileStats() {
 
   useEffect(() => {
     setScore(recentLearn.map((learn => learn.score)))
-    setDate(recentLearn.map((learn => learn.createdDate.slice(2, 10))))
+    setDate(recentLearn.map((learn => learn.createdDate.slice(5, 10))))
   }, [recentLearn])
 
   const [monthStat, setMonthStat] = useState([]);
@@ -311,28 +311,22 @@ export function ProfileStats() {
           <S.StatsText className="mt-0">{streakPeriod}</S.StatsText>
         </Col>
       </S.StatsRow>
-      <Row
-        style={{
-          margin: '2rem'
-        }}
-      >
-        <ApexCharts 
-          series={lineChartSeries}
-          options={lineChartOptions}
-          height={300}
-        />
-      </Row>
-      <Row
-        style={{
-          margin: '2rem'
-        }}
-      >
-        <ApexCharts 
-          type="bar"
-          series={columnChartSeries}
-          options={columnChartOptions}
-          height={500}
-        />
+      <Row className="justify-content-center">
+        <S.StatCol xs={12} xl={6}>
+          <ApexCharts 
+            series={lineChartSeries}
+            options={lineChartOptions}
+            height={300}
+          />
+        </S.StatCol>
+        <S.StatCol xs={12} xl={6}>
+          <ApexCharts 
+            type="bar"
+            series={columnChartSeries}
+            options={columnChartOptions}
+            height={300}
+          />
+        </S.StatCol>
       </Row>
     </Container>
   )
