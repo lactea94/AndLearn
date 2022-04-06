@@ -1,8 +1,8 @@
 import styled from "styled-components"
-import { Image } from "react-bootstrap"
+import { Image, Col } from "react-bootstrap"
 
 export const MyImage = styled(Image)`
-  margin-top: 3rem;
+  margin-top: 2rem;
 
   @media screen and (min-width: 900px) {
     width: 850px;
@@ -12,6 +12,7 @@ export const MyImage = styled(Image)`
 `
 
 export const MyImage2 = styled(Image)`
+  margin-top: 2rem;
   ${'' /* @media screen and (min-width: 900px) {
     width: 500px;
     height: 350px;
@@ -19,7 +20,14 @@ export const MyImage2 = styled(Image)`
   width: 100%;
 `
 
+export const smallAlluCol = styled(Col)`
+  @media screen and (min-width: 400px) {
+    display: none;
+  }
+`
+
 export const AlluImage = styled(Image)`
+  margin-top: 1rem;
   width:200px;
   height:200px;
 
@@ -51,7 +59,8 @@ export const AIBox = styled.div`
 `
 
 export const smallAudio = styled.audio`
-  @media screen and (min-width: 400px) {
+  @media screen and (min-width: 1280px) {
     display: none;
   }
+  width: 100%;
 `

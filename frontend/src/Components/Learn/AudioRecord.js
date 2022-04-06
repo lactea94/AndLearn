@@ -24,7 +24,7 @@ export function AudioRecord({ setScript, setAudioUrl1, setAud1, setIsRecord, wha
     if (whatRecord === 'first') {
       setTimeout(() =>{
         setCanStop(true);
-      }, 20000)
+      }, 2000)
     } else {
       setCanStop(true)
     }
@@ -107,11 +107,6 @@ export function AudioRecord({ setScript, setAudioUrl1, setAud1, setIsRecord, wha
   }
 
   const onSubmitAudioFile = useCallback(() => {
-    // if (finalTranscript) {
-    // } else {
-    //   alert('녹음을 완료해주세요!.')
-    // }
-
     if (audioUrl) {
       // 출력된 링크에서 녹음된아이포트폴리오
       setAudioUrl1(URL.createObjectURL(audioUrl))

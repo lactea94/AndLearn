@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react'
+import React, { useEffect, useState } from 'react'
 import { ImageUpload } from './ImageUpload.js'
 import { AudioRecord } from './AudioRecord'
 // import { GrammarlyEditor } from './GrammarlyEditor'
@@ -6,7 +6,7 @@ import plusDefault from './plusDefault.png'
 import allu from './allu.png'
 import { apiInstance } from 'api/index'
 import { MyButton } from 'styles/Button.js'
-import { Container, Image, Col, Row } from 'react-bootstrap'
+import { Container, Col, Row } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 import * as S from './LearnStyle';
 
@@ -14,7 +14,6 @@ export function Learn() {
   const api = apiInstance()
   const [fileImage, setFileImage] = useState(plusDefault)
 
-  const [isWords, setIsWords] = useState(false);
   const [isStart, setIsStart] = useState(false);
   const [isFirstRecord, setIsFirstRecord] = useState(false);
   const [isSecondRecord, setIsSecondRecord] = useState(false);
@@ -36,7 +35,6 @@ export function Learn() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    setIsWords(true);
     const wordList = words.map((word, index) => 
       <div key={index}>{word}</div>
     )
@@ -100,19 +98,30 @@ export function Learn() {
           </Row>
         ) : (
           <Row className='justify-content-center'>
-            <Col xs={12}>
-              <S.MyImage2 src={fileImage} alt="추가한 사진" />
+            <Col xs={12} lg={6}>
+              <S.MyImage2 src={fileImage} alt="녹음할 때 보일 사진" />
             </Col>
             {/* Record 부분 */}
             <Col>
+              { (aud1 && words.length > 0) &&
+                <S.AIBox> 
+                  {recommendWord}
+                </S.AIBox>
+              }
               {isStart &&
                 <span id="first-record">
                   {audioUrl1 && 
                     <>
-                      <S.Text1>1차 녹음</S.Text1>
-                      <S.smallAudio controls src={audioUrl1} controlsList='nodownload'></S.smallAudio>
+                      <Row style={{ marginTop: '1rem' }}>
+                        <Col xs={3} lg={12}>
+                          <S.Text1>1차 녹음</S.Text1>
+                        </Col>
+                        <Col xs={9}>
+                          <S.smallAudio controls src={audioUrl1} controlsList='nodownload'></S.smallAudio>
+                        </Col>
+                      </Row>
                       {aud1 && (
-                        <textarea value={script1} style={{ width: '100%' }} onChange={onCheck1}>
+                        <textarea value={script1} style={{ width: '100%', marginTop: '1rem' }} onChange={onCheck1}>
                           {script1}
                         </textarea>
                       )}
@@ -154,16 +163,12 @@ export function Learn() {
                   }
                 </span>
               }
-              { (aud1 && words.length > 0) &&
-                <S.AIBox> 
-                  {recommendWord}
-                </S.AIBox>
-              }
+              
             </Col>
             {/* Answer Box 부분 */}
-            <Col className="justify-content-center">
+            <S.smallAlluCol className="justify-content-center">
               <S.AlluImage src={allu} alt="추가한 사진" />
-            </Col>
+            </S.smallAlluCol>
           </Row>
         )}
 
