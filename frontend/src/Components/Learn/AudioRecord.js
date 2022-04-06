@@ -5,7 +5,7 @@ import SpeechRecognition, {
 } from 'react-speech-recognition'
 import { MyButton } from 'styles/Button'
 
-export function AudioRecord({ setScript, setAudioUrl1, setAud1, setIsRecord, words }) {
+export function AudioRecord({ setScript, setAudioUrl1, setAud1, setIsRecord, whatRecord }) {
   const [stream, setStream] = useState()
   const [media, setMedia] = useState()
   const [onRec, setOnRec] = useState(true)
@@ -13,12 +13,22 @@ export function AudioRecord({ setScript, setAudioUrl1, setAud1, setIsRecord, wor
   const [analyser, setAnalyser] = useState()
   const [audioUrl, setAudioUrl] = useState()
   const [isComplete, setIsComplete] = useState(false);
+  const [canStop, setCanStop] = useState(false);
 
   const { transcript, resetTranscript, finalTranscript } =
     useSpeechRecognition()
 
   // 사용자가 음성 녹음을 시작했을 때
   const onRecAudio = () => {
+    // 첫번째 녹음을 시작했을 경우, 최소 20초의 녹음시간 이후 정지버튼 노출
+    if (whatRecord === 'first') {
+      setTimeout(() =>{
+        setCanStop(true);
+      }, 20000)
+    } else {
+      setCanStop(true)
+    }
+
     setIsComplete(false)
     setOnRec(false)
     // 음원정보를 담은 노드를 생성하거나 음원을 실행또는 디코딩 시키는 일을 한다
@@ -125,7 +135,7 @@ export function AudioRecord({ setScript, setAudioUrl1, setAud1, setIsRecord, wor
             :
             <MyButton onClick={onRecAudio} style={{ width: '7rem' }}>녹음</MyButton>
         ) : (
-          finalTranscript && words && <MyButton onClick={() => {offRecAudio();}} style={{ width: '7rem' }}>정지</MyButton>
+          finalTranscript && canStop && <MyButton onClick={() => {offRecAudio();}} style={{ width: '7rem' }}>정지</MyButton>
         )}
         {finalTranscript && isComplete && (
           <MyButton onClick={onSubmitAudioFile} style={{ width: '7rem', marginLeft: '2rem' }}>녹음 확인</MyButton>

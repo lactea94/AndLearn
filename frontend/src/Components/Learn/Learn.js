@@ -14,6 +14,7 @@ export function Learn() {
   const api = apiInstance()
   const [fileImage, setFileImage] = useState(plusDefault)
 
+  const [isWords, setIsWords] = useState(false);
   const [isStart, setIsStart] = useState(false);
   const [isFirstRecord, setIsFirstRecord] = useState(false);
   const [isSecondRecord, setIsSecondRecord] = useState(false);
@@ -35,6 +36,7 @@ export function Learn() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    setIsWords(true);
     const wordList = words.map((word, index) => 
       <div key={index}>{word}</div>
     )
@@ -108,7 +110,7 @@ export function Learn() {
                   {audioUrl1 && 
                     <>
                       <S.Text1>1차 녹음</S.Text1>
-                      <audio controls src={audioUrl1} controlsList='nodownload'></audio>
+                      <S.smallAudio controls src={audioUrl1} controlsList='nodownload'></S.smallAudio>
                       {aud1 && (
                         <textarea value={script1} style={{ width: '100%' }} onChange={onCheck1}>
                           {script1}
@@ -123,6 +125,7 @@ export function Learn() {
                       setAudioUrl1={setAudioUrl1}
                       setAud1={setAud1}
                       setIsRecord={setIsFirstRecord}
+                      whatRecord={'first'}
                     />
                   }
                 </span>
@@ -132,7 +135,7 @@ export function Learn() {
                   {audioUrl2 && (
                     <>
                       <S.Text2>2차 녹음</S.Text2>
-                      <audio controls src={audioUrl2} controlsList="nodownload"></audio>
+                      <S.smallAudio controls src={audioUrl2} controlsList="nodownload"></S.smallAudio>
                       {aud2 && (
                         <textarea value={script2} style={{ width: '100%' }} onChange={onCheck2}>
                           {script2}
@@ -146,6 +149,7 @@ export function Learn() {
                       setAudioUrl1={setAudioUrl2}
                       setAud1={setAud2}
                       setIsRecord={setIsSecondRecord}
+                      whatRecord={'second'}
                     />
                   }
                 </span>

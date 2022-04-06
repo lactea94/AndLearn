@@ -25,13 +25,14 @@ export const AlluImage = styled(Image)`
 
 `
 export const Text1 = styled.div`
-  margin-bottom:15px;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
   font-weight:bold;
 `
 
 export const Text2 = styled.div`
-  margin-bottom:15px;
-  margin-top:30px;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
   font-weight:bold;
 `
 
@@ -47,4 +48,10 @@ export const AIBox = styled.div`
   width: 100%;
   padding: 1rem;
   border-radius: 1rem;
+`
+
+export const smallAudio = styled.audio`
+  @media screen and (min-width: 400px) {
+    display: none;
+  }
 `
