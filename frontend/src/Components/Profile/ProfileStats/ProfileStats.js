@@ -5,15 +5,19 @@ import { apiInstance } from "api";
 import ApexCharts from "react-apexcharts";
 
 export function ProfileStats() {
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = today.getMonth();
+  const dates = today.getDate();
   const [myLearns, setMyLearns] = useState([]);
   const [myLearnCounts, setMyLearnCounts] = useState(Array.from({length: 368}, () => 0));
   const [dailyBoxs, setDailyBoxs] = useState();
-  const [myNowDate, setMyNowDate] = useState(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate()));
-  const [myLastDate, setMyLastDate] = useState(new Date(new Date().getFullYear() - 1, new Date().getMonth(), new Date().getDate() - 1));
+  const [myNowDate, setMyNowDate] = useState(new Date(year, month, dates));
+  const [myLastDate, setMyLastDate] = useState(new Date(year - 1, month, dates - 1));
   const [period, setPeriod] = useState('');
   const [streakDays, setStreakDays] = useState(0);
   const [streakPeriod, setStreakPeriod] = useState('');
-
+  
   // 러닝 목록
   useEffect(() => {
     apiInstance().get("/learn/statistics")
@@ -115,10 +119,10 @@ export function ProfileStats() {
 
     setDailyBoxs(myStats());
   }, [myLearnCounts, myLearns])
-
+  
   // 총 학습량 계산
   const totalLearnNum = () => {
-    var result = 0;
+    let result = 0;
 
     for (let i = 0; i < myLearnCounts.length; i++) {
       if (myLearnCounts[i] > 0) {
@@ -145,8 +149,8 @@ export function ProfileStats() {
 
   // 최근 연속 학습일 계산
   useEffect(() => {
-    var days = 0;
-    var dateNums = []; // endDay, startDay
+    let days = 0;
+    let dateNums = []; // endDay, startDay
 
     for (let i = myLearnCounts.length - 1; i >= 0; i--) {
       if (dateNums.length === 0) {
