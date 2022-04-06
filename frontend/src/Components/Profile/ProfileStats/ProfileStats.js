@@ -196,9 +196,7 @@ export function ProfileStats() {
 
   useEffect(() => {
     apiInstance().get('/learn/graph')
-    .then(res => {
-      setMonthStat(res.data)
-    })
+    .then(res => setMonthStat(res.data))
   }, [])
 
   const lineChartSeries = [{
@@ -272,7 +270,7 @@ export function ProfileStats() {
       intersect: false
     },
     xaxis: {
-      categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+      categories: ['Dec', 'Nov', 'Oct', 'Sep', 'Aug', 'Jul', 'Jun', 'May', 'Apr', 'Mar', 'Feb', 'Jan'],
     },
     colors: [
       '#FFDD74'
