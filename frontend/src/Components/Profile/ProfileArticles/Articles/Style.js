@@ -24,13 +24,17 @@ export const TableHead = styled(Row)`
 export const ColumnName = styled(Col)``
 
 export const TableRow = styled(Row)`
-  font-size: 0.8rem;
+  font-size: 0.2rem;
   padding: 0.5rem 0;
   align-items: center;
   border-top: solid 1px lightgray;
 
   &:hover {
     background-color: lightgray;
+  }
+
+  @media (min-width: 768px) {
+    font-size: 0.8rem;
   }
 `
 
