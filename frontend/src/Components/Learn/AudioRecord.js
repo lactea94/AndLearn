@@ -5,7 +5,7 @@ import SpeechRecognition, {
 } from 'react-speech-recognition'
 import { MyButton } from 'styles/Button'
 
-export function AudioRecord({ setScript, setAudioUrl1, setAud1, setIsRecord }) {
+export function AudioRecord({ setScript, setAudioUrl1, setAud1, setIsRecord, words }) {
   const [stream, setStream] = useState()
   const [media, setMedia] = useState()
   const [onRec, setOnRec] = useState(true)
@@ -13,7 +13,6 @@ export function AudioRecord({ setScript, setAudioUrl1, setAud1, setIsRecord }) {
   const [analyser, setAnalyser] = useState()
   const [audioUrl, setAudioUrl] = useState()
   const [isComplete, setIsComplete] = useState(false);
-  const [tmp, setTmp] = useState('');
 
   const { transcript, resetTranscript, finalTranscript } =
     useSpeechRecognition()
@@ -25,6 +24,7 @@ export function AudioRecord({ setScript, setAudioUrl1, setAud1, setIsRecord }) {
     // 음원정보를 담은 노드를 생성하거나 음원을 실행또는 디코딩 시키는 일을 한다
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)()
     // 자바스크립트를 통해 음원의 진행상태에 직접접근에 사용된다.
+    // const analyser = audioCtx.createAudioWorklet(0, 1, 1)
     const analyser = audioCtx.createScriptProcessor(0, 1, 1)
     setAnalyser(analyser)
     function makeSound(stream) {
@@ -111,23 +111,6 @@ export function AudioRecord({ setScript, setAudioUrl1, setAud1, setIsRecord }) {
       lastModified: new Date().getTime(),
       type: 'audio/x-m4a',
     })
-
-    function getBase64(file, onLoadCallback) {
-      return new Promise(function(resolve, reject) {
-          var reader = new FileReader();
-          reader.onload = function() { resolve(reader.result); };
-          reader.onerror = reject;
-          reader.readAsDataURL(file);
-      });
-    }
-
-    async function please() {
-      var promise = getBase64(sound);
-      var my_pdf_file_as_base64 = await promise;
-      return my_pdf_file_as_base64
-    }
-
-    console.log(please())
  
     setAud1(sound);
     setIsRecord(true);
@@ -142,7 +125,7 @@ export function AudioRecord({ setScript, setAudioUrl1, setAud1, setIsRecord }) {
             :
             <MyButton onClick={onRecAudio} style={{ width: '7rem' }}>녹음</MyButton>
         ) : (
-          finalTranscript && <MyButton onClick={() => {offRecAudio();}} style={{ width: '7rem' }}>정지</MyButton>
+          finalTranscript && words && <MyButton onClick={() => {offRecAudio();}} style={{ width: '7rem' }}>정지</MyButton>
         )}
         {finalTranscript && isComplete && (
           <MyButton onClick={onSubmitAudioFile} style={{ width: '7rem', marginLeft: '2rem' }}>녹음 확인</MyButton>
