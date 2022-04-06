@@ -244,7 +244,7 @@ export function ProfileStats() {
       categories: date,
     },
     colors: [
-      '#FFDD74'
+      '#58C063'
     ]
   }
 
@@ -287,7 +287,7 @@ export function ProfileStats() {
       categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
     },
     colors: [
-      '#FFDD74'
+      '#58C063'
     ]
   }
 
