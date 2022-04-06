@@ -4,6 +4,8 @@ import SpeechRecognition, {
   useSpeechRecognition,
 } from 'react-speech-recognition'
 import { MyButton } from 'styles/Button'
+import * as S from './LearnStyle';
+import onRecordingImage from './icons8-audio-wave.gif'
 
 export function AudioRecord({ setScript, setAudioUrl1, setAud1, setIsRecord, whatRecord }) {
   const [stream, setStream] = useState()
@@ -130,7 +132,13 @@ export function AudioRecord({ setScript, setAudioUrl1, setAud1, setIsRecord, wha
             :
             <MyButton onClick={onRecAudio} style={{ width: '7rem' }}>녹음</MyButton>
         ) : (
-          finalTranscript && canStop && <MyButton onClick={() => {offRecAudio();}} style={{ width: '7rem' }}>정지</MyButton>
+          <>
+            <S.onRecordingImage src={onRecordingImage} alt="recording"></S.onRecordingImage>
+            <div style={{ display: 'inline' }}>녹음을 진행중입니다...</div>
+            {finalTranscript && canStop && 
+              <MyButton onClick={() => {offRecAudio();}} style={{ width: '7rem', marginLeft: '1rem' }}>정지</MyButton>
+            }
+          </>
         )}
         {finalTranscript && isComplete && (
           <MyButton onClick={onSubmitAudioFile} style={{ width: '7rem', marginLeft: '2rem' }}>녹음 확인</MyButton>

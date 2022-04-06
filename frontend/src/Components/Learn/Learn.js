@@ -34,6 +34,15 @@ export function Learn() {
 
   const navigate = useNavigate();
 
+  const [AIBoxElement, setAIBoxElement] = useState('200px')
+
+  useEffect(() => {
+    if (document.getElementById('AIWordBox')) {
+      setAIBoxElement(document.getElementById('AIWordBox').clientHeight)
+    }
+  }, [recommendWord])
+  
+
   useEffect(() => {
     const wordList = words.map((word, index) => 
       <div key={index}>{word}</div>
@@ -42,12 +51,10 @@ export function Learn() {
   }, [words])
 
   function onCheck1(e) {
-    console.log(e.target.value)
     setScript1(e.target.value)
   }
 
   function onCheck2(e) {
-    console.log(e.target.value)
     setScript2(e.target.value)
   }
 
@@ -85,7 +92,7 @@ export function Learn() {
   return (
     <Container>
         {!isStart ? (
-          <Row>
+          <Row className='justify-content-center'>
             <Col xs={12}>
               <S.MyImage src={fileImage} alt="추가한 사진" />
             </Col>
@@ -97,58 +104,62 @@ export function Learn() {
             />
           </Row>
         ) : (
+          <>
           <Row className='justify-content-center'>
-            <Col xs={12} lg={6}>
+            <Col xs={12} lg={8}>
               <S.MyImage2 src={fileImage} alt="녹음할 때 보일 사진" />
             </Col>
             {/* Record 부분 */}
-            <Col>
-              { (aud1 && words.length > 0) &&
-                <S.AIBox> 
-                  {recommendWord}
-                </S.AIBox>
-              }
+            <Col xs={12} lg={4}>
               {isStart &&
-                <span id="first-record">
+                <span id="firstRecord">
                   {audioUrl1 && 
                     <>
                       <Row style={{ marginTop: '1rem' }}>
-                        <Col xs={3} lg={12}>
+                        <Col xs={3}>
                           <S.Text1>1차 녹음</S.Text1>
                         </Col>
                         <Col xs={9}>
-                          <S.smallAudio controls src={audioUrl1} controlsList='nodownload'></S.smallAudio>
+                          <S.myAudio controls src={audioUrl1} controlsList='nodownload'></S.myAudio>
                         </Col>
                       </Row>
                       {aud1 && (
-                        <textarea value={script1} style={{ width: '100%', marginTop: '1rem' }} onChange={onCheck1}>
+                        <S.myTextarea value={script1} style={{ width: '100%' }} onChange={onCheck1}>
                           {script1}
-                        </textarea>
+                        </S.myTextarea>
                       )}
                     </>
                   }
                   {!isFirstRecord && 
-                    <AudioRecord
-                      words={words}
-                      setScript={setScript1}
-                      setAudioUrl1={setAudioUrl1}
-                      setAud1={setAud1}
-                      setIsRecord={setIsFirstRecord}
-                      whatRecord={'first'}
-                    />
+                    <>
+                      <AudioRecord
+                        words={words}
+                        setScript={setScript1}
+                        setAudioUrl1={setAudioUrl1}
+                        setAud1={setAud1}
+                        setIsRecord={setIsFirstRecord}
+                        whatRecord={'first'}
+                      />
+                    </>
                   }
                 </span>
               }
               {isFirstRecord && 
-                <span id="second-record">
+                <span id="secondRecord">
                   {audioUrl2 && (
                     <>
-                      <S.Text2>2차 녹음</S.Text2>
-                      <S.smallAudio controls src={audioUrl2} controlsList="nodownload"></S.smallAudio>
+                      <Row style={{ marginTop: '1rem' }}>
+                        <Col xs={3}>
+                          <S.Text2>2차 녹음</S.Text2>
+                        </Col>
+                        <Col xs={9}>
+                          <S.myAudio controls src={audioUrl2} controlsList="nodownload"></S.myAudio>
+                        </Col>
+                      </Row>
                       {aud2 && (
-                        <textarea value={script2} style={{ width: '100%' }} onChange={onCheck2}>
+                        <S.myTextarea value={script2} style={{ width: '100%' }} onChange={onCheck2}>
                           {script2}
-                        </textarea>
+                        </S.myTextarea>
                       )}
                     </>
                   )}
@@ -164,15 +175,55 @@ export function Learn() {
                 </span>
               }
               
+              { (aud1 && words.length > 0) &&
+                <Row>
+                  <Col xs={12} md={6} lg={12}>
+                    <S.AIBox id="AIWordBox"> 
+                      {recommendWord}
+                    </S.AIBox>
+                  </Col>
+                  <S.smallAlluCol className="justify-content-center" xs={12} md={6} lg={12}>
+                    <S.AlluImage src={allu} alt="추가한 사진" />
+                  </S.smallAlluCol>
+                </Row>
+              }
             </Col>
-            {/* Answer Box 부분 */}
-            <S.smallAlluCol className="justify-content-center">
-              <S.AlluImage src={allu} alt="추가한 사진" />
-            </S.smallAlluCol>
           </Row>
+          <S.largeWidthRow style={{ marginTop: '1rem'}}>
+            <Col lg={8}>
+              {aud1 && (
+                <Row>
+                  <Col lg={2}>
+                    <S.Text1>1차 답변</S.Text1>
+                  </Col>
+                  <Col lg={10}>
+                    <S.largeTextarea value={script1} style={{ width: '100%' }} onChange={onCheck1}>
+                      {script1}
+                    </S.largeTextarea>
+                  </Col>
+                </Row>
+              )}
+              {aud2 && (
+                <Row>
+                  <Col lg={2}>
+                    <S.Text1>2차 답변</S.Text1>
+                  </Col>
+                  <Col lg={10}>
+                    <S.largeTextarea value={script2} style={{ width: '100%' }} onChange={onCheck2}>
+                      {script2}
+                    </S.largeTextarea>
+                  </Col>
+                </Row>
+              )}
+            </Col>
+            <Col lg={4}>
+              <S.largeAlluImage src={allu} alt="추가한 사진" />
+            </Col>
+          </S.largeWidthRow>
+          </>
         )}
 
-      {isSecondRecord && <MyButton onClick={onSubmit}>완료</MyButton>}
+      {isSecondRecord && <MyButton style={{ marginTop: '1rem'}} onClick={onSubmit}>완료</MyButton>}
     </Container>
   )
 }
