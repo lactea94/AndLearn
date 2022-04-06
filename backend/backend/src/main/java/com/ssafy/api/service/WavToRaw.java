@@ -60,10 +60,10 @@ public class WavToRaw {
             //핵심 코드
             //core code
             output.write(formatWavToRaw(changeFormat(AudioToByte(file), FORMAT)));
+//            return formatWavToRaw(changeFormat(AudioToByte(file), FORMAT))
 
-            //Can delete
-            //Just Test Code
-            System.out.print("여기여기여기여기여기여기여기여깅 Success");
+
+            System.out.print("Success");
 
         } catch (IOException e) {
             // TODO Auto-generated catch block

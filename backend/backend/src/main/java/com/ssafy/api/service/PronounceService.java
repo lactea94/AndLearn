@@ -12,6 +12,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
@@ -30,8 +31,8 @@ public class PronounceService {
         //String openApiURL = "http://aiopen.etri.re.kr:8000/WiseASR/PronunciationKor";   //한국어
         String accessKey = "151eac6a-5b68-4ad5-a784-36d773e22df9";    // 발급받은 API Key
         String languageCode = "english";     // 언어 코드
-        String script = "welcome to the bus station thank you";    // 평가 대본
-        String audioFilePath = "https://ssafy-s3-bucket.s3.ap-northeast-2.amazonaws.com/86d03c29-7a37-466e-abaa-7faa23e03d80.m4a";  // 녹음된 음성 파일 경로
+//        String script = "";    // 평가 대본
+//        String audioFilePath = "/Users/gojaehyeon/Desktop/pronounce/S06P22C201/backend/backend/soundBlob.m4a";  // 녹음된 음성 파일 경로
         String audioContents = null;
 
         Gson gson = new Gson();
@@ -40,9 +41,6 @@ public class PronounceService {
 
         try {
             File file = convert(multipartFile2);
-            System.out.println("여기여기요기여기여기여기여기여기"+file);
-//            wavToRaw.SaveRaw(file);
-
             Path path = file.toPath();
             byte[] audioBytes = Files.readAllBytes(path);
             audioContents = Base64.getEncoder().encodeToString(audioBytes);
@@ -51,7 +49,7 @@ public class PronounceService {
         }
 
         argument.put("language_code", languageCode);
-        argument.put("script", script);
+//        argument.put("script", script);
         argument.put("audio", audioContents);
 
         request.put("access_key", accessKey);
