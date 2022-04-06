@@ -72,7 +72,7 @@ export function Profile() {
           </Col>
           <Col>
             <NavLink to="articles" state={{ user:user }} style={S.navLinkStyle}>
-                게시 글
+                게시글
             </NavLink>
           </Col>
         </Row>

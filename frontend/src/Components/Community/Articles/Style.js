@@ -50,4 +50,8 @@ export const DetailLink = styled(Link)`
   text-decoration: none;
   font-weight: bold;
   color: black;
+
+  &:hover {
+    color: gray;
+  }
 `;

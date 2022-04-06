@@ -42,7 +42,6 @@ export const navLinkStyle = ({ isActive }) => (
     backgroundColor: isActive ? "#FFDD74" : "#58C063",
     color: "white",
     fontSize: "1rem",
-    fontFamily: "Maru Buri",
     paddingRight: "0.8rem",
     paddingLeft: "0.8rem",
     paddingTop: "0.53rem",

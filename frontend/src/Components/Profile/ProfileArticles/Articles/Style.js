@@ -43,6 +43,10 @@ export const Column = styled(Col)`
 
 export const DetailLink = styled(Link)`
   text-decoration: none;
+  color: black;
   font-weight: bold;
-  font-size: 1rem;
+
+  &:hover {
+    color: gray;
+  }
 `;
