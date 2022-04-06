@@ -129,18 +129,18 @@ export function Learn() {
 
     const scoreBody = JSON.stringify(scoreData)
 
-    axios
-      .post('http://aiopen.etri.re.kr:8000/WiseASR/Pronunciation', scoreBody, {
-      headers: {
-        'Content-Type':'application/json; charset=UTF-8'
-      },
-    })
-      .then(res => {
-        console.log(res)
-      })
-      .catch(e => {
-        console.log(e)
-      })
+    // axios
+    //   .post('http://aiopen.etri.re.kr:8000/WiseASR/Pronunciation', scoreBody, {
+    //   headers: {
+    //     'Content-Type':'application/json; charset=UTF-8'
+    //   },
+    // })
+    //   .then(res => {
+    //     console.log(res)
+    //   })
+    //   .catch(e => {
+    //     console.log(e)
+    //   })
     
     const formData = new FormData()
     formData.append('file', aud1)
