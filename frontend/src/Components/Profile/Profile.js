@@ -61,7 +61,7 @@ export function Profile() {
         </Row>
         <Row style={{ marginTop: '2rem' }}>
           <Col>
-            <NavLink to="content" isActive style={S.navLinkStyle}>
+            <NavLink to="content" style={S.navLinkStyle}>
               공부내용
             </NavLink>
           </Col>
