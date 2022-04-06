@@ -1,9 +1,10 @@
-import { Form } from "react-bootstrap"
+import { Alert, Form } from "react-bootstrap"
 import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { MyButton } from "styles/Button"
 import styled from "styled-components"
 import { apiInstance } from "api"
+import { Input } from "styles/Input"
 
 const MyForm = styled(Form)`
   @media screen and (min-width: 576px) {
@@ -16,7 +17,6 @@ export function UserInfoEdit() {
   const [userName, setUserName] = useState('');
   const [userNameError, setUserNameError] = useState(false);
   const [dName, setDName] = useState('');
-  const [checkName, setCheckName] = useState(false);
   const [checkValues, setCheckValues] = useState('');
   const [imgBase64, setImgBase64] = useState([]); // 파일 base64
   const [imgFile, setImgFile] = useState(null);	//파일
@@ -55,11 +55,9 @@ export function UserInfoEdit() {
       })
       .then((res) => {
         setDName('');
-        setCheckName(true);
       })
       .catch((error) => {
         setDName('이미 존재하는 이름입니다.');
-        setCheckName(false);
       })
   }
 
@@ -99,19 +97,20 @@ export function UserInfoEdit() {
   return (
     <div className="row justify-content-center"  style={{ minHeight:'100vh'}}>
       <MyForm>
-        <Form.Group className="mb-3">
-          <Form.Control
+        <Form.Group className="mb-4">
+          <Input
             maxLength={20}
+            style={{width: "100%", margin: 0}}
             placeholder="Nickname"
             value={userName}
             onChange={onChangeUserName}
           />
         </Form.Group>
-        <p>{dName}</p>
+        { dName && <Alert variant="warning">{dName}</Alert> }
         {userNameError && (
           <div className="invalid-input">닉네임을 입력해주세요.</div>
         )}
-        <div className="mb-3">
+        <div className="mb-4">
           {imgBase64.map((item, index) => {
             return(
               <img
@@ -124,23 +123,32 @@ export function UserInfoEdit() {
             )
           })}
         </div>
-        <Form.Group className="mb-3">
-          <Form.Control 
+        <Form.Group className="mb-4">
+          <Input 
             type="file" 
             id="file"
+            style={{width: "100%", margin: 0}}
             onChange={handleChangeFile}
             placeholder="프로필 사진"
           />
         </Form.Group>
-        <div className="d-grid gap-1 mb-3">
-          <MyButton color="#58C063" onClick={() => {onSubmit(); onCheckName();}}>회원 정보 수정</MyButton>
-        </div>
-        <p>{checkValues}</p>
-        <div>
-          <Link to={`password`}>
-            <MyButton color="#58C063">비밀번호 수정</MyButton>
-          </Link>
-        </div>
+        <MyButton
+          color="#58C063"
+          style={{width: "100%", marginBottom: "1.5rem"}}
+          onClick={() => {onSubmit(); onCheckName();}}
+        >
+          회원 정보 수정
+        </MyButton>
+        { checkValues && <Alert variant="warning">{checkValues}</Alert> }
+        <Link to={`password`}>
+          <MyButton
+            style={{
+              width: "100%"
+            }}
+          >
+            비밀번호를 수정하려면 클릭!!
+          </MyButton>
+        </Link>
       </MyForm>
     </div>
   )

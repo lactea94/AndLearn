@@ -2,7 +2,7 @@ import { useState } from "react"
 import { Form } from "react-bootstrap"
 import { MyButton } from "styles/Button";
 import { apiInstance } from "api";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export function PasswordEdit() {
   const [password, setPassword] = useState('')
@@ -74,7 +74,8 @@ export function PasswordEdit() {
           )}
         </Form.Group>
         <div className="d-grid gap-1">
-          <MyButton color="#58C063" onClick={onSubmit}>비밀번호 수정</MyButton>
+          <MyButton onClick={() => {navigate(-1)}}>뒤로가기</MyButton>
+          <MyButton onClick={onSubmit}>비밀번호 수정</MyButton>
         </div>
       </Form>
     </div>
