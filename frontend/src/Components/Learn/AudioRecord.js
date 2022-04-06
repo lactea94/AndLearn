@@ -111,7 +111,7 @@ export function AudioRecord({ setScript, setAudioUrl1, setAud1, setIsRecord, wor
       lastModified: new Date().getTime(),
       type: 'audio/x-m4a',
     })
- 
+
     setAud1(sound);
     setIsRecord(true);
     setIsComplete(false);
@@ -120,7 +120,7 @@ export function AudioRecord({ setScript, setAudioUrl1, setAud1, setIsRecord, wor
   return (
     <Col style={{margin: '1rem'}}>
         {onRec ? (
-          isComplete ? 
+          isComplete ?
             <MyButton onClick={onRecAudio} style={{ width: '7rem' }}>재녹음</MyButton>
             :
             <MyButton onClick={onRecAudio} style={{ width: '7rem' }}>녹음</MyButton>
