@@ -52,7 +52,7 @@ export function Community() {
     ))} else if (searchCategory === 'nickname') {
       setFilterdArticle(() => 
         articles.filter((article) => 
-          article.nickname.includes(searchText)
+          article.nickname.toLowerCase().includes(searchText.toLowerCase())
     ))}
   }, [searchText, articles, searchCategory]);
 
