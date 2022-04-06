@@ -1,48 +1,49 @@
-package com.ssafy.api.controller;
+package com.ssafy.api.service;
 
 import com.google.gson.Gson;
-import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import io.swagger.v3.oas.annotations.servers.Server;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import javax.sound.sampled.UnsupportedAudioFileException;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 
-@RestController
-@RequiredArgsConstructor
-@RequestMapping("/v1/pronunce")
-public class PronunController {
+@Service
+public class PronounceService {
+    private final WavToRaw wavToRaw;
 
-    @GetMapping("")
-    public ResponseEntity pronunce() {
+    public PronounceService(WavToRaw wavToRaw) {
+        this.wavToRaw = wavToRaw;
+    }
+
+    public void pronounce(MultipartFile multipartFile2){
+        // 음성 파일 저장 전 평가 점수
         String openApiURL = "http://aiopen.etri.re.kr:8000/WiseASR/Pronunciation"; // 영어
         //String openApiURL = "http://aiopen.etri.re.kr:8000/WiseASR/PronunciationKor";   //한국어
         String accessKey = "151eac6a-5b68-4ad5-a784-36d773e22df9";    // 발급받은 API Key
         String languageCode = "english";     // 언어 코드
-//        String script = "PRONUNCIATION_SCRIPT";    // 평가 대본
+        String script = "welcome to the bus station thank you";    // 평가 대본
         String audioFilePath = "https://ssafy-s3-bucket.s3.ap-northeast-2.amazonaws.com/86d03c29-7a37-466e-abaa-7faa23e03d80.m4a";  // 녹음된 음성 파일 경로
         String audioContents = null;
 
         Gson gson = new Gson();
-
         Map<String, Object> request = new HashMap<>();
         Map<String, String> argument = new HashMap<>();
 
         try {
-            Path path = Paths.get(audioFilePath);
+            File file = convert(multipartFile2);
+            System.out.println("여기여기요기여기여기여기여기여기"+file);
+//            wavToRaw.SaveRaw(file);
+
+            Path path = file.toPath();
             byte[] audioBytes = Files.readAllBytes(path);
             audioContents = Base64.getEncoder().encodeToString(audioBytes);
         } catch (IOException e) {
@@ -50,7 +51,7 @@ public class PronunController {
         }
 
         argument.put("language_code", languageCode);
-//        argument.put("script", script);
+        argument.put("script", script);
         argument.put("audio", audioContents);
 
         request.put("access_key", accessKey);
@@ -79,13 +80,21 @@ public class PronunController {
             System.out.println("[responseCode] " + responseCode);
             System.out.println("[responBody]");
             System.out.println(responBody);
-            return new ResponseEntity(HttpStatus.OK);
+
 
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return null;
+    }
+
+    public File convert(MultipartFile mfile) throws IOException {
+        File file = new File(mfile.getOriginalFilename());
+        file.createNewFile();
+        FileOutputStream fos = new FileOutputStream(file);
+        fos.write(mfile.getBytes());
+        fos.close();
+        return file;
     }
 }

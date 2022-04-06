@@ -107,9 +107,9 @@ export function AudioRecord({ setScript, setAudioUrl1, setAud1, setIsRecord }) {
       setAudioUrl1(URL.createObjectURL(audioUrl))
     }
     // File 생성자를 사용해 파일로 변환
-    const sound = new File([audioUrl], 'soundBlob.m4a', {
+    const sound = new File([audioUrl], 'soundBlob.wav', {
       lastModified: new Date().getTime(),
-      type: 'audio/x-m4a',
+      type: 'audio/wav',
     })
 
     function getBase64(file, onLoadCallback) {
