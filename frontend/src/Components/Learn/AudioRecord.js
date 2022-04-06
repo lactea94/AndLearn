@@ -4,8 +4,10 @@ import SpeechRecognition, {
   useSpeechRecognition,
 } from 'react-speech-recognition'
 import { MyButton } from 'styles/Button'
+import * as S from './LearnStyle';
+import onRecordingImage from './icons8-audio-wave.gif'
 
-export function AudioRecord({ setScript, setAudioUrl1, setAud1, setIsRecord }) {
+export function AudioRecord({ setScript, setAudioUrl1, setAud1, setIsRecord, whatRecord }) {
   const [stream, setStream] = useState()
   const [media, setMedia] = useState()
   const [onRec, setOnRec] = useState(true)
@@ -13,18 +15,28 @@ export function AudioRecord({ setScript, setAudioUrl1, setAud1, setIsRecord }) {
   const [analyser, setAnalyser] = useState()
   const [audioUrl, setAudioUrl] = useState()
   const [isComplete, setIsComplete] = useState(false);
-  const [tmp, setTmp] = useState('');
+  const [canStop, setCanStop] = useState(false);
 
   const { transcript, resetTranscript, finalTranscript } =
     useSpeechRecognition()
 
   // 사용자가 음성 녹음을 시작했을 때
   const onRecAudio = () => {
+    // 첫번째 녹음을 시작했을 경우, 최소 20초의 녹음시간 이후 정지버튼 노출
+    if (whatRecord === 'first') {
+      setTimeout(() =>{
+        setCanStop(true);
+      }, 2000)
+    } else {
+      setCanStop(true)
+    }
+
     setIsComplete(false)
     setOnRec(false)
     // 음원정보를 담은 노드를 생성하거나 음원을 실행또는 디코딩 시키는 일을 한다
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)()
     // 자바스크립트를 통해 음원의 진행상태에 직접접근에 사용된다.
+    // const analyser = audioCtx.createAudioWorklet(0, 1, 1)
     const analyser = audioCtx.createScriptProcessor(0, 1, 1)
     setAnalyser(analyser)
     function makeSound(stream) {
@@ -97,11 +109,6 @@ export function AudioRecord({ setScript, setAudioUrl1, setAud1, setIsRecord }) {
   }
 
   const onSubmitAudioFile = useCallback(() => {
-    // if (finalTranscript) {
-    // } else {
-    //   alert('녹음을 완료해주세요!.')
-    // }
-
     if (audioUrl) {
       // 출력된 링크에서 녹음된아이포트폴리오
       setAudioUrl1(URL.createObjectURL(audioUrl))
@@ -112,23 +119,6 @@ export function AudioRecord({ setScript, setAudioUrl1, setAud1, setIsRecord }) {
       type: 'audio/x-m4a',
     })
 
-    function getBase64(file, onLoadCallback) {
-      return new Promise(function(resolve, reject) {
-          var reader = new FileReader();
-          reader.onload = function() { resolve(reader.result); };
-          reader.onerror = reject;
-          reader.readAsDataURL(file);
-      });
-    }
-
-    async function please() {
-      var promise = getBase64(sound);
-      var my_pdf_file_as_base64 = await promise;
-      return my_pdf_file_as_base64
-    }
-
-    console.log(please())
- 
     setAud1(sound);
     setIsRecord(true);
     setIsComplete(false);
@@ -137,12 +127,18 @@ export function AudioRecord({ setScript, setAudioUrl1, setAud1, setIsRecord }) {
   return (
     <Col style={{margin: '1rem'}}>
         {onRec ? (
-          isComplete ? 
+          isComplete ?
             <MyButton onClick={onRecAudio} style={{ width: '7rem' }}>재녹음</MyButton>
             :
             <MyButton onClick={onRecAudio} style={{ width: '7rem' }}>녹음</MyButton>
         ) : (
-          finalTranscript && <MyButton onClick={() => {offRecAudio();}} style={{ width: '7rem' }}>정지</MyButton>
+          <>
+            <S.onRecordingImage src={onRecordingImage} alt="recording"></S.onRecordingImage>
+            <div style={{ display: 'inline' }}>녹음을 진행중입니다...</div>
+            {finalTranscript && canStop && 
+              <MyButton onClick={() => {offRecAudio();}} style={{ width: '7rem', marginLeft: '1rem' }}>정지</MyButton>
+            }
+          </>
         )}
         {finalTranscript && isComplete && (
           <MyButton onClick={onSubmitAudioFile} style={{ width: '7rem', marginLeft: '2rem' }}>녹음 확인</MyButton>

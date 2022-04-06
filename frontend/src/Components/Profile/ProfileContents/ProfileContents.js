@@ -1,5 +1,4 @@
 import { Col, Row } from 'react-bootstrap';
-import { useParams } from 'react-router-dom';
 import { ProfileContent } from './ProfileContent';
 import styled from "styled-components";
 import { useState, useEffect } from "react"
@@ -37,7 +36,6 @@ export function ProfileContents() {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [isRemoteOn, setIsRemoteOn] = useState(true);
-  const api = apiInstance();
 
   function range(start, end) {
     var arr = [];
@@ -65,12 +63,11 @@ export function ProfileContents() {
     "December",
   ];
 
-  // 전체 Contents 목록 불러오기 (현재 임시 값)
+  // 전체 Contents 목록 불러오기
   useEffect(() => {
-    api.get("/learn/pictures")
+    apiInstance().get("/learn/pictures")
       .then(res => {
         setContents(res.data)
-        console.log(new Date().getFullYear(), new Date().getMonth()+1, new Date().getDate() )
       })
   }, [])
 
@@ -89,7 +86,6 @@ export function ProfileContents() {
     )
 
     setSelectedContents(result);
-    console.log(startMSec)
   }
 
   // Remote 관련 함수

@@ -1,5 +1,5 @@
 import { Image } from "react-bootstrap"
-import { NavLink, useParams } from "react-router-dom"
+import { NavLink } from "react-router-dom"
 import styled from "styled-components";
 
 const MyImage = styled(Image)`
@@ -24,7 +24,6 @@ const MyImage = styled(Image)`
 `
 
 export function ProfileContent({content}) {
-  const { userId } = useParams();
 
   return (
     <div className="mb-4">

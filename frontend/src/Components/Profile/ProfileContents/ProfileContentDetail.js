@@ -15,7 +15,7 @@ export function ProfileContentDetail() {
       .then(res => {
         setLearningInfo(res.data);
       })
-  }, [])
+  }, [api, contentId])
 
   const onToggleOpen = () => {
     setIsCheckAnswer(!isCheckAnswer)

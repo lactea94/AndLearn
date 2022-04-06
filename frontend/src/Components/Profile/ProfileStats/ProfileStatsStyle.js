@@ -8,10 +8,10 @@ export const CalendarBox = styled.div`
   border-right: 1px solid gray;
   border-top-left-radius: 6px;
   border-top-right-radius: 6px;
-  @media screen and (min-width: 900px) {
-    width: 850px;
-  }
   width: 90%;
+  @media ( min-width: 1280px ) {
+    width: 80%;
+  }
 `
 
 export const Calendar = styled.div`
@@ -31,10 +31,10 @@ export const DailyBox = styled.div`
 `
 
 export const StatsRow = styled(Row)`
-  @media screen and (min-width: 900px) {
-    width: 850px;
-  }
   width: 90%;
+  @media ( min-width: 1280px ) {
+    width: 80%;
+  }
 `
 
 export const StatsText = styled.div`

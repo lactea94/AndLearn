@@ -1,8 +1,7 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { djangoInstance } from 'api/index'
 import { MyButton } from 'styles/Button'
 import { Col } from 'react-bootstrap'
-//import Dropzone from 'react-dropzone'
 
 export function ImageUpload({ setFileImage, setKeyDjango, setWords, setIsStart }) {
   const [image, setImage] = useState('')
@@ -10,7 +9,6 @@ export function ImageUpload({ setFileImage, setKeyDjango, setWords, setIsStart }
 
   function onLoad(e) {
     setImage(e.target.files[0])
-    console.log(e.target.files[0])
     setFileImage(URL.createObjectURL(e.target.files[0]))
   }
 
@@ -18,7 +16,6 @@ export function ImageUpload({ setFileImage, setKeyDjango, setWords, setIsStart }
     setIsStart(true);
     const formData = new FormData()
     formData.append('file', image)
-
     api
       .post('image', formData, {
         headers: {
@@ -39,20 +36,10 @@ export function ImageUpload({ setFileImage, setKeyDjango, setWords, setIsStart }
   return (
     <Col>
       {image ? 
-        <MyButton style={{margin: "1rem"}} onClick={onImageUpload}>시작!</MyButton>
+        <MyButton style={{margin: "1rem"}} onClick={() => {onImageUpload()}}>시작!</MyButton>
       : 
         <>
           <MyButton style={{margin: "1rem"}}>
-            {/* <Dropzone onDrop={onLoad}>
-              {({ getRootProps, getInputProps }) => (
-                <section>
-                  <div {...getRootProps()}>
-                    <input {...getInputProps()} />
-                    <p>Drag 'n' drop some files here, or click to select files</p>
-                  </div>
-                </section>
-              )}
-            </Dropzone> */}
             <input
               id="imgInput"
               className="image"
