@@ -50,7 +50,7 @@ export function PasswordEdit() {
       api
         .put('/users/edit-password', { password: password })
         .then(setTimeout(() => {
-          navigate(0)
+          navigate(-1)
         }, 500))
         .catch((error) => {
           console.log(error)
