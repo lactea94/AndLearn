@@ -4,6 +4,20 @@ import { MyButton } from "styles/Button";
 import { apiInstance } from "api";
 import { useNavigate } from "react-router-dom";
 import { Input } from "styles/Input";
+import styled from "styled-components";
+
+const MyForm = styled(Form)`
+  margin-top: 2rem;
+  width: 80%;
+
+  @media screen and (min-width: 768px) {
+    width: 40%;
+  }
+
+  @media screen and (min-width: 1200px) {
+    width: 30%;
+  }
+`
 
 export function PasswordEdit() {
   const [password, setPassword] = useState('')
@@ -44,9 +58,9 @@ export function PasswordEdit() {
   }
 
   return (
-    <div className="row justify-content-center"  style={{ minHeight:'100vh'}}>
-      <Form style={{ width: '50%' }}>
-        <Form.Group className="mb-3">
+    <div className="row justify-content-center">
+      <MyForm>
+        <Form.Group className="mb-4">
           <Input
             maxLength={20}
             style={{
@@ -64,7 +78,7 @@ export function PasswordEdit() {
             </div>
           )}
         </Form.Group>
-        <Form.Group className="mb-3">
+        <Form.Group className="mb-4">
           <Input
             maxLength={20}
             style={{
@@ -85,7 +99,7 @@ export function PasswordEdit() {
         <MyButton
           style={{
             width: "100%",
-            marginBottom: "1rem"
+            marginBottom: "1.5rem"
           }}
           onClick={onSubmit}
           
@@ -98,7 +112,7 @@ export function PasswordEdit() {
         >
           뒤로가기
         </MyButton>
-      </Form>
+      </MyForm>
     </div>
   )
 }
