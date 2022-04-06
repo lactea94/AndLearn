@@ -1,6 +1,12 @@
 package com.ssafy.api.controller;
 
 import com.google.gson.Gson;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -15,14 +21,19 @@ import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 
+@RestController
+@RequiredArgsConstructor
+@RequestMapping("/v1/pronunce")
 public class PronunController {
-    static public void main ( String[] args ) {
+
+    @GetMapping("")
+    public ResponseEntity pronunce() {
         String openApiURL = "http://aiopen.etri.re.kr:8000/WiseASR/Pronunciation"; // 영어
         //String openApiURL = "http://aiopen.etri.re.kr:8000/WiseASR/PronunciationKor";   //한국어
         String accessKey = "151eac6a-5b68-4ad5-a784-36d773e22df9";    // 발급받은 API Key
         String languageCode = "english";     // 언어 코드
-        String script = "PRONUNCIATION_SCRIPT";    // 평가 대본
-        String audioFilePath = "AUDIO_FILE_PATH";  // 녹음된 음성 파일 경로
+//        String script = "PRONUNCIATION_SCRIPT";    // 평가 대본
+        String audioFilePath = "https://ssafy-s3-bucket.s3.ap-northeast-2.amazonaws.com/86d03c29-7a37-466e-abaa-7faa23e03d80.m4a";  // 녹음된 음성 파일 경로
         String audioContents = null;
 
         Gson gson = new Gson();
@@ -39,7 +50,7 @@ public class PronunController {
         }
 
         argument.put("language_code", languageCode);
-        argument.put("script", script);
+//        argument.put("script", script);
         argument.put("audio", audioContents);
 
         request.put("access_key", accessKey);
@@ -68,11 +79,13 @@ public class PronunController {
             System.out.println("[responseCode] " + responseCode);
             System.out.println("[responBody]");
             System.out.println(responBody);
+            return new ResponseEntity(HttpStatus.OK);
 
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return null;
     }
 }
