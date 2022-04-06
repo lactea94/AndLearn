@@ -1,5 +1,4 @@
 import { Col, Row } from 'react-bootstrap';
-import { useParams } from 'react-router-dom';
 import { ProfileContent } from './ProfileContent';
 import styled from "styled-components";
 import { useState, useEffect } from "react"
@@ -37,7 +36,6 @@ export function ProfileContents() {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [isRemoteOn, setIsRemoteOn] = useState(true);
-  const api = apiInstance();
 
   function range(start, end) {
     var arr = [];
@@ -67,7 +65,7 @@ export function ProfileContents() {
 
   // 전체 Contents 목록 불러오기
   useEffect(() => {
-    api.get("/learn/pictures")
+    apiInstance().get("/learn/pictures")
       .then(res => {
         setContents(res.data)
       })
