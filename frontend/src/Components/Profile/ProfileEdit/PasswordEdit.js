@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Col, Form, Row } from "react-bootstrap"
+import { Form } from "react-bootstrap"
 import { MyButton } from "styles/Button";
 import { apiInstance } from "api";
 import { useNavigate } from "react-router-dom";

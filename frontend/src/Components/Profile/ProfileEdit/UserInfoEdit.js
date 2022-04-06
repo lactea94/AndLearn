@@ -7,10 +7,16 @@ import { apiInstance } from "api"
 import { Input } from "styles/Input"
 
 const MyForm = styled(Form)`
-  @media screen and (min-width: 576px) {
-    width: 50%;
+  margin-top: 2rem;
+  width: 80%;
+
+  @media screen and (min-width: 768px) {
+    width: 40%;
   }
-  width: 90%;
+
+  @media screen and (min-width: 1200px) {
+    width: 30%;
+  }
 `
 
 export function UserInfoEdit() {
@@ -95,7 +101,7 @@ export function UserInfoEdit() {
   }
 
   return (
-    <div className="row justify-content-center"  style={{ minHeight:'100vh'}}>
+    <div className="row justify-content-center">
       <MyForm>
         <Form.Group className="mb-4">
           <Input
