@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Form } from "react-bootstrap"
+import { Alert, Form } from "react-bootstrap"
 import { MyButton } from "styles/Button";
 import { apiInstance } from "api";
 import { useNavigate } from "react-router-dom";
@@ -46,15 +46,16 @@ export function PasswordEdit() {
   }
 
   function onSubmit() {
-    api
-      .put('/users/edit-password', { password: password })
-      .then(setTimeout(() => {
-        navigate(0)
-      }, 500))
-      .catch((error) => {
-        console.log(error)
-      })
-    console.log(password)
+    if (password) {
+      api
+        .put('/users/edit-password', { password: password })
+        .then(setTimeout(() => {
+          navigate(0)
+        }, 500))
+        .catch((error) => {
+          console.log(error)
+        })
+    }
   }
 
   return (
@@ -73,9 +74,9 @@ export function PasswordEdit() {
             onChange={onChangePassword}
           />
           {passwordError && (
-            <div className="invalid-input">
+            <Alert variant="warning" style={{ marginTop: "1rem"}} className="invalid-input">
               최소 8자리, 영문, 숫자, 특수문자 모두 포함해주세요.
-            </div>
+            </Alert>
           )}
         </Form.Group>
         <Form.Group className="mb-4">
@@ -91,9 +92,14 @@ export function PasswordEdit() {
             onChange={onChangeConfirmPassword}
           />
           {confirmPasswordError && (
-            <div className="invalid-input">
+            <Alert variant="warning" style={{ marginTop: "1rem"}} className="invalid-input">
               비밀번호가 일치하지 않습니다.
-            </div>
+            </Alert>
+          )}
+          { !password && (
+            <Alert variant="warning" style={{ marginTop: "1rem"}} className="invalid-input">
+              비밀번호를 입력하세요.
+            </Alert>
           )}
         </Form.Group>
         <MyButton
