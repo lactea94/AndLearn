@@ -65,12 +65,11 @@ export function ProfileContents() {
     "December",
   ];
 
-  // 전체 Contents 목록 불러오기 (현재 임시 값)
+  // 전체 Contents 목록 불러오기
   useEffect(() => {
     api.get("/learn/pictures")
       .then(res => {
         setContents(res.data)
-        console.log(new Date().getFullYear(), new Date().getMonth()+1, new Date().getDate() )
       })
   }, [])
 
@@ -89,7 +88,6 @@ export function ProfileContents() {
     )
 
     setSelectedContents(result);
-    console.log(startMSec)
   }
 
   // Remote 관련 함수
