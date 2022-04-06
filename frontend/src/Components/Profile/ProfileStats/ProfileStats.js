@@ -193,11 +193,21 @@ export function ProfileStats() {
   }, [recentLearn])
 
   const [monthStat, setMonthStat] = useState([]);
+  const [monthValue, setMonthValue] = useState([]);
 
   useEffect(() => {
     apiInstance().get('/learn/graph')
     .then(res => setMonthStat(res.data))
   }, [])
+
+  useEffect(() => {
+    setMonthValue([
+      monthStat.jan, monthStat.feb, monthStat.mar,
+      monthStat.apr, monthStat.may, monthStat.jun,
+      monthStat.jul, monthStat.aug, monthStat.sep,
+      monthStat.oct, monthStat.nov, monthStat.dec
+    ])
+  }, [monthStat])
 
   const lineChartSeries = [{
     name: "점수",
@@ -236,7 +246,7 @@ export function ProfileStats() {
 
   const columnChartSeries = [{
     name: '누적',
-    data: Object.values(monthStat)
+    data: monthValue
   }]
 
   const columnChartOptions = {
