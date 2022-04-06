@@ -196,9 +196,7 @@ export function ProfileStats() {
 
   useEffect(() => {
     apiInstance().get('/learn/graph')
-    .then(res => {
-      setMonthStat(res.data)
-    })
+    .then(res => setMonthStat(res.data))
   }, [])
 
   const lineChartSeries = [{

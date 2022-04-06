@@ -82,7 +82,7 @@ export function Learn() {
         console.log(res)
       })
       .then(setTimeout(() => {
-        navigate('/profile')
+        navigate('/profile/content')
       }, 500))
       .catch((error) => {
         console.log(error)
