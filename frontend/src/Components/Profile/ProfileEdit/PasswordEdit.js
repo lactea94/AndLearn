@@ -1,8 +1,9 @@
 import { useState } from "react"
-import { Form } from "react-bootstrap"
+import { Col, Form, Row } from "react-bootstrap"
 import { MyButton } from "styles/Button";
 import { apiInstance } from "api";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { Input } from "styles/Input";
 
 export function PasswordEdit() {
   const [password, setPassword] = useState('')
@@ -46,12 +47,16 @@ export function PasswordEdit() {
     <div className="row justify-content-center"  style={{ minHeight:'100vh'}}>
       <Form style={{ width: '50%' }}>
         <Form.Group className="mb-3">
-          <Form.Control
+          <Input
             maxLength={20}
+            style={{
+              width: "100%",
+              margin: 0
+            }}
             type="password"
-              placeholder="Password"
-              value={password}
-              onChange={onChangePassword}
+            placeholder="Password"
+            value={password}
+            onChange={onChangePassword}
           />
           {passwordError && (
             <div className="invalid-input">
@@ -60,8 +65,12 @@ export function PasswordEdit() {
           )}
         </Form.Group>
         <Form.Group className="mb-3">
-          <Form.Control
+          <Input
             maxLength={20}
+            style={{
+              width: "100%",
+              margin: 0
+            }}
             type="password"
             placeholder="Confirm Password"
             value={confirmPassword}
@@ -73,10 +82,22 @@ export function PasswordEdit() {
             </div>
           )}
         </Form.Group>
-        <div className="d-grid gap-1">
-          <MyButton onClick={() => {navigate(-1)}}>뒤로가기</MyButton>
-          <MyButton onClick={onSubmit}>비밀번호 수정</MyButton>
-        </div>
+        <MyButton
+          style={{
+            width: "100%",
+            marginBottom: "1rem"
+          }}
+          onClick={onSubmit}
+          
+        >
+          비밀번호 수정
+        </MyButton>
+        <MyButton
+          style={{width: "100%"}}
+          onClick={() => {navigate(-1)}}
+        >
+          뒤로가기
+        </MyButton>
       </Form>
     </div>
   )
