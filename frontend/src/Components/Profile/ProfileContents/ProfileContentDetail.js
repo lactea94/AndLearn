@@ -51,7 +51,7 @@ export function ProfileContentDetail() {
                 <S.Button color="#58C063" onClick={() => {onToggleOpen()}}>{isCheckAnswer ? '닫기' : 'AI 단어 보기'}</S.Button>
               </Col>
               <S.AnswerBox style={{ display : isCheckAnswer ? '' : 'none'}}>
-                <S.Text1>AI 단어 : {learningInfo.words.map(word => word.content).join(", ")}</S.Text1>
+                <S.Text1>{learningInfo.words.map(word => word.content).join(", ")}</S.Text1>
               </S.AnswerBox>          
               <S.AudioBox>
                 <S.Text1>두 번째 녹음</S.Text1>
