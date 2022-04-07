@@ -3,13 +3,13 @@ import styled from "styled-components";
 
 export const Text = styled.div`
   text-align: left;
-  font-size: 22px;
-  margin-bottom: 15px;
+  font-size: 1rem;
+  margin: 1rem 0;
 `
 export const Text1 = styled.div`
   text-align: center;
-  font-size: 22px;
-  margin-bottom: 15px;
+  font-size: 1rem;
+  margin-bottom: 1rem;
 `
 
 export const AnswerBox = styled.div`
@@ -17,17 +17,13 @@ export const AnswerBox = styled.div`
   border: 1px solid gray;
   width: 100%;
   padding: 5px;
-  margin-left: 12px;
-  margin-right: 24px;
-  border-radius: 6px;
+  border-radius: 1rem;
 `
 
 export const AnswerButton = styled(Button)`
   width: 30%;
-  font-size: 17px;
-  margin-left: 12px;
-  margin-bottom: 5px;
-
+  font-size: 1rem;
+  margin: 1rem;
   background-color: #58C063;
   border: solid 1px #58C063;
 

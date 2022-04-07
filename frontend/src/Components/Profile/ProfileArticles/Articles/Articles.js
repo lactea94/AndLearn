@@ -3,20 +3,14 @@ import * as S from './Style';
 
 export default function Articles({ articles, offset, limit, me }) {
   function ArticleComponent(article, notice) {
+    const articleId = article.id
     return (
       <S.TableRow notice={notice} key={article.id}>
         <S.Column xs={2} md={1}>
-          {notice ? '공지' : `${article.id}`}
+          {notice ? '공지' : `${articleId}`}
         </S.Column>
         <S.Column xs={4} md={7}>
-          <S.DetailLink
-            to={`${article.id}`}
-            state={{
-              user: me,
-            }}
-          >
-            {article.title}
-          </S.DetailLink>
+          {article.title}
         </S.Column>
         <S.Column xs={3} md={2}>{article.nickname}</S.Column>
         <S.Column xs={3} md={2}>

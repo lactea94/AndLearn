@@ -60,7 +60,6 @@ export function Detail() {
     }
   }
 
-  console.log(article)
   return (
     <S.Article>
       <S.Header>

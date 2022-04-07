@@ -25,8 +25,8 @@ export function ProfileContentDetail() {
     <>
       {learningInfo && 
         <div>
-          <Row>
-            <Col lg={5}>
+          <Row className="justify-content-center">
+            <Col xs={12}>
               <Image 
                 src={`https://d3qljd3xvkb8gz.cloudfront.net/${learningInfo.pictureUrl}`} 
                 alt="profile_image" 
@@ -35,30 +35,33 @@ export function ProfileContentDetail() {
                 style={{ width: '100%', marginBottom: '10px', overflow: 'hidden', objectFit: 'cover' }}
               />
             </Col>
-            <Col lg={7} className="d-flex flex-column align-items-start row text-start">
+            <Col xs={12}>
               <S.Text>학습 날짜 : {learningInfo.createdDate.substr(0, 19)}</S.Text>
               <S.Text>발음 점수 : {learningInfo.score}</S.Text>
-
-              <div className="row mb-2">
-                <S.Text1 className="mb-0 align-self-center">1차 녹음본</S.Text1>
-                <audio controls>
-                  <source src={`${learningInfo.records[0].recordUrl}`} />
-                </audio>
-              </div>
-
-              <div className="row">
-                <S.Text1 className="mb-0 align-self-center">2차 녹음본</S.Text1>
-                <audio controls>
-                  <source src={`${learningInfo.records[1].recordUrl}`} />
-                </audio>
-              </div>
-
+            </Col>
+            <Col xs={12}>
+              <S.Text1>1차 녹음본</S.Text1>
+              <audio controls>
+                <source src={`${learningInfo.records[0].recordUrl}`} />
+              </audio>
+            </Col>
+            <Col xs={12}>
+              <S.Text1>2차 녹음본</S.Text1>
+              <audio controls>
+                <source src={`${learningInfo.records[1].recordUrl}`} />
+              </audio>
+            </Col>
+            <Col xs={12}>
               <S.Text>AI 단어 / 내 답변</S.Text>
+            </Col>
+            <Col >
               <S.AnswerButton onClick={() => {onToggleOpen()}}>{isCheckAnswer ? 'Close' : 'Open'}</S.AnswerButton>
+            </Col>
+            <Col>
               <S.AnswerBox style={{ display : isCheckAnswer ? '' : 'none'}}>
                 <S.Text>AI 단어 : {learningInfo.words.map(word => word.content).join(", ")}</S.Text>
-                <S.Text>답변 1: {learningInfo.records[0].sentence}</S.Text>
-                <S.Text>답변 2: {learningInfo.records[1].sentence}</S.Text>
+                <S.Text>첫 번째 답변 : {learningInfo.records[0].sentence}</S.Text>
+                <S.Text>두 번째 답변 : {learningInfo.records[1].sentence}</S.Text>
               </S.AnswerBox>          
             </Col>
           </Row>
