@@ -295,41 +295,47 @@ export function ProfileStats() {
 
   return(
     <Container>
-      <S.CalendarBox className="d-flex flex-column justify-content-end align-items-end overflow-hidden mx-auto pt-2">
-        <S.Calendar className="d-flex flex-column flex-wrap overflow-hidden ps-4 pt-3">
-          {dailyBoxs}
-        </S.Calendar>
-      </S.CalendarBox>
-      
-      <S.StatsRow className="mx-auto">
-        <Col style={{ border: '1px solid gray', borderRight: 'none', borderBottomLeftRadius: '6px'}} >
-          <S.StatsText className="mb-0">1년간 총 학습량</S.StatsText>
-          <S.StatsNum>{totalLearnNum().toLocaleString()} total</S.StatsNum>
-          <S.StatsText className="mt-0">{period}</S.StatsText>
-        </Col>
-        <Col style={{ border: '1px solid gray', borderBottomRightRadius: '6px'}} >
-          <S.StatsText className="mb-0">최근 연속 학습일</S.StatsText>
-          <S.StatsNum>{streakDays} days</S.StatsNum>
-          <S.StatsText className="mt-0">{streakPeriod}</S.StatsText>
-        </Col>
-      </S.StatsRow>
-      <Row className="justify-content-center">
-        <S.StatCol xs={12} xl={6}>
-          <ApexCharts 
-            series={lineChartSeries}
-            options={lineChartOptions}
-            height={300}
-          />
-        </S.StatCol>
-        <S.StatCol xs={12} xl={6}>
-          <ApexCharts 
-            type="bar"
-            series={columnChartSeries}
-            options={columnChartOptions}
-            height={300}
-          />
-        </S.StatCol>
-      </Row>
+      { myLearns ?
+        <>
+          <S.CalendarBox className="d-flex flex-column justify-content-end align-items-end overflow-hidden mx-auto pt-2">
+            <S.Calendar className="d-flex flex-column flex-wrap overflow-hidden ps-4 pt-3">
+              {dailyBoxs}
+            </S.Calendar>
+          </S.CalendarBox>
+          
+          <S.StatsRow className="mx-auto">
+            <Col style={{ border: '1px solid gray', borderRight: 'none', borderBottomLeftRadius: '6px'}} >
+              <S.StatsText className="mb-0">1년간 총 학습량</S.StatsText>
+              <S.StatsNum>{totalLearnNum().toLocaleString()} total</S.StatsNum>
+              <S.StatsText className="mt-0">{period}</S.StatsText>
+            </Col>
+            <Col style={{ border: '1px solid gray', borderBottomRightRadius: '6px'}} >
+              <S.StatsText className="mb-0">최근 연속 학습일</S.StatsText>
+              <S.StatsNum>{streakDays} days</S.StatsNum>
+              <S.StatsText className="mt-0">{streakPeriod}</S.StatsText>
+            </Col>
+          </S.StatsRow>
+          <Row className="justify-content-center">
+            <S.StatCol xs={12} xl={6}>
+              <ApexCharts 
+                series={lineChartSeries}
+                options={lineChartOptions}
+                height={300}
+              />
+            </S.StatCol>
+            <S.StatCol xs={12} xl={6}>
+              <ApexCharts 
+                type="bar"
+                series={columnChartSeries}
+                options={columnChartOptions}
+                height={300}
+              />
+            </S.StatCol>
+          </Row>
+        </> 
+      :
+        <h1>학습 기록이 없습니다.</h1>
+      }
     </Container>
   )
 }
