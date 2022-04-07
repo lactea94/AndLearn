@@ -93,6 +93,18 @@ export const myTextarea = styled.textarea`
   }
   padding: 3px;
   resize: none;
+  border: 1px solid black;
+`
+
+export const ScriptTextBox = styled.div`
+  @media screen and (min-width: 1280px) {
+    display: none;
+  }
+  width: 100%;
+  height: 3.5rem;
+  padding: 3px;
+  border: 1px solid black;
+  text-align: start;
 `
 
 export const largeTextarea = styled.textarea`
@@ -101,6 +113,19 @@ export const largeTextarea = styled.textarea`
   }
   padding: 3px;
   resize: none;
+  border: 1px solid black;
+`
+
+export const largeScriptTextBox = styled.div`
+  @media screen and (max-width: 1024px) {
+    display: none;
+  }
+  width: 100%;
+  height: 3.5rem;
+  padding: 3px;
+  border: 1px solid black;
+  text-align: start;
+  margin-bottom: 1rem;
 `
 
 export const largeWidthRow = styled(Row)`

@@ -7,7 +7,7 @@ import { MyButton } from 'styles/Button'
 import * as S from './LearnStyle';
 import onRecordingImage from './icons8-audio-wave.gif'
 
-export function AudioRecord({ setScript, setAudioUrl1, setAud1, setIsRecord, whatRecord }) {
+export function AudioRecord({ setScript, setAudioUrl1, setAud1, setIsRecord, setIsRecordStart , whatRecord }) {
   const [stream, setStream] = useState()
   const [media, setMedia] = useState()
   const [onRec, setOnRec] = useState(true)
@@ -31,6 +31,7 @@ export function AudioRecord({ setScript, setAudioUrl1, setAud1, setIsRecord, wha
       setCanStop(true)
     }
 
+    setIsRecordStart(true)
     setIsComplete(false)
     setOnRec(false)
     // 음원정보를 담은 노드를 생성하거나 음원을 실행또는 디코딩 시키는 일을 한다

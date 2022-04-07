@@ -2,10 +2,13 @@ import React, { useEffect, useState } from 'react'
 import { djangoInstance } from 'api/index'
 import { MyButton } from 'styles/Button'
 import { Col } from 'react-bootstrap'
+import { useNavigate } from 'react-router-dom'
+import plusDefault from './plusDefault.png'
 
 export function ImageUpload({ setFileImage, setKeyDjango, setWords, setIsStart }) {
   const [image, setImage] = useState('')
   const api = djangoInstance()
+  const navigate = useNavigate();
 
   function onLoad(e) {
     setImage(e.target.files[0])
@@ -26,17 +29,31 @@ export function ImageUpload({ setFileImage, setKeyDjango, setWords, setIsStart }
       .then((res) => {
         setImage(res.data)
         setKeyDjango(res.data.id)
-        setWords(res.data.words)
+        if (res.data.words) {
+          setWords(res.data.words)
+        } else {
+          setWords(['AI 추천 단어를 선별하지 못했습니다.', '다른 사진을 이용해보세요.'])
+        }
+        
       })
       .catch((error) => {
         console.log(error)
       })
   }
 
+  function onGoToBefore() {
+    // window.location.assign('/learn');
+    setFileImage(plusDefault)
+    setImage('');
+  }
+
   return (
     <Col>
       {image ? 
-        <MyButton style={{margin: "1rem"}} onClick={() => {onImageUpload()}}>시작!</MyButton>
+        <>
+          <MyButton style={{margin: "1rem"}} onClick={() => {onGoToBefore()}}>이전</MyButton>
+          <MyButton style={{margin: "1rem"}} onClick={() => {onImageUpload()}}>시작!</MyButton>
+        </>
       : 
         <>
           <MyButton style={{margin: "1rem"}}>
