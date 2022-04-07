@@ -39,6 +39,8 @@ export function Detail() {
       apiInstance().delete(`/community/${articleId}`)
       .then(setTimeout(() => {
         navigate('/community')
+      }, 300))
+      .then(setTimeout(() => {
         navigate(0)
       }, 500))
     }
