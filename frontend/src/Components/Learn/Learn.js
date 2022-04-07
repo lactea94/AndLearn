@@ -9,6 +9,7 @@ import { MyButton } from 'styles/Button.js'
 import { Container, Col, Row } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 import * as S from './LearnStyle';
+import Loading from 'Common/Loading/Loading.js'
 
 export function Learn() {
   const api = apiInstance()
@@ -37,6 +38,8 @@ export function Learn() {
   const navigate = useNavigate();
 
   const [AIBoxElement, setAIBoxElement] = useState('200px')
+  const [loading, setLoading] = useState(false)
+
 
   useEffect(() => {
     if (document.getElementById('AIWordBox')) {
@@ -79,15 +82,12 @@ export function Learn() {
           'Content-Type': 'multipart/form-data',
         },
       })
-      .then((res) => {
-        console.log(res)
-      })
       .then(setTimeout(() => {
-        navigate('/profile/content')
-      }, 300))
+        setLoading(true)
+      }, 50))
       .then(setTimeout(() => {
-        navigate(0)
-      }, 500))
+        navigate("/profile/content")
+      }, 5000))
       .catch((error) => {
         console.log(error)
       })
@@ -95,6 +95,9 @@ export function Learn() {
 
   return (
     <Container>
+      {loading ? (
+        <Loading></Loading>
+      ) : <>
         {!isStart ? (
           <Row className='justify-content-center'>
             <Col xs={12}>
@@ -241,6 +244,7 @@ export function Learn() {
         )}
 
       {isSecondRecord && <MyButton style={{ marginTop: '1rem'}} onClick={onSubmit}>완료</MyButton>}
+    </>}
     </Container>
   )
 }
