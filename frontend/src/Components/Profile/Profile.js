@@ -6,7 +6,7 @@ import { apiInstance } from 'api';
 import * as S from './Style';
 
 export function Profile() {
-  const [profileImgUrl, setProfileImgUrl] = useState("http://placeimg.com/240/240/animals");
+  const [profileImgUrl, setProfileImgUrl] = useState("/images/allu-3.png");
   const [user, setUser] = useState();
   const [userId, setUserId] = useState();
   const [userNickname, setUserNickname] = useState();

@@ -120,8 +120,14 @@ export function Signup() {
       })
   };
 
+  const handleKeyPress = e => {
+    if(e.key === 'Enter') {
+      onSubmit();
+    }
+  }
+
   return (
-    <S.Contents>
+    <S.Contents onKeyPress={handleKeyPress}>
       <Row className="justify-content-center align-items-center">
         <Col xs={11} style={{margin: "1rem 0"}}>
           <Input
@@ -139,7 +145,7 @@ export function Signup() {
             <S.CheckFillButton /> :
             <S.CheckButton onClick={onCheckEmail}/>}
         </Col>
-        {(dEmail !== "확인 완료") && <div>{dEmail}</div>}
+        {( dEmail && dEmail !== "확인 완료" ) && <Alert variant="warning">{dEmail}</Alert>}
         {emailError && (
           <Alert variant="warning">
             유효한 이메일 주소를 입력해주세요
@@ -162,7 +168,7 @@ export function Signup() {
             <S.CheckFillButton /> :
             <S.CheckButton onClick={onCheckName}/>}
         </Col>
-        {(dName !== "확인 완료") && <div>{dName}</div>}
+        {(dName && dName !== "확인 완료") && <Alert variant="warning">{dName}</Alert>}
         {userNameError && (
           <Alert variant="warning">
             닉네임을 입력해주세요.

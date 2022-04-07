@@ -20,8 +20,7 @@ export function Login() {
     setPassword(event.currentTarget.value)
   };
 
-  const onSubmit = (event) => {
-    event.preventDefault();
+  const onSubmit = () => {
     const data = {
       id: email,
       password: password,
@@ -32,7 +31,6 @@ export function Login() {
         if (response.data.accessToken) {
           localStorage.setItem('accesstoken', response.data.accessToken)
         }
-        // window.location.replae('/')
         navigate('/');
         navigate(0);
       })
@@ -43,8 +41,14 @@ export function Login() {
       })
   };
 
+  const handleKeyPress = e => {
+    if(e.key === 'Enter') {
+      onSubmit();
+    }
+  }
+
   return (
-    <S.Contents>
+    <S.Contents onKeyPress={handleKeyPress}>
       <Row className="justify-content-center">
         <Col style={{marginBottom: "1rem"}}>
           <Input
