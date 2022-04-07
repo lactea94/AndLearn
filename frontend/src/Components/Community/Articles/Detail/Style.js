@@ -59,6 +59,7 @@ export const SubHeader = styled(Row)`
 export const User = styled(Col)`
   text-align: start;
   font-size: 0.8rem;
+  padding: 0;
 `;
 
 export const Body = styled(Row)`
@@ -87,4 +88,19 @@ export const TextArea = styled.textarea`
     border: solid 1px #58C063;
     outline: solid 1px #58C063;
   }
+`;
+
+export const ImgBox = styled(Col)`
+  width: 2rem;
+  height: 2rem;
+  border-radius: 70%;
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
+`
+
+export const UserImg = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 `;
