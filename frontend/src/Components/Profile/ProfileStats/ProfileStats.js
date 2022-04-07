@@ -184,7 +184,7 @@ export function ProfileStats() {
   }, [myLearnCounts, myLearns])
 
   const [recentLearn, setRecentLearn] = useState([]);
-  const [score, setScore] = useState([]);
+  const [score, setScore] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
   const [date, setDate] = useState([]);
 
   useEffect(() => {
@@ -192,8 +192,10 @@ export function ProfileStats() {
   }, [myLearns])
 
   useEffect(() => {
-    setScore(recentLearn.map((learn => learn.score)))
-    setDate(recentLearn.map((learn => learn.createdDate.slice(5, 10))))
+    if (recentLearn) {
+      setScore(recentLearn.map((learn => learn.score)))
+      setDate(recentLearn.map((learn => learn.createdDate.slice(5, 10))))
+    }
   }, [recentLearn])
 
   const [monthStat, setMonthStat] = useState([]);
