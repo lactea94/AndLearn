@@ -3,7 +3,7 @@ import { djangoInstance } from 'api/index'
 import { MyButton } from 'styles/Button'
 import { Col } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
-import plusDefault from './plusDefault.png'
+import plusDefault from './defaultImage.jpg'
 
 export function ImageUpload({ setFileImage, setKeyDjango, setWords, setIsStart }) {
   const [image, setImage] = useState('')
