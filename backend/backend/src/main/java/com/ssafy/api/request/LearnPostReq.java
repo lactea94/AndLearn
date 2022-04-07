@@ -12,9 +12,6 @@ import java.util.List;
 @ApiModel("LearnPostRequest")
 public class LearnPostReq {
 
-    @ApiModelProperty(name="발음 평가 점수", example="3.5")
-    float score;
-
     @ApiModelProperty(name="AI 추천 단어들", example="[cake,birthday]")
     List<String> words;
 //    List<Integer> times;
