@@ -86,15 +86,15 @@
 
 - 사용자들끼리 자유롭게 의견을 나눌 수 있는 공간이며 관리자가 작성한 공지사항이 상단에 위치한다.
 
-![com1.png](readme_img/com1.png)
+![20.png](readme_img/20.png)
 
 - 게시글 상세 페이지로 들어가면 제목과 내용을 볼 수 있고 댓글을 작성할 수 있다.
 
-![com2.png](readme_img/com2.png)
+![com2.png](readme_img/21.png)
 
 - 관리자 계정으로 새 글 작성시 공지사항으로 설정할 수 있는 토글 스위치가 나타난다.
 
-![com3.png](readme_img/com3.png)
+![com3.png](readme_img/22.png)
 
 ### 4. User
 
