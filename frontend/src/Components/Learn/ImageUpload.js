@@ -1,14 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { djangoInstance } from 'api/index'
 import { MyButton } from 'styles/Button'
 import { Col } from 'react-bootstrap'
-import { useNavigate } from 'react-router-dom'
 import plusDefault from './defaultImage.jpg'
 
 export function ImageUpload({ setFileImage, setKeyDjango, setWords, setIsStart }) {
   const [image, setImage] = useState('')
   const api = djangoInstance()
-  const navigate = useNavigate();
 
   function onLoad(e) {
     setImage(e.target.files[0])
@@ -42,7 +40,6 @@ export function ImageUpload({ setFileImage, setKeyDjango, setWords, setIsStart }
   }
 
   function onGoToBefore() {
-    // window.location.assign('/learn');
     setFileImage(plusDefault)
     setImage('');
   }
@@ -74,7 +71,6 @@ export function ImageUpload({ setFileImage, setKeyDjango, setWords, setIsStart }
               사진 업로드
             </label>
           </MyButton>
-          <MyButton style={{margin: "1rem"}}>랜덤사진</MyButton>
         </>
       }
     </Col>

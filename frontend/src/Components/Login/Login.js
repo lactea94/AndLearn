@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Col, Row } from 'react-bootstrap';
+import { Alert, Col, Row } from 'react-bootstrap';
 import { MyButton } from 'styles/Button';
 import { userInstance } from 'api/index';
 import * as S from './Style';
@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 export function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [alert, setAlert] = useState('');
   const navigate = useNavigate();
   const api = userInstance();
 
@@ -36,7 +37,7 @@ export function Login() {
       })
       .catch((error) => {
         if (error.response.status === 401) {
-          alert('비밀번호를 다시 입력해주세요.')
+          setAlert('아이디 또는 비밀번호를 확인해주세요.')
         }
       })
   };
@@ -70,6 +71,7 @@ export function Login() {
             onChange={onPasswordHandler}
           />
         </Col>
+        { alert && <Alert variant="warning">{alert}</Alert>}
       </Row>
       <Row className="justify-content-center">
         <MyButton
