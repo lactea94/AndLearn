@@ -16,7 +16,9 @@ export function Learn() {
 
   const [isStart, setIsStart] = useState(false);
   const [isFirstRecord, setIsFirstRecord] = useState(false);
+  const [isFirstRecordStart, setIsFirstRecordStart] = useState(false);
   const [isSecondRecord, setIsSecondRecord] = useState(false);
+  const [isSecondRecordStart, setIsSecondRecordStart] = useState(false);
 
   const [keyDjango, setKeyDjango] = useState(2)
   const [words, setWords] = useState([]);
@@ -41,7 +43,6 @@ export function Learn() {
       setAIBoxElement(document.getElementById('AIWordBox').clientHeight)
     }
   }, [recommendWord])
-  
 
   useEffect(() => {
     const wordList = words.map((word, index) => 
@@ -110,7 +111,7 @@ export function Learn() {
               <S.MyImage2 src={fileImage} alt="녹음할 때 보일 사진" />
             </Col>
             {/* Record 부분 */}
-            <Col xs={12} lg={4}>
+            <Col xs={12} lg={4} style={{ marginTop: '2rem'}}>
               {isStart &&
                 <span id="firstRecord">
                   {audioUrl1 && 
@@ -124,9 +125,15 @@ export function Learn() {
                         </Col>
                       </Row>
                       {aud1 && (
-                        <S.myTextarea value={script1} style={{ width: '100%' }} onChange={onCheck1}>
-                          {script1}
-                        </S.myTextarea>
+                        <>
+                          {isSecondRecordStart ? 
+                            <S.ScriptTextBox>{script1}</S.ScriptTextBox>
+                          : 
+                            <S.myTextarea value={script1} style={{ width: '100%' }} onChange={onCheck1} readonly>
+                              {script1}
+                            </S.myTextarea>
+                          }
+                        </>
                       )}
                     </>
                   }
@@ -138,6 +145,7 @@ export function Learn() {
                         setAudioUrl1={setAudioUrl1}
                         setAud1={setAud1}
                         setIsRecord={setIsFirstRecord}
+                        setIsRecordStart={setIsFirstRecordStart}
                         whatRecord={'first'}
                       />
                     </>
@@ -169,6 +177,7 @@ export function Learn() {
                       setAudioUrl1={setAudioUrl2}
                       setAud1={setAud2}
                       setIsRecord={setIsSecondRecord}
+                      setIsRecordStart={setIsSecondRecordStart}
                       whatRecord={'second'}
                     />
                   }
@@ -178,6 +187,7 @@ export function Learn() {
               { (aud1 && words.length > 0) &&
                 <Row>
                   <Col xs={12} md={6} lg={12}>
+                    <S.Text1>AI 추천 단어</S.Text1>
                     <S.AIBox id="AIWordBox"> 
                       {recommendWord}
                     </S.AIBox>
@@ -197,9 +207,13 @@ export function Learn() {
                     <S.Text1>1차 답변</S.Text1>
                   </Col>
                   <Col lg={10}>
-                    <S.largeTextarea value={script1} style={{ width: '100%' }} onChange={onCheck1}>
-                      {script1}
-                    </S.largeTextarea>
+                    {isSecondRecordStart ? 
+                      <S.largeScriptTextBox>{script1}</S.largeScriptTextBox>
+                    : 
+                      <S.largeTextarea value={script1} style={{ width: '100%' }} onChange={onCheck1}>
+                        {script1}
+                      </S.largeTextarea>
+                    }
                   </Col>
                 </Row>
               )}

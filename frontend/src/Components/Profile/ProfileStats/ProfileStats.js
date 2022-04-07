@@ -5,11 +5,15 @@ import { apiInstance } from "api";
 import ApexCharts from "react-apexcharts";
 
 export function ProfileStats() {
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = today.getMonth();
+  const dates = today.getDate();
   const [myLearns, setMyLearns] = useState([]);
   const [myLearnCounts, setMyLearnCounts] = useState(Array.from({length: 368}, () => 0));
   const [dailyBoxs, setDailyBoxs] = useState();
-  const [myNowDate, setMyNowDate] = useState(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate()));
-  const [myLastDate, setMyLastDate] = useState(new Date(new Date().getFullYear() - 1, new Date().getMonth(), new Date().getDate() - 1));
+  const [myNowDate, setMyNowDate] = useState(new Date(year, month, dates));
+  const [myLastDate, setMyLastDate] = useState(new Date(year - 1, month, dates - 1));
   const [period, setPeriod] = useState('');
   const [streakDays, setStreakDays] = useState(0);
   const [streakPeriod, setStreakPeriod] = useState('');
@@ -115,10 +119,10 @@ export function ProfileStats() {
 
     setDailyBoxs(myStats());
   }, [myLearnCounts, myLearns])
-
+  
   // 총 학습량 계산
   const totalLearnNum = () => {
-    var result = 0;
+    let result = 0;
 
     for (let i = 0; i < myLearnCounts.length; i++) {
       if (myLearnCounts[i] > 0) {
@@ -145,8 +149,8 @@ export function ProfileStats() {
 
   // 최근 연속 학습일 계산
   useEffect(() => {
-    var days = 0;
-    var dateNums = []; // endDay, startDay
+    let days = 0;
+    let dateNums = []; // endDay, startDay
 
     for (let i = myLearnCounts.length - 1; i >= 0; i--) {
       if (dateNums.length === 0) {
@@ -189,15 +193,25 @@ export function ProfileStats() {
 
   useEffect(() => {
     setScore(recentLearn.map((learn => learn.score)))
-    setDate(recentLearn.map((learn => learn.createdDate.slice(2, 10))))
+    setDate(recentLearn.map((learn => learn.createdDate.slice(5, 10))))
   }, [recentLearn])
 
   const [monthStat, setMonthStat] = useState([]);
+  const [monthValue, setMonthValue] = useState([]);
 
   useEffect(() => {
     apiInstance().get('/learn/graph')
     .then(res => setMonthStat(res.data))
   }, [])
+
+  useEffect(() => {
+    setMonthValue([
+      monthStat.jan, monthStat.feb, monthStat.mar,
+      monthStat.apr, monthStat.may, monthStat.jun,
+      monthStat.jul, monthStat.aug, monthStat.sep,
+      monthStat.oct, monthStat.nov, monthStat.dec
+    ])
+  }, [monthStat])
 
   const lineChartSeries = [{
     name: "점수",
@@ -230,13 +244,13 @@ export function ProfileStats() {
       categories: date,
     },
     colors: [
-      '#FFDD74'
+      '#58C063'
     ]
   }
 
   const columnChartSeries = [{
     name: '누적',
-    data: Object.values(monthStat)
+    data: monthValue
   }]
 
   const columnChartOptions = {
@@ -273,7 +287,7 @@ export function ProfileStats() {
       categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
     },
     colors: [
-      '#FFDD74'
+      '#58C063'
     ]
   }
 
@@ -297,28 +311,22 @@ export function ProfileStats() {
           <S.StatsText className="mt-0">{streakPeriod}</S.StatsText>
         </Col>
       </S.StatsRow>
-      <Row
-        style={{
-          margin: '2rem'
-        }}
-      >
-        <ApexCharts 
-          series={lineChartSeries}
-          options={lineChartOptions}
-          height={300}
-        />
-      </Row>
-      <Row
-        style={{
-          margin: '2rem'
-        }}
-      >
-        <ApexCharts 
-          type="bar"
-          series={columnChartSeries}
-          options={columnChartOptions}
-          height={500}
-        />
+      <Row className="justify-content-center">
+        <S.StatCol xs={12} xl={6}>
+          <ApexCharts 
+            series={lineChartSeries}
+            options={lineChartOptions}
+            height={300}
+          />
+        </S.StatCol>
+        <S.StatCol xs={12} xl={6}>
+          <ApexCharts 
+            type="bar"
+            series={columnChartSeries}
+            options={columnChartOptions}
+            height={300}
+          />
+        </S.StatCol>
       </Row>
     </Container>
   )

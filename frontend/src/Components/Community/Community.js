@@ -49,14 +49,10 @@ export function Community() {
       setFilterdArticle(() => 
         articles.filter((article) => 
           article.title.toLowerCase().includes(searchText.toLowerCase())
-    ))} else if (searchCategory === 'content') {
-      setFilterdArticle(() => 
-        articles.filter((article) => 
-          article.body.toLowerCase().includes(searchText.toLowerCase())
     ))} else if (searchCategory === 'nickname') {
       setFilterdArticle(() => 
         articles.filter((article) => 
-          article.nickname.includes(searchText)
+          article.nickname.toLowerCase().includes(searchText.toLowerCase())
     ))}
   }, [searchText, articles, searchCategory]);
 

@@ -27,7 +27,6 @@ export function Search({ setSearchText, setSearchCategory, setPage }) {
         }}
       >
         <option value="title">제목</option>
-        <option value="content">내용</option>
         <option value="nickname">작성자</option>
       </Select>
       <Input
