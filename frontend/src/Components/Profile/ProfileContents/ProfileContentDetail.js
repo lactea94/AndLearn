@@ -1,5 +1,5 @@
-import { useParams } from "react-router-dom";
-import { Row, Col, Image } from "react-bootstrap";
+import { useNavigate, useParams } from "react-router-dom";
+import { Row, Col } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import * as S from './ProfileContentDetailStyle';
 import { apiInstance } from "api";
@@ -8,14 +8,14 @@ export function ProfileContentDetail() {
   const { contentId } = useParams();
   const [isCheckAnswer, setIsCheckAnswer] = useState(false);
   const [learningInfo, setLearningInfo] = useState();
-  const api = apiInstance();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    api.get(`/learn/picture/${contentId}`)
+    apiInstance().get(`/learn/picture/${contentId}`)
       .then(res => {
         setLearningInfo(res.data);
       })
-  }, [api, contentId])
+  }, [contentId])
 
   const onToggleOpen = () => {
     setIsCheckAnswer(!isCheckAnswer)
@@ -24,51 +24,46 @@ export function ProfileContentDetail() {
   return (
     <>
       {learningInfo && 
-        <div>
+        <S.Container>
           <Row className="justify-content-center">
-            <Col xs={12} md={6}>
-              <Image 
+            <Col xs={12} md={5}>
+              <S.MyImage 
                 src={`https://d3qljd3xvkb8gz.cloudfront.net/${learningInfo.pictureUrl}`} 
-                alt="profile_image" 
-                rounded 
-                fluid 
-                style={{ width: '100%', marginBottom: '10px', overflow: 'hidden', objectFit: 'cover' }}
+                alt="profile_image"
               />
             </Col>
-            <Col>
+            <Col xs={12} md={5}>
               <Col>
                 <S.Text>학습 날짜 : {learningInfo.createdDate.substr(0, 19)}</S.Text>
                 <S.Text>발음 점수 : {learningInfo.score}</S.Text>
               </Col>
               <Col>
-                <S.Text1>1차 녹음본</S.Text1>
-                <audio controls>
-                  <source src={`${learningInfo.records[0].recordUrl}`} />
-                </audio>
+                <S.Button color="#58C063" onClick={() => {onToggleOpen()}}>{isCheckAnswer ? '닫기' : 'AI 단어 보기'}</S.Button>
               </Col>
-              <Col>
-                <S.Text1>2차 녹음본</S.Text1>
-                <audio controls>
-                  <source src={`${learningInfo.records[1].recordUrl}`} />
-                </audio>
-              </Col>
-              <Col>
-                <S.Text>AI 단어 / 내 답변</S.Text>
-              </Col>
-              <Col>
-                <S.AnswerButton onClick={() => {onToggleOpen()}}>{isCheckAnswer ? 'Close' : 'Open'}</S.AnswerButton>
-              </Col>
-              <Col>
-                <S.AnswerBox style={{ display : isCheckAnswer ? '' : 'none'}}>
-                  <S.Text>AI 단어 : {learningInfo.words.map(word => word.content).join(", ")}</S.Text>
-                  <S.Text>첫 번째 답변 : {learningInfo.records[0].sentence}</S.Text>
-                  <S.Text>두 번째 답변 : {learningInfo.records[1].sentence}</S.Text>
-                </S.AnswerBox>          
-              </Col>
+              <S.AnswerBox style={{ display : isCheckAnswer ? '' : 'none'}}>
+                <S.Text1>{learningInfo.words.map(word => word.content).join(", ")}</S.Text1>
+              </S.AnswerBox>          
+            </Col>
+            <S.AudioBox xs={12} md={5}>
+              <S.Text1>첫 번째 녹음</S.Text1>
+              <S.Audio controls>
+                <source src={`${learningInfo.records[0].recordUrl}`} />
+              </S.Audio>
+              <S.Text1>{learningInfo.records[0].sentence}</S.Text1>
+            </S.AudioBox>
+            <S.AudioBox xs={12} md={5}>
+              <S.Text1>두 번째 녹음</S.Text1>
+              <S.Audio controls>
+                <source src={`${learningInfo.records[1].recordUrl}`} />
+              </S.Audio>
+              <S.Text1>{learningInfo.records[1].sentence}</S.Text1>
+            </S.AudioBox>
+            <Col lg={2}>
+              <S.Button onClick={() => navigate(-1)}>뒤로가기</S.Button>
             </Col>
           </Row>
           <br />
-        </div>
+        </S.Container>
       }
     </>
   )
