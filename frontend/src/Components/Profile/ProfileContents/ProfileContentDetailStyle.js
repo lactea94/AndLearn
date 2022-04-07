@@ -1,5 +1,6 @@
-import { Button } from "react-bootstrap";
+import { Col } from "react-bootstrap";
 import styled from "styled-components";
+import { MyButton } from "styles/Button";
 
 export const Text = styled.div`
   text-align: left;
@@ -9,34 +10,23 @@ export const Text = styled.div`
 export const Text1 = styled.div`
   text-align: center;
   font-size: 1rem;
-  margin-bottom: 1rem;
+  margin: 1rem;
 `
 
-export const AnswerBox = styled.div`
-  text-align: left;
+export const AudioBox = styled(Col)`
   border: 1px solid gray;
-  width: 100%;
-  padding: 5px;
+  margin: 0.5rem;
+  padding: 1rem;
   border-radius: 1rem;
 `
 
-export const AnswerButton = styled(Button)`
-  width: 30%;
-  font-size: 1rem;
+export const AnswerBox = styled(Col)`
+  border: 1px solid gray;
+  margin: 0.5rem;
+  padding: 1rem;
+  border-radius: 1rem;
+`
+
+export const Button = styled(MyButton)`
   margin: 1rem;
-  background-color: #58C063;
-  border: solid 1px #58C063;
-
-  &:hover {
-    background-color: white;
-    color: #58C063;
-    border: solid 1px #58C063;
-  }
-
-  &:focus {
-    background-color: #58C063;
-    border: solid 1px #58C063;
-    color: white;
-    box-shadow: none;
-  }
 `
