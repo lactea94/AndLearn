@@ -41,9 +41,9 @@ export function ProfileContents() {
     var arr = [];
     var length = end - start; 
     for (var i = 0; i <= length; i++) { 
- 
-        arr[i] = start;
-        start++;
+      
+      arr[i] = start;
+      start++;
     }
     return arr;
   }
@@ -62,7 +62,7 @@ export function ProfileContents() {
     "November",
     "December",
   ];
-
+  
   // 전체 Contents 목록 불러오기
   useEffect(() => {
     apiInstance().get("/learn/pictures")
@@ -70,17 +70,17 @@ export function ProfileContents() {
         setContents(res.data)
       })
   }, [])
-
+  
   // 처음 contents 목록 받아올 때, 모든 contents 값을 default로 설정
   useEffect(() => {
     setSelectedContents(contents);
   }, [contents])
-
+  
   // 버튼 클릭시 기간설정을 바탕으로 selectedContents 업데이트
   const clickSearchButton = () => {
     const startMSec = startDate.getTime() - startDate.getHours()*3600000 - startDate.getMinutes()*60000 - startDate.getSeconds()*1000 - startDate.getMilliseconds();
     const endMSec = endDate.getTime();
-
+    
     const result = contents.filter(content => 
       startMSec <= new Date(content.createdDate).getTime() && new Date(content.createdDate).getTime() <= endMSec
     )
@@ -111,7 +111,7 @@ export function ProfileContents() {
 
   return (
     <>
-      {selectedContents && 
+      {selectedContents ? 
         <div>
           <Row>
             {selectedContents.map((content) => {
@@ -255,7 +255,8 @@ export function ProfileContents() {
             </MyButton>
           </Remote>
         </div>
-      }
+      : 
+        <h1>학습 기록이 없습니다.</h1>}
     </>
   )
 }
