@@ -7,9 +7,17 @@ import * as S from './Style'
 export function Home() {
   const token = localStorage.getItem(ACCESS_TOKEN)
   const items = [
-    {id: 1, img: '/images/allu-1.png'},
-    {id: 2, img: '/images/allu-2.png'},
-    {id: 3, img: '/images/allu-3.png'},
+    {id: 1, img: '/images/action1.png'},
+    {id: 2, img: '/images/action2.png'},
+    {id: 3, img: '/images/action3.png'},
+    {id: 4, img: '/images/action4.png'},
+    {id: 5, img: '/images/action5.png'},
+    {id: 6, img: '/images/action6.png'},
+    {id: 7, img: '/images/action7.png'},
+    {id: 8, img: '/images/action8.png'},
+    {id: 9, img: '/images/action9.png'},
+    {id: 10, img: '/images/action10.png'},
+    {id: 11, img: '/images/action11.png'},
   ]
   const Carousels = items.map((item) => {
     return (
@@ -50,7 +58,7 @@ export function Home() {
             <S.Mascot src="/images/allu-1.svg"/>
           </Col>
         </S.FirstStepContent>
-        <S.Image src="asdf.png" alt='단어가 나오고 녹음하는 부분 이미지'></S.Image>
+        <S.Image src="./images/action7.png" alt='단어가 나오고 녹음하는 부분 이미지'></S.Image>
         <S.SecondStepContent>
           <Col xs={12} sm={12} xl={4}>
             <S.Mascot src="/images/allu-2.svg"/>
