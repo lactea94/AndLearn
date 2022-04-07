@@ -35,7 +35,7 @@ public class Community extends BaseEntity {
     private User user;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "community", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "community", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Comment> comments = new ArrayList<>();
 
     // 0328 김병완 save용 builder 추가

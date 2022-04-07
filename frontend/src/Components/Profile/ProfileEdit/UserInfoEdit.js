@@ -1,10 +1,9 @@
 import { Form } from "react-bootstrap"
 import { useState } from "react"
-import { Link, useNavigate, useParams } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { MyButton } from "styles/Button"
 import styled from "styled-components"
 import { apiInstance } from "api"
-import { ACCESS_TOKEN } from "constants";
 
 const MyForm = styled(Form)`
   @media screen and (min-width: 576px) {
@@ -14,7 +13,6 @@ const MyForm = styled(Form)`
 `
 
 export function UserInfoEdit() {
-  const { userId } = useParams();
   const [userName, setUserName] = useState('');
   const [userNameError, setUserNameError] = useState(false);
   const [dName, setDName] = useState('');

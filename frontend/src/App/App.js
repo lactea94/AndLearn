@@ -10,6 +10,12 @@ import { Login } from '../Common/Login/Login'
 import { Signup } from '../Common/Signup/Signup'
 import './App.css'
 import { Footer } from 'Common/Footer/Footer'
+import { ProfileContentDetail } from 'Components/Profile/ProfileContents/ProfileContentDetail'
+import { ProfileStats } from 'Components/Profile/ProfileStats/ProfileStats'
+import { ProfileArticles } from 'Components/Profile/ProfileArticles/ProfileArticles'
+import { UserInfoEdit } from 'Components/Profile/ProfileEdit/UserInfoEdit'
+import { PasswordEdit } from 'Components/Profile/ProfileEdit/PasswordEdit'
+import { ProfileContents } from 'Components/Profile/ProfileContents/ProfileContents'
 
 function App() {
   const location = useLocation();
@@ -18,7 +24,14 @@ function App() {
       <Navigation />
       <Routes>
         <Route path="/" element={<Home />}></Route>
-        <Route path="profile/*" element={<Profile />} />
+        <Route path="profile" element={<Profile />}>
+          <Route path="content" element={<ProfileContents/>} />
+          <Route path="content/:contentId" element={<ProfileContentDetail/>} />
+          <Route path="stats" element={<ProfileStats/>} />
+          <Route path="articles" element={<ProfileArticles />} />
+          <Route path="edit" element={<UserInfoEdit />} />
+          <Route path="edit/password" element={<PasswordEdit />} />
+        </Route> 
         
         <Route path="login" element={<Login />}></Route>
         <Route path="signup" element={<Signup />}></Route>
