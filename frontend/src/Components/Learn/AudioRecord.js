@@ -6,6 +6,9 @@ import SpeechRecognition, {
 import { MyButton } from 'styles/Button'
 import * as S from './LearnStyle';
 import onRecordingImage from './icons8-audio-wave.gif'
+import RecordRTC from 'recordrtc';
+import { MediaStreamRecorder, StereoAudioRecorder } from 'recordrtc';
+import { invokeSaveAsDialog } from 'recordrtc';
 
 export function AudioRecord({ setScript, setAudioUrl1, setAud1, setIsRecord, setIsRecordStart , whatRecord }) {
   const [stream, setStream] = useState()
@@ -26,7 +29,7 @@ export function AudioRecord({ setScript, setAudioUrl1, setAud1, setIsRecord, set
     if (whatRecord === 'first') {
       setTimeout(() =>{
         setCanStop(true);
-      }, 20000)
+      }, 2000)
     } else {
       setCanStop(true)
     }
@@ -35,7 +38,12 @@ export function AudioRecord({ setScript, setAudioUrl1, setAud1, setIsRecord, set
     setIsComplete(false)
     setOnRec(false)
     // 음원정보를 담은 노드를 생성하거나 음원을 실행또는 디코딩 시키는 일을 한다
-    const audioCtx = new (window.AudioContext || window.webkitAudioContext)()
+    // const audioCtx = new (window.AudioContext || window.webkitAudioContext)()
+    var AudioContext = window.AudioContext || window.webkitAudioContext;
+
+    var audioCtx = new AudioContext({
+      sampleRate: 16000,
+    });
     // 자바스크립트를 통해 음원의 진행상태에 직접접근에 사용된다.
     // const analyser = audioCtx.createAudioWorklet(0, 1, 1)
     const analyser = audioCtx.createScriptProcessor(0, 1, 1)
@@ -49,10 +57,20 @@ export function AudioRecord({ setScript, setAudioUrl1, setAud1, setIsRecord, set
     }
     // 마이크 사용 권한 획득
     navigator.mediaDevices.getUserMedia({ audio: true }).then((stream) => {
-      const mediaRecorder = new MediaRecorder(stream)
-      mediaRecorder.start()
+      // const mediaRecorder = new MediaRecorder(stream, {
+      //   audioBitsPerSecond: 16000,
+      // })
+      // mediaRecorder.start()
+      let recorder = RecordRTC(stream, {
+        mimeType: 'audio/wav',
+        recorderType: StereoAudioRecorder,
+        numberOfAudioChannels: 1,
+        desiredSampRate: 16000,
+      });
+      recorder.startRecording();
       setStream(stream)
-      setMedia(mediaRecorder)
+      setMedia(recorder)
+      // setMedia(mediaRecorder)
       makeSound(stream)
       if (finalTranscript !== '') {
         resetTranscript()
@@ -65,16 +83,20 @@ export function AudioRecord({ setScript, setAudioUrl1, setAud1, setIsRecord, set
             track.stop()
             setScript(finalTranscript)
           })
-          mediaRecorder.stop()
+
+          recorder.stopRecording = function (e) {
+            var blob = media.getBlob();
+            setAudioUrl1(URL.createObjectURL(blob))
+          }
 
           // 메서드가 호출 된 노드 연결 해제
           analyser.disconnect()
           audioCtx.createMediaStreamSource(stream).disconnect()
 
-          mediaRecorder.ondataavailable = function (e) {
-            setAudioUrl(e.data)
-            setOnRec(true)
+          recorder.getDataURL = function(dataURL) {
+            console.log(dataURL)
           }
+          setOnRec(true)
           SpeechRecognition.stopListening()
         } else {
           setOnRec(false)
@@ -90,11 +112,10 @@ export function AudioRecord({ setScript, setAudioUrl1, setAud1, setIsRecord, set
     // dataavailable 이벤트로 Blob 데이터에 대한 응답을 받을 수 있음
     SpeechRecognition.stopListening()
 
-    media.ondataavailable = function (e) {
-      setAudioUrl1(URL.createObjectURL(e.data))
-      setAudioUrl(e.data)
-      setOnRec(true)
-    }
+    media.stopRecording(function() {
+      var blob = media.getBlob();
+      setAudioUrl1(URL.createObjectURL(blob))
+    });
 
     // 모든 트랙에서 stop()을 호출해 오디오 스트림을 정지
     stream.getAudioTracks().forEach(function (track) {
@@ -103,27 +124,24 @@ export function AudioRecord({ setScript, setAudioUrl1, setAud1, setIsRecord, set
     //스크립트 저장
     setScript(finalTranscript)
     // 미디어 캡처 중지
-    media.stop()
     // 메서드가 호출 된 노드 연결 해제
     analyser.disconnect()
     source.disconnect()
   }
 
-  const onSubmitAudioFile = useCallback(() => {
-    if (audioUrl) {
-      // 출력된 링크에서 녹음된아이포트폴리오
-      setAudioUrl1(URL.createObjectURL(audioUrl))
-    }
+  const onSubmitAudioFile = () => {
     // File 생성자를 사용해 파일로 변환
-    const sound = new File([audioUrl], 'soundBlob.m4a', {
+    const resultBlob = media.getBlob();
+
+    const sound = new File([resultBlob], 'soundBlob.wav', {
       lastModified: new Date().getTime(),
-      type: 'audio/x-m4a',
+      type: 'audio/wav',
     })
 
     setAud1(sound);
     setIsRecord(true);
     setIsComplete(false);
-  }, [audioUrl])
+  }
 
   return (
     <Col style={{margin: '1rem'}}>
@@ -142,7 +160,7 @@ export function AudioRecord({ setScript, setAudioUrl1, setAud1, setIsRecord, set
           </>
         )}
         {finalTranscript && isComplete && (
-          <MyButton onClick={onSubmitAudioFile} style={{ width: '7rem', marginLeft: '2rem' }}>녹음 확인</MyButton>
+          <MyButton onClick={() => {onSubmitAudioFile()}} style={{ width: '7rem', marginLeft: '2rem' }}>녹음 확인</MyButton>
         )}
     </Col>
   )
