@@ -63,10 +63,9 @@ public class AmazonS3Controller {
                                     @RequestPart(value="file2", required = false) @ApiParam(value="음성 파일", required = true) MultipartFile multipartFile2,
                                       @RequestPart(value="learnPostReq") @ApiParam(value="음성 파일을 제외한 나머지 학습 정보", required = true) LearnPostReq learnPostReq) {
 
-        // key로 해당 컬럼 찾아서 rank 저장
-
         Optional<Learn> learnTmp = learnRepository.findById(key);
-        float rank = learnPostReq.getScore();
+
+        float scoreTmp = pronounceService.pronounce(multipartFile2);
 
         if (learnTmp.isEmpty()) {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
@@ -77,7 +76,7 @@ public class AmazonS3Controller {
 
         Learn learn = learnTmp.get();
         learn.setUser(user);
-        learn.setScore(rank);
+        learn.setScore(scoreTmp);
         learn.setCreatedDate(LocalDateTime.now());
         learnRepository.save(learn);
 
@@ -89,9 +88,6 @@ public class AmazonS3Controller {
             word.setLearn(learn);
             wordRepository.save(word);
                 });
-
-        pronounceService.pronounce(multipartFile2);
-
 
         // 음성 파일 저장
         String fileName = awsS3Service.uploadFile(multipartFile1);
