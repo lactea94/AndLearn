@@ -84,6 +84,9 @@ export function Learn() {
       })
       .then(setTimeout(() => {
         navigate('/profile/content')
+      }, 300))
+      .then(setTimeout(() => {
+        navigate(0)
       }, 500))
       .catch((error) => {
         console.log(error)
