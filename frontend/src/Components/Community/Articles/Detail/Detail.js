@@ -60,6 +60,7 @@ export function Detail() {
     }
   }
 
+  console.log(article)
   return (
     <S.Article>
       <S.Header>
@@ -68,8 +69,15 @@ export function Detail() {
         <S.Updated>{DateFormat(article.updatedAt)}</S.Updated>
       </S.Header>
       <S.SubHeader>
-        <S.User xs={5} md={8}>{article.nickname}</S.User>
-        {(article.nickname === state.user.nickname) && 
+        <S.ImgBox xs={2}>
+          { article.imgUrl ?
+          <S.UserImg src={`${article.imgUrl}`} alt={article.imgUrl}/> :
+          <S.UserImg src="/images/allu-3.png" alt="allu.png"/>}
+        </S.ImgBox>
+        <S.User xs={3} md={7} lg={9}>
+          {article.nickname}
+        </S.User>
+        {(article.nickname === state.user.nickname) &&
           <>
             <Col>
               <MyButton
