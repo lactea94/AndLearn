@@ -105,43 +105,7 @@ export function Learn() {
     setScript2(e.target.value)
   }
 
-  function onSubmit() {
-    function getBase64(file) {
-      var reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = function () {
-        console.log(reader.result);
-        return(reader.result)
-      };
-      reader.onerror = function (error) {
-        console.log('Error: ', error);
-      };
-    }
-    const audioToString = getBase64(aud2)
-
-    const scoreData = {
-      'access_key': '83178bba-2ea7-46a2-b88f-47e9d6915d3b',
-      'argument': {
-          'language_code': 'english',
-          'audio': `${audioToString}`
-      }
-    }
-
-    const scoreBody = JSON.stringify(scoreData)
-
-    // axios
-    //   .post('http://aiopen.etri.re.kr:8000/WiseASR/Pronunciation', scoreBody, {
-    //   headers: {
-    //     'Content-Type':'application/json; charset=UTF-8'
-    //   },
-    // })
-    //   .then(res => {
-    //     console.log(res)
-    //   })
-    //   .catch(e => {
-    //     console.log(e)
-    //   })
-    
+  function onSubmit() {   
     const formData = new FormData()
     formData.append('file', aud1)
     formData.append('file2', aud2)
