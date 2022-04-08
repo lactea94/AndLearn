@@ -58,7 +58,7 @@ export const SubHeader = styled(Row)`
 
 export const User = styled(Col)`
   text-align: start;
-  font-size: 0.8rem;
+  font-size: 1rem;
   padding: 0;
 `;
 
