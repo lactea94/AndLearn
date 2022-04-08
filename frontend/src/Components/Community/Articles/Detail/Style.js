@@ -91,12 +91,12 @@ export const TextArea = styled.textarea`
 `;
 
 export const ImgBox = styled(Col)`
-  width: 2rem;
-  height: 2rem;
+  width: 2.5rem;
+  height: 2.5rem;
   border-radius: 70%;
   overflow: hidden;
   padding: 0;
-  margin: 0;
+  margin: 0.3rem;
 `
 
 export const UserImg = styled.img`
