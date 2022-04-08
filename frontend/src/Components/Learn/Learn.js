@@ -97,154 +97,154 @@ export function Learn() {
     <Container>
       {loading ? (
         <Loading></Loading>
-      ) : <>
-        {!isStart ? (
-          <Row className='justify-content-center'>
-            <Col xs={12}>
-              <S.MyImage src={fileImage} alt="추가한 사진" />
-            </Col>
-            <ImageUpload
-              setFileImage={setFileImage}
-              setKeyDjango={setKeyDjango}
-              setWords={setWords}
-              setIsStart={setIsStart}
-            />
-          </Row>
-        ) : (
-          <>
-          <Row className='justify-content-center'>
-            <Col xs={12} lg={8}>
-              <S.MyImage2 src={fileImage} alt="녹음할 때 보일 사진" />
-            </Col>
-            {/* Record 부분 */}
-            <Col xs={12} lg={4} style={{ marginTop: '2rem'}}>
-              {isStart &&
-                <span id="firstRecord">
-                  {audioUrl1 && 
-                    <>
-                      <Row style={{ marginTop: '1rem' }}>
-                        <Col xs={3}>
-                          <S.Text1>1차 녹음</S.Text1>
-                        </Col>
-                        <Col xs={9}>
-                          <S.myAudio controls src={audioUrl1} controlsList='nodownload'></S.myAudio>
-                        </Col>
-                      </Row>
-                      {aud1 && (
-                        <>
-                          {isSecondRecordStart ? 
-                            <S.ScriptTextBox>{script1}</S.ScriptTextBox>
-                          : 
-                            <S.myTextarea value={script1} style={{ width: '100%' }} onChange={onCheck1} readonly>
-                              {script1}
-                            </S.myTextarea>
-                          }
-                        </>
-                      )}
-                    </>
-                  }
-                  {!isFirstRecord && 
-                    <>
-                      <AudioRecord
-                        words={words}
-                        setScript={setScript1}
-                        setAudioUrl1={setAudioUrl1}
-                        setAud1={setAud1}
-                        setIsRecord={setIsFirstRecord}
-                        setIsRecordStart={setIsFirstRecordStart}
-                        whatRecord={'first'}
-                      />
-                    </>
-                  }
-                </span>
-              }
-              {isFirstRecord && 
-                <span id="secondRecord">
-                  {audioUrl2 && (
-                    <>
-                      <Row style={{ marginTop: '1rem' }}>
-                        <Col xs={3}>
-                          <S.Text2>2차 녹음</S.Text2>
-                        </Col>
-                        <Col xs={9}>
-                          <S.myAudio controls src={audioUrl2} controlsList="nodownload"></S.myAudio>
-                        </Col>
-                      </Row>
-                      {aud2 && (
-                        <S.myTextarea value={script2} style={{ width: '100%' }} onChange={onCheck2}>
-                          {script2}
-                        </S.myTextarea>
-                      )}
-                    </>
-                  )}
-                  {!isSecondRecord &&
-                    <AudioRecord
-                      setScript={setScript2}
-                      setAudioUrl1={setAudioUrl2}
-                      setAud1={setAud2}
-                      setIsRecord={setIsSecondRecord}
-                      setIsRecordStart={setIsSecondRecordStart}
-                      whatRecord={'second'}
-                    />
-                  }
-                </span>
-              }
-              
-              { (aud1 && words.length > 0) &&
-                <Row>
-                  <Col xs={12} md={6} lg={12}>
-                    <S.Text1>AI 추천 단어</S.Text1>
-                    <S.AIBox id="AIWordBox"> 
-                      {recommendWord}
-                    </S.AIBox>
-                  </Col>
-                  <S.smallAlluCol className="justify-content-center" xs={12} md={6} lg={12}>
-                    <S.AlluImage src={allu} alt="추가한 사진" />
-                  </S.smallAlluCol>
-                </Row>
-              }
-            </Col>
-          </Row>
-          <S.largeWidthRow style={{ marginTop: '1rem'}}>
-            <Col lg={8}>
-              {aud1 && (
-                <Row>
-                  <Col lg={2}>
-                    <S.Text1>1차 답변</S.Text1>
-                  </Col>
-                  <Col lg={10}>
-                    {isSecondRecordStart ? 
-                      <S.largeScriptTextBox>{script1}</S.largeScriptTextBox>
-                    : 
-                      <S.largeTextarea value={script1} style={{ width: '100%' }} onChange={onCheck1}>
-                        {script1}
-                      </S.largeTextarea>
+      ) : 
+        <>
+          {!isStart ? (
+            <Row className='justify-content-center'>
+              <Col xs={12}>
+                <S.MyImage src={fileImage} alt="추가한 사진" />
+              </Col>
+              <ImageUpload
+                setFileImage={setFileImage}
+                setKeyDjango={setKeyDjango}
+                setWords={setWords}
+                setIsStart={setIsStart}
+              />
+            </Row>
+          ) : (
+            <>
+            <Row className='justify-content-center'>
+              <Col xs={12} lg={8}>
+                <S.MyImage2 src={fileImage} alt="녹음할 때 보일 사진" />
+              </Col>
+              {/* Record 부분 */}
+              <Col xs={12} lg={4} style={{ marginTop: '2rem'}}>
+                {isStart &&
+                  <span id="firstRecord">
+                    {audioUrl1 && 
+                      <>
+                        <Row style={{ marginTop: '1rem' }}>
+                          <Col xs={3}>
+                            <S.Text1>1차 녹음</S.Text1>
+                          </Col>
+                          <Col xs={9}>
+                            <S.myAudio controls src={audioUrl1} controlsList='nodownload'></S.myAudio>
+                          </Col>
+                        </Row>
+                        {aud1 && (
+                          <>
+                            {isSecondRecordStart ? 
+                              <S.ScriptTextBox>{script1}</S.ScriptTextBox>
+                            : 
+                              <S.myTextarea value={script1} style={{ width: '100%' }} onChange={onCheck1} readonly>
+                                {script1}
+                              </S.myTextarea>
+                            }
+                          </>
+                        )}
+                      </>
                     }
-                  </Col>
-                </Row>
-              )}
-              {aud2 && (
-                <Row>
-                  <Col lg={2}>
-                    <S.Text1>2차 답변</S.Text1>
-                  </Col>
-                  <Col lg={10}>
-                    <S.largeTextarea value={script2} style={{ width: '100%' }} onChange={onCheck2}>
-                      {script2}
-                    </S.largeTextarea>
-                  </Col>
-                </Row>
-              )}
-            </Col>
-            <Col lg={4}>
-              <S.largeAlluImage src={allu} alt="추가한 사진" />
-            </Col>
-          </S.largeWidthRow>
-          </>
-        )}
-
-      {isSecondRecord && <MyButton style={{ marginTop: '1rem'}} onClick={onSubmit}>완료</MyButton>}
-    </>}
+                    {!isFirstRecord && 
+                      <>
+                        <AudioRecord
+                          words={words}
+                          setScript={setScript1}
+                          setAudioUrl1={setAudioUrl1}
+                          setAud1={setAud1}
+                          setIsRecord={setIsFirstRecord}
+                          setIsRecordStart={setIsFirstRecordStart}
+                          whatRecord={'first'}
+                        />
+                      </>
+                    }
+                  </span>
+                }
+                {isFirstRecord && 
+                  <span id="secondRecord">
+                    {audioUrl2 && (
+                      <>
+                        <Row style={{ marginTop: '1rem' }}>
+                          <Col xs={3}>
+                            <S.Text2>2차 녹음</S.Text2>
+                          </Col>
+                          <Col xs={9}>
+                            <S.myAudio controls src={audioUrl2} controlsList="nodownload"></S.myAudio>
+                          </Col>
+                        </Row>
+                        {aud2 && (
+                          <S.myTextarea value={script2} style={{ width: '100%' }} onChange={onCheck2}>
+                            {script2}
+                          </S.myTextarea>
+                        )}
+                      </>
+                    )}
+                    {!isSecondRecord &&
+                      <AudioRecord
+                        setScript={setScript2}
+                        setAudioUrl1={setAudioUrl2}
+                        setAud1={setAud2}
+                        setIsRecord={setIsSecondRecord}
+                        setIsRecordStart={setIsSecondRecordStart}
+                        whatRecord={'second'}
+                      />
+                    }
+                  </span>
+                }
+                
+                { (aud1 && words.length > 0) &&
+                  <Row>
+                    <Col xs={12} md={6} lg={12}>
+                      <S.Text1>AI 추천 단어</S.Text1>
+                      <S.AIBox id="AIWordBox"> 
+                        {recommendWord}
+                      </S.AIBox>
+                    </Col>
+                    <S.smallAlluCol className="justify-content-center" xs={12} md={6} lg={12}>
+                      <S.AlluImage src={allu} alt="추가한 사진" />
+                    </S.smallAlluCol>
+                  </Row>
+                }
+              </Col>
+            </Row>
+            <S.largeWidthRow style={{ marginTop: '1rem'}}>
+              <Col lg={8}>
+                {aud1 && (
+                  <Row>
+                    <Col lg={2}>
+                      <S.Text1>1차 답변</S.Text1>
+                    </Col>
+                    <Col lg={10}>
+                      {isSecondRecordStart ? 
+                        <S.largeScriptTextBox>{script1}</S.largeScriptTextBox>
+                      : 
+                        <S.largeTextarea value={script1} style={{ width: '100%' }} onChange={onCheck1}>
+                          {script1}
+                        </S.largeTextarea>
+                      }
+                    </Col>
+                  </Row>
+                )}
+                {aud2 && (
+                  <Row>
+                    <Col lg={2}>
+                      <S.Text1>2차 답변</S.Text1>
+                    </Col>
+                    <Col lg={10}>
+                      <S.largeTextarea value={script2} style={{ width: '100%' }} onChange={onCheck2}>
+                        {script2}
+                      </S.largeTextarea>
+                    </Col>
+                  </Row>
+                )}
+              </Col>
+              <Col lg={4}>
+                <S.largeAlluImage src={allu} alt="추가한 사진" />
+              </Col>
+            </S.largeWidthRow>
+            </>
+          )}
+        {isSecondRecord && <MyButton style={{ marginTop: '1rem'}} onClick={onSubmit}>완료</MyButton>}
+      </>}
     </Container>
   )
 }

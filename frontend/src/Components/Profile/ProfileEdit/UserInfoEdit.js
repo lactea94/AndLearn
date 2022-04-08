@@ -133,6 +133,7 @@ export function UserInfoEdit() {
           <Input 
             type="file" 
             id="file"
+            accept="image/*"
             style={{width: "100%", margin: 0}}
             onChange={handleChangeFile}
             placeholder="프로필 사진"

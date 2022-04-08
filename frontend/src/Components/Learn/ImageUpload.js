@@ -1,16 +1,21 @@
 import { useState } from 'react'
 import { djangoInstance } from 'api/index'
 import { MyButton } from 'styles/Button'
-import { Col } from 'react-bootstrap'
+import { Alert, Col } from 'react-bootstrap'
 import plusDefault from './defaultImage.jpg'
 
 export function ImageUpload({ setFileImage, setKeyDjango, setWords, setIsStart }) {
-  const [image, setImage] = useState('')
+  const [image, setImage] = useState('');
+  const [error, setError] = useState(false);
   const api = djangoInstance()
 
   function onLoad(e) {
-    setImage(e.target.files[0])
-    setFileImage(URL.createObjectURL(e.target.files[0]))
+    if (e.target.files[0].size > 1000000) {
+      setError(true)
+    } else {
+      setImage(e.target.files[0])
+      setFileImage(URL.createObjectURL(e.target.files[0]))
+    }
   }
 
   function onImageUpload(e) {
@@ -53,6 +58,7 @@ export function ImageUpload({ setFileImage, setKeyDjango, setWords, setIsStart }
         </>
       : 
         <>
+          { error && <Alert variant="warning">1mb 이하의 사진을 올려주세요.</Alert>}
           <MyButton style={{margin: "1rem"}}>
             <input
               id="imgInput"
