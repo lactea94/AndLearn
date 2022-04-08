@@ -29,7 +29,7 @@ export function AudioRecord({ setScript, setAudioUrl1, setAud1, setIsRecord, set
     if (whatRecord === 'first') {
       setTimeout(() =>{
         setCanStop(true);
-      }, 20000)
+      }, 10000)
     } else {
       setCanStop(true)
     }
