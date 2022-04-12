@@ -137,8 +137,8 @@ STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-AWS_ACCESS_KEY_ID = 'AKIAVKWXUQLU7OTAGQHZ' # .csv 파일에 있는 내용을 입력 Access key ID
-AWS_SECRET_ACCESS_KEY = 'kn3Z5qhV64QWnzJMge637TlkBcn3WIZdooAhuvO8' # .csv 파일에 있는 내용을 입력 Secret access key
+AWS_ACCESS_KEY_ID = '엑세스 키' # .csv 파일에 있는 내용을 입력 Access key ID
+AWS_SECRET_ACCESS_KEY = '시크릿 키' # .csv 파일에 있는 내용을 입력 Secret access key
 AWS_REGION = 'ap-northeast-2'
 
 ###S3 Storages
